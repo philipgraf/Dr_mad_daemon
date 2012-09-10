@@ -6,6 +6,7 @@
  */
 
 #include "Game.h"
+#include <iostream>
 
 Game::Game() {
 	running = true;
@@ -20,13 +21,19 @@ int Game::execute() {
 		return -1;
 
 	SDL_Event event;
+	Uint32 start;
 
 	while (running) {
+		start = SDL_GetTicks();
 		while (SDL_PollEvent(&event)) {
 			onEvent(&event);
 		}
 		logic();
 		render();
+
+		if(SDL_GetTicks()-start < 1000/FPS){
+			SDL_Delay(1000/FPS-(SDL_GetTicks()-start));
+		}
 	}
 
 	cleanUp();
@@ -57,6 +64,7 @@ void Game::render() {
 }
 
 void Game::cleanUp() {
+	SDL_FreeSurface(display);
 }
 
 void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
@@ -67,6 +75,12 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	default:
 		break;
 	}
+}
+
+void Game::onLButtonDown(int mX, int mY){
+
+	std::cout<< "X: "<< mX << "Y:" << mY << std::endl;
+
 }
 
 void Game::onExit() {

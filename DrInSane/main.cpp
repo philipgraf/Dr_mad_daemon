@@ -1,12 +1,17 @@
 #include <iostream>
+#include "Game.h"
 
 using namespace std;
 
 
+
 int main(){
 
-	cout << "test" << endl;
+	cout << "starting... \n";
 
-	return 0;
+	Game game;
+
+
+	return game.execute();
 
 }

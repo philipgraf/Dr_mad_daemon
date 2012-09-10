@@ -13,7 +13,11 @@ Event::Event() {
 
 Event::~Event() {
 }
-
+/**
+ * Funktion that execute the different Eventhandler
+ *
+ * @param event sdl event which contains happened UI interactions
+ */
 void Event::onEvent(SDL_Event *event) {
 	switch (event->type) {
 	case SDL_ACTIVEEVENT:

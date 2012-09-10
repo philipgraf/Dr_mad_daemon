@@ -77,11 +77,7 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	}
 }
 
-void Game::onLButtonDown(int mX, int mY){
 
-	std::cout<< "X: "<< mX << "Y:" << mY << std::endl;
-
-}
 
 void Game::onExit() {
 	running = false;

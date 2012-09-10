@@ -1,0 +1,8 @@
+Tile-Features:
+	wegschleudern,elektro,einbrechen, ...
+	
+
+	
+	
+TODO:
+	mapcreator, 		

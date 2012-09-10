@@ -22,7 +22,7 @@ public:
 	virtual void onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode);
 	virtual void onMouseFocus();
 	virtual void onMouseBlur();
-	virtual void onMouseMove(int mX, int mY, int relX, int relY, bool left, bool right, bool middle);
+	virtual void onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle);
 	virtual void onMouseWheel(bool up, bool down);
 	virtual void onLButtonDown(int mX,int mY);
 	virtual void onLButtonUp(int mX,int mY);

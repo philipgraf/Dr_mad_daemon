@@ -118,7 +118,7 @@ void Event::onMouseFocus() {
 }
 void Event::onMouseBlur() {
 }
-void Event::onMouseMove(int mX, int mY, int relX, int relY, bool left,
+void Event::onMouseMove(int mX, int mY, int xRel, int yRel, bool left,
 		bool right, bool middle) {
 }
 void Event::onMouseWheel(bool up, bool down) {

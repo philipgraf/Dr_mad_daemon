@@ -65,6 +65,7 @@ void Game::render() {
 
 void Game::cleanUp() {
 	SDL_FreeSurface(display);
+	SDL_Quit();
 }
 
 void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {

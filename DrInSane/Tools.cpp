@@ -22,23 +22,23 @@ SDL_Surface * Tools::loadImage(string filename) {
 	ret = SDL_DisplayFormatAlpha(temp);
 	SDL_FreeSurface(temp);
 	return ret;
-
 }
+
 bool Tools::drawImage(SDL_Surface* dstSurface, int dstX, int dstY,
 		SDL_Surface* srcSurface, int srcX, int srcY, int width, int height) {
 	if (dstSurface == NULL || srcSurface == NULL) {
 		Tools::error("drawImage: Surface not defined");
 		return false;
 	}
-	SDL_Rect *dstRect;
-	dstRect->x = dstX;
-	dstRect->y = dstY;
+	SDL_Rect dstRect;
+	dstRect.x = dstX;
+	dstRect.y = dstY;
 
-	SDL_Rect *srcRect;
-	srcRect->x = srcX;
-	srcRect->y = srcY;
-	srcRect->w = width;
-	srcRect->h = height;
-	SDL_BlitSurface(srcSurface,srcRect,dstSurface,dstRect);
+	SDL_Rect srcRect;
+	srcRect.x = srcX;
+	srcRect.y = srcY;
+	srcRect.w = width;
+	srcRect.h = height;
+	SDL_BlitSurface(srcSurface, &srcRect, dstSurface, &dstRect);
 	return true;
 }

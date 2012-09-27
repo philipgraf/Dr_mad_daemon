@@ -11,7 +11,11 @@
 
 #include "Event.h"
 #include "define.h"
+#include "Tools.h"
 #include <SDL/SDL.h>
+#include <iostream>
+
+using namespace std;
 
 class Game: public Event {
 private:
@@ -27,9 +31,9 @@ public:
 	void onEvent(SDL_Event *event);
 	void logic();
 	void render();
+	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void cleanUp();
 
-	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onExit();
 
 

@@ -6,13 +6,12 @@
  */
 
 #include "Game.h"
-#include <iostream>
+
 
 Game::Game() {
 	running = true;
-	display = NULL;
+//	display = Tools::loadImage("bg.png");
 }
-
 Game::~Game() {
 }
 
@@ -63,11 +62,6 @@ void Game::logic() {
 void Game::render() {
 }
 
-void Game::cleanUp() {
-	SDL_FreeSurface(display);
-	SDL_Quit();
-}
-
 void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	switch (sym) {
 	case SDLK_ESCAPE:
@@ -77,6 +71,13 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		break;
 	}
 }
+
+
+void Game::cleanUp() {
+	SDL_FreeSurface(display);
+	SDL_Quit();
+}
+
 
 
 

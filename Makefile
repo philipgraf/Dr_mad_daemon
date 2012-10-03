@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS = -c -Wall
-LDFLAGS = -lSDL -lSDL_image
+LDFLAGS = -lSDL -lSDL_image -lSDL_ttf
 SOURCES = Entity.cpp Event.cpp Game.cpp main.cpp Tools.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = DrInSane

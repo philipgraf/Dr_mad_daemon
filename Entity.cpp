@@ -152,10 +152,14 @@ void Entity::move() {
 	x += speedX;
 	y += speedY;
 
-	if(x<0)
+	if(x<0){
 		x=0;
-	else if(x>768)
+		speedX=0;
+	}
+	else if(x>768){
 		x=768;
+		speedX=0;
+	}
 
 }
 

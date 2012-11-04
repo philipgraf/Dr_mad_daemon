@@ -12,6 +12,10 @@ Game::Game() {
 	display = NULL;
 	menufont = NULL;
 	background = NULL;
+	view.x = 0;
+	view.y = 0;
+	view.w = WIDTH;
+	view.h = HEIGHT;
 	player = NULL;
 }
 Game::~Game() {
@@ -60,7 +64,7 @@ void Game::init() {
 	if ((menufont = TTF_OpenFont("fonts/menu.ttf", 50)) == NULL)
 		Tools::error("unable to load menufont");
 	background = Tools::loadImage("img/bg.png");
-	player = new Entity("img/player.png", 20, HEIGHT - 64 - 20);
+	player = new Entity("img/player.png", WIDTH/2, HEIGHT - 64 - 20);
 }
 
 void Game::onEvent(SDL_Event* event) {
@@ -70,12 +74,12 @@ void Game::onEvent(SDL_Event* event) {
 void Game::logic() {
 	player->move();
 	cout << player->getX() << endl;
-	;
+
 }
 
 void Game::render() {
-	Tools::drawImage(display, 0, 0, background, 0, 0, display->clip_rect.w,
-			display->clip_rect.h);
+	Tools::drawImage(display, 0, 0, background, view.x, view.y, view.w,
+			view.h);
 	player->render();
 	SDL_Flip(display);
 }

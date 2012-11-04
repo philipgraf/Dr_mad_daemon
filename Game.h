@@ -28,6 +28,7 @@ private:
 	bool running;
 	SDL_Surface * display;
 	SDL_Surface * background;
+	SDL_Rect view;
 	TTF_Font *menufont;
 	Entity *player;
 	vector<fptr> labelactions;

@@ -1,7 +1,7 @@
 CC=g++
-CFLAGS = -c -Wall
+CFLAGS = -c -Wall -O0 -g
 LDFLAGS = -lSDL -lSDL_image -lSDL_ttf
-SOURCES = Entity.cpp Event.cpp Game.cpp main.cpp Tools.cpp
+SOURCES = Entity.cpp Event.cpp Game.cpp main.cpp Tools.cpp Level.cpp Tile.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = DrInSane
 

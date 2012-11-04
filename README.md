@@ -1,1 +1,1 @@
-Author: philipgraf
+Author: Philip Graf, Felix Eckner

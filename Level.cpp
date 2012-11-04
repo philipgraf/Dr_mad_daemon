@@ -2,26 +2,18 @@
 #include "Level.h"
 
 Level::Level(string lname) {
-	printf("Test");
 	fstream filestream;
-	//filestream.open(("levels/"+lname+".conf").c_str(),fstream::in);
-	//filestream >> name >> width;
+	string background;
+	filestream.open(("levels/"+lname+".conf").c_str(),fstream::in);
+	filestream >> name >> width >> height >> background >> gravity >> time;
 
-	cout << name << endl;
-	cout << width << endl;
+	background = "img/"+background;
 
-	/**
-	 * 	name=tutorial
-	 *	width=50
-	 *	height=50
-	 *	background=bg.png
-	 * 	gravity=1
-	 *	time=300
-	 */
+	this->background = Tools::loadImage(background);
 
+	filestream.close();
 
-
-	//filestream.close();
+	//TODO array initialisieren
 
 }
 

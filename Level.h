@@ -2,6 +2,7 @@
 #define _LEVEL_H_
 
 #include "Tile.h"
+#include "Tools.h"
 
 #include <fstream>
 #include <iostream>
@@ -16,7 +17,7 @@ private:
 	 */
 	Tile ***tilelist;
 	string name;
-	SDL_Surface *backgroud;
+	SDL_Surface *background;
 	int width;
 	int height;
 	int gravity;

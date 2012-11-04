@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.h"
 
-#include "Level.h"
+
 
 using namespace std;
 
@@ -9,13 +9,10 @@ using namespace std;
 int main(){
 
 	cout << "starting... \n";
-	Level lhgkhjg();
-	//Game game;
+
+	Game game;
 
 
-	cout << "exiting...\n";
-
-
-	return 0;//game.execute();
+	return game.execute();
 
 }

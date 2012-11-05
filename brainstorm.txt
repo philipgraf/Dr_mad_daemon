@@ -1,7 +1,8 @@
 Tile-Features:
 	wegschleudern,elektro,einbrechen, ...
 	
-
+enitityanimations:
+	beule am kopf ... muahahaha
 	
 	
 TODO:

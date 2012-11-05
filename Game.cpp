@@ -6,18 +6,19 @@
  */
 
 #include "Game.h"
+#include "Tile.h"
 #include "Level.h"
 
 Game::Game() {
 	running = false;
 	display = NULL;
 	menufont = NULL;
-	background = NULL;
 	view.x = 0;
 	view.y = 0;
 	view.w = WIDTH;
 	view.h = HEIGHT;
 	player = NULL;
+	l1=NULL;
 }
 Game::~Game() {
 }
@@ -29,8 +30,6 @@ int Game::execute() {
 
 	SDL_Event event;
 	Uint32 start;
-
-
 
 	while (running) {
 		start = SDL_GetTicks();
@@ -66,8 +65,9 @@ void Game::init() {
 
 	if ((menufont = TTF_OpenFont("fonts/menu.ttf", 50)) == NULL)
 		Tools::error("unable to load menufont");
-	background = Tools::loadImage("img/bg.png");
+	Tile::loadTileset();
 	player = new Entity("img/player.png", WIDTH/2, HEIGHT - 64 - 20);
+	l1 = new Level();
 }
 
 void Game::onEvent(SDL_Event* event) {
@@ -81,8 +81,7 @@ void Game::logic() {
 }
 
 void Game::render() {
-	Tools::drawImage(display, 0, 0, background, view.x, view.y, view.w,
-			view.h);
+	l1->render(view);
 	player->render();
 	SDL_Flip(display);
 }
@@ -144,7 +143,7 @@ void Game::menu() {
 	SDL_Color colors[2] = { { 255, 255, 255 }, { 91, 176, 248 } };
 	SDL_Event event;
 	bool menu = true;
-	int currentItem = 0;
+	unsigned int currentItem = 0;
 	SDL_Surface *menubackground = SDL_CreateRGBSurface(SDL_SWSURFACE,screen->w,screen->h,32,screen->format->Rmask,screen->format->Gmask,screen->format->Bmask,screen->format->Amask);
 	Uint32 start;
 
@@ -172,7 +171,7 @@ void Game::menu() {
 
 	menuitem items[labeltexts.size()];
 
-	for (int i = 0; i < SIZE(items); i++) {
+	for (unsigned int i = 0; i < SIZE(items); i++) {
 		items[i].labelText = labeltexts[i];
 		items[i].labelSurface = TTF_RenderText_Solid(menufont,
 				items[i].labelText.c_str(),
@@ -232,7 +231,7 @@ void Game::menu() {
 			}
 		}
 
-		for (int i = 0; i < SIZE(items); i++) {
+		for (unsigned int i = 0; i < SIZE(items); i++) {
 			SDL_BlitSurface(items[i].labelSurface, NULL, screen,
 					&(items[i].position));
 		}
@@ -243,7 +242,7 @@ void Game::menu() {
 		}
 	}
 
-	for (int i = 0; i < SIZE(items); i++) {
+	for (unsigned int i = 0; i < SIZE(items); i++) {
 		SDL_FreeSurface(items[i].labelSurface);
 	}
 

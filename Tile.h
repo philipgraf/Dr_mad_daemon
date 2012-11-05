@@ -7,8 +7,6 @@
 #include <SDL/SDL.h>
 
 
-
-
 class Tile {
 private:
 	int id;

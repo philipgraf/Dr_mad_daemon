@@ -15,7 +15,7 @@ private:
 	/**
 	 * 3D Tilearray [0=bg,1=main,2=fg][x][y]
 	 */
-	Tile ***tilelist;
+	Tile ****tilelist;
 	string name;
 	SDL_Surface *background;
 	int width;
@@ -31,6 +31,8 @@ public:
 	const string& getName() const;
 	int getTime() const;
 	void setTime(int time);
+	int getTileID(int x,int y,int layer=1);
+	void render(SDL_Rect view,int layer=1);
 };
 
 

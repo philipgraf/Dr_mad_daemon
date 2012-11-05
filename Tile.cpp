@@ -9,7 +9,7 @@ Tile::Tile(int id) {
 }
 
 void Tile::render(int x, int y) {
-	Tools::drawImage(SDL_GetVideoSurface(),x,y,tileset,currentframe*TILESIZE,id*TILESIZE);
+	Tools::drawImage(SDL_GetVideoSurface(),x*TILESIZE,y*TILESIZE,tileset,currentframe*TILESIZE,id*TILESIZE);
 }
 
 void Tile::nextFrame() {

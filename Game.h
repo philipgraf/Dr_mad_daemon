@@ -13,6 +13,7 @@
 #include "define.h"
 #include "Tools.h"
 #include "Entity.h"
+#include "Level.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <iostream>
@@ -27,11 +28,12 @@ class Game: public Event {
 private:
 	bool running;
 	SDL_Surface * display;
-	SDL_Surface * background;
 	SDL_Rect view;
 	TTF_Font *menufont;
 	Entity *player;
 	vector<fptr> labelactions;
+
+	Level *l1; // TODO only for testing
 
 public:
 	Game();

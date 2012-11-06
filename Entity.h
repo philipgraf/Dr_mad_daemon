@@ -36,40 +36,124 @@ private:
 	float maxSpeedY;
 	float accelX;
 	float accelY;
+	float breakX;
+
+
 
 public:
 	static vector<Entity*> entityList;
 	Entity();
 	Entity(string imagename,int x,int y);
 	virtual ~Entity();
-	float getAccelX() const;
-	void setAccelX(float accelX);
-	float getAccelY() const;
-	void setAccelY(float accelY);
-	bool isAlive() const;
-	void setAlive(bool alive);
-	Uint8 getDirection() const;
-	void setDirection(Uint8 direction);
-	void delDirection(Uint8 direction);
-	int getFlags() const;
-	void setFlags(int flags);
-	SDL_Surface* getImage() const;
-	float getMaxSpeedX() const;
-	void setMaxSpeedX(float maxSpeedX);
-	float getMaxSpeedY() const;
-	void setMaxSpeedY(float maxSpeedY);
-	float getSpeedX() const;
-	void setSpeedX(float speedX);
-	float getSpeedY() const;
-	void setSpeedY(float speedY);
-	int getX() const;
-	void setX(int x);
-	int getY() const;
-	void setY(int y);
 
 	void move();
 
 	void render();
+
+
+	//----------------------------------- Getter and Setter ------------------------------
+
+	float getAccelX() const {
+		return accelX;
+	}
+
+	void setAccelX(float accelX) {
+		this->accelX = accelX;
+	}
+
+	float getAccelY() const {
+		return accelY;
+	}
+
+	void setAccelY(float accelY) {
+		this->accelY = accelY;
+	}
+
+	bool isAlive() const {
+		return alive;
+	}
+
+	void setAlive(bool alive) {
+		this->alive = alive;
+	}
+
+	float getBreakX() const {
+		return breakX;
+	}
+
+	void setBreakX(float breakX) {
+		this->breakX = breakX;
+	}
+
+	Uint8 getDirection() const {
+		return direction;
+	}
+
+
+	void setDirection(Uint8 direction) {
+		this->direction |= direction;
+	}
+
+	void  delDirection(Uint8 direction) {
+		this->direction &= ~direction;
+	}
+
+
+	int getFlags() const {
+		return flags;
+	}
+
+	void setFlags(int flags) {
+		this->flags = flags;
+	}
+
+	float getMaxSpeedX() const {
+		return maxSpeedX;
+	}
+
+	void setMaxSpeedX(float maxSpeedX) {
+		this->maxSpeedX = maxSpeedX;
+	}
+
+	float getMaxSpeedY() const {
+		return maxSpeedY;
+	}
+
+	void setMaxSpeedY(float maxSpeedY) {
+		this->maxSpeedY = maxSpeedY;
+	}
+
+	float getSpeedX() const {
+		return speedX;
+	}
+
+	void setSpeedX(float speedX) {
+		this->speedX = speedX;
+	}
+
+	float getSpeedY() const {
+		return speedY;
+	}
+
+	void setSpeedY(float speedY) {
+		this->speedY = speedY;
+	}
+
+	int getX() const {
+		return x;
+	}
+
+	void setX(int x) {
+		this->x = x;
+	}
+
+	int getY() const {
+		return y;
+	}
+
+	void setY(int y) {
+		this->y = y;
+	}
 };
 
 #endif /* ENTITY_H_ */

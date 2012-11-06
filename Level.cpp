@@ -4,6 +4,7 @@
 Level::Level(string lname) {
 	width=height=gravity=time=0;
 	tilelist=NULL;
+	background=NULL;
 
 	fstream filestream;
 	string background;
@@ -88,5 +89,4 @@ void Level::render(SDL_Rect view,int layer) {
 			tilelist[layer][x][y]->render(x,y);
 		}
 	}
-
 }

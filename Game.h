@@ -30,10 +30,9 @@ private:
 	SDL_Surface * display;
 	SDL_Rect view;
 	TTF_Font *menufont;
-	Entity *player;
 	vector<fptr> labelactions;
 
-	Level *l1; // TODO only for testing
+	Level *currentLevel; // TODO only for testing
 
 public:
 	Game();

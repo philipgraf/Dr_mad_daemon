@@ -17,8 +17,7 @@ Game::Game() {
 	view.y = 0;
 	view.w = WIDTH;
 	view.h = HEIGHT;
-	player = NULL;
-	l1=NULL;
+	currentLevel=NULL;
 }
 Game::~Game() {
 }
@@ -54,8 +53,7 @@ void Game::init() {
 		Tools::error("unable to initialize SDL");
 	}
 
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32,
-			SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
 		Tools::error("unable to initialize display");
 	}
 
@@ -63,11 +61,11 @@ void Game::init() {
 		Tools::error("unable to initialize TTF");
 	}
 
-	if ((menufont = TTF_OpenFont("fonts/menu.ttf", 50)) == NULL)
+	if ((menufont = TTF_OpenFont("fonts/menu.ttf", 50)) == NULL) {
 		Tools::error("unable to load menufont");
+	}
 	Tile::loadTileset();
-	player = new Entity("img/player.png", WIDTH/2, HEIGHT - 64 - 20);
-	l1 = new Level();
+	currentLevel = new Level();
 }
 
 void Game::onEvent(SDL_Event* event) {
@@ -75,14 +73,11 @@ void Game::onEvent(SDL_Event* event) {
 }
 
 void Game::logic() {
-	player->move();
-	cout << player->getX() << endl;
-
+	currentLevel->logic();
 }
 
 void Game::render() {
-	l1->render(view);
-	player->render();
+	currentLevel->render(view);
 	SDL_Flip(display);
 }
 
@@ -92,16 +87,16 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		menu();
 		break;
 	case SDLK_LEFT:
-		player->setDirection(LEFT);
+		currentLevel->getPlayer()->setDirection(LEFT);
 		break;
 	case SDLK_UP:
-		player->setDirection(UP);
+		currentLevel->getPlayer()->setDirection(UP);
 		break;
 	case SDLK_DOWN:
-		player->setDirection(DOWN);
+		currentLevel->getPlayer()->setDirection(DOWN);
 		break;
 	case SDLK_RIGHT:
-		player->setDirection(RIGHT);
+		currentLevel->getPlayer()->setDirection(RIGHT);
 		break;
 	default:
 		break;
@@ -111,16 +106,16 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 void Game::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	switch (sym) {
 	case SDLK_LEFT:
-		player->delDirection(LEFT);
+		currentLevel->getPlayer()->delDirection(LEFT);
 		break;
 	case SDLK_UP:
-		player->delDirection(UP);
+		currentLevel->getPlayer()->delDirection(UP);
 		break;
 	case SDLK_DOWN:
-		player->delDirection(DOWN);
+		currentLevel->getPlayer()->delDirection(DOWN);
 		break;
 	case SDLK_RIGHT:
-		player->delDirection(RIGHT);
+		currentLevel->getPlayer()->delDirection(RIGHT);
 		break;
 	default:
 		break;

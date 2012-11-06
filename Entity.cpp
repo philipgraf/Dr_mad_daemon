@@ -20,15 +20,15 @@ Entity::Entity(string imagename, int x, int y) {
 	this->x = x;
 	this->y = y;
 	accelX = 1.1;
-	accelY = 1.0;
+	accelY = 1.1;
 	breakX = 1.5;
-	maxSpeedX = (float) TILESIZE;
-	maxSpeedY = (float) TILESIZE;
+	maxSpeedX = (float) TILESIZE/4;
+	maxSpeedY = (float) TILESIZE/4;
 	speedX = 0.0;
 	speedY = 0.0;
 }
 
-
+// FIXME better move algorithm needed
 void Entity::move() {
 	if ((direction & LEFT) && -maxSpeedX < speedX) {
 		speedX -= accelX;
@@ -50,14 +50,16 @@ void Entity::move() {
 	}
 
 	if (!(direction & UP) && speedY < 0) {
-		speedY += accelY*breakX;
+		speedY /= accelY;
 	} else if (!(direction & DOWN) && speedY > 0) {
-		speedY -= accelY*breakX;
+		speedY /= accelY;
 	}
 
 	if(speedX>-1 && speedX<1)
 		speedX=0;
 
+	if(speedY>-1 && speedY<1)
+		speedY=0;
 
 	x +=(int)speedX;
 	y +=(int)speedY;

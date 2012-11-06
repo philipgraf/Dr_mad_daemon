@@ -5,7 +5,7 @@ Level::Level(string lname) {
 	width=height=gravity=time=0;
 	tilelist=NULL;
 	background=NULL;
-
+	player = new Entity("img/player.png", WIDTH/2, HEIGHT - 64 - 20);
 	fstream filestream;
 	string background;
 	filestream.open(("levels/"+lname+".conf").c_str(),fstream::in);
@@ -81,12 +81,55 @@ int Level::getTileID(int x, int y, int layer) {
 	return tilelist[layer][x][y]->getId();
 }
 
-void Level::render(SDL_Rect view,int layer) {
-	Tools::drawImage(SDL_GetVideoSurface(), 0, 0, background, view.x, view.y, view.w,
-				view.h);
+void Level::renderLayer(int layer) {
 	for(int y=0;y<height;y++){
 		for(int x=0;x<width;x++){
 			tilelist[layer][x][y]->render(x,y);
 		}
 	}
+}
+
+void Level::render(SDL_Rect view) {
+	Tools::drawImage(SDL_GetVideoSurface(), 0, 0, background, view.x, view.y, view.w,
+				view.h);
+	renderLayer(BACKGROUND);
+	renderLayer(MAIN);
+	player->render();
+	SDL_FillRect(SDL_GetVideoSurface(),&testrec,SDL_MapRGB(SDL_GetVideoSurface()->format,128,132,0));
+	renderLayer(FOREGROUND);
+
+}
+
+void Level::logic() {
+	int px,py;
+	px = player->getX();
+	py = player->getY();
+
+	if ((py+64>testrec.y && py<testrec.y+testrec.h && px +32 > testrec.x && px <testrec.x + testrec.w)){
+		if(player->getSpeedY()<0){
+			player->setY(testrec.y+testrec.h);
+			player->setSpeedY(0);
+			cout << "bottom"<< endl;
+		}else if(player->getSpeedY()>0){
+			player->setY(testrec.y-player->getImage()->clip_rect.h);
+			player->setSpeedY(0);
+			cout << "top"<< endl;
+		}
+		if(player->getSpeedX()>0){
+			player->setSpeedX(0);
+			player->setX(testrec.x-player->getImage()->clip_rect.w);
+			cout << "left"<< endl;
+		}
+		if(player->getSpeedX()<0){
+			player->setX(testrec.x+testrec.w);
+			player->setSpeedX(0);
+			cout << "right"<< endl;
+		}
+
+
+	}
+
+player->move();
+
+
 }

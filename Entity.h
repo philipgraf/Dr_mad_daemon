@@ -154,6 +154,10 @@ public:
 	void setY(int y) {
 		this->y = y;
 	}
+
+	const SDL_Surface* getImage() const {
+		return image;
+	}
 };
 
 #endif /* ENTITY_H_ */

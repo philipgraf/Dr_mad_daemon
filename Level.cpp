@@ -32,7 +32,13 @@ Level::Level(string lname) {
 			for(int x=0;x<width;x++){
 				int id;
 				filestream >> id;
+				if(id==-1){
+					player->setX(x*TILESIZE);
+					player->setY(y*TILESIZE);
+					id=0;
+				}
 				tilelist[i][x][y]= new Tile(id);
+
 			}
 		}
 		char ch;

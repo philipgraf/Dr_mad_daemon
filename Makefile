@@ -6,6 +6,10 @@ OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = DrInSane
 
 
+TEST_DIR = Tests\
+TEST_SOURCES = TestTile.cpp
+
+
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)

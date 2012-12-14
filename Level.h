@@ -32,7 +32,7 @@ private:
 	int gravity;
 	int time;
 
-	SDL_Rect testrec={100,300,32,32};
+	SDL_Rect testrec;
 
 	void renderLayer(int layer);
 	

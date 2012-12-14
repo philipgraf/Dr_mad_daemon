@@ -5,6 +5,10 @@ Level::Level(string lname) {
 	width=height=gravity=time=0;
 	tilelist=NULL;
 	background=NULL;
+	testrec.h=32;
+	testrec.w=32;
+	testrec.x=100;
+	testrec.y=300;
 	player = new Entity("img/player.png", WIDTH/2, HEIGHT - 64 - 20);
 	fstream filestream;
 	string background;

@@ -1,8 +1,8 @@
 CC=g++
 CFLAGS = -c -Wall -O0 -g
 LDFLAGS = -lSDL -lSDL_image -lSDL_ttf
-SOURCES = Entity.cpp Event.cpp Game.cpp main.cpp Tools.cpp Level.cpp Tile.cpp
-HEADERS = Entity.h Event.h Game.h Tools.h Level.h Tile.h define.h
+SOURCES = Entity.cpp Event.cpp Game.cpp Tools.cpp Level.cpp Tile.cpp
+HEADERS = $(SOURCES:.cpp=.h) define.h
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = DrInSane
 
@@ -19,12 +19,12 @@ TEST_EXECUTABLE = $(TEST_DIR)/testrunner
 
 all: game test
 
-game: $(SOURCES) $(EXECUTABLE)
+game:$(HEADERS) $(SOURCES) $(EXECUTABLE) 
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $@ $(LDFLAGS) 
+	$(CC) $(OBJECTS) main.cpp -o $@ $(LDFLAGS) 
 
-.cpp.o:
+$(SOURCES):
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
@@ -42,7 +42,7 @@ runTest: $(TEST_EXECUTABLE)
 test: $(TEST_DS) $(TEST_EXECUTABLE)
 
 
-$(TEST_EXECUTABLE): $(TEST_OBJECTS)
-	$(CC) $(TEST_OBJECTS) -o $@ $(TEST_LDFLAGS)
+$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(OBJECTS)
+	$(CC) $(TEST_OBJECTS) $(OBJECTS) -o $@ $(TEST_LDFLAGS)
 
 

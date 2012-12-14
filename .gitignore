@@ -4,3 +4,4 @@ Debug/
 *.o
 DrInSane
 /Dr_In_Sane.dia.autosave
+Tests/testrunner

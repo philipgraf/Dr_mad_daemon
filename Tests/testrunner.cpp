@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 	CompilerOutputter outputter(&result, stdCOut());
 	outputter.write();
 
-	ofstream xmlFile("Tests/data/cpptestresults.xml");
+	ofstream xmlFile("data/cpptestresults.xml");
 	XmlOutputter xmlOut(&result, xmlFile);
 	xmlOut.write();
 

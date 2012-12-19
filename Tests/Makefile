@@ -1,7 +1,7 @@
 include ../source.mk
 include ../flags.mk
 
-TSOURCES = $(addprefix ../,$(SOURCES)) TileTest.cpp ToolsTest.cpp testrunner.cpp
+TSOURCES = $(addprefix ../,$(SOURCES)) TileTest.cpp testrunner.cpp
 
 COVFILE = app.info
 COVDIR = coverage

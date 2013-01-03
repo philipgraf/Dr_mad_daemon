@@ -1,3 +1,6 @@
+
+#include "includes.h"
+
 #ifndef _LEVEL_H_
 #define _LEVEL_H_
 
@@ -6,14 +9,6 @@
 #define	MAIN 1
 #define	FOREGROUND 2
 
-
-#include "Tile.h"
-#include "Tools.h"
-#include "Entity.h"
-
-#include <fstream>
-#include <iostream>
-#include <SDL/SDL.h>
 
 using namespace std;
 
@@ -31,8 +26,8 @@ private:
 	int height;
 	int gravity;
 	int time;
+	Camera* mainCam;
 
-	SDL_Rect testrec;
 
 	void renderLayer(int layer);
 	
@@ -45,12 +40,22 @@ public:
 	int getTime() const;
 	void setTime(int time);
 	int getTileID(int x,int y,int layer=1);
-	void render(SDL_Rect view);
+	void render();
 	void logic();
 
 
 	Entity*& getPlayer() {
 		return player;
+	}
+
+	int getHeight() const
+	{
+		return height;
+	}
+
+	int getWidth() const
+	{
+		return width;
 	}
 };
 

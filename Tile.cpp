@@ -3,13 +3,14 @@
 int tileconf[]={6,1,1,1,1,1,1}; //definiert Anzahl der Frames; Index [0] = Anzahl der Tiles
 SDL_Surface *Tile::tileset;
 
-Tile::Tile(int id) {
-	this->id = id;
+Tile::Tile(u_int64_t id) {
+	this->id = id & 0xFFFFFFFF;
+	this->flags= id & 0xFFFFFFFFFFFFFFFFFFFFFFFF00000000;
 	currentframe = 0;
 }
 
-void Tile::render(int x, int y) {
-	Tools::drawImage(SDL_GetVideoSurface(),x*TILESIZE,y*TILESIZE,tileset,currentframe*TILESIZE,id*TILESIZE);
+void Tile::render(int x, int y, SDL_Rect view) {
+	Tools::drawImage(SDL_GetVideoSurface(),x*TILESIZE-view.x,y*TILESIZE-view.y,tileset,currentframe*TILESIZE,id*TILESIZE);
 }
 
 void Tile::nextFrame() {

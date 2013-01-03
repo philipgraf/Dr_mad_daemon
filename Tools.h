@@ -8,11 +8,7 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
 
-#include "define.h"
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <string>
-#include <iostream>
+#include "includes.h"
 
 using namespace std;
 

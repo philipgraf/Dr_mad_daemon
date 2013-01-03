@@ -2,8 +2,8 @@
 #define DEFINE_H_
 
 
-#define WIDTH 1280
-#define HEIGHT 768
+#define WIDTH 800
+#define HEIGHT 600
 #define FPS 60
 #define TILESIZE 32
 

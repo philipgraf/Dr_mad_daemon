@@ -5,6 +5,8 @@
  *      Author: medi
  */
 
+#include "includes.h"
+
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
@@ -13,11 +15,7 @@
 #define DOWN 0x04
 #define LEFT 0x08
 
-#include "define.h"
-#include "Tools.h"
-#include <SDL/SDL.h>
-#include <string>
-#include <vector>
+
 
 using namespace std;
 
@@ -26,9 +24,14 @@ class Entity {
 private:
 	SDL_Surface * image;
 	bool alive;
+	int currentframe;
+
 	int flags;
 	int x;
 	int y;
+	int width;
+	int height;
+
 	Uint8 direction;
 	float speedX;
 	float speedY;
@@ -43,7 +46,7 @@ private:
 public:
 	static vector<Entity*> entityList;
 	Entity();
-	Entity(string imagename,int x,int y);
+	Entity(string imagename,int w, int h);
 	virtual ~Entity();
 
 	void move();
@@ -52,6 +55,15 @@ public:
 
 
 	//----------------------------------- Getter and Setter ------------------------------
+
+	SDL_Rect getCurFrameRect(){
+		SDL_Rect rect;
+		rect.x = currentframe*width;
+		rect.y = 0; // TODO: Animation
+		rect.h = height;
+		rect.w = width;
+		return rect;
+	}
 
 	float getAccelX() const {
 		return accelX;
@@ -155,8 +167,32 @@ public:
 		this->y = y;
 	}
 
-	const SDL_Surface* getImage() const {
+	SDL_Surface* getImage() {
 		return image;
+	}
+
+	int getCurrentframe() const {
+		return currentframe;
+	}
+
+	void setCurrentframe(int currentframe) {
+		this->currentframe = currentframe;
+	}
+
+	int getHeight() const {
+		return height;
+	}
+
+	void setHeight(int height) {
+		this->height = height;
+	}
+
+	int getWidth() const {
+		return width;
+	}
+
+	void setWidth(int width) {
+		this->width = width;
 	}
 };
 

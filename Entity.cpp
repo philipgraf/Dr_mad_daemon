@@ -12,13 +12,16 @@ Entity::Entity() {
 	// TODO Auto-generated constructor stub
 
 }
-Entity::Entity(string imagename, int x, int y) {
+Entity::Entity(string imagename, int w,int h) {
 	image = Tools::loadImage(imagename);
 	alive = true;
 	flags = 0;
+	currentframe=0;
 	direction = 0;
 	this->x = x;
 	this->y = y;
+	width = w;
+	height = h;
 	accelX = 1.1;
 	accelY = 1.1;
 	breakX = 1.5;
@@ -26,6 +29,7 @@ Entity::Entity(string imagename, int x, int y) {
 	maxSpeedY = (float) TILESIZE/4;
 	speedX = 0.0;
 	speedY = 0.0;
+	entityList.push_back(this);
 }
 
 // FIXME better move algorithm needed
@@ -68,19 +72,18 @@ void Entity::move() {
 		x=0;
 		speedX=0;
 	}
-	else if(x>WIDTH-32){
-		x=WIDTH-32;
+	else if(x>(Game::curGame->getCurrentLevel()->getWidth())*TILESIZE-width){
+		x=(Game::curGame->getCurrentLevel()->getWidth())*TILESIZE-width;
 		speedX=0;
 	}
 
 }
 
 Entity::~Entity() {
-	// TODO Auto-generated destructor stub
 }
 
 
 void Entity::render() {
-	Tools::drawImage(SDL_GetVideoSurface(), x, y, image, 0, 0, 32, 64);
+
 }
 

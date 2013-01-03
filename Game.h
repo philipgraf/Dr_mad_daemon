@@ -5,18 +5,12 @@
  *      Author: philip
  */
 
+#include "includes.h"
+
 #ifndef GAME_H_
 #define GAME_H_
 
 
-#include "Event.h"
-#include "define.h"
-#include "Tools.h"
-#include "Entity.h"
-#include "Level.h"
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
-#include <iostream>
 
 #define SIZE(x) (sizeof(x)/sizeof(x[0]))
 
@@ -25,10 +19,12 @@ using namespace std;
 
 class Game: public Event {
 	typedef void (Game::*fptr)();
+public:
+	static Game *curGame;
 private:
 	bool running;
 	SDL_Surface * display;
-	SDL_Rect view;
+
 	TTF_Font *menufont;
 	vector<fptr> labelactions;
 
@@ -59,6 +55,11 @@ public:
 	}
 
 	void onExit();
+
+	Level* getCurrentLevel(){
+		return currentLevel;
+	}
+
 
 
 };

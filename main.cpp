@@ -1,8 +1,4 @@
-#include <iostream>
-#include "Game.h"
-
-
-
+#include "includes.h"
 using namespace std;
 
 

@@ -24,6 +24,7 @@ SDL_Surface * Tools::loadImage(string filename) {
 	return ret;
 }
 
+// TODO: deprecated
 bool Tools::drawImage(SDL_Surface* dstSurface, int dstX, int dstY,
 		SDL_Surface* srcSurface, int srcX, int srcY, int width, int height) {
 	if (dstSurface == NULL || srcSurface == NULL) {

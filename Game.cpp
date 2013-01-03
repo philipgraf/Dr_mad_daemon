@@ -6,17 +6,14 @@
  */
 
 #include "Game.h"
-#include "Tile.h"
-#include "Level.h"
+
+Game* Game::curGame;
 
 Game::Game() {
 	running = false;
+	curGame=this;
 	display = NULL;
 	menufont = NULL;
-	view.x = 0;
-	view.y = 0;
-	view.w = WIDTH;
-	view.h = HEIGHT;
 	currentLevel=NULL;
 }
 Game::~Game() {
@@ -65,6 +62,7 @@ void Game::init() {
 		Tools::error("unable to load menufont");
 	}
 	Tile::loadTileset();
+
 	currentLevel = new Level();
 }
 
@@ -77,7 +75,7 @@ void Game::logic() {
 }
 
 void Game::render() {
-	currentLevel->render(view);
+	currentLevel->render();
 	SDL_Flip(display);
 }
 
@@ -98,6 +96,18 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	case SDLK_RIGHT:
 		currentLevel->getPlayer()->setDirection(RIGHT);
 		break;
+//	case SDLK_d:
+//		view.x += 50;
+//		break;
+//	case SDLK_a:
+//		view.x -= 50;
+//		break;
+//	case SDLK_w:
+//		view.y += 50;
+//		break;
+//	case SDLK_s:
+//		view.y -= 50;
+//		break;
 	default:
 		break;
 	}
@@ -123,9 +133,11 @@ void Game::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 }
 
 void Game::cleanUp() {
+	Entity::entityList.clear();
 	SDL_FreeSurface(display);
 	SDL_Quit();
 }
+
 
 void Game::onExit() {
 	running = false;

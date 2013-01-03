@@ -115,9 +115,9 @@ void Level::render() {
 }
 
 void Level::logic() {
-	int px,py;
-	px = player->getX();
-	py = player->getY();
+//	int px,py;
+//	px = player->getX();
+//	py = player->getY();
 
 //	if ((py+64>testrec.y && py<testrec.y+testrec.h && px +32 > testrec.x && px <testrec.x + testrec.w)){
 //		if(player->getSpeedY()<0){

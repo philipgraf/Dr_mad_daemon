@@ -21,7 +21,27 @@ public:
 	void nextFrame();
 	static void loadTileset();
 
-	Uint64 getId() const {return id;}
+	u_int16_t getId() const {return id;}
+
+	int getCurrentframe() const
+	{
+		return currentframe;
+	}
+
+	void setCurrentframe(int currentframe)
+	{
+		this->currentframe = currentframe;
+	}
+
+	u_int64_t getFlags() const
+	{
+		return flags;
+	}
+
+	void setFlags(u_int64_t flags)
+	{
+		this->flags = flags;
+	}
 };
 
 #endif

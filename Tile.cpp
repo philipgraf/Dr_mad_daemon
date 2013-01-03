@@ -5,7 +5,7 @@ SDL_Surface *Tile::tileset;
 
 Tile::Tile(u_int64_t id) {
 	this->id = id & 0xFFFFFFFF;
-	this->flags= id & 0xFFFFFFFFFFFFFFFFFFFFFFFF00000000;
+	this->flags= (id - this->id) >> 16;
 	currentframe = 0;
 }
 

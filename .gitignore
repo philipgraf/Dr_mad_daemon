@@ -7,3 +7,5 @@ DrInSane
 Tests/testrunner
 Tests/.cccc/
 .settings
+*.gcda
+*.gcno

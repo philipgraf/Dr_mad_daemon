@@ -151,7 +151,7 @@ void Camera::drawBackground() {
 
 	if(cameraMode== STICKY){
 		// center background behind level and move it with half speed
-		SDL_Rect destRect = {lWidth/2-bgWidth/2+x/3,lHeight/2-bgHeight/2+y/3,curLevel->getBackground()->clip_rect.w,curLevel->getBackground()->clip_rect.h};
+		SDL_Rect destRect = {lWidth/2-bgWidth/2-x/2,lHeight/2-bgHeight/2-y/2,curLevel->getBackground()->clip_rect.w,curLevel->getBackground()->clip_rect.h};
 		SDL_BlitSurface(curLevel->getBackground(),NULL,SDL_GetVideoSurface(),&destRect);
 	}else{
 		Tools::drawImage(SDL_GetVideoSurface(), 0, 0, Game::curGame->getCurrentLevel()->getBackground(), x, y, width,height);

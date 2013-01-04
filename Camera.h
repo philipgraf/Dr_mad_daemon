@@ -10,6 +10,12 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
+
+#define	BACKGROUND 0
+#define	MAIN 1
+#define	FOREGROUND 2
+
+
 class Camera {
 public:
 	enum{
@@ -24,6 +30,10 @@ private:
 	int height;
 	Entity *target;
 	mode cameraMode;
+
+	void drawEntities();
+	void drawTiles(int layer);
+	void drawBackground();
 
 public:
 	Camera(Entity* target, int w=WIDTH, int h=HEIGHT);

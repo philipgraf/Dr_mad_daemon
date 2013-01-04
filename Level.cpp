@@ -55,7 +55,6 @@ Level::Level(string lname) {
 	filestream.close();
 
 	mainCam = new Camera(player);
-
 }
 
 Level::~Level() {
@@ -95,22 +94,12 @@ int Level::getTileID(int x, int y, int layer) {
 	return tilelist[layer][x][y]->getId();
 }
 
-void Level::renderLayer(int layer) {
-	for(int y=0;y<height;y++){
-		for(int x=0;x<width;x++){
-			tilelist[layer][x][y]->render(x,y,mainCam->getRect());
-		}
-	}
-}
+
 
 void Level::render() {
-	Tools::drawImage(SDL_GetVideoSurface(), 0, 0, background, mainCam->getX()/2, mainCam->getY()/2, mainCam->getWidth(),
-				mainCam->getHeight());
-	renderLayer(BACKGROUND);
-	renderLayer(MAIN);
+
+
 	mainCam->drawImage();
-	//player->render();
-	renderLayer(FOREGROUND);
 
 }
 
@@ -140,9 +129,17 @@ void Level::logic() {
 //			cout << "right"<< endl;
 //		}
 //	}
+	for(int layer=0;layer<3;layer++){
+		for(int y=0;y<height;y++){
+			for(int x=0;x<width;x++){
+				tilelist[layer][x][y]->logic();
+			}
+		}
+	}
 
 	player->move();
 	mainCam->logic();
+
 
 
 }

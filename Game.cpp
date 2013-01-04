@@ -72,7 +72,7 @@ void Game::init() {
 		Tools::error("unable to initialize SDL");
 	}
 
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF )) == NULL) {
 		Tools::error("unable to initialize display");
 	}
 	SDL_WM_SetCaption("Dr. In Sane",NULL);

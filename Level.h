@@ -5,9 +5,7 @@
 #define _LEVEL_H_
 
 
-#define	BACKGROUND 0
-#define	MAIN 1
-#define	FOREGROUND 2
+
 
 
 using namespace std;
@@ -44,7 +42,7 @@ public:
 	void logic();
 
 
-	Entity*& getPlayer() {
+	Entity* getPlayer() {
 		return player;
 	}
 
@@ -56,6 +54,16 @@ public:
 	int getWidth() const
 	{
 		return width;
+	}
+
+	Tile**** getTilelist() const
+	{
+		return tilelist;
+	}
+
+	SDL_Surface* getBackground() const
+	{
+		return background;
 	}
 };
 

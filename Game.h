@@ -28,7 +28,7 @@ private:
 	TTF_Font *menufont;
 	vector<fptr> labelactions;
 
-	Level *currentLevel; // TODO only for testing
+	Level *currentLevel;
 
 public:
 	Game();

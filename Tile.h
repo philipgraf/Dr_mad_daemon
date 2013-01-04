@@ -13,15 +13,23 @@ private:
 	u_int16_t id;
 	u_int64_t flags;
 	int currentframe;
-	static SDL_Surface *tileset;
+	void nextFrame();
+
 
 public:
+	static SDL_Surface *tileset;
 	Tile(u_int64_t id=0);
-	void render(int x,int y, SDL_Rect view);
-	void nextFrame();
 	static void loadTileset();
 
-	u_int16_t getId() const {return id;}
+	void logic();
+
+
+
+
+	//-------------------------GETTER AND SETTER ------------------------------------------//
+	u_int16_t getId() const {
+		return id;
+	}
 
 	int getCurrentframe() const
 	{

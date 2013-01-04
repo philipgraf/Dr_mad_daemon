@@ -10,7 +10,7 @@
 
 #include "includes.h"
 
-class DISException: public std::exception {
+class DISException{
 public:
 	DISException();
 	virtual ~DISException();

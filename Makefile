@@ -16,7 +16,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) main.cpp -o $@ $(LDFLAGS) 
 
 $(SOURCES):
-	$(CC) $(CFLAGS) $< -o $@ $(CFLAGS)  
+	$(CC) $< -o $@ $(CFLAGS)  
 
 clean:
 	$(RM) $(OBJECTS) $(EXECUTABLE) *.gcno *.gcda

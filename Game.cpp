@@ -26,18 +26,40 @@ int Game::execute() {
 
 	SDL_Event event;
 	Uint32 start;
-
+#ifdef DEBUG
+	int fps=0;
+	int fpstime=0;
+#endif
 	while (running) {
+#ifdef DEBUG
+		fps++;
+#endif
 		start = SDL_GetTicks();
+
+
 		while (SDL_PollEvent(&event)) {
 			onEvent(&event);
 		}
 		logic();
 		render();
 
+		#ifndef DEBUG
 		if (SDL_GetTicks() - start < 1000 / FPS) {
+
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
 		}
+		#else
+
+		if(SDL_GetTicks() - fpstime > 1000){
+			char buffer[10];
+			sprintf(buffer,"FPS: %d",fps);
+			SDL_WM_SetCaption(buffer,NULL);
+			fps=0;
+			fpstime = SDL_GetTicks();
+		}
+		#endif
+
+
 	}
 
 	cleanUp();
@@ -53,7 +75,7 @@ void Game::init() {
 	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
 		Tools::error("unable to initialize display");
 	}
-
+	SDL_WM_SetCaption("Dr. In Sane",NULL);
 	if (TTF_Init() < 0) {
 		Tools::error("unable to initialize TTF");
 	}

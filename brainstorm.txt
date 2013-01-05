@@ -1,9 +1,23 @@
+Tiles:
+	Mauer (Loch mit Augen,Graffiti,Tür, Fenster), 
+	Bildschirm, 
+	Laterne, 
+	Evil scientist lights, 
+	straßen bordstein mit gulli,
+	Mülltonnen,
+	Reagenzglässer (Destilatoren, Elktrozeug),
+	C1u6 M4t3 Flaschen :-),
+	
+
 Tile-Features:
 	wegschleudern,elektro,einbrechen, ...
+	
+	
 	
 enitityanimations:
 	beule am kopf ... muahahaha
 	
 	
+	
 TODO:
-	mapcreator, 		
+	mapcreator,

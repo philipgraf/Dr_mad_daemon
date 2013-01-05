@@ -7,6 +7,9 @@
 #include "Entity.h"
 
 vector<Entity*> Entity::entityList;
+//TODO: get from file and save NOT static in Entity class
+int actionframes[] = {1,4,4};
+
 
 Entity::Entity() {
 	// TODO Auto-generated constructor stub
@@ -17,6 +20,7 @@ Entity::Entity(string imagename, int w,int h) {
 	alive = true;
 	flags = 0;
 	currentframe=0;
+	action=ACTION_STAY;
 	direction = 0;
 	this->x = x;
 	this->y = y;
@@ -32,13 +36,22 @@ Entity::Entity(string imagename, int w,int h) {
 	entityList.push_back(this);
 }
 
+void Entity::nextframe() {
+	currentframe++;
+	if(currentframe >= actionframes[action]){
+		currentframe=0;
+	}
+}
+
 // FIXME better move algorithm needed
 void Entity::move() {
 	if ((direction & LEFT) && -maxSpeedX < speedX) {
 		speedX -= accelX;
+		action = ACTION_WALK_LEFT;
+
 	} else if ((direction & RIGHT) && maxSpeedX > speedX) {
 		speedX += accelX;
-
+		action = ACTION_WALK_RIGHT;
 	}
 
 	if ((direction & UP) && -maxSpeedY < speedY) {
@@ -59,11 +72,14 @@ void Entity::move() {
 		speedY /= accelY;
 	}
 
-	if(speedX>-1 && speedX<1)
+	if(speedX>-1 && speedX<1){
 		speedX=0;
+		action=ACTION_STAY;
+	}
 
-	if(speedY>-1 && speedY<1)
+	if(speedY>-1 && speedY<1){
 		speedY=0;
+	}
 
 	x +=(int)speedX;
 	y +=(int)speedY;
@@ -76,14 +92,11 @@ void Entity::move() {
 		x=(Game::curGame->getCurrentLevel()->getWidth())*TILESIZE-width;
 		speedX=0;
 	}
+	nextframe();
 
 }
 
 Entity::~Entity() {
 }
 
-
-void Entity::render() {
-
-}
 

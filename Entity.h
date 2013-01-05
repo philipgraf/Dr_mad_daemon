@@ -15,9 +15,17 @@
 #define DOWN 0x04
 #define LEFT 0x08
 
+#define ACTION_STAY 0
+#define ACTION_WALK_LEFT 1
+#define ACTION_WALK_RIGHT 2
+#define ACTION_JUMP_LEFT  3
+#define ACTION_JUMP_RIGHT 4
+#define ACTION_DUCK_LEFT 5
+#define ACTION_DUCK_RIGHT 6
 
 
 using namespace std;
+
 
 
 class Entity {
@@ -25,6 +33,9 @@ private:
 	SDL_Surface * image;
 	bool alive;
 	int currentframe;
+	int action;
+	//TODO: actionframes get from File ?!?
+
 
 	int flags;
 	int x;
@@ -41,6 +52,8 @@ private:
 	float accelY;
 	float breakX;
 
+	void nextframe();
+
 
 
 public:
@@ -51,7 +64,6 @@ public:
 
 	void move();
 
-	void render();
 
 
 	//----------------------------------- Getter and Setter ------------------------------
@@ -59,7 +71,7 @@ public:
 	SDL_Rect getCurFrameRect(){
 		SDL_Rect rect;
 		rect.x = currentframe*width;
-		rect.y = 0; // TODO: Animation
+		rect.y = action*height; // TODO: Animation
 		rect.h = height;
 		rect.w = width;
 		return rect;

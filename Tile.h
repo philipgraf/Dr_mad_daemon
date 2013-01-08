@@ -14,6 +14,7 @@ private:
 	u_int64_t flags;
 	int currentframe;
 	void nextFrame();
+	bool transparency;
 
 
 public:
@@ -49,6 +50,16 @@ public:
 	void setFlags(u_int64_t flags)
 	{
 		this->flags = flags;
+	}
+
+	bool isTransparency() const
+	{
+		return transparency;
+	}
+
+	void setTransparency(bool transparency)
+	{
+		this->transparency = transparency;
 	}
 };
 

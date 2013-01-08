@@ -8,6 +8,7 @@ Tile::Tile(u_int64_t id) {
 	this->id = id & 0xFFFFFFFF;
 	this->flags= (id - this->id) >> 16;
 	currentframe = 0;
+	transparency=false;
 }
 
 void Tile::nextFrame() {

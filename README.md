@@ -6,7 +6,7 @@
 ```C
 
 printf("hallo world");
-
+return 0;
 ```
 
 

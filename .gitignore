@@ -9,3 +9,5 @@ Tests/.cccc/
 .settings
 *.gcda
 *.gcno
+a.out
+Leveleditor/

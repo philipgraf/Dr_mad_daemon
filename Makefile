@@ -2,7 +2,7 @@ include source.mk
 
 include flags.mk
 
-HEADERS = $(SOURCES:.cpp=.h) define.h
+HEADERS = $(SOURCES:.cpp=.h) $(addprefix $(SRCDIR), define.h)
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = DrInSane
 
@@ -13,7 +13,7 @@ all: game
 game:$(HEADERS) $(SOURCES) $(EXECUTABLE) 
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(OBJECTS) main.cpp -o $@ $(LDFLAGS) 
+	$(CC) $(OBJECTS) $(SRCDIR)main.cpp -o $@ $(LDFLAGS) 
 
 $(SOURCES):
 	$(CC) -o $@ $(CFLAGS) 

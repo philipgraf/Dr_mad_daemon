@@ -27,13 +27,15 @@
 using namespace std;
 
 
-
+/**
+ * Entity Class all things you can interact with.
+ */
 class Entity {
 private:
-	SDL_Surface * image;
-	bool alive;
-	int currentframe;
-	int action;
+	SDL_Surface * image; /**< Image of the entity with all animationframes */
+	bool alive; /**< contain true if the entity is still alive and false if not */
+	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
+	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
 
 
@@ -58,6 +60,7 @@ private:
 
 public:
 	static vector<Entity*> entityList;
+
 	Entity();
 	Entity(string imagename,int w, int h);
 	virtual ~Entity();
@@ -68,6 +71,11 @@ public:
 
 	//----------------------------------- Getter and Setter ------------------------------
 
+
+	/**
+	 * Return the current animation picture of the entity
+	 * @return the current animation picture as SDL_Rect
+	 */
 	SDL_Rect getCurFrameRect(){
 		SDL_Rect rect;
 		rect.x = currentframe*width;
@@ -77,6 +85,9 @@ public:
 		return rect;
 	}
 
+	/**
+	 * return the acceleration
+	 */
 	float getAccelX() const {
 		return accelX;
 	}

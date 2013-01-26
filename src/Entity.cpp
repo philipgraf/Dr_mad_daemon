@@ -5,16 +5,26 @@
  */
 
 #include "Entity.h"
+#include <algorithm>
 
 vector<Entity*> Entity::entityList;
 //TODO: get from file and save NOT static in Entity class
 int actionframes[] = {1,4,4};
 
-
+/**
+ * currently do nothing
+ */
 Entity::Entity() {
 	// TODO Auto-generated constructor stub
 
 }
+
+/** Constuctor
+ * Set the given values an initial all other Entityvalues with default values
+ * @param imagename Name of the image which will be loaded and converted into a SDL_Surface
+ * @param w The width of the entity
+ * @param h The height of the entity
+ */
 Entity::Entity(string imagename, int w,int h) {
 	image = Tools::loadImage(imagename);
 	alive = true;
@@ -44,6 +54,10 @@ void Entity::nextframe() {
 }
 
 // FIXME better move algorithm needed
+/**
+ * handle player movement
+ * \todo better move algorithm needed
+ */
 void Entity::move() {
 	if ((direction & LEFT) && -maxSpeedX < speedX) {
 		speedX -= accelX;
@@ -97,6 +111,11 @@ void Entity::move() {
 }
 
 Entity::~Entity() {
+	SDL_FreeSurface(image);
+	std::vector<Entity*>::iterator pos;
+	if(( pos = std::find(entityList.begin(),entityList.end(),this))!=entityList.end()){
+		entityList.erase(pos);
+	}
 }
 
 

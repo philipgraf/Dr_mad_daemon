@@ -1,9 +1,25 @@
 \documentclass[paper=a4,ngerman]{scrartcl}
 
 \usepackage[utf8]{inputenc}
+\usepackage{listings}
 \usepackage{color}
 \usepackage{graphics}
-\usepackage{natbib}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green},
+  commentstyle=\itshape\color{magenta},
+  identifierstyle=\color{blue},
+  stringstyle=\color{yellow},
+}
+
+\lstset{escapechar=@,style=customc}
 \newcommand{\todo}[1]{{\small\color{blue}#1}}
 
 \title{Dr inSane}
@@ -29,11 +45,7 @@ $$ \frac{a}{b} + \frac{c}{b} = \frac{a+c}{b} $$
     E = mc^2
   \end{equation}
  \subsection{Player}
- \begin{figure}[h!]
-   \centering
-   \includegraphics{img/player.png}
-   \caption{Image for the Player}
- \end{figure}
+
  \subsection{blubb}
 \section{Zwei} 
 Dies ist der zweite sector 

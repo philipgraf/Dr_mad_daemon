@@ -20,7 +20,7 @@ void Tile::nextFrame() {
 }
 
 void Tile::loadTileset() {
-	tileset=Tools::loadImage("img/tiles.png");
+	tileset=Tools::loadImage(IMG"tiles.png");
 }
 
 void Tile::logic() {

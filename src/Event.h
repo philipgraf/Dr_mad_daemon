@@ -10,7 +10,10 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
-
+/**
+ * This Class handles all Input Events
+ * Maybe wii and SNES too
+ */
 class Event {
 public:
 	Event();

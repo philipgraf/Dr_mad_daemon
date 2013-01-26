@@ -21,6 +21,7 @@ Camera::Camera(Entity* target, int w, int h) {
 
 }
 
+
 Camera::Camera(int x, int y, int w, int h) {
 	this->target=NULL;
 	this->x=x;

@@ -9,15 +9,15 @@ Level::Level(string lname) {
 	background=NULL;
 
 	//TODO: get width and height dynamically
-	player = new Entity("img/player.png",32,64);
+	player = new Entity(IMG "player.png",32,64);
 	string background;
 
 	fstream filestream;
-	filestream.open(("levels/"+lname+".conf").c_str(),fstream::in);
+	filestream.open((LEVELS +lname+".conf").c_str(),fstream::in);
 	filestream >> name >> width >> height >> background >> gravity >> time;
 	filestream.close();
 
-	background = "img/"+background;
+	background = IMG +background;
 
 	this->background = Tools::loadImage(background);
 
@@ -31,7 +31,7 @@ Level::Level(string lname) {
 	}
 
 
-	filestream.open(("levels/"+lname+".map").c_str(),fstream::in);
+	filestream.open((LEVELS+lname+".map").c_str(),fstream::in);
 	for(int i=0;i<3;i++){
 		for(int y=0;y<height;y++){
 			for(int x=0;x<width;x++){
@@ -50,7 +50,7 @@ Level::Level(string lname) {
 		char ch;
 		filestream >> ch;
 		if(ch!=';')
-			Tools::error("Error loading mapfile:levels/"+lname+".map"); // TODO Throw Errorobjekt
+			Tools::error("Error loading mapfile:"LEVELS+lname+".map"); // TODO Throw Errorobjekt
 	}
 	filestream.close();
 

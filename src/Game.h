@@ -60,6 +60,10 @@ public:
 		return currentLevel;
 	}
 
+	void setCurrentLevel(Level *curLev){
+		currentLevel = curLev;
+	}
+
 
 
 };

@@ -5,7 +5,7 @@
  *      Author: philip
  */
 #include <cppunit/extensions/HelperMacros.h>
-#include "../Tile.h"
+#include "../src/Tile.h"
 
 
 class TileTest : public CppUnit::TestFixture {

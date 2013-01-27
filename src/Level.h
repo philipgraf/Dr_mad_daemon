@@ -10,6 +10,13 @@
 
 using namespace std;
 
+/** Level class.
+ * This class contain all Tiles, the name, the Background Image, the Player, absolute width and height in Tiles, the gravity and the time.
+ * All values loaded from file.
+ * @author Philip Graf
+ * @date 04.11.2012
+ * @version 0.0.1 Class create
+ */
 class Level {
 private:
 
@@ -17,13 +24,19 @@ private:
 	 * 3D Tilearray [0=bg,1=main,2=fg][x][y]
 	 */
 	Tile ****tilelist;
+	/**
+	 * the name of the Level.
+	 */
 	string name;
 	SDL_Surface *background;
+	b2World *world;
 	Entity* player; 
 	int width;
 	int height;
-	int gravity;
+	float gravity;
 	int time;
+	b2Vec2 *gravity2d;
+
 	Camera* mainCam;
 
 
@@ -64,6 +77,11 @@ public:
 	SDL_Surface* getBackground() const
 	{
 		return background;
+	}
+
+	b2World* getWorld() const
+	{
+		return world;
 	}
 };
 

@@ -11,6 +11,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
+#include <Box2D/Box2D.h>
 #include <iostream>
 #include <fstream>
 #include <string>

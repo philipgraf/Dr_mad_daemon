@@ -27,30 +27,26 @@
 using namespace std;
 
 
-
+/**
+ * Entity Class all things you can interact with.
+ */
 class Entity {
 private:
-	SDL_Surface * image;
-	bool alive;
-	int currentframe;
-	int action;
+	SDL_Surface * image; /**< Image of the entity with all animationframes */
+	bool alive; /**< contain true if the entity is still alive and false if not */
+	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
+	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
 
 
 	int flags;
-	int x;
-	int y;
-	int width;
-	int height;
+	float width;
+	float height;
+
+	b2Body *body;
+	b2FixtureDef *fixtureDef;
 
 	Uint8 direction;
-	float speedX;
-	float speedY;
-	float maxSpeedX;
-	float maxSpeedY;
-	float accelX;
-	float accelY;
-	float breakX;
 
 	void nextframe();
 
@@ -58,8 +54,9 @@ private:
 
 public:
 	static vector<Entity*> entityList;
+
 	Entity();
-	Entity(string imagename,int w, int h);
+	Entity(string imagename,float w, float h,int x, int y);
 	virtual ~Entity();
 
 	void move();
@@ -68,29 +65,18 @@ public:
 
 	//----------------------------------- Getter and Setter ------------------------------
 
+
+	/**
+	 * Return the current animation picture of the entity
+	 * @return the current animation picture as SDL_Rect
+	 */
 	SDL_Rect getCurFrameRect(){
 		SDL_Rect rect;
-		rect.x = currentframe*width;
-		rect.y = action*height; // TODO: Animation
-		rect.h = height;
-		rect.w = width;
+		rect.x = currentframe*width*TILESIZE;
+		rect.y = action*height*TILESIZE; // TODO: Animation
+		rect.h = height*TILESIZE;
+		rect.w = width*TILESIZE;
 		return rect;
-	}
-
-	float getAccelX() const {
-		return accelX;
-	}
-
-	void setAccelX(float accelX) {
-		this->accelX = accelX;
-	}
-
-	float getAccelY() const {
-		return accelY;
-	}
-
-	void setAccelY(float accelY) {
-		this->accelY = accelY;
 	}
 
 	bool isAlive() const {
@@ -99,14 +85,6 @@ public:
 
 	void setAlive(bool alive) {
 		this->alive = alive;
-	}
-
-	float getBreakX() const {
-		return breakX;
-	}
-
-	void setBreakX(float breakX) {
-		this->breakX = breakX;
 	}
 
 	Uint8 getDirection() const {
@@ -131,52 +109,13 @@ public:
 		this->flags = flags;
 	}
 
-	float getMaxSpeedX() const {
-		return maxSpeedX;
+	//TODO replace
+	float getX() const {
+		return body->GetPosition().x;
 	}
 
-	void setMaxSpeedX(float maxSpeedX) {
-		this->maxSpeedX = maxSpeedX;
-	}
-
-	float getMaxSpeedY() const {
-		return maxSpeedY;
-	}
-
-	void setMaxSpeedY(float maxSpeedY) {
-		this->maxSpeedY = maxSpeedY;
-	}
-
-	float getSpeedX() const {
-		return speedX;
-	}
-
-	void setSpeedX(float speedX) {
-		this->speedX = speedX;
-	}
-
-	float getSpeedY() const {
-		return speedY;
-	}
-
-	void setSpeedY(float speedY) {
-		this->speedY = speedY;
-	}
-
-	int getX() const {
-		return x;
-	}
-
-	void setX(int x) {
-		this->x = x;
-	}
-
-	int getY() const {
-		return y;
-	}
-
-	void setY(int y) {
-		this->y = y;
+	float getY() const {
+		return body->GetPosition().y;
 	}
 
 	SDL_Surface* getImage() {
@@ -205,6 +144,11 @@ public:
 
 	void setWidth(int width) {
 		this->width = width;
+	}
+
+	b2Body* getBody()
+	{
+		return body;
 	}
 };
 

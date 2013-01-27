@@ -75,12 +75,12 @@ void Game::init() {
 	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF )) == NULL) {
 		Tools::error("unable to initialize display");
 	}
-	SDL_WM_SetCaption("Dr. In Sane",NULL);
+	SDL_WM_SetCaption(TITLE,NULL);
 	if (TTF_Init() < 0) {
 		Tools::error("unable to initialize TTF");
 	}
 
-	if ((menufont = TTF_OpenFont("fonts/menu.ttf", 50)) == NULL) {
+	if ((menufont = TTF_OpenFont(FONTS "menu.ttf", 50)) == NULL) {
 		Tools::error("unable to load menufont");
 	}
 	Tile::loadTileset();
@@ -118,18 +118,6 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	case SDLK_RIGHT:
 		currentLevel->getPlayer()->setDirection(RIGHT);
 		break;
-//	case SDLK_d:
-//		view.x += 50;
-//		break;
-//	case SDLK_a:
-//		view.x -= 50;
-//		break;
-//	case SDLK_w:
-//		view.y += 50;
-//		break;
-//	case SDLK_s:
-//		view.y -= 50;
-//		break;
 	default:
 		break;
 	}

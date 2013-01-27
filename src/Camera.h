@@ -60,7 +60,7 @@ public:
 	 * @param w The width of the camera
 	 * @parma h The Height of the camera
 	 */
-	Camera(int x=0,int y=0, int w=WIDTH, int h=HEIGHT);
+	Camera(float x=0,float y=0, int w=WIDTH, int h=HEIGHT);
 	virtual ~Camera();
 
 	void logic();

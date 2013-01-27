@@ -5,10 +5,11 @@ int tileconf[]={8,1,1,1,1,1,1,9,1}; //definiert Anzahl der Frames; Index [0] = A
 SDL_Surface *Tile::tileset;
 
 Tile::Tile(u_int64_t id) {
-	this->id = id & 0xFFFFFFFF;
-	this->flags= (id - this->id) >> 16;
+	this->id = id & 0xFFFF;
+	this->flags= id >> 16;
 	currentframe = 0;
 	transparency=false;
+
 }
 
 void Tile::nextFrame() {

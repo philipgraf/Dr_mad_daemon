@@ -29,11 +29,14 @@ private:
 	 */
 	string name;
 	SDL_Surface *background;
+	b2World *world;
 	Entity* player; 
 	int width;
 	int height;
-	int gravity;
+	float gravity;
 	int time;
+	b2Vec2 *gravity2d;
+
 	Camera* mainCam;
 
 
@@ -74,6 +77,11 @@ public:
 	SDL_Surface* getBackground() const
 	{
 		return background;
+	}
+
+	b2World* getWorld() const
+	{
+		return world;
 	}
 };
 

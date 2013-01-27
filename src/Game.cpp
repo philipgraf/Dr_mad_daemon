@@ -118,18 +118,6 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	case SDLK_RIGHT:
 		currentLevel->getPlayer()->setDirection(RIGHT);
 		break;
-//	case SDLK_d:
-//		view.x += 50;
-//		break;
-//	case SDLK_a:
-//		view.x -= 50;
-//		break;
-//	case SDLK_w:
-//		view.y += 50;
-//		break;
-//	case SDLK_s:
-//		view.y -= 50;
-//		break;
 	default:
 		break;
 	}

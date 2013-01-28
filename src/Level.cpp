@@ -62,6 +62,27 @@ Level::Level(string lname) {
 			Tools::error("Error loading mapfile:"LEVELS + lname + ".map"); // TODO Throw Errorobjekt
 	}
 	filestream.close();
+//
+//	b2BodyDef groundBodyDef;
+//	groundBodyDef.fixedRotation = true;
+//	groundBodyDef.position.Set(0, 16);
+//	b2Body* groundBody = world->CreateBody(&groundBodyDef);
+//
+//	b2ChainShape ground;
+//
+//	b2Vec2 v[6];
+//	v[0].Set(0,0);
+//	v[1].Set(13,0);
+//	v[2].Set(13,-2);
+//	v[3].Set(15,-2);
+//	v[4].Set(15,0);
+//	v[5].Set(24,0);
+//
+//	ground.CreateChain(v,6);
+//
+//
+//
+//	groundBody->CreateFixture(&ground,0.0f);
 
 	mainCam = new Camera(player);
 }

@@ -37,6 +37,8 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	width = w;
 	height = h;
 
+	ground = true; //TODO test only
+
 	b2BodyDef bodydef;
 	bodydef.type = b2_dynamicBody;
 	bodydef.fixedRotation = true;
@@ -49,7 +51,7 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
 	fixtureDef->density = 35.0f;
-	fixtureDef->friction = 0.5f;
+	fixtureDef->friction = 1.0f;
 
 	body->CreateFixture(fixtureDef);
 
@@ -71,22 +73,29 @@ void Entity::nextframe() {
 void Entity::move() {
 
 	if (direction & LEFT) {
-		b2Vec2 vel = body->GetLinearVelocity();
 
-		vel.x -= 0.5;
-		body->SetLinearVelocity(vel);
+		body->ApplyLinearImpulse(b2Vec2(-15, 0), body->GetWorldCenter());
 		action = ACTION_WALK_LEFT;
+
 	}
 	if (direction & RIGHT) {
 		b2Vec2 vel = body->GetLinearVelocity();
-		vel.x += 0.5;
-		body->SetLinearVelocity(vel);
+
+		body->ApplyLinearImpulse(b2Vec2(15, 0), body->GetWorldCenter());
 		action = ACTION_WALK_RIGHT;
+
 	}
 	if (direction & UP) {
-		b2Vec2 vel = body->GetLinearVelocity();
-		vel.y -= 0.5;
-		body->SetLinearVelocity(vel);
+//		b2Vec2 vel = body->GetLinearVelocity();
+//		vel.y = -7;
+//		body->SetLinearVelocity(vel);
+		//	body->ApplyForce(b2Vec2(0.0f,-500.0f),body->GetWorldCenter());
+		if (body->GetContactList() != NULL) {
+			float impulse = body->GetMass();
+			body->ApplyLinearImpulse(b2Vec2(0, -impulse),
+					body->GetWorldCenter());
+
+		}
 		//action = ACTION_JUMP_LEFT;
 	}
 	nextframe();

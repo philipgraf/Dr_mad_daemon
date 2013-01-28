@@ -78,7 +78,7 @@ void Camera::drawEntities() {
 		if (curEntity->isAlive()) {
 			// if entcurEntityy left of camera
 			if (curEntity->getX() * TILESIZE
-					+ curEntity->getImage()->clip_rect.w < x) {
+					+ curEntity->getImage()->clip_rect.w/2 < x) {
 				continue;
 			}
 			// if entcurEntityy right of camera

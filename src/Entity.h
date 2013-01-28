@@ -43,6 +43,8 @@ private:
 	float width;
 	float height;
 
+	bool ground; //TODO test only
+
 	b2Body *body;
 	b2FixtureDef *fixtureDef;
 
@@ -130,19 +132,19 @@ public:
 		this->currentframe = currentframe;
 	}
 
-	int getHeight() const {
+	float getHeight() const {
 		return height;
 	}
 
-	void setHeight(int height) {
+	void setHeight(float height) {
 		this->height = height;
 	}
 
-	int getWidth() const {
+	float getWidth() const {
 		return width;
 	}
 
-	void setWidth(int width) {
+	void setWidth(float width) {
 		this->width = width;
 	}
 

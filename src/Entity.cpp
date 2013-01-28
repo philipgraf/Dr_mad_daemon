@@ -4,8 +4,9 @@
  *      Author: medi
  */
 
+//#include <algorithm>
+
 #include "Entity.h"
-#include <algorithm>
 
 vector<Entity*> Entity::entityList;
 //TODO: get from file and save NOT static in Entity class

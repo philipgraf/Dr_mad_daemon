@@ -4,11 +4,18 @@
  *  Created on: 27.09.2012
  *      Author: medi
  */
-
-#include "includes.h"
-
 #ifndef ENTITY_H_
 #define ENTITY_H_
+
+#include <vector>
+#include <string>
+#include <SDL/SDL.h>
+#include <Box2D/Box2D.h>
+
+#include "define.h"
+//TODO REMOVE!!!!!!!!!
+#include "Tools.h"
+#include "Game.h"
 
 #define UP 0x01
 #define RIGHT 0x02

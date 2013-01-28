@@ -1,12 +1,14 @@
-
-#include "includes.h"
-
 #ifndef _LEVEL_H_
 #define _LEVEL_H_
 
+#include <string>
+#include <fstream>
+#include <Box2D/Box2D.h>
 
-
-
+#include "Tile.h"
+#include "Entity.h"
+#include "Camera.h"
+#include "Game.h"
 
 using namespace std;
 

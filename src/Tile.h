@@ -1,8 +1,9 @@
-
-#include "includes.h"
-
 #ifndef _TILE_H_
 #define _TILE_H_
+
+#include <SDL/SDL.h>
+
+#include "Tools.h"
 
 #define TF_START 0x10000
 #define TF_FINISH 0x20000

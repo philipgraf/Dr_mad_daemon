@@ -4,12 +4,12 @@
  *  Created on: 03.01.2013
  *      Author: philip
  */
-
-#include "includes.h"
-
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
+#include <SDL/SDL.h>
+
+#include "Entity.h"
 
 #define	BACKGROUND 0
 #define	MAIN 1

@@ -4,11 +4,10 @@
  *  Created on: 10.09.2012
  *      Author: philip
  */
-
-#include "includes.h"
-
 #ifndef EVENT_H_
 #define EVENT_H_
+
+#include <SDL/SDL.h>
 
 /**
  * This Class handles all Input Events

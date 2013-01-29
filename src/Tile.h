@@ -1,12 +1,12 @@
-
-#include "includes.h"
-
 #ifndef _TILE_H_
 #define _TILE_H_
 
+#include <SDL/SDL.h>
+
+#include "Tools.h"
+
 #define TF_START 0x10000
 #define TF_FINISH 0x20000
-
 
 class Tile {
 private:
@@ -16,51 +16,27 @@ private:
 	void nextFrame();
 	bool transparency;
 
-
 public:
 	static SDL_Surface *tileset;
-	Tile(u_int64_t id=0);
+	Tile(u_int64_t id = 0);
 	static void loadTileset();
 
 	void logic();
 
-
-
-
 	//-------------------------GETTER AND SETTER ------------------------------------------//
-	u_int16_t getId() const {
-		return id;
-	}
+	u_int16_t getId() const;
 
-	int getCurrentframe() const
-	{
-		return currentframe;
-	}
+	int getCurrentframe() const;
 
-	void setCurrentframe(int currentframe)
-	{
-		this->currentframe = currentframe;
-	}
+	void setCurrentframe(int currentframe);
 
-	u_int64_t getFlags() const
-	{
-		return flags;
-	}
+	u_int64_t getFlags() const;
 
-	void setFlags(u_int64_t flags)
-	{
-		this->flags = flags;
-	}
+	void setFlags(u_int64_t flags);
 
-	bool isTransparency() const
-	{
-		return transparency;
-	}
+	bool isTransparency() const;
 
-	void setTransparency(bool transparency)
-	{
-		this->transparency = transparency;
-	}
+	void setTransparency(bool transparency);
 };
 
 #endif

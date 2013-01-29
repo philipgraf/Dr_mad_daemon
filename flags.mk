@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS = -Wall -O0 -g -fprofile-arcs -ftest-coverage 
-LDFLAGS = -lSDL -lSDL_image -lSDL_ttf -lgcov -coverage -lBox2D
+CFLAGS = -Wall -O0 -g
+LDFLAGS = -lSDL -lSDL_image -lSDL_ttf -lBox2D
 
 RM = rm -rf

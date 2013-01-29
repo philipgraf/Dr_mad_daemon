@@ -4,11 +4,18 @@
  *  Created on: 27.09.2012
  *      Author: medi
  */
-
-#include "includes.h"
-
 #ifndef ENTITY_H_
 #define ENTITY_H_
+
+#include <vector>
+#include <string>
+#include <SDL/SDL.h>
+#include <Box2D/Box2D.h>
+
+#include "define.h"
+//TODO REMOVE!!!!!!!!!
+#include "Tools.h"
+#include "Game.h"
 
 #define UP 0x01
 #define RIGHT 0x02
@@ -25,7 +32,6 @@
 
 
 using namespace std;
-
 
 /**
  * Entity Class all things you can interact with.
@@ -67,91 +73,41 @@ public:
 
 	//----------------------------------- Getter and Setter ------------------------------
 
+	SDL_Rect getCurFrameRect();
 
-	/**
-	 * Return the current animation picture of the entity
-	 * @return the current animation picture as SDL_Rect
-	 */
-	SDL_Rect getCurFrameRect(){
-		SDL_Rect rect;
-		rect.x = currentframe*width*TILESIZE;
-		rect.y = action*height*TILESIZE; // TODO: Animation
-		rect.h = height*TILESIZE;
-		rect.w = width*TILESIZE;
-		return rect;
-	}
+	bool isAlive() const;
 
-	bool isAlive() const {
-		return alive;
-	}
+	void setAlive(bool alive);
 
-	void setAlive(bool alive) {
-		this->alive = alive;
-	}
+	Uint8 getDirection() const;
 
-	Uint8 getDirection() const {
-		return direction;
-	}
+	void setDirection(Uint8 direction);
 
+	void  delDirection(Uint8 direction);
 
-	void setDirection(Uint8 direction) {
-		this->direction |= direction;
-	}
+	int getFlags() const;
 
-	void  delDirection(Uint8 direction) {
-		this->direction &= ~direction;
-	}
+	void setFlags(int flags);
 
+	float getX() const;
 
-	int getFlags() const {
-		return flags;
-	}
+	float getY() const;
 
-	void setFlags(int flags) {
-		this->flags = flags;
-	}
+	SDL_Surface* getImage();
 
-	//TODO replace
-	float getX() const {
-		return body->GetPosition().x;
-	}
+	int getCurrentframe() const;
 
-	float getY() const {
-		return body->GetPosition().y;
-	}
+	void setCurrentframe(int currentframe);
 
-	SDL_Surface* getImage() {
-		return image;
-	}
+	float getHeight() const;
 
-	int getCurrentframe() const {
-		return currentframe;
-	}
+	void setHeight(float height);
 
-	void setCurrentframe(int currentframe) {
-		this->currentframe = currentframe;
-	}
+	float getWidth() const;
 
-	float getHeight() const {
-		return height;
-	}
+	void setWidth(float width);
 
-	void setHeight(float height) {
-		this->height = height;
-	}
-
-	float getWidth() const {
-		return width;
-	}
-
-	void setWidth(float width) {
-		this->width = width;
-	}
-
-	b2Body* getBody()
-	{
-		return body;
-	}
+	b2Body* getBody();
 };
 
 #endif /* ENTITY_H_ */

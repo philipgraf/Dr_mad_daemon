@@ -151,3 +151,32 @@ void Level::logic() {
 	mainCam->logic();
 
 }
+
+Entity* Level::getPlayer() {
+	return player;
+}
+
+int Level::getHeight() const
+{
+	return height;
+}
+
+int Level::getWidth() const
+{
+	return width;
+}
+
+Tile**** Level::getTilelist() const
+{
+	return tilelist;
+}
+
+SDL_Surface* Level::getBackground() const
+{
+	return background;
+}
+
+b2World* Level::getWorld() const
+{
+	return world;
+}

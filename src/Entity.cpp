@@ -28,7 +28,20 @@ Entity::Entity() {
  * @param y the y value of the entity
  */
 Entity::Entity(string imagename, float w, float h, int x, int y) {
-	image = Tools::loadImage(imagename);
+	//image = Tools::loadImage(imagename);
+	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
+
+	if (!tmp) {
+		cout << "unable to load BMP file" << endl;
+	} else {
+		image = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+		if (image != 0) {
+			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL,
+					SDL_MapRGB(image->format, 255, 0, 255));
+
+		}
+	}
 	alive = true;
 	flags = 0;
 	currentframe = 0;

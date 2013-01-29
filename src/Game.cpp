@@ -54,6 +54,7 @@ int Game::execute() {
 			char buffer[10];
 			sprintf(buffer,"FPS: %d",fps);
 			SDL_WM_SetCaption(buffer,NULL);
+			cout << buffer << endl;
 			fps=0;
 			fpstime = SDL_GetTicks();
 		}
@@ -68,11 +69,11 @@ int Game::execute() {
 
 void Game::init() {
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0) {
 		Tools::error("unable to initialize SDL");
 	}
 
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF )) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE )) == NULL) {
 		Tools::error("unable to initialize display");
 	}
 	SDL_WM_SetCaption(TITLE,NULL);

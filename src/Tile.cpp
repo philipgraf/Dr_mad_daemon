@@ -21,7 +21,21 @@ void Tile::nextFrame() {
 }
 
 void Tile::loadTileset() {
-	tileset=Tools::loadImage(IMG"tiles.png");
+	SDL_Surface *tmp = SDL_LoadBMP(IMG"tiles.bmp");
+
+	if(!tmp){
+		cout << "unable to load BMP file" << endl;
+	}else{
+		tileset = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+		if(tileset!=0){
+			SDL_SetColorKey(tileset,SDL_SRCCOLORKEY| SDL_RLEACCEL,SDL_MapRGB(tileset->format,255,0,255));
+
+		}
+	}
+
+
+	//tileset=Tools::loadImage(IMG"tiles.png");
 }
 
 void Tile::logic() {

@@ -113,3 +113,86 @@ Entity::~Entity() {
 	delete fixtureDef;
 }
 
+
+/**
+ * Return the current animation picture of the entity
+ * @return the current animation picture as SDL_Rect
+ */
+SDL_Rect Entity::getCurFrameRect(){
+	SDL_Rect rect;
+	rect.x = currentframe*width*TILESIZE;
+	rect.y = action*height*TILESIZE; // TODO: Animation
+	rect.h = height*TILESIZE;
+	rect.w = width*TILESIZE;
+	return rect;
+}
+
+bool Entity::isAlive() const {
+	return alive;
+}
+
+void Entity::setAlive(bool alive) {
+	this->alive = alive;
+}
+
+Uint8 Entity::getDirection() const {
+	return direction;
+}
+
+void Entity::setDirection(Uint8 direction) {
+	this->direction |= direction;
+}
+
+void Entity::delDirection(Uint8 direction) {
+	this->direction &= ~direction;
+}
+
+int Entity::getFlags() const {
+	return flags;
+}
+
+void Entity::setFlags(int flags) {
+	this->flags = flags;
+}
+
+//TODO replace
+float Entity::getX() const {
+	return body->GetPosition().x;
+}
+
+float Entity::getY() const {
+	return body->GetPosition().y;
+}
+
+SDL_Surface* Entity::getImage() {
+	return image;
+}
+
+int Entity::getCurrentframe() const {
+	return currentframe;
+}
+
+void Entity::setCurrentframe(int currentframe) {
+	this->currentframe = currentframe;
+}
+
+float Entity::getHeight() const {
+	return height;
+}
+
+void Entity::setHeight(float height) {
+	this->height = height;
+}
+
+float Entity::getWidth() const {
+	return width;
+}
+
+void Entity::setWidth(float width) {
+	this->width = width;
+}
+
+b2Body* Entity::getBody()
+{
+	return body;
+}

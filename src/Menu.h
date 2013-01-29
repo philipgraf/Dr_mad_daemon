@@ -10,9 +10,15 @@
 
 #define SIZE(x) (sizeof(x)/sizeof(x[0]))
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include <iostream>
+#include <vector>
 
+#include "define.h"
 #include "Event.h"
+#include "Game.h"
+
 
 using namespace std;
 
@@ -25,15 +31,9 @@ public:
 	Menu();
 	virtual ~Menu();
 
-	void mStart() {
-		Game::curGame->setRunning(true);
-	}
-	void mExit() {
-		Game::curGame->setRunning(false);
-	}
-	void mAudio() {
-		cout << "Audio an/aus!" << endl;
-	}
+	void mStart();
+	void mExit();
+	void mAudio();
 
 };
 

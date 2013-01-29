@@ -127,3 +127,14 @@ Menu::~Menu() {
 	// TODO Auto-generated destructor stub
 }
 
+void Menu::mStart() {
+	Game::curGame->setRunning(true);
+}
+
+void Menu::mExit() {
+	Game::curGame->setRunning(false);
+}
+
+void Menu::mAudio() {
+	cout << "Audio an/aus!" << endl;
+}

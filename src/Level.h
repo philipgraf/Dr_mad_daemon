@@ -12,6 +12,9 @@
 
 using namespace std;
 
+class Entity;
+class Camera;
+
 /** Level class.
  * This class contain all Tiles, the name, the Background Image, the Player, absolute width and height in Tiles, the gravity and the time.
  * All values loaded from file.
@@ -26,10 +29,8 @@ private:
 	 * 3D Tilearray [0=bg,1=main,2=fg][x][y]
 	 */
 	Tile ****tilelist;
-	/**
-	 * the name of the Level.
-	 */
-	string name;
+
+	string name; /**< the name of the Level. */
 	SDL_Surface *background;
 	b2World *world;
 	Entity* player; 
@@ -56,35 +57,17 @@ public:
 	void render();
 	void logic();
 
+	Entity* getPlayer();
 
-	Entity* getPlayer() {
-		return player;
-	}
+	int getHeight() const;
 
-	int getHeight() const
-	{
-		return height;
-	}
+	int getWidth() const;
 
-	int getWidth() const
-	{
-		return width;
-	}
+	Tile**** getTilelist() const;
 
-	Tile**** getTilelist() const
-	{
-		return tilelist;
-	}
+	SDL_Surface* getBackground() const;
 
-	SDL_Surface* getBackground() const
-	{
-		return background;
-	}
-
-	b2World* getWorld() const
-	{
-		return world;
-	}
+	b2World* getWorld() const;
 };
 
 

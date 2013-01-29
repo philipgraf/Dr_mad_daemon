@@ -11,11 +11,12 @@ Game* Game::curGame;
 
 Game::Game() {
 	running = false;
-	curGame=this;
+	curGame = this;
 	display = NULL;
 	font = NULL;
-	currentLevel=NULL;
+	currentLevel = NULL;
 }
+
 Game::~Game() {
 }
 
@@ -36,29 +37,27 @@ int Game::execute() {
 #endif
 		start = SDL_GetTicks();
 
-
 		while (SDL_PollEvent(&event)) {
 			onEvent(&event);
 		}
 		logic();
 		render();
 
-		#ifndef DEBUG
+#ifndef DEBUG
 		if (SDL_GetTicks() - start < 1000 / FPS) {
 
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
 		}
-		#else
+#else
 
-		if(SDL_GetTicks() - fpstime > 1000){
+		if(SDL_GetTicks() - fpstime > 1000) {
 			char buffer[10];
 			sprintf(buffer,"FPS: %d",fps);
 			SDL_WM_SetCaption(buffer,NULL);
 			fps=0;
 			fpstime = SDL_GetTicks();
 		}
-		#endif
-
+#endif
 
 	}
 
@@ -72,10 +71,11 @@ void Game::init() {
 		Tools::error("unable to initialize SDL");
 	}
 
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_HWSURFACE | SDL_DOUBLEBUF )) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32,
+			SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
 		Tools::error("unable to initialize display");
 	}
-	SDL_WM_SetCaption(TITLE,NULL);
+	SDL_WM_SetCaption(TITLE, NULL);
 	if (TTF_Init() < 0) {
 		Tools::error("unable to initialize TTF");
 	}
@@ -148,9 +148,29 @@ void Game::cleanUp() {
 	SDL_Quit();
 }
 
-
 void Game::onExit() {
 	running = false;
 }
 
+/********************************** GETTER AND SETTER **********************************************************/
+
+Level* Game::getCurrentLevel() {
+	return currentLevel;
+}
+
+void Game::setCurrentLevel(Level *curLev) {
+	currentLevel = curLev;
+}
+
+void Game::setRunning(bool r) {
+	running = r;
+}
+
+bool Game::isRunning() {
+	return running;
+}
+
+TTF_Font* Game::getFont() {
+	return font;
+}
 

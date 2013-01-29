@@ -15,6 +15,8 @@
 #include "Menu.h"
 #include "Event.h"
 
+class Level;
+
 using namespace std;
 
 class Game: public Event {
@@ -44,28 +46,11 @@ public:
 
 	void onExit();
 
-	Level* getCurrentLevel(){
-		return currentLevel;
-	}
-
-	void setCurrentLevel(Level *curLev){
-		currentLevel = curLev;
-	}
-
-	void setRunning(bool r){
-		running =r;
-	}
-
-	bool isRunning(){
-		return running;
-	}
-
-	TTF_Font* getFont(){
-		return font;
-	}
-
-
-
+	Level* getCurrentLevel();
+	void setCurrentLevel(Level *curLev);
+	void setRunning(bool r);
+	bool isRunning();
+	TTF_Font* getFont();
 };
 
 

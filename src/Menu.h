@@ -22,10 +22,28 @@
 
 using namespace std;
 
+//typedef void (Game::*fptr)();
+typedef struct {
+	string labelText;
+	SDL_Surface *labelSurface;
+	SDL_Rect position;
+	bool selected;
+	//fptr action;
+} menuitem;
+
 class Menu: public Event {
 	typedef void (Menu::*fptr)();
 private:
 	vector<fptr> labelactions;
+	vector<string> labeltexts;
+	menuitem items[labeltexts.size()];
+	unsigned int currentItem = 0;
+	const SDL_Color colors[2] = { { 255, 255, 255 }, { 91, 176, 248 } };
+
+	bool running;
+	void onExit();
+	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
+	void render();
 
 public:
 	Menu();
@@ -37,13 +55,6 @@ public:
 
 };
 
-//typedef void (Game::*fptr)();
-typedef struct {
-	string labelText;
-	SDL_Surface *labelSurface;
-	SDL_Rect position;
-	bool selected;
-	//fptr action;
-} menuitem;
+
 
 #endif /* MENU_H_ */

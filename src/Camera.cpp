@@ -154,6 +154,7 @@ void Camera::drawTiles(int layer) {
 
 			SDL_Rect destRect = { x * TILESIZE - this->x, y * TILESIZE
 					- this->y, TILESIZE, TILESIZE };
+
 			SDL_BlitSurface(Tile::tileset, &srcRect, SDL_GetVideoSurface(),
 					&destRect);
 		}

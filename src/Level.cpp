@@ -17,9 +17,24 @@ Level::Level(string lname) {
 	gravity2d = new b2Vec2(0.0f, gravity*10);
 	world = new b2World(*gravity2d);
 
-	background = IMG + background;
+	//background = IMG + background;
 
-	this->background = Tools::loadImage(background);
+	//this->background = Tools::loadImage(background);
+
+	SDL_Surface *tmp = SDL_LoadBMP(IMG"bg.bmp");
+
+	if (!tmp) {
+		cout << "unable to load BMP file" << endl;
+	} else {
+		this->background = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+		if (this->background != 0) {
+			SDL_SetColorKey(this->background, SDL_SRCCOLORKEY | SDL_RLEACCEL,
+					SDL_MapRGB(this->background->format, 255, 0, 255));
+
+		}
+	}
+
 
 	tilelist = new Tile***[3];
 	for (int i = 0; i < 3; i++) {

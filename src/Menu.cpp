@@ -12,13 +12,20 @@ Menu::Menu() {
 	SDL_Surface *screen = SDL_GetVideoSurface();
 
 	SDL_Event event;
-	SDL_Surface *menubackground = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w,
+	menubackground = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w,
 			screen->h, 32, screen->format->Rmask, screen->format->Gmask,
 			screen->format->Bmask, screen->format->Amask);
 
 	running = true;
 
 	Uint32 start;
+	currentItem = 0;
+	colors[0].r = 255;
+	colors[0].g = 255;
+	colors[0].b = 255;
+	colors[1].r = 91;
+	colors[1].g = 176;
+	colors[1].b = 248;
 
 	SDL_FillRect(menubackground, &screen->clip_rect,
 			SDL_MapRGB(screen->format, 0, 0, 0));
@@ -41,8 +48,9 @@ Menu::Menu() {
 	labelactions.push_back(&Menu::mExit);
 
 
+	items = new menuitem[labeltexts.size()];
 
-	for (unsigned int i = 0; i < SIZE(items); i++) {
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		items[i].labelText = labeltexts[i];
 		items[i].labelSurface = TTF_RenderText_Solid(Game::curGame->getFont(),
 				items[i].labelText.c_str(),
@@ -68,7 +76,7 @@ Menu::Menu() {
 		}
 	}
 
-	for (unsigned int i = 0; i < SIZE(items); i++) {
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		SDL_FreeSurface(items[i].labelSurface);
 	}
 
@@ -113,8 +121,8 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
 				items[currentItem].labelText.c_str(), colors[0]);
 		currentItem =
-				(currentItem >= SIZE(items) - 1) ?
-						SIZE(items) - 1 : currentItem + 1;
+				(currentItem >= labeltexts.size() - 1) ?
+						labeltexts.size() -1 : currentItem + 1;
 		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
 				items[currentItem].labelText.c_str(), colors[1]);
 		break;
@@ -128,7 +136,7 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 }
 
 void Menu::render() {
-	for (unsigned int i = 0; i < SIZE(items); i++) {
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
 				&(items[i].position));
 	}

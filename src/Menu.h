@@ -36,9 +36,10 @@ class Menu: public Event {
 private:
 	vector<fptr> labelactions;
 	vector<string> labeltexts;
-	menuitem items[labeltexts.size()];
-	unsigned int currentItem = 0;
-	const SDL_Color colors[2] = { { 255, 255, 255 }, { 91, 176, 248 } };
+	SDL_Surface *menubackground;
+	menuitem *items;
+	unsigned int currentItem;
+	SDL_Color colors[2];
 
 	bool running;
 	void onExit();

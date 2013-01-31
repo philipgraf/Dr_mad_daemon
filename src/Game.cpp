@@ -71,7 +71,7 @@ void Game::init() {
 		Tools::error("unable to initialize SDL");
 	}
 
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32,
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel,
 			SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
 		Tools::error("unable to initialize display");
 	}

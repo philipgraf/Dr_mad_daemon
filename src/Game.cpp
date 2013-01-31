@@ -72,7 +72,7 @@ void Game::init() {
 		cout << "unable to initialize SDL" << endl;
 	}
 
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32,
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel,
 			SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
 		cout << "unable to initialize display" << endl;
 	}

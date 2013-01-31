@@ -3,8 +3,8 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-
-#include "Tools.h"
+#include <iostream>
+#include "define.h"
 
 #define TF_START 0x10000
 #define TF_FINISH 0x20000

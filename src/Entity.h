@@ -13,8 +13,6 @@
 #include <Box2D/Box2D.h>
 
 #include "define.h"
-//TODO REMOVE!!!!!!!!!
-#include "Tools.h"
 #include "Game.h"
 
 #define UP 0x01

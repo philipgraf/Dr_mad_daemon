@@ -26,7 +26,7 @@ void Tile::loadTileset() {
 	SDL_Surface *temp;
 	if ((temp = IMG_Load(IMG"tiles.png")) == NULL) {
 		//TODO Throw exception
-		cout << "unable to load tiles.png" << endl;
+		std::cout << "unable to load tiles.png" << std::endl;
 	}
 	tileset = SDL_DisplayFormatAlpha(temp);
 	SDL_FreeSurface(temp);

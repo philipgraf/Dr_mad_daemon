@@ -17,6 +17,11 @@ Level::Level(string lname) {
 	gravity2d = new b2Vec2(0.0f, gravity*10);
 	world = new b2World(*gravity2d);
 
+#ifdef DEBUG
+	b2Debug.SetFlags(b2Draw::e_shapeBit);// | b2Draw::e_aabbBit);
+	world->SetDebugDraw(&b2Debug);
+#endif
+
 
 	//this->background = Tools::loadImage(background);
 
@@ -141,6 +146,7 @@ int Level::getTileID(int x, int y, int layer) {
 void Level::render() {
 
 	mainCam->drawImage();
+	world->DrawDebugData();
 
 }
 

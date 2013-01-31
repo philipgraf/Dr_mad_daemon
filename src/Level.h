@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "Camera.h"
 #include "Game.h"
+#include "Debug.h"
 
 using namespace std;
 
@@ -39,6 +40,10 @@ private:
 	float gravity;
 	int time;
 	b2Vec2 *gravity2d;
+
+#ifdef DEBUG
+	Debug b2Debug;
+#endif
 
 	Camera* mainCam;
 

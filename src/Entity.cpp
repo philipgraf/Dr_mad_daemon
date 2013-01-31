@@ -5,7 +5,6 @@
  */
 
 //#include <algorithm>
-
 #include "Entity.h"
 
 vector<Entity*> Entity::entityList;
@@ -53,6 +52,8 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	width = w;
 	height = h;
 
+	float radius =  w / 2;
+
 	ground = true; //TODO test only
 
 	b2BodyDef bodydef;
@@ -62,7 +63,7 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
 			&bodydef);
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(w / 2, h / 2);
+	dynamicBox.SetAsBox(w / 2-0.1, h / 2 - radius/2);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
@@ -70,6 +71,32 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	fixtureDef->friction = 5.0f;
 
 	body->CreateFixture(fixtureDef);
+
+	b2BodyDef feetdef;
+	feetdef.type = b2_dynamicBody;
+	//bodydef.fixedRotation = true;
+	feetdef.position.Set(x + w / 2, y + h -radius);
+	this->feet = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
+			&feetdef);
+	b2CircleShape feetShape;
+	feetShape.m_radius=radius;
+
+	feetFixture = new b2FixtureDef;
+	feetFixture->shape = &feetShape;
+	feetFixture->density = 10.0f;
+	feetFixture->friction = 5.0f;
+
+	feet->CreateFixture(feetFixture);
+
+	b2RevoluteJointDef joinDef;
+	joinDef.Initialize(body,feet,body->GetWorldCenter());
+	joinDef.localAnchorA=b2Vec2(0,h/2-radius);
+	joinDef.localAnchorB=b2Vec2(0,0);
+	joinDef.enableLimit=true;
+
+
+	joint =(b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&joinDef);
+
 
 	entityList.push_back(this);
 }
@@ -90,14 +117,16 @@ void Entity::move() {
 
 	if (direction & LEFT) {
 
-		body->ApplyLinearImpulse(b2Vec2(-body->GetMass()/2, 0), body->GetWorldCenter());
+		body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0),
+				body->GetWorldCenter());
 		action = ACTION_WALK_LEFT;
 
 	}
 	if (direction & RIGHT) {
 		b2Vec2 vel = body->GetLinearVelocity();
 
-		body->ApplyLinearImpulse(b2Vec2(body->GetMass()/2, 0), body->GetWorldCenter());
+		body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
+				body->GetWorldCenter());
 		action = ACTION_WALK_RIGHT;
 
 	}
@@ -106,7 +135,7 @@ void Entity::move() {
 //		vel.y = -7;
 //		body->SetLinearVelocity(vel);
 		//	body->ApplyForce(b2Vec2(0.0f,-500.0f),body->GetWorldCenter());
-		if (body->GetContactList() != NULL) {
+		if (feet->GetContactList() != NULL) {
 			float impulse = body->GetMass();
 			body->ApplyLinearImpulse(b2Vec2(0, -impulse),
 					body->GetWorldCenter());
@@ -128,17 +157,16 @@ Entity::~Entity() {
 	delete fixtureDef;
 }
 
-
 /**
  * Return the current animation picture of the entity
  * @return the current animation picture as SDL_Rect
  */
-SDL_Rect Entity::getCurFrameRect(){
+SDL_Rect Entity::getCurFrameRect() {
 	SDL_Rect rect;
-	rect.x = currentframe*width*TILESIZE;
-	rect.y = action*height*TILESIZE; // TODO: Animation
-	rect.h = height*TILESIZE;
-	rect.w = width*TILESIZE;
+	rect.x = currentframe * width * TILESIZE;
+	rect.y = action * height * TILESIZE; // TODO: Animation
+	rect.h = height * TILESIZE;
+	rect.w = width * TILESIZE;
 	return rect;
 }
 
@@ -207,7 +235,6 @@ void Entity::setWidth(float width) {
 	this->width = width;
 }
 
-b2Body* Entity::getBody()
-{
+b2Body* Entity::getBody() {
 	return body;
 }

@@ -52,6 +52,11 @@ private:
 	b2Body *body;
 	b2FixtureDef *fixtureDef;
 
+	b2Body *feet;
+	b2FixtureDef *feetFixture;
+
+	b2RevoluteJoint *joint;
+
 	Uint8 direction;
 
 	void nextframe();

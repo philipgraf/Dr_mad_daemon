@@ -177,10 +177,9 @@ void Camera::drawBackground() {
 		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(),
 				&destRect);
 	} else {
-		Tools::drawImage(SDL_GetVideoSurface(), 0, 0,
-				Game::curGame->getCurrentLevel()->getBackground(), x, y, width,
-				height);
+		SDL_BlitSurface(Game::curGame->getCurrentLevel()->getBackground(),NULL,SDL_GetVideoSurface(),NULL);
 	}
+
 }
 
 void Camera::setPosition(int x, int y) {

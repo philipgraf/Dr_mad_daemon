@@ -69,20 +69,20 @@ int Game::execute() {
 void Game::init() {
 
 	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0) {
-		Tools::error("unable to initialize SDL");
+		cout << "unable to initialize SDL" << endl;
 	}
 
 	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, 32,
 			SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
-		Tools::error("unable to initialize display");
+		cout << "unable to initialize display" << endl;
 	}
 	SDL_WM_SetCaption(TITLE, NULL);
 	if (TTF_Init() < 0) {
-		Tools::error("unable to initialize TTF");
+		cout << "unable to initialize TTF" << endl;
 	}
 
 	if ((font = TTF_OpenFont(FONTS "menu.ttf", 50)) == NULL) {
-		Tools::error("unable to load menufont");
+		cout << "unable to load menufont" << endl;
 	}
 	Tile::loadTileset();
 

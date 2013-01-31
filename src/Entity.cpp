@@ -29,11 +29,12 @@ Entity::Entity() {
  * @param y the y value of the entity
  */
 Entity::Entity(string imagename, float w, float h, int x, int y) {
-	//image = Tools::loadImage(imagename);
-	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
+
+	SDL_Surface *tmp = SDL_LoadBMP((IMG+imagename).c_str());
 
 	if (!tmp) {
-		cout << "unable to load BMP file" << endl;
+		//TODO Throw DISException
+		cout << "unable to load BMP file" << imagename << endl;
 	} else {
 		image = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
@@ -43,6 +44,7 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 
 		}
 	}
+
 	alive = true;
 	flags = 0;
 	currentframe = 0;
@@ -65,7 +67,7 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
 	fixtureDef->density = 35.0f;
-	fixtureDef->friction = 1.0f;
+	fixtureDef->friction = 5.0f;
 
 	body->CreateFixture(fixtureDef);
 
@@ -88,14 +90,14 @@ void Entity::move() {
 
 	if (direction & LEFT) {
 
-		body->ApplyLinearImpulse(b2Vec2(-15, 0), body->GetWorldCenter());
+		body->ApplyLinearImpulse(b2Vec2(-body->GetMass()/2, 0), body->GetWorldCenter());
 		action = ACTION_WALK_LEFT;
 
 	}
 	if (direction & RIGHT) {
 		b2Vec2 vel = body->GetLinearVelocity();
 
-		body->ApplyLinearImpulse(b2Vec2(15, 0), body->GetWorldCenter());
+		body->ApplyLinearImpulse(b2Vec2(body->GetMass()/2, 0), body->GetWorldCenter());
 		action = ACTION_WALK_RIGHT;
 
 	}

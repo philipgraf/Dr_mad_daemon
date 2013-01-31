@@ -1,5 +1,6 @@
 #include "Tile.h"
 
+
 //TODO: tileFrames get from file and not globle
 int tileconf[] = { 8, 1, 1, 1, 1, 1, 1, 9, 1 }; //definiert Anzahl der Frames; Index [0] = Anzahl der Tiles
 SDL_Surface *Tile::tileset;
@@ -21,21 +22,15 @@ void Tile::nextFrame() {
 }
 
 void Tile::loadTileset() {
-	SDL_Surface *tmp = SDL_LoadBMP(IMG"tiles.bmp");
 
-	if(!tmp){
-		cout << "unable to load BMP file" << endl;
-	}else{
-		tileset = SDL_DisplayFormat(tmp);
-		SDL_FreeSurface(tmp);
-		if(tileset!=0){
-			SDL_SetColorKey(tileset,SDL_SRCCOLORKEY| SDL_RLEACCEL,SDL_MapRGB(tileset->format,255,0,255));
-
-		}
+	SDL_Surface *temp;
+	if ((temp = IMG_Load(IMG"tiles.png")) == NULL) {
+		//TODO Throw exception
+		cout << "unable to load tiles.png" << endl;
 	}
+	tileset = SDL_DisplayFormatAlpha(temp);
+	SDL_FreeSurface(temp);
 
-
-	//tileset=Tools::loadImage(IMG"tiles.png");
 }
 
 void Tile::logic() {

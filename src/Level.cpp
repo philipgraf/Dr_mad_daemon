@@ -17,11 +17,10 @@ Level::Level(string lname) {
 	gravity2d = new b2Vec2(0.0f, gravity*10);
 	world = new b2World(*gravity2d);
 
-	//background = IMG + background;
 
 	//this->background = Tools::loadImage(background);
 
-	SDL_Surface *tmp = SDL_LoadBMP(IMG"bg.bmp");
+	SDL_Surface *tmp = SDL_LoadBMP((IMG+background).c_str());
 
 	if (!tmp) {
 		cout << "unable to load BMP file" << endl;
@@ -53,7 +52,7 @@ Level::Level(string lname) {
 
 				if (id & TF_START) {
 					//TODO: get width and height dynamically
-					player = new Entity(IMG "player.png", 1, 2, x, y);
+					player = new Entity("player.bmp", 1, 2, x, y);
 				}
 
 				tilelist[i][x][y] = new Tile(id);
@@ -74,7 +73,7 @@ Level::Level(string lname) {
 		char ch;
 		filestream >> ch;
 		if (ch != ';')
-			Tools::error("Error loading mapfile:"LEVELS + lname + ".map"); // TODO Throw Errorobjekt
+			cout << "Error loading mapfile:"LEVELS + lname + ".map" << endl; // TODO Throw Errorobjekt
 	}
 	filestream.close();
 //
@@ -155,7 +154,7 @@ void Level::logic() {
 		}
 	}
 	//TODO move to a better place and check
-	float32 timeStep = 1.0f / 60.0f;
+	float32 timeStep = 1.0f / FPS;
 
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;

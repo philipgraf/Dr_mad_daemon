@@ -2,6 +2,7 @@
 #define _TILE_H_
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 #include "Tools.h"
 

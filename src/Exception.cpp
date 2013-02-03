@@ -1,5 +1,5 @@
 /*
- * DISException.cpp
+ * Exception.cpp
  *
  *  Created on: 16.12.2012
  *      Author: philip
@@ -7,14 +7,14 @@
  * Copyright 2012,2013 Philip Graf, Felix Eckner
  */
 
-#include "DISException.h"
+#include "Exception.h"
 
-DISException::DISException()
+Exception::Exception()
 {
     // TODO Auto-generated constructor stub
 }
 
-DISException::~DISException()
+Exception::~Exception()
 {
     // TODO Auto-generated destructor stub
 }

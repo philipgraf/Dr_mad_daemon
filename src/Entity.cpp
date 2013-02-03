@@ -52,7 +52,7 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	width = w;
 	height = h;
 
-	float radius =  w / 2;
+	float radius =  w/2;
 
 	ground = true; //TODO test only
 
@@ -123,9 +123,9 @@ void Entity::move() {
 
 	}
 	if (direction & RIGHT) {
-		b2Vec2 vel = body->GetLinearVelocity();
+		//b2Vec2 vel = body->GetLinearVelocity();
 
-		body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
+		feet->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
 				body->GetWorldCenter());
 		action = ACTION_WALK_RIGHT;
 

@@ -12,8 +12,8 @@ Menu::Menu() {
 	SDL_Surface *screen = SDL_GetVideoSurface();
 
 	SDL_Event event;
-	menubackground = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w,
-			screen->h, 32, screen->format->Rmask, screen->format->Gmask,
+	menubackground = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h,
+			32, screen->format->Rmask, screen->format->Gmask,
 			screen->format->Bmask, screen->format->Amask);
 
 	running = true;
@@ -47,7 +47,6 @@ Menu::Menu() {
 	labeltexts.push_back("Exit");
 	labelactions.push_back(&Menu::mExit);
 
-
 	items = new menuitem[labeltexts.size()];
 
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
@@ -76,17 +75,15 @@ Menu::Menu() {
 		}
 	}
 
+}
+
+Menu::~Menu() {
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		SDL_FreeSurface(items[i].labelSurface);
 	}
 
 	labeltexts.clear();
 	labelactions.clear();
-
-}
-
-Menu::~Menu() {
-	// TODO Auto-generated destructor stub
 }
 
 void Menu::mStart() {
@@ -122,7 +119,7 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 				items[currentItem].labelText.c_str(), colors[0]);
 		currentItem =
 				(currentItem >= labeltexts.size() - 1) ?
-						labeltexts.size() -1 : currentItem + 1;
+						labeltexts.size() - 1 : currentItem + 1;
 		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
 				items[currentItem].labelText.c_str(), colors[1]);
 		break;
@@ -136,10 +133,34 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 }
 
 void Menu::render() {
+
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
 				&(items[i].position));
 	}
+}
+
+void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left,
+		bool right, bool middle) {
+	TTF_Font *menufont = Game::curGame->getFont();
+	for (int i = 0; i < labeltexts.size(); i++) {
+		if (mX > items[i].position.x
+				&& mX < items[i].position.x + items[i].position.w
+				&& mY > items[i].position.y
+				&& mY < items[i].position.y + items[i].position.h) {
+			SDL_FreeSurface(items[currentItem].labelSurface);
+			items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
+					items[currentItem].labelText.c_str(), colors[0]);
+			currentItem = i;
+			items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
+					items[currentItem].labelText.c_str(), colors[1]);
+		}
+	}
+}
+
+void Menu::onLButtonDown(int mX, int mY) {
+	(this->*labelactions[currentItem])();
+	running = false;
 }
 
 void Menu::mAudio() {

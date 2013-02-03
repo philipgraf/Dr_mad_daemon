@@ -44,6 +44,8 @@ private:
 	bool running;
 	void onExit();
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
+	void onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle);
+	void onLButtonDown(int mX,int mY);
 	void render();
 
 public:

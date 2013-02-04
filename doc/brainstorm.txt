@@ -23,7 +23,7 @@ TODO:
 	mapcreator,
 	
 IDEAS:
-	XML-Configs
-	XML-Translation file
-	XML-Errorsmessages
+	YML-Configs
+	YML-Translation file
+	YML-Errorsmessages
 	

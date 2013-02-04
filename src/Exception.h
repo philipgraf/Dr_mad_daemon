@@ -9,7 +9,7 @@
 #define EXCEPTION_H_
 
 
-class Exception:public std::exception{
+class Exception: public std::exception {
 public:
 	enum ExceptionType{
 		UNKNOWN_EXCEPTION = 0,

@@ -10,6 +10,12 @@
 
 #define SIZE(x) (sizeof(x)/sizeof(x[0]))
 
+#define MAINMENU 0
+#define SLOTMENU 1
+#define OPTIONMENU 2
+#define PAUSEMENU 3
+#define CREDITS 4
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <iostream>
@@ -22,13 +28,11 @@
 
 using namespace std;
 
-//typedef void (Game::*fptr)();
 typedef struct {
 	string labelText;
 	SDL_Surface *labelSurface;
 	SDL_Rect position;
 	bool selected;
-	//fptr action;
 } menuitem;
 
 class Menu: public Event {
@@ -36,25 +40,37 @@ class Menu: public Event {
 private:
 	vector<fptr> labelactions;
 	vector<string> labeltexts;
-	SDL_Surface *menubackground;
+	SDL_Surface *background;
+	SDL_Surface *backgroudFilter;
 	menuitem *items;
 	unsigned int currentItem;
 	SDL_Color colors[2];
+	int menuType;
+	int returnValue;
 
 	bool running;
 	void onExit();
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle);
 	void onLButtonDown(int mX,int mY);
+
 	void render();
 
-public:
-	Menu();
-	virtual ~Menu();
 
-	void mStart();
-	void mExit();
-	void mAudio();
+	void start();
+	void exit();
+	void options();
+	void quitLevel();
+	void back();
+	void credits();
+	void sound();
+	void controllerSettings();
+
+public:
+	Menu(int menuType=0);
+	virtual ~Menu();
+	int show();
+
 
 };
 

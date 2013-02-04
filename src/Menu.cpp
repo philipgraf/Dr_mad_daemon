@@ -7,18 +7,13 @@
 
 #include "Menu.h"
 
-Menu::Menu() {
+Menu::Menu(int menuType) {
 
-	SDL_Surface *screen = SDL_GetVideoSurface();
-
-	SDL_Event event;
-	menubackground = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h,
-			32, screen->format->Rmask, screen->format->Gmask,
-			screen->format->Bmask, screen->format->Amask);
-
+	background=NULL;
 	running = true;
+	this->menuType = menuType;
+	returnValue = 0;
 
-	Uint32 start;
 	currentItem = 0;
 	colors[0].r = 255;
 	colors[0].g = 255;
@@ -27,25 +22,103 @@ Menu::Menu() {
 	colors[1].g = 176;
 	colors[1].b = 248;
 
-	SDL_FillRect(menubackground, &screen->clip_rect,
+	switch (menuType) {
+
+	case MAINMENU:
+		labeltexts.push_back("Start");
+		labelactions.push_back(&Menu::start);
+		labeltexts.push_back("Options");
+		labelactions.push_back(&Menu::options);
+		labeltexts.push_back("Credits");
+		labelactions.push_back(&Menu::credits);
+		labeltexts.push_back("Exit");
+		labelactions.push_back(&Menu::exit);
+		break;
+	case PAUSEMENU:
+		labeltexts.push_back("Continue");
+		labelactions.push_back(&Menu::start);
+		labeltexts.push_back("Sound");
+		labelactions.push_back(&Menu::sound);
+		labeltexts.push_back("Quit Level");
+		labelactions.push_back(&Menu::quitLevel);
+		labeltexts.push_back("Quit Game");
+		labelactions.push_back(&Menu::exit);
+		break;
+	case OPTIONMENU:
+		labeltexts.push_back("Sound");
+		labelactions.push_back(&Menu::sound);
+		labeltexts.push_back("Controller Settings");
+		labelactions.push_back(&Menu::controllerSettings);
+		labeltexts.push_back("Back");
+		labelactions.push_back(&Menu::back);
+		break;
+	case CREDITS:
+		//TODO find better "visualization" ;)
+		labeltexts.push_back("Philip Graf");
+		labelactions.push_back(&Menu::back);
+		labeltexts.push_back("Felix Eckner");
+		labelactions.push_back(&Menu::back);
+	}
+
+	if(menuType != PAUSEMENU){
+		SDL_Surface *tmp = SDL_LoadBMP(IMG"menubg.bmp");
+		background = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+	}
+
+}
+
+Menu::~Menu() {
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
+		SDL_FreeSurface(items[i].labelSurface);
+	}
+
+	SDL_FreeSurface(backgroudFilter);
+	labeltexts.clear();
+	labelactions.clear();
+
+}
+
+void Menu::render() {
+	SDL_Surface *screen = SDL_GetVideoSurface();
+
+	if (background != NULL) {
+		SDL_BlitSurface(background, NULL, screen, NULL);
+		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE,
+				backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
+		SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h
+				- 2 * TILESIZE };
+		SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
+
+	}
+
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
+		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
+				&(items[i].position));
+	}
+}
+
+int Menu::show() {
+	SDL_Surface *screen = SDL_GetVideoSurface();
+	Uint32 start;
+	SDL_Event event;
+
+	backgroudFilter = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h,
+			SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask,
+			screen->format->Gmask, screen->format->Bmask,
+			screen->format->Amask);
+
+	SDL_FillRect(backgroudFilter, &screen->clip_rect,
 			SDL_MapRGB(screen->format, 0, 0, 0));
 
-	SDL_SetAlpha(menubackground, SDL_SRCALPHA, 128);
-	SDL_BlitSurface(menubackground, NULL, screen, NULL);
-	SDL_FreeSurface(menubackground);
+	SDL_SetAlpha(backgroudFilter, SDL_SRCALPHA, 128);
 
-	if (Game::curGame->isRunning()) {
-		labeltexts.push_back("Continue");
-		labelactions.push_back(&Menu::mStart);
-
-	} else {
-		labeltexts.push_back("Start");
-		labelactions.push_back(&Menu::mStart);
-	}
-	labeltexts.push_back("Audio");
-	labelactions.push_back(&Menu::mAudio);
-	labeltexts.push_back("Exit");
-	labelactions.push_back(&Menu::mExit);
+	SDL_SetAlpha(backgroudFilter, SDL_SRCALPHA, 128);
+	SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w,
+			backgroudFilter->clip_rect.h };
+	SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h
+			- 2 * TILESIZE };
+	SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	items = new menuitem[labeltexts.size()];
 
@@ -58,7 +131,6 @@ Menu::Menu() {
 				- items[i].labelSurface->clip_rect.w / 2;
 		items[i].position.y = (i + 1) * items[i].labelSurface->clip_rect.h;
 		items[i].selected = false;
-		//items[i].action = (this->labelactions[i]);
 	}
 
 	while (running) {
@@ -74,25 +146,49 @@ Menu::Menu() {
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
 		}
 	}
-
+	return returnValue;
 }
 
-Menu::~Menu() {
-	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		SDL_FreeSurface(items[i].labelSurface);
-	}
+/*************************************** MENU ACTIONS **************************************/
 
-	labeltexts.clear();
-	labelactions.clear();
-}
-
-void Menu::mStart() {
+void Menu::start() {
 	Game::curGame->setRunning(true);
+	running = false;
 }
 
-void Menu::mExit() {
-	Game::curGame->setRunning(false);
+void Menu::sound() {
+	cout << "Audio an/aus!" << endl;
 }
+
+void Menu::options() {
+	Menu optionMenu(OPTIONMENU);
+	optionMenu.show();
+}
+
+void Menu::exit() {
+	//TODO if level has the main gameloop then return -1 oder so
+	Game::curGame->setRunning(false);
+	running = false;
+}
+
+void Menu::credits() {
+	Menu creditsMenu(CREDITS);
+	creditsMenu.show();
+}
+
+void Menu::back() {
+	running = false;
+}
+
+void Menu::quitLevel() {
+	Game::curGame->setRunning(false);
+	running = false;
+}
+
+void Menu::controllerSettings() {
+}
+
+/*************************************** EVENT HANDLING ****************************************/
 
 void Menu::onExit() {
 	running = false;
@@ -125,18 +221,9 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		break;
 	case SDLK_RETURN:
 		(this->*labelactions[currentItem])();
-		running = false;
 		break;
 	default:
 		break;
-	}
-}
-
-void Menu::render() {
-
-	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
-				&(items[i].position));
 	}
 }
 
@@ -163,6 +250,3 @@ void Menu::onLButtonDown(int mX, int mY) {
 	running = false;
 }
 
-void Menu::mAudio() {
-	cout << "Audio an/aus!" << endl;
-}

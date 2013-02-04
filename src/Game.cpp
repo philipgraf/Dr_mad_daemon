@@ -23,7 +23,8 @@ Game::~Game() {
 int Game::execute() {
 	init();
 
-	Menu();
+	Menu mainMenu;
+	mainMenu.show();
 
 	SDL_Event event;
 	Uint32 start;
@@ -81,7 +82,7 @@ void Game::init() {
 		cout << "unable to initialize TTF" << endl;
 	}
 
-	if ((font = TTF_OpenFont(FONTS "menu.ttf", 50)) == NULL) {
+	if ((font = TTF_OpenFont(FONTS "menu.ttf", 45)) == NULL) {
 		cout << "unable to load menufont" << endl;
 	}
 	Tile::loadTileset();
@@ -103,9 +104,14 @@ void Game::render() {
 }
 
 void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
+
 	switch (sym) {
 	case SDLK_ESCAPE:
-		Menu();
+		//TODO check out
+		Menu *pauseMenu;
+		pauseMenu= new Menu(PAUSEMENU);
+		pauseMenu->show();
+		delete pauseMenu;
 		break;
 	case SDLK_LEFT:
 		currentLevel->getPlayer()->setDirection(LEFT);
@@ -122,6 +128,7 @@ void Game::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	default:
 		break;
 	}
+
 }
 
 void Game::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {

@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Game.h"
 #include "Debug.h"
+#include "Event.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ class Camera;
  * @date 04.11.2012
  * @version 0.0.1 Class create
  */
-class Level {
+class Level : public Event {
 private:
 
 	/**
@@ -37,42 +38,45 @@ private:
 	Entity* player; 
 	int width;
 	int height;
-	float gravity;
 	int time;
 	b2Vec2 *gravity2d;
+	Camera* mainCam;
+	bool running;
 
 #ifdef DEBUG
 	Debug b2Debug;
 #endif
 
-	Camera* mainCam;
 
 
-	void renderLayer(int layer);
+	void loadMapFile(string filename);
+	void onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) ;
+	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	
 public:
 	Level(string lname="l000");
 	~Level();
+
+	void render();
+	void logic();
+	void play();
+
+
+
+	/*********************** GETTER / SETTER ************************/
 	int getGravity() const;
 	void setGravity(int gravity);
 	const string& getName() const;
 	int getTime() const;
 	void setTime(int time);
 	int getTileID(int x,int y,int layer=1);
-	void render();
-	void logic();
-
 	Entity* getPlayer();
-
 	int getHeight() const;
-
 	int getWidth() const;
-
 	Tile**** getTilelist() const;
-
 	SDL_Surface* getBackground() const;
-
 	b2World* getWorld() const;
+	void setRunning(bool running);
 };
 
 

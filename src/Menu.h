@@ -24,8 +24,9 @@
 #include "define.h"
 #include "Event.h"
 #include "Game.h"
+#include "Level.h"
 
-
+class Level;
 using namespace std;
 
 typedef struct {
@@ -48,6 +49,8 @@ private:
 	int menuType;
 	int returnValue;
 
+	//Level *level; //TODO only testing
+
 	bool running;
 	void onExit();
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
@@ -65,6 +68,7 @@ private:
 	void credits();
 	void sound();
 	void controllerSettings();
+	void continueGame();
 
 public:
 	Menu(int menuType=0);

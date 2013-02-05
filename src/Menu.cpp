@@ -10,11 +10,12 @@
 Menu::Menu(int menuType) {
 
 	backgroudFilter = NULL;
-	background=NULL;
-	items=NULL;
+	background = NULL;
+	items = NULL;
 	running = true;
 	this->menuType = menuType;
 	returnValue = 0;
+//	level = NULL;
 
 	currentItem = 0;
 	colors[0].r = 255;
@@ -38,7 +39,7 @@ Menu::Menu(int menuType) {
 		break;
 	case PAUSEMENU:
 		labeltexts.push_back("Continue");
-		labelactions.push_back(&Menu::start);
+		labelactions.push_back(&Menu::continueGame);
 		labeltexts.push_back("Sound");
 		labelactions.push_back(&Menu::sound);
 		labeltexts.push_back("Quit Level");
@@ -63,7 +64,7 @@ Menu::Menu(int menuType) {
 		break;
 	}
 
-	if(menuType != PAUSEMENU){
+	if (menuType != PAUSEMENU) {
 		SDL_Surface *tmp = SDL_LoadBMP(IMG"menubg.bmp");
 		background = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
@@ -79,7 +80,8 @@ Menu::~Menu() {
 	SDL_FreeSurface(backgroudFilter);
 	labeltexts.clear();
 	labelactions.clear();
-
+//	if(level != NULL)
+//		delete level;
 }
 
 void Menu::render() {
@@ -141,7 +143,6 @@ int Menu::show() {
 		while (SDL_PollEvent(&event)) {
 			onEvent(&event);
 		}
-
 		render();
 
 		SDL_Flip(screen);
@@ -155,8 +156,14 @@ int Menu::show() {
 /*************************************** MENU ACTIONS **************************************/
 
 void Menu::start() {
-	Game::curGame->setRunning(true);
-	running = false;
+
+	Level level;
+	//Game::curGame->setCurrentLevel(level);
+	level.play();
+}
+
+void Menu::continueGame(){
+	this->running = false;
 }
 
 void Menu::sound() {
@@ -170,7 +177,10 @@ void Menu::options() {
 
 void Menu::exit() {
 	//TODO if level has the main gameloop then return -1 oder so
-	Game::curGame->setRunning(false);
+//	Game::curGame->setRunning(false);
+	//TODO set returnvalue to pass throw and quit the whole game
+
+	//Game::curGame->getCurrentLevel()->setRunning(false);
 	running = false;
 }
 
@@ -184,7 +194,9 @@ void Menu::back() {
 }
 
 void Menu::quitLevel() {
-	Game::curGame->setRunning(false);
+	Game::curGame->getCurrentLevel()->setRunning(false);
+//	delete level;
+//	level=NULL;
 	running = false;
 }
 
@@ -194,8 +206,7 @@ void Menu::controllerSettings() {
 /*************************************** EVENT HANDLING ****************************************/
 
 void Menu::onExit() {
-	running = false;
-	Game::curGame->setRunning(false);
+	exit();
 }
 
 void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {

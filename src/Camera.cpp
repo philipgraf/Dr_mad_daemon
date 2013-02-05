@@ -177,7 +177,7 @@ void Camera::drawBackground() {
 		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(),
 				&destRect);
 	} else {
-		SDL_BlitSurface(Game::curGame->getCurrentLevel()->getBackground(),NULL,SDL_GetVideoSurface(),NULL);
+		SDL_BlitSurface(curLevel->getBackground(),NULL,SDL_GetVideoSurface(),NULL);
 	}
 
 }

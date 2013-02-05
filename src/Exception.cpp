@@ -7,7 +7,7 @@
  * Copyright 2012,2013 Philip Graf, Felix Eckner
  */
 
-#include "Exception.h"
+/*#include "Exception.h"
 
 Exception::Exception()
 {
@@ -17,4 +17,4 @@ Exception::Exception()
 Exception::~Exception()
 {
     // TODO Auto-generated destructor stub
-}
+}*/

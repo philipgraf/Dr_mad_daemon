@@ -11,20 +11,18 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
-#include "Level.h"
 #include "Menu.h"
-#include "Event.h"
+#include "Level.h"
 
-class Level;
 
 using namespace std;
 
-class Game: public Event {
+class Game {
 
 public:
 	static Game *curGame;
 private:
-	bool running;
+
 	SDL_Surface * display;
 	TTF_Font *font;
 
@@ -36,20 +34,10 @@ public:
 
 	int execute();
 	void init();
-	void onEvent(SDL_Event *event);
-	void logic();
-	void render();
-	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
-	void onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode);
-	void cleanUp();
-
-
-	void onExit();
 
 	Level* getCurrentLevel();
+	void destroyCurrentLevel();
 	void setCurrentLevel(Level *curLev);
-	void setRunning(bool r);
-	bool isRunning();
 	TTF_Font* getFont();
 };
 

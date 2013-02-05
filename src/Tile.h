@@ -26,17 +26,11 @@ public:
 
 	//-------------------------GETTER AND SETTER ------------------------------------------//
 	u_int16_t getId() const;
-
 	int getCurrentframe() const;
-
 	void setCurrentframe(int currentframe);
-
 	u_int64_t getFlags() const;
-
 	void setFlags(u_int64_t flags);
-
 	bool isTransparency() const;
-
 	void setTransparency(bool transparency);
 };
 

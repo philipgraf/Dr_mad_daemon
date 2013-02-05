@@ -9,7 +9,9 @@
 
 Menu::Menu(int menuType) {
 
+	backgroudFilter = NULL;
 	background=NULL;
+	items=NULL;
 	running = true;
 	this->menuType = menuType;
 	returnValue = 0;
@@ -58,6 +60,7 @@ Menu::Menu(int menuType) {
 		labelactions.push_back(&Menu::back);
 		labeltexts.push_back("Felix Eckner");
 		labelactions.push_back(&Menu::back);
+		break;
 	}
 
 	if(menuType != PAUSEMENU){

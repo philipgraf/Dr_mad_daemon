@@ -7,16 +7,49 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
+
+/*********************************** WII DEFINES ****************************************************************************/
+
+/* Message Types and SDL_UserEvent Codes */
+#define MSGTYPE_STATUS 0
+#define MSGTYPE_BTN 1
+#define MSGTYPE_ACC 2
+#define MSGTYPE_IR 3
+#define MSGTYPE_NUNCHUK 4
+
+/* Wii Buttons */
+#define WII_BTN_2 		0x0001
+#define WII_BTN_1 		0x0002
+#define WII_BTN_B 		0x0004
+#define WII_BTN_A 		0x0008
+#define WII_BTN_MINUS 	0x0010
+#define WII_BTN_HOME	0x0080
+#define WII_BTN_LEFT	0x0100
+#define WII_BTN_RIGHT	0x0200
+#define WII_BTN_DOWN	0x0400
+#define WII_BTN_UP		0x0800
+#define WII_BTN_PLUS	0x1000
+
+
+
+/****************************************************************************************************************************/
+
 #include <SDL/SDL.h>
+#include <cwiid.h>
 
 /**
  * This Class handles all Input Events
  * Maybe wii and SNES too
  */
 class Event {
+private:
+	bdaddr_t blueaddr;
+	cwiid_wiimote_t *wiimote;
 public:
 	Event();
 	virtual ~Event();
+
+	void initWiimote();
 
 	virtual void onEvent(SDL_Event *event);
 	virtual void onInputFocus();
@@ -43,6 +76,7 @@ public:
 	virtual void onResize(int w, int h);
 	virtual void onExpose();
 	virtual void onExit();
+	virtual void onWiiButtonEvent(int buttons);
 	virtual void onUser(Uint8 type, int code, void *data1, void *data2);
 };
 

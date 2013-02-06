@@ -15,10 +15,12 @@
 #define OPTIONMENU 2
 #define PAUSEMENU 3
 #define CREDITS 4
+#define LEVELMENU 5
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 #include "define.h"
@@ -49,6 +51,8 @@ private:
 	int menuType;
 	int returnValue;
 
+//	string selectedLevel;
+
 	//Level *level; //TODO only testing
 
 	bool running;
@@ -56,11 +60,14 @@ private:
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle);
 	void onLButtonDown(int mX,int mY);
+	void onWiiButtonEvent(int buttons);
 
 	void render();
+	void select(int direction);
 
 
 	void start();
+	void levels();
 	void exit();
 	void options();
 	void quitLevel();

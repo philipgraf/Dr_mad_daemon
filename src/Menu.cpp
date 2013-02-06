@@ -15,6 +15,7 @@ Menu::Menu(int menuType) {
 	running = true;
 	this->menuType = menuType;
 	returnValue = 0;
+	//selectedLevel="";
 //	level = NULL;
 
 	currentItem = 0;
@@ -29,7 +30,7 @@ Menu::Menu(int menuType) {
 
 	case MAINMENU:
 		labeltexts.push_back("Start");
-		labelactions.push_back(&Menu::start);
+		labelactions.push_back(&Menu::levels);
 		labeltexts.push_back("Options");
 		labelactions.push_back(&Menu::options);
 		labeltexts.push_back("Credits");
@@ -60,6 +61,14 @@ Menu::Menu(int menuType) {
 		labeltexts.push_back("Philip Graf");
 		labelactions.push_back(&Menu::back);
 		labeltexts.push_back("Felix Eckner");
+		labelactions.push_back(&Menu::back);
+		break;
+	case LEVELMENU:
+		labeltexts.push_back("Level00");
+		labelactions.push_back(&Menu::start);
+		labeltexts.push_back("Level01");
+		labelactions.push_back(&Menu::start);
+		labeltexts.push_back("Back");
 		labelactions.push_back(&Menu::back);
 		break;
 	}
@@ -101,6 +110,24 @@ void Menu::render() {
 		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
 				&(items[i].position));
 	}
+}
+
+void Menu::select(int direction) {
+	TTF_Font *menufont = Game::curGame->getFont();
+ 		SDL_FreeSurface(items[currentItem].labelSurface);
+ 		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
+ 				items[currentItem].labelText.c_str(), colors[0]);
+
+	 //runter
+ 		if(direction & DOWN){
+ 			currentItem =(currentItem >= labeltexts.size() - 1) ? labeltexts.size() - 1 : currentItem + 1;
+ 		}else if(direction & UP){
+ 			currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
+ 		}
+
+ 		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
+ 				items[currentItem].labelText.c_str(), colors[1]);
+
 }
 
 int Menu::show() {
@@ -157,12 +184,21 @@ int Menu::show() {
 
 void Menu::start() {
 
-	Level level;
+	ostringstream s;
+	s << "l00" << currentItem;
+
+
+	Level level(s.str());
 	//Game::curGame->setCurrentLevel(level);
 	level.play();
 }
 
-void Menu::continueGame(){
+void Menu::levels(){
+	Menu levelmenu(LEVELMENU);
+	levelmenu.show();
+}
+
+void Menu::continueGame() {
 	this->running = false;
 }
 
@@ -212,32 +248,42 @@ void Menu::onExit() {
 void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	TTF_Font *menufont = Game::curGame->getFont();
 	switch (sym) {
+	case SDLK_TAB:
+		initWiimote();
+		break;
 	case SDLK_ESCAPE:
 		running = false;
 		break;
 	case SDLK_UP:
-		SDL_FreeSurface(items[currentItem].labelSurface);
-		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
-				items[currentItem].labelText.c_str(), colors[0]);
-		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
-		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
-				items[currentItem].labelText.c_str(), colors[1]);
+		select(UP);
 		break;
 	case SDLK_DOWN:
-		SDL_FreeSurface(items[currentItem].labelSurface);
-		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
-				items[currentItem].labelText.c_str(), colors[0]);
-		currentItem =
-				(currentItem >= labeltexts.size() - 1) ?
-						labeltexts.size() - 1 : currentItem + 1;
-		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
-				items[currentItem].labelText.c_str(), colors[1]);
+		select(DOWN);
 		break;
 	case SDLK_RETURN:
 		(this->*labelactions[currentItem])();
 		break;
 	default:
 		break;
+	}
+}
+
+void Menu::onWiiButtonEvent(int buttons) {
+	TTF_Font *menufont = Game::curGame->getFont();
+	switch (buttons) {
+	// if the wiimote is horizontal Left is down
+	case WII_BTN_LEFT:
+		select(DOWN);
+		break;
+	case WII_BTN_RIGHT:
+		select(UP);
+		break;
+	case WII_BTN_2:
+		(this->*labelactions[currentItem])();
+		break;
+	default:
+		break;
+
 	}
 }
 

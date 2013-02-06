@@ -125,7 +125,7 @@ void Event::onEvent(SDL_Event *event) {
 		switch (event->user.code) {
 		case MSGTYPE_BTN:
 			onWiiButtonEvent(*((int*) (event->user.data1)));
-			delete (int*) event->user.data1;
+			//delete (int*) event->user.data1;
 			break;
 		}
 		break;
@@ -234,12 +234,12 @@ void wiimote_callback(cwiid_wiimote_t *wiimote_my, int mesg_count,
 			break;
 		case CWIID_MESG_BTN:
 			SDL_Event event;
-			int *date1;
-			date1 = new int;
-			*date1 = mesg[i].btn_mesg.buttons;
+//			int *date1;
+//			date1 = new int;
+//			*date1 = ;
 			event.type = SDL_USEREVENT;
 			event.user.code = MSGTYPE_BTN;
-			event.user.data1 = date1;
+			event.user.data1 = &mesg[i].btn_mesg.buttons;
 			event.user.data2 = NULL;
 			SDL_PushEvent(&event);
 			break;

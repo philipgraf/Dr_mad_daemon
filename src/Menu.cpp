@@ -16,7 +16,7 @@ Menu::Menu(int menuType) {
 	this->menuType = menuType;
 	returnValue = 0;
 	//selectedLevel="";
-//	level = NULL;
+	//level = NULL;
 
 	currentItem = 0;
 	colors[0].r = 255;
@@ -89,8 +89,8 @@ Menu::~Menu() {
 	SDL_FreeSurface(backgroudFilter);
 	labeltexts.clear();
 	labelactions.clear();
-//	if(level != NULL)
-//		delete level;
+	//	if(level != NULL)
+	//		delete level;
 }
 
 void Menu::render() {
@@ -98,36 +98,31 @@ void Menu::render() {
 
 	if (background != NULL) {
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE,
-				backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
-		SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h
-				- 2 * TILESIZE };
+		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
+		SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h 	- 2 * TILESIZE };
 		SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	}
 
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
-				&(items[i].position));
+		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),	&(items[i].position));
 	}
 }
 
 void Menu::select(int direction) {
 	TTF_Font *menufont = Game::curGame->getFont();
- 		SDL_FreeSurface(items[currentItem].labelSurface);
- 		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
- 				items[currentItem].labelText.c_str(), colors[0]);
+	SDL_FreeSurface(items[currentItem].labelSurface);
+	items[currentItem].labelSurface = TTF_RenderText_Solid(menufont, items[currentItem].labelText.c_str(), colors[0]);
 
-	 //runter
- 		if(direction & DOWN){
- 			currentItem =(currentItem >= labeltexts.size() - 1) ? labeltexts.size() - 1 : currentItem + 1;
- 		}else if(direction & UP){
- 			currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
- 		}
+	//item below
+	if(direction & DOWN){
+		currentItem =(currentItem >= labeltexts.size() - 1) ? labeltexts.size() - 1 : currentItem + 1;
+	//item above
+	}else if(direction & UP){
+		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
+	}
 
- 		items[currentItem].labelSurface = TTF_RenderText_Solid(menufont,
- 				items[currentItem].labelText.c_str(), colors[1]);
-
+	items[currentItem].labelSurface = TTF_RenderText_Solid(menufont, items[currentItem].labelText.c_str(), colors[1]);
 }
 
 int Menu::show() {
@@ -213,7 +208,7 @@ void Menu::options() {
 
 void Menu::exit() {
 	//TODO if level has the main gameloop then return -1 oder so
-//	Game::curGame->setRunning(false);
+	//	Game::curGame->setRunning(false);
 	//TODO set returnvalue to pass throw and quit the whole game
 
 	//Game::curGame->getCurrentLevel()->setRunning(false);
@@ -231,8 +226,8 @@ void Menu::back() {
 
 void Menu::quitLevel() {
 	Game::curGame->getCurrentLevel()->setRunning(false);
-//	delete level;
-//	level=NULL;
+	//	delete level;
+	//	level=NULL;
 	running = false;
 }
 

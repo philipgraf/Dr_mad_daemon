@@ -65,7 +65,6 @@ private:
 	void render();
 	void select(int direction);
 
-
 	void start();
 	void levels();
 	void exit();
@@ -81,7 +80,6 @@ public:
 	Menu(int menuType=0);
 	virtual ~Menu();
 	int show();
-
 
 };
 

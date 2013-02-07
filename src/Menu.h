@@ -54,9 +54,6 @@ private:
 
 	Language lang;
 
-//	string selectedLevel;
-
-	//Level *level; //TODO only testing
 
 	bool running;
 	void onExit();

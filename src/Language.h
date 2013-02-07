@@ -16,12 +16,15 @@ using namespace YAML;
 class Language {
 private:
 	Node root;
-	std::string lang;
+	std::string language;
 
 public:
 	Language();
 	virtual ~Language();
 	std::string operator[](std::string key);
+
+
+	void setLanguage(std::string language);
 };
 
 #endif /* LANGUAGE_H_ */

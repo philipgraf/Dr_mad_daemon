@@ -49,6 +49,13 @@ void Game::init() {
 	if ((font = TTF_OpenFont(FONTS "menu.ttf", 45)) == NULL) {
 		cout << "unable to load menufont" << endl;
 	}
+
+	loadSettings();
+}
+
+void Game::loadSettings() {
+	YAML::Node settings = YAML::LoadFile(CONFIGS"global.yml");
+	this->settings.language = settings["language"].Scalar();
 }
 
 /********************************** GETTER AND SETTER **********************************************************/

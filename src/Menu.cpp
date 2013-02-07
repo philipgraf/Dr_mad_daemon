@@ -15,8 +15,6 @@ Menu::Menu(int menuType) {
 	running = true;
 	this->menuType = menuType;
 	returnValue = 0;
-	//selectedLevel="";
-	//level = NULL;
 
 	currentItem = 0;
 	colors[0].r = 255;
@@ -89,8 +87,6 @@ Menu::~Menu() {
 	SDL_FreeSurface(backgroudFilter);
 	labeltexts.clear();
 	labelactions.clear();
-	//	if(level != NULL)
-	//		delete level;
 }
 
 void Menu::render() {
@@ -184,7 +180,6 @@ void Menu::start() {
 
 
 	Level level(s.str());
-	//Game::curGame->setCurrentLevel(level);
 	level.play();
 }
 

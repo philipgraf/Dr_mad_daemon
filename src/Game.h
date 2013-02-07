@@ -10,6 +10,8 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <string>
+#include <yaml-cpp/yaml.h>
 
 #include "Menu.h"
 #include "Level.h"
@@ -17,16 +19,23 @@
 
 using namespace std;
 
+typedef struct{
+	string language;
+}settings_t;
+
 class Game {
 
 public:
 	static Game *curGame;
+	settings_t settings;
 private:
 
 	SDL_Surface * display;
 	TTF_Font *font;
 
 	Level *currentLevel;
+
+	void loadSettings();
 
 public:
 	Game();

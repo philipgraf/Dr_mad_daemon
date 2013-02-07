@@ -16,7 +16,6 @@ int actionframes[] = { 1, 4, 4 };
  */
 Entity::Entity() {
 	// TODO Auto-generated constructor stub
-
 }
 
 /** Constuctor

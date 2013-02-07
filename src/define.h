@@ -14,6 +14,8 @@
 #define FONTS DATA "fonts/"
 #define IMG DATA "img/"
 #define LEVELS DATA "levels/"
+#define MUSIC DATA "music/"
+#define SOUNDS DATA "sounds/"
 
 
 #endif /* DEFINE_H_ */

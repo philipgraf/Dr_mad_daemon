@@ -16,6 +16,7 @@
 #define LEVELS DATA "levels/"
 #define MUSIC DATA "music/"
 #define SOUNDS DATA "sounds/"
+#define CONFIGS DATA "configs/"
 
 
 #endif /* DEFINE_H_ */

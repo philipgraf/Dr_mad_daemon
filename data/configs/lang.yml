@@ -1,0 +1,45 @@
+greeting:
+    en: Hello Dr. In Sanus
+    de: Hallo Doktor
+    lt: salve Sciens
+    ru: Привет врача
+play:
+    en: Play Game
+    de: Spiel Starten
+    lt: ludere venatus
+options:
+    en: Options
+    de: Optionen
+    lt: Occasus
+exit:
+    en: Exit
+    de: Beenden
+    lt: Finis
+credits:
+    en: Credits
+    de: Credits
+    lt: Credits
+back:
+    en: Back
+    de: Zurück
+    lt: Retro
+sound:
+    en: Sound
+    de: Ton
+    lt: Tonus
+controller:
+    en: Control Settings
+    de: Kontroller Einstellungen
+    lt: Control Occasum
+continue:
+    en: Continue
+    de: Fortsetzen
+    lt: permane
+leave level:
+    en: Leave Level
+    de: Level Verlassen
+    lt: Egredior Scena
+quit game:
+    en: Quit Game
+    de: Spiel Verlassen
+    lt: Egredior Venatus

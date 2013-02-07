@@ -27,6 +27,7 @@
 #include "Event.h"
 #include "Game.h"
 #include "Level.h"
+#include "Language.h"
 
 class Level;
 using namespace std;
@@ -50,6 +51,8 @@ private:
 	SDL_Color colors[2];
 	int menuType;
 	int returnValue;
+
+	Language lang;
 
 //	string selectedLevel;
 

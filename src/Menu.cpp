@@ -29,31 +29,31 @@ Menu::Menu(int menuType) {
 	switch (menuType) {
 
 	case MAINMENU:
-		labeltexts.push_back("Start");
+		labeltexts.push_back(lang["play"]);
 		labelactions.push_back(&Menu::levels);
-		labeltexts.push_back("Options");
+		labeltexts.push_back(lang["options"]);
 		labelactions.push_back(&Menu::options);
-		labeltexts.push_back("Credits");
+		labeltexts.push_back(lang["credits"]);
 		labelactions.push_back(&Menu::credits);
-		labeltexts.push_back("Exit");
+		labeltexts.push_back(lang["exit"]);
 		labelactions.push_back(&Menu::exit);
 		break;
 	case PAUSEMENU:
-		labeltexts.push_back("Continue");
+		labeltexts.push_back(lang["continue"]);
 		labelactions.push_back(&Menu::continueGame);
-		labeltexts.push_back("Sound");
+		labeltexts.push_back(lang["sound"]);
 		labelactions.push_back(&Menu::sound);
-		labeltexts.push_back("Quit Level");
+		labeltexts.push_back(lang["quit level"]);
 		labelactions.push_back(&Menu::quitLevel);
-		labeltexts.push_back("Quit Game");
+		labeltexts.push_back(lang["quit game"]);
 		labelactions.push_back(&Menu::exit);
 		break;
 	case OPTIONMENU:
-		labeltexts.push_back("Sound");
+		labeltexts.push_back(lang["sound"]);
 		labelactions.push_back(&Menu::sound);
-		labeltexts.push_back("Controller Settings");
+		labeltexts.push_back(lang["controller settings"]);
 		labelactions.push_back(&Menu::controllerSettings);
-		labeltexts.push_back("Back");
+		labeltexts.push_back(lang["back"]);
 		labelactions.push_back(&Menu::back);
 		break;
 	case CREDITS:
@@ -68,7 +68,7 @@ Menu::Menu(int menuType) {
 		labelactions.push_back(&Menu::start);
 		labeltexts.push_back("Level01");
 		labelactions.push_back(&Menu::start);
-		labeltexts.push_back("Back");
+		labeltexts.push_back(lang["back"]);
 		labelactions.push_back(&Menu::back);
 		break;
 	}

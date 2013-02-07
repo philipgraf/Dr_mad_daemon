@@ -1,66 +1,77 @@
 greeting:
     en: Hello Dr. In Sanus
     de: Hallo Doktor
-    lt: salve Sciens
-    ru: Привет врача
+    lt: Salve Scientifice
+    fr:	Bonjour Docteur
+    ru: Привет доктор
     ls: H3ll0 D
 play:
     en: Play Game
     de: Spiel Starten
-    lt: Ludere Venatus
+    lt: Inire Ludum 
     fr: Commencer Jeu
+    ru: Играть игру
     ls: P14y 64m3
 options:
     en: Settings
     de: Einstellungen
-    lt: Occasus
+    lt: Facultates
     fr: Paramètres
+    ru: настройки
     ls: $377in6$
 exit:
     en: Exit
     de: Beenden
-    lt: Finis
+    lt: Finire
     fr: Terminer
+    ru: Выход
     ls: 3x17
 credits:
     en: Contributors
     de: Mitwirkende
     lt: Contributors
-    fr: Conributeur
+    fr: Contributeurs
+    ru: Авторы
     ls: (0n7r1bu70r$
 back:
     en: Back
     de: Zurück
     lt: Retro
     fr: Retour
+    ru: назад
     ls: b4(k
 sound:
     en: Sound
     de: Ton
     lt: Tonus
-    fr: Ton
+    fr: Son
+    ru: звук
     ls: 50und
 controller:
-    en: Control Settings
-    de: Kontroller Einstellungen
-    lt: Control Occasum
-    fr: Paramètres le Controller
-    ls: (0ntr0l 53771n6$
+    en: Controls
+    de: Steuerung
+    lt: Gubernatio
+    fr: Commande
+    ru: Управление
+    ls: (0ntr0l5
 continue:
     en: Continue
     de: Fortsetzen
-    lt: Permane
+    lt: Pergere
     fr: Continuer
+    ru: продолжать
     ls: (0n71nu3
 quit level:
     en: Quit Level
     de: Level Verlassen
-    lt: Egredior Scena
+    lt: Relinquere Locas 
     fr: Quitter Niveau
+    ru: покинуть Уровень 
     ls: Qu17 L3v3l
 quit game:
     en: Quit Game
     de: Spiel Verlassen
-    lt: Egredior Venatus
+    lt: Relinquere Ludum
     fr: Quitter le Jeu
+    ru: покинуть игру
     ls: Qu17 64m3

@@ -54,7 +54,7 @@ void Game::init() {
 }
 
 void Game::loadSettings() {
-	YAML::Node settings = YAML::LoadFile(CONFIGS"global.yml");
+	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
 	this->settings.language = settings["language"].Scalar();
 }
 

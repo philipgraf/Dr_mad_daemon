@@ -11,7 +11,7 @@
 Language::Language() {
 
 	root = LoadFile(CONFIGS"lang.yml");
-	lang = "en";
+	lang = "de";
 
 }
 

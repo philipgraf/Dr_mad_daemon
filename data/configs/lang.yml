@@ -3,43 +3,64 @@ greeting:
     de: Hallo Doktor
     lt: salve Sciens
     ru: Привет врача
+    ls: H3ll0 D
 play:
     en: Play Game
     de: Spiel Starten
-    lt: ludere venatus
+    lt: Ludere Venatus
+    fr: Commencer Jeu
+    ls: P14y 64m3
 options:
-    en: Options
-    de: Optionen
+    en: Settings
+    de: Einstellungen
     lt: Occasus
+    fr: Paramètres
+    ls: $377in6$
 exit:
     en: Exit
     de: Beenden
     lt: Finis
+    fr: Terminer
+    ls: 3x17
 credits:
-    en: Credits
-    de: Credits
-    lt: Credits
+    en: Contributors
+    de: Mitwirkende
+    lt: Contributors
+    fr: Conributeur
+    ls: (0n7r1bu70r$
 back:
     en: Back
     de: Zurück
     lt: Retro
+    fr: Retour
+    ls: b4(k
 sound:
     en: Sound
     de: Ton
     lt: Tonus
+    fr: Ton
+    ls: 50und
 controller:
     en: Control Settings
     de: Kontroller Einstellungen
     lt: Control Occasum
+    fr: Paramètres le Controller
+    ls: (0ntr0l 53771n6$
 continue:
     en: Continue
     de: Fortsetzen
-    lt: permane
-leave level:
-    en: Leave Level
+    lt: Permane
+    fr: Continuer
+    ls: (0n71nu3
+quit level:
+    en: Quit Level
     de: Level Verlassen
     lt: Egredior Scena
+    fr: Quitter Niveau
+    ls: Qu17 L3v3l
 quit game:
     en: Quit Game
     de: Spiel Verlassen
     lt: Egredior Venatus
+    fr: Quitter le Jeu
+    ls: Qu17 64m3

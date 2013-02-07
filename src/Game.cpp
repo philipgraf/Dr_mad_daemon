@@ -46,7 +46,7 @@ void Game::init() {
 		cout << "unable to initialize TTF" << endl;
 	}
 
-	if ((font = TTF_OpenFont(FONTS "menu.ttf", 45)) == NULL) {
+	if ((font = TTF_OpenFont(FONTS "menu.ttf", 40)) == NULL) {
 		cout << "unable to load menufont" << endl;
 	}
 
@@ -54,6 +54,7 @@ void Game::init() {
 }
 
 void Game::loadSettings() {
+	//TODO if file not exist load default settings and store in file
 	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
 	this->settings.language = settings["language"].Scalar();
 }

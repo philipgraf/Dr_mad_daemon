@@ -19,6 +19,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -75,6 +76,7 @@ private:
 	void sound();
 	void controllerSettings();
 	void continueGame();
+	void changeLanguage();
 
 public:
 	Menu(int menuType=0);

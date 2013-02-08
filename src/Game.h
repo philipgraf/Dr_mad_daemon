@@ -10,8 +10,10 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
 #include <string>
 #include <yaml-cpp/yaml.h>
+#include <map>
 
 #include "Menu.h"
 #include "Level.h"
@@ -27,7 +29,7 @@ class Game {
 
 public:
 	static Game *curGame;
-	settings_t settings;
+	static map<string,Mix_Chunk*> sounds;
 private:
 
 	SDL_Surface * display;
@@ -38,11 +40,15 @@ private:
 	void loadSettings();
 
 public:
+	settings_t settings;
+
 	Game();
 	virtual ~Game();
 
 	int execute();
 	void init();
+
+	void loadSounds();
 
 	Level* getCurrentLevel();
 	void destroyCurrentLevel();

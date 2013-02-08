@@ -21,7 +21,14 @@ Language::~Language() {
 }
 
 std::string Language::operator [](std::string key) {
-	return root[key][language].Scalar();
+
+	std::string retVel;
+	if(root[key][language].Scalar() == detail::node_data::empty_scalar){
+		return root[key]["en"].Scalar();
+	}else{
+		return root[key][language].Scalar();
+
+	}
 }
 
 void Language::setLanguage(std::string language) {

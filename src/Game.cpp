@@ -8,12 +8,14 @@
 #include "Game.h"
 
 Game* Game::curGame;
+map<string,Mix_Chunk*> Game::sounds;
 
 Game::Game() {
 	curGame = this;
 	display = NULL;
 	font = NULL;
 	currentLevel = NULL;
+
 }
 
 Game::~Game() {
@@ -32,31 +34,67 @@ int Game::execute() {
 
 void Game::init() {
 
+	/**
+	 * Initialize SDL
+	 */
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO) < 0) {
 		cout << "unable to initialize SDL" << endl;
 	}
 
+	/**
+	 * Create Game Window with defined width and height and Bits per pixel use by the system
+	 */
 	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT,
 			SDL_GetVideoInfo()->vfmt->BitsPerPixel,
 			SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL) {
 		cout << "unable to initialize display" << endl;
 	}
+
+	/**
+	 * Set Title
+	 */
 	SDL_WM_SetCaption(TITLE, NULL);
+
+	/**
+	 * Initialize SDL_ttf for Fonts
+	 */
 	if (TTF_Init() < 0) {
 		cout << "unable to initialize TTF" << endl;
 	}
 
+	/**
+	 * Load the menu font
+	 */
 	if ((font = TTF_OpenFont(FONTS "menu.ttf", 40)) == NULL) {
 		cout << "unable to load menufont" << endl;
 	}
 
+	/**
+	 * Load settings from game.yml file
+	 */
 	loadSettings();
+
+	/**
+	 * Initialize SDL_mixer for audio
+	 */
+	Mix_Init(MIX_INIT_OGG);
+
+	/**
+	 * load all the sound files
+	 */
+	loadSounds();
 }
 
 void Game::loadSettings() {
 	//TODO if file not exist load default settings and store in file
 	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
 	this->settings.language = settings["language"].Scalar();
+}
+
+
+void Game::loadSounds() {
+	sounds["menu"]=Mix_LoadWAV(SOUNDS"menu.ogg");
+	sounds["payer jump"]=Mix_LoadWAV(SOUNDS"PlayerJump.ogg");
 }
 
 /********************************** GETTER AND SETTER **********************************************************/
@@ -71,10 +109,10 @@ void Game::setCurrentLevel(Level *curLev) {
 
 void Game::destroyCurrentLevel() {
 	if (currentLevel != NULL) {
-		//delete currentLevel;
 		currentLevel = NULL;
 	}
 }
+
 
 TTF_Font* Game::getFont() {
 	return font;

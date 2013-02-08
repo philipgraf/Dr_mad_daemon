@@ -49,6 +49,8 @@ Menu::Menu(int menuType) {
 	case OPTIONMENU:
 		labeltexts.push_back(lang["sound"]);
 		labelactions.push_back(&Menu::sound);
+		labeltexts.push_back(lang["language"]+":"+Game::curGame->settings.language);
+		labelactions.push_back(&Menu::changeLanguage);
 		labeltexts.push_back(lang["controller"]);
 		labelactions.push_back(&Menu::controllerSettings);
 		labeltexts.push_back(lang["back"]);
@@ -106,6 +108,9 @@ void Menu::render() {
 }
 
 void Menu::select(int direction) {
+
+	Mix_PlayChannel(-1,Game::sounds["menu"],0);
+
 	TTF_Font *menufont = Game::curGame->getFont();
 	SDL_FreeSurface(items[currentItem].labelSurface);
 	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[0]);
@@ -120,6 +125,7 @@ void Menu::select(int direction) {
 
 	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[1]);
 }
+
 
 int Menu::show() {
 	SDL_Surface *screen = SDL_GetVideoSurface();
@@ -181,6 +187,11 @@ void Menu::start() {
 
 	Level level(s.str());
 	level.play();
+}
+
+
+void Menu::changeLanguage() {
+
 }
 
 void Menu::levels(){

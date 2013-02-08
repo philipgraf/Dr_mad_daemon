@@ -21,6 +21,11 @@ Game::Game() {
 Game::~Game() {
 	SDL_FreeSurface(display);
 	SDL_Quit();
+
+	//TODO Free all sounds via map iterator
+
+	Mix_CloseAudio();
+	Mix_Quit();
 }
 
 int Game::execute() {
@@ -79,6 +84,8 @@ void Game::init() {
 	 */
 	Mix_Init(MIX_INIT_OGG);
 
+	Mix_OpenAudio(settings.audioRate,AUDIO_S16,2,1024);
+
 	/**
 	 * load all the sound files
 	 */
@@ -89,12 +96,13 @@ void Game::loadSettings() {
 	//TODO if file not exist load default settings and store in file
 	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
 	this->settings.language = settings["language"].Scalar();
+	this->settings.audioRate = settings["audio rate"].as<int>();
 }
 
 
 void Game::loadSounds() {
 	sounds["menu"]=Mix_LoadWAV(SOUNDS"menu.ogg");
-	sounds["payer jump"]=Mix_LoadWAV(SOUNDS"PlayerJump.ogg");
+	sounds["player jump"]=Mix_LoadWAV(SOUNDS"playerJump.ogg");
 }
 
 /********************************** GETTER AND SETTER **********************************************************/

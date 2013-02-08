@@ -23,6 +23,7 @@ using namespace std;
 
 typedef struct{
 	string language;
+	int audioRate;
 }settings_t;
 
 class Game {

@@ -1,0 +1,7 @@
+name    : testlevel
+width   : 25
+height  : 20
+bgImage : bg.bmp
+bgMusic : LukHash_DigitalHeart.ogg
+gravity : 1.0
+time    : 300

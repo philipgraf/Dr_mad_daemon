@@ -6,17 +6,25 @@ Level::Level(string lname) {
 	Game::curGame->setCurrentLevel(this);
 
 	tilelist = NULL;
-	background = NULL;
+	bgImage = NULL;
 	running = true;
 	string background;
 	float gravity;
-	fstream filestream;
-	filestream.open((LEVELS + lname + ".conf").c_str(), fstream::in);
-	filestream >> name >> width >> height >> background >> gravity >> time;
-	filestream.close();
+	YAML::Node levelconfig = YAML::LoadFile(LEVELS + lname + ".yml");
+
+	name = levelconfig["name"].Scalar();
+	width = levelconfig["width"].as<int>();
+	height = levelconfig["height"].as<int>();
+	background = levelconfig["bgImage"].Scalar();
+	gravity = levelconfig["gravity"].as<float>();
+	time = levelconfig["time"].as<int>();
+	bgMusic = Mix_LoadMUS((MUSIC+levelconfig["bgMusic"].Scalar()).c_str());
+
 
 	gravity2d = new b2Vec2(0.0f, gravity * 10);
 	world = new b2World(*gravity2d);
+
+
 
 	Tile::loadTileset();
 
@@ -30,11 +38,11 @@ Level::Level(string lname) {
 	if (!tmp) {
 		cout << "unable to load BMP file" << endl;
 	} else {
-		this->background = SDL_DisplayFormat(tmp);
+		this->bgImage = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
-		if (this->background != 0) {
-			SDL_SetColorKey(this->background, SDL_SRCCOLORKEY | SDL_RLEACCEL,
-					SDL_MapRGB(this->background->format, 255, 0, 255));
+		if (this->bgImage != 0) {
+			SDL_SetColorKey(this->bgImage, SDL_SRCCOLORKEY | SDL_RLEACCEL,
+					SDL_MapRGB(this->bgImage->format, 255, 0, 255));
 		}
 	}
 
@@ -109,7 +117,7 @@ void Level::render() {
 #ifdef DEBUG
 	world->DrawDebugData();
 #endif
-	SDL_Flip (SDL_GetVideoSurface());
+	SDL_Flip(SDL_GetVideoSurface());
 }
 
 void Level::logic() {
@@ -137,6 +145,9 @@ void Level::logic() {
 void Level::play() {
 	SDL_Event event;
 	Uint32 start;
+
+	Mix_PlayMusic(bgMusic,-1);
+
 #ifdef DEBUG
 	int fps=0;
 	int fpstime=0;
@@ -171,9 +182,10 @@ void Level::play() {
 #endif
 
 	}
+	Mix_HaltMusic();
+	Mix_FreeMusic(bgMusic);
 	Game::curGame->destroyCurrentLevel();
 }
-
 
 void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 
@@ -265,7 +277,7 @@ Tile**** Level::getTilelist() const {
 }
 
 SDL_Surface* Level::getBackground() const {
-	return background;
+	return bgImage;
 }
 
 void Level::setRunning(bool running) {

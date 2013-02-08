@@ -138,6 +138,8 @@ void Entity::move() {
 			float impulse = body->GetMass();
 			body->ApplyLinearImpulse(b2Vec2(0, -impulse),
 					body->GetWorldCenter());
+			Mix_PlayChannel(-1,Game::sounds["player jump"],0);
+
 
 		}
 		//action = ACTION_JUMP_LEFT;

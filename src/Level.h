@@ -4,6 +4,9 @@
 #include <string>
 #include <fstream>
 #include <Box2D/Box2D.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
+#include <yaml-cpp/yaml.h>
 
 #include "Tile.h"
 #include "Entity.h"
@@ -33,7 +36,8 @@ private:
 	Tile ****tilelist;
 
 	string name; /**< the name of the Level. */
-	SDL_Surface *background;
+	SDL_Surface *bgImage;
+	Mix_Music *bgMusic;
 	b2World *world;
 	Entity* player; 
 	int width;

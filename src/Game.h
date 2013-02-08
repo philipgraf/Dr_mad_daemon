@@ -31,6 +31,7 @@ class Game {
 public:
 	static Game *curGame;
 	static map<string,Mix_Chunk*> sounds;
+	static vector<string> supLanguages;
 private:
 
 	SDL_Surface * display;
@@ -39,6 +40,9 @@ private:
 	Level *currentLevel;
 
 	void loadSettings();
+	void loadSounds();
+
+	void getSupportedLanguages();
 
 public:
 	settings_t settings;
@@ -49,7 +53,7 @@ public:
 	int execute();
 	void init();
 
-	void loadSounds();
+
 
 	Level* getCurrentLevel();
 	void destroyCurrentLevel();

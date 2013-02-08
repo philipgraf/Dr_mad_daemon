@@ -9,6 +9,7 @@
 
 Game* Game::curGame;
 map<string,Mix_Chunk*> Game::sounds;
+vector<string> Game::supLanguages;
 
 Game::Game() {
 	curGame = this;
@@ -90,6 +91,8 @@ void Game::init() {
 	 * load all the sound files
 	 */
 	loadSounds();
+
+	getSupportedLanguages();
 }
 
 void Game::loadSettings() {
@@ -103,6 +106,15 @@ void Game::loadSettings() {
 void Game::loadSounds() {
 	sounds["menu"]=Mix_LoadWAV(SOUNDS"menu.ogg");
 	sounds["player jump"]=Mix_LoadWAV(SOUNDS"playerJump.ogg");
+}
+
+void Game::getSupportedLanguages(){
+	YAML::Node root = YAML::LoadFile(CONFIGS"lang.yml");
+
+	for(YAML::iterator it = root["greeting"].begin(); it != root["greeting"].end(); ++it){
+		supLanguages.push_back(it->first.Scalar());
+	}
+
 }
 
 /********************************** GETTER AND SETTER **********************************************************/

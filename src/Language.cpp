@@ -12,7 +12,6 @@
 Language::Language() {
 
 	root = LoadFile(CONFIGS"lang.yml");
-	language = Game::curGame->settings.language;
 
 }
 
@@ -23,14 +22,10 @@ Language::~Language() {
 std::string Language::operator [](std::string key) {
 
 	std::string retVel;
-	if(root[key][language].Scalar() == detail::node_data::empty_scalar){
+	if(root[key][Game::curGame->settings.language].Scalar() == detail::node_data::empty_scalar){
 		return root[key]["en"].Scalar();
 	}else{
-		return root[key][language].Scalar();
+		return root[key][Game::curGame->settings.language].Scalar();
 
 	}
-}
-
-void Language::setLanguage(std::string language) {
-	this->language = language;
 }

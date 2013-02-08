@@ -24,6 +24,35 @@ Menu::Menu(int menuType) {
 	colors[1].g = 176;
 	colors[1].b = 248;
 
+	build();
+
+	if (menuType != PAUSEMENU) {
+		SDL_Surface *tmp = SDL_LoadBMP(IMG"menubg.bmp");
+		background = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+	}
+
+}
+
+Menu::~Menu() {
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
+		SDL_FreeSurface(items[i].labelSurface);
+	}
+
+	SDL_FreeSurface(backgroudFilter);
+	labeltexts.clear();
+	labelactions.clear();
+}
+
+void Menu::build() {
+
+	SDL_Surface *screen = SDL_GetVideoSurface();
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
+		delete items[i].labelSurface;
+	}
+
+	labelactions.clear();
+	labeltexts.clear();
 	switch (menuType) {
 
 	case MAINMENU:
@@ -49,7 +78,8 @@ Menu::Menu(int menuType) {
 	case OPTIONMENU:
 		labeltexts.push_back(lang["sound"]);
 		labelactions.push_back(&Menu::sound);
-		labeltexts.push_back(lang["language"]+":"+Game::curGame->settings.language);
+		labeltexts.push_back(
+				lang["language"] + ":" + Game::curGame->settings.language);
 		labelactions.push_back(&Menu::changeLanguage);
 		labeltexts.push_back(lang["controller"]);
 		labelactions.push_back(&Menu::controllerSettings);
@@ -72,65 +102,6 @@ Menu::Menu(int menuType) {
 		labelactions.push_back(&Menu::back);
 		break;
 	}
-
-	if (menuType != PAUSEMENU) {
-		SDL_Surface *tmp = SDL_LoadBMP(IMG"menubg.bmp");
-		background = SDL_DisplayFormat(tmp);
-		SDL_FreeSurface(tmp);
-	}
-
-}
-
-Menu::~Menu() {
-	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		SDL_FreeSurface(items[i].labelSurface);
-	}
-
-	SDL_FreeSurface(backgroudFilter);
-	labeltexts.clear();
-	labelactions.clear();
-}
-
-void Menu::render() {
-	SDL_Surface *screen = SDL_GetVideoSurface();
-
-	if (background != NULL) {
-		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
-		SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h 	- 2 * TILESIZE };
-		SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
-
-	}
-
-	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),	&(items[i].position));
-	}
-}
-
-void Menu::select(int direction) {
-
-	Mix_PlayChannel(-1,Game::sounds["menu"],0);
-
-	TTF_Font *menufont = Game::curGame->getFont();
-	SDL_FreeSurface(items[currentItem].labelSurface);
-	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[0]);
-
-	//item below
-	if(direction & DOWN){
-		currentItem =(currentItem >= labeltexts.size() - 1) ? labeltexts.size() - 1 : currentItem + 1;
-	//item above
-	}else if(direction & UP){
-		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
-	}
-
-	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[1]);
-}
-
-
-int Menu::show() {
-	SDL_Surface *screen = SDL_GetVideoSurface();
-	Uint32 start;
-	SDL_Event event;
 
 	backgroudFilter = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h,
 			SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask,
@@ -162,6 +133,54 @@ int Menu::show() {
 		items[i].selected = false;
 	}
 
+}
+
+void Menu::render() {
+	SDL_Surface *screen = SDL_GetVideoSurface();
+
+	if (background != NULL) {
+		SDL_BlitSurface(background, NULL, screen, NULL);
+		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE,
+				backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
+		SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h
+				- 2 * TILESIZE };
+		SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
+
+	}
+
+	for (unsigned int i = 0; i < labeltexts.size(); i++) {
+		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
+				&(items[i].position));
+	}
+}
+
+void Menu::select(int direction) {
+
+	Mix_PlayChannel(-1, Game::sounds["menu"], 0);
+
+	TTF_Font *menufont = Game::curGame->getFont();
+	SDL_FreeSurface(items[currentItem].labelSurface);
+	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont,
+			items[currentItem].labelText.c_str(), colors[0]);
+
+	//item below
+	if (direction & DOWN) {
+		currentItem =
+				(currentItem >= labeltexts.size() - 1) ?
+						labeltexts.size() - 1 : currentItem + 1;
+		//item above
+	} else if (direction & UP) {
+		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
+	}
+
+	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont,
+			items[currentItem].labelText.c_str(), colors[1]);
+}
+
+int Menu::show() {
+	Uint32 start;
+	SDL_Event event;
+
 	while (running) {
 		start = SDL_GetTicks();
 		while (SDL_PollEvent(&event)) {
@@ -169,7 +188,7 @@ int Menu::show() {
 		}
 		render();
 
-		SDL_Flip(screen);
+		SDL_Flip(SDL_GetVideoSurface());
 		if (SDL_GetTicks() - start < 1000 / FPS) {
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
 		}
@@ -184,17 +203,32 @@ void Menu::start() {
 	ostringstream s;
 	s << "l00" << currentItem;
 
-
 	Level level(s.str());
 	level.play();
 }
 
-
 void Menu::changeLanguage() {
+	int index = -1;
+	for (int i = 0; i < Game::supLanguages.size(); i++) {
+		if (Game::supLanguages[i] == Game::curGame->settings.language) {
+			index = i;
+		}
+	}
 
+	if (index != -1) {
+		index++;
+		if (index >= Game::supLanguages.size()) {
+			index = 0;
+		}
+		Game::curGame->settings.language = Game::supLanguages[index];
+	} else {
+
+		Game::curGame->settings.language = Game::supLanguages[0];
+	}
+	build();
 }
 
-void Menu::levels(){
+void Menu::levels() {
 	Menu levelmenu(LEVELMENU);
 	levelmenu.show();
 }
@@ -210,6 +244,7 @@ void Menu::sound() {
 void Menu::options() {
 	Menu optionMenu(OPTIONMENU);
 	optionMenu.show();
+	build();
 }
 
 void Menu::exit() {

@@ -65,6 +65,7 @@ private:
 
 	void render();
 	void select(int direction);
+	void build();
 
 	void start();
 	void levels();

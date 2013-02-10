@@ -104,7 +104,8 @@ void Game::loadSettings() {
 
 
 void Game::loadSounds() {
-	sounds["menu"]=Mix_LoadWAV(SOUNDS"menu.ogg");
+	sounds["menu select"]=Mix_LoadWAV(SOUNDS"menu_select.ogg");
+	sounds["menu confirm"]=Mix_LoadWAV(SOUNDS"menu_confirm.ogg");
 	sounds["player jump"]=Mix_LoadWAV(SOUNDS"playerJump.ogg");
 }
 

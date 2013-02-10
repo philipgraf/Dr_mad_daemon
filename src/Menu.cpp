@@ -156,7 +156,7 @@ void Menu::render() {
 
 void Menu::select(int direction) {
 
-	Mix_PlayChannel(-1, Game::sounds["menu"], 0);
+	Mix_PlayChannel(-1, Game::sounds["menu select"], 0);
 
 	TTF_Font *menufont = Game::curGame->getFont();
 	SDL_FreeSurface(items[currentItem].labelSurface);
@@ -297,6 +297,7 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		select(DOWN);
 		break;
 	case SDLK_RETURN:
+		Mix_PlayChannel(-1, Game::sounds["menu confirm"], 0);
 		(this->*labelactions[currentItem])();
 		break;
 	default:

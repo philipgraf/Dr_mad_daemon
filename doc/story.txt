@@ -1,0 +1,14 @@
+l000:	tutorial
+		im elektrofachhandel um bauteile zu besorgen
+l001:	WTF!!! 
+		rückkehr zum labor, dabei angriff der staubsaugerroboter
+l001:	DrInSaneLaboratory
+		ibuild 3000: i build unlimited intelligent laboratory devices hat eine fehlfunktion (produziert böse staubsaugerrobotter)
+		-> Aufgabe: strom des labors ausschalten
+		ibuild schaltet sich nicht aus (hat sich wohl selbst verbessert und mit einem generator versehen) und flüchtet (weil das internet nicht mehr geht)
+		-> aufgabe: verbleibende staubsaugerrobotter zerstören
+		-> Aufgabe: Strom einschalten
+		-> erkärung des labors
+l002:	suche des ibuild 3000 in der stadt -> internetcafe
+		
+l003:	

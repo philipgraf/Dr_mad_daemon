@@ -94,10 +94,10 @@ void Menu::build() {
 		labelactions.push_back(&Menu::back);
 		break;
 	case LEVELMENU:
-		labeltexts.push_back("Level00");
-		labelactions.push_back(&Menu::start);
-		labeltexts.push_back("Level01");
-		labelactions.push_back(&Menu::start);
+		for(int i=0; i< Game::levels.size(); i++){
+			labeltexts.push_back(Game::levelnames[Game::levels[i]]);
+			labelactions.push_back(&Menu::start);
+		}
 		labeltexts.push_back(lang["back"]);
 		labelactions.push_back(&Menu::back);
 		break;
@@ -200,10 +200,8 @@ int Menu::show() {
 
 void Menu::start() {
 
-	ostringstream s;
-	s << "l00" << currentItem;
 
-	Level level(s.str());
+	Level level(Game::levels[currentItem]);
 	level.play();
 }
 

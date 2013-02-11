@@ -10,6 +10,8 @@
 Game* Game::curGame;
 map<string,Mix_Chunk*> Game::sounds;
 vector<string> Game::supLanguages;
+vector<string> Game::levels;
+map<string,string> Game::levelnames;
 
 Game::Game() {
 	curGame = this;
@@ -92,6 +94,8 @@ void Game::init() {
 	 */
 	loadSounds();
 
+	loadLevels();
+
 	getSupportedLanguages();
 }
 
@@ -107,6 +111,20 @@ void Game::loadSounds() {
 	sounds["menu select"]=Mix_LoadWAV(SOUNDS"menu_select.ogg");
 	sounds["menu confirm"]=Mix_LoadWAV(SOUNDS"menu_confirm.ogg");
 	sounds["player jump"]=Mix_LoadWAV(SOUNDS"playerJump.ogg");
+}
+
+void Game::loadLevels() {
+	levels.push_back("l000");
+	levels.push_back("l001");
+	levels.push_back("l002");
+	levels.push_back("l003");
+
+
+	for(int i=0; i< levels.size();i++){
+		YAML::Node levelconfig = YAML::LoadFile(LEVELS+levels[i]+".yml");
+		levelnames[levels[i]] = levelconfig["name"].Scalar();
+	}
+
 }
 
 void Game::getSupportedLanguages(){

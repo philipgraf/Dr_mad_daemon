@@ -13,6 +13,7 @@
 #include <SDL/SDL_mixer.h>
 #include <string>
 #include <yaml-cpp/yaml.h>
+#include <vector>
 #include <map>
 
 #include "Menu.h"
@@ -31,6 +32,8 @@ class Game {
 public:
 	static Game *curGame;
 	static map<string,Mix_Chunk*> sounds;
+	static vector<string> levels;
+	static map<string,string> levelnames;
 	static vector<string> supLanguages;
 private:
 
@@ -41,6 +44,7 @@ private:
 
 	void loadSettings();
 	void loadSounds();
+	void loadLevels();
 
 	void getSupportedLanguages();
 

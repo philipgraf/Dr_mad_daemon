@@ -248,7 +248,7 @@ void Menu::changeSlot() {
 }
 
 void Menu::createSlot() {
-	string slotname = TextInput("Enter slotname:", 20).getInput();
+	string slotname = TextInput("Enter slotname:", 10).getInput();
 	if (slotname != "") {
 		Slot::slots.push_back(new Slot(slotname));
 		Game::curGame->settings.activeSlot = Slot::slots.size() - 1;

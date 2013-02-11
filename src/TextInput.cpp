@@ -20,7 +20,11 @@ TextInput::TextInput(string title, int maxSize) {
 }
 
 TextInput::~TextInput() {
-	// TODO Auto-generated destructor stub
+	SDL_FreeSurface(titleSurface);
+	SDL_FreeSurface(background);
+	SDL_FreeSurface(textInputBackground);
+	SDL_FreeSurface(textInputSurface);
+
 }
 
 string TextInput::getInput() {

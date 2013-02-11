@@ -106,8 +106,17 @@ void Game::loadSettings() {
 	//TODO if file not exist load default settings and store in file
 
 	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
-	this->settings.language = settings["language"].Scalar();
-	this->settings.audioRate = settings["audio rate"].as<int>();
+
+	if (settings["language"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.language = "en";
+		} else {
+			this->settings.language = settings["language"].Scalar();
+		}
+	if (settings["audio rate"].Scalar() == YAML::detail::node_data::empty_scalar) {
+		this->settings.audioRate = 22050;
+	} else {
+		this->settings.audioRate = settings["audio rate"].as<int>();
+	}
 
 	if (settings["active slot"].Scalar() == YAML::detail::node_data::empty_scalar) {
 		this->settings.activeSlot = -1;

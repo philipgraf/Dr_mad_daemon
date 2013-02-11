@@ -16,7 +16,7 @@ void Slot::loadSlots() {
 	} catch (...) {
 		//TODO create new default slots.yml
 	}
-	int i=0;
+	int i = 0;
 
 	for (YAML::iterator it = slots.begin(); it != slots.end(); ++it) {
 
@@ -24,27 +24,20 @@ void Slot::loadSlots() {
 		slot.setName(it->first.Scalar());
 		slot.setFinishedLevels(it->second["finished levels"].as<int>());
 		Slot::slots.push_back(new Slot(slot));
-		if(Game::curGame->settings.activeSlot == -1){
-			Game::curGame->settings.activeSlot = i++;
-		}
 	}
-	/*
-	 * if active slot in game.yml is invalid set to -1 for later checks
-	 */
-	if(Slot::slots[Game::curGame->settings.activeSlot] == NULL){
-		Game::curGame->settings.activeSlot= -1;
+	if (Game::curGame->settings.activeSlot < 0 || Game::curGame->settings.activeSlot >= Slot::slots.size()) {
+		Game::curGame->settings.activeSlot = Slot::slots.size() - 1;
 	}
-
 
 }
 
-void Slot::saveSlots(){
+void Slot::saveSlots() {
 
 	YAML::Emitter out;
 
 	out << YAML::BeginMap;
 
-	for(int i=0; i< slots.size() ; i++){
+	for (int i = 0; i < slots.size(); i++) {
 		out << YAML::Key << slots[i]->getName();
 		out << YAML::Value << YAML::BeginMap;
 		out << YAML::Key << "finished levels";
@@ -68,15 +61,15 @@ Slot::Slot(string name) {
 	//Slot::slotnames.push_back(this->name);
 }
 
-Slot::Slot(Slot &copy){
-	this->name=copy.name;
+Slot::Slot(Slot &copy) {
+	this->name = copy.name;
 	this->finishedLevels = copy.finishedLevels;
 }
 
 /*******************************************GETTER AND SETTER *************************************************/
 
 void Slot::checkAndSetFinishedLevels(int levelnum) {
-	if(levelnum == finishedLevels)
+	if (levelnum == finishedLevels)
 		finishedLevels++;
 }
 

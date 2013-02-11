@@ -29,6 +29,7 @@
 #include "Game.h"
 #include "Level.h"
 #include "Language.h"
+#include "TextInput.h"
 
 class Level;
 using namespace std;

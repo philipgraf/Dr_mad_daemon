@@ -28,6 +28,13 @@ void Slot::loadSlots() {
 			Game::curGame->settings.activeSlot = i++;
 		}
 	}
+	/*
+	 * if active slot in game.yml is invalid set to -1 for later checks
+	 */
+	if(Slot::slots[Game::curGame->settings.activeSlot] == NULL){
+		Game::curGame->settings.activeSlot= -1;
+	}
+
 
 }
 

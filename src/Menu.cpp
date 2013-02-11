@@ -344,6 +344,5 @@ void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left,
 
 void Menu::onLButtonDown(int mX, int mY) {
 	(this->*labelactions[currentItem])();
-	running = false;
 }
 

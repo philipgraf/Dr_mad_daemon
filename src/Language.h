@@ -10,10 +10,13 @@
 
 #include <yaml-cpp/yaml.h>
 #include <string>
+#include <vector>
 
 using namespace YAML;
 
 class Language {
+public:
+	static std::vector<std::string> supLanguages;
 private:
 	Node root;
 
@@ -21,6 +24,7 @@ public:
 	Language();
 	virtual ~Language();
 	std::string operator[](std::string key);
+	static void getSupportedLanguages();
 
 };
 

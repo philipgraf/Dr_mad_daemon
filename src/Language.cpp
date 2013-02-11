@@ -9,6 +9,8 @@
 #include "define.h"
 #include "Game.h"
 
+vector<string> Language::supLanguages;
+
 Language::Language() {
 
 	root = LoadFile(CONFIGS"lang.yml");
@@ -28,4 +30,14 @@ std::string Language::operator [](std::string key) {
 		return root[key][Game::curGame->settings.language].Scalar();
 
 	}
+}
+
+void Language::getSupportedLanguages() {
+	YAML::Node root = YAML::LoadFile(CONFIGS"lang.yml");
+
+	for (YAML::iterator it = root["greeting"].begin();
+			it != root["greeting"].end(); ++it) {
+		supLanguages.push_back(it->first.Scalar());
+	}
+
 }

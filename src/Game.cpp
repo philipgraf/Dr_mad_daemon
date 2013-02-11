@@ -8,10 +8,7 @@
 #include "Game.h"
 
 Game* Game::curGame;
-map<string,Mix_Chunk*> Game::sounds;
-vector<string> Game::supLanguages;
-vector<string> Game::levels;
-map<string,string> Game::levelnames;
+map<string, Mix_Chunk*> Game::sounds;
 
 Game::Game() {
 	curGame = this;
@@ -26,6 +23,10 @@ Game::~Game() {
 	SDL_Quit();
 
 	//TODO Free all sounds via map iterator
+
+	Language::supLanguages.clear();
+	Level::levels.clear();
+	Level::levelnames.clear();
 
 	Mix_CloseAudio();
 	Mix_Quit();
@@ -87,54 +88,61 @@ void Game::init() {
 	 */
 	Mix_Init(MIX_INIT_OGG);
 
-	Mix_OpenAudio(settings.audioRate,AUDIO_S16,2,1024);
+	Mix_OpenAudio(settings.audioRate, AUDIO_S16, 2, 1024);
 
 	/**
 	 * load all the sound files
 	 */
 	loadSounds();
 
-	loadLevels();
+	Level::loadLevels();
 
-	getSupportedLanguages();
+	Slot::loadSlots();
+
+	Language::getSupportedLanguages();
 }
 
 void Game::loadSettings() {
 	//TODO if file not exist load default settings and store in file
+
 	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
 	this->settings.language = settings["language"].Scalar();
 	this->settings.audioRate = settings["audio rate"].as<int>();
-}
 
+	if (settings["active slot"].Scalar() == YAML::detail::node_data::empty_scalar) {
+		this->settings.activeSlot = -1;
+	} else {
+		this->settings.activeSlot = settings["active slot"].as<int>();
+	}
+}
 
 void Game::loadSounds() {
-	sounds["menu select"]=Mix_LoadWAV(SOUNDS"menu_select.ogg");
-	sounds["menu confirm"]=Mix_LoadWAV(SOUNDS"menu_confirm.ogg");
-	sounds["player jump"]=Mix_LoadWAV(SOUNDS"playerJump.ogg");
+	sounds["menu select"] = Mix_LoadWAV(SOUNDS"menu_select.ogg");
+	sounds["menu confirm"] = Mix_LoadWAV(SOUNDS"menu_confirm.ogg");
+	sounds["player jump"] = Mix_LoadWAV(SOUNDS"playerJump.ogg");
 }
 
-void Game::loadLevels() {
-	levels.push_back("l000");
-	levels.push_back("l001");
-	levels.push_back("l002");
-	levels.push_back("l003");
+void Game::saveSettings() {
 
+	YAML::Emitter out;
+	out << YAML::BeginMap;
+	out << YAML::Key << "language";
+	out << YAML::Value << settings.language;
+	out << YAML::Key << "audio rate";
+	out << YAML::Value << settings.audioRate;
+	out << YAML::Key << "active slot";
+	out << YAML::Value << settings.activeSlot;
+	out << YAML::EndMap;
 
-	for(int i=0; i< levels.size();i++){
-		YAML::Node levelconfig = YAML::LoadFile(LEVELS+levels[i]+".yml");
-		levelnames[levels[i]] = levelconfig["name"].Scalar();
-	}
+	fstream filestream;
+	filestream.open(CONFIGS"game.yml",fstream::out);
 
-}
+	filestream << out.c_str();
 
-void Game::getSupportedLanguages(){
-	YAML::Node root = YAML::LoadFile(CONFIGS"lang.yml");
-
-	for(YAML::iterator it = root["greeting"].begin(); it != root["greeting"].end(); ++it){
-		supLanguages.push_back(it->first.Scalar());
-	}
+	filestream.close();
 
 }
+
 
 /********************************** GETTER AND SETTER **********************************************************/
 

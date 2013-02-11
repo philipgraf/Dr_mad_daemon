@@ -18,6 +18,7 @@
 
 #include "Menu.h"
 #include "Level.h"
+#include "Slot.h"
 
 
 using namespace std;
@@ -25,6 +26,7 @@ using namespace std;
 typedef struct{
 	string language;
 	int audioRate;
+	int activeSlot;
 }settings_t;
 
 class Game {
@@ -32,9 +34,7 @@ class Game {
 public:
 	static Game *curGame;
 	static map<string,Mix_Chunk*> sounds;
-	static vector<string> levels;
-	static map<string,string> levelnames;
-	static vector<string> supLanguages;
+
 private:
 
 	SDL_Surface * display;
@@ -44,9 +44,6 @@ private:
 
 	void loadSettings();
 	void loadSounds();
-	void loadLevels();
-
-	void getSupportedLanguages();
 
 public:
 	settings_t settings;
@@ -56,6 +53,8 @@ public:
 
 	int execute();
 	void init();
+
+	void saveSettings();
 
 
 

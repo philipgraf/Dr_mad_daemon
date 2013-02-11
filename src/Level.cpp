@@ -1,5 +1,23 @@
 #include "Level.h"
 
+vector<string> Level::levels;
+map<string,string> Level::levelnames;
+
+void Level::loadLevels() {
+	levels.push_back("l000");
+	levels.push_back("l001");
+	levels.push_back("l002");
+	levels.push_back("l003");
+
+
+	for(int i=0; i< levels.size();i++){
+		YAML::Node levelconfig = YAML::LoadFile(LEVELS+levels[i]+".yml");
+		levelnames[levels[i]] = levelconfig["name"].Scalar();
+	}
+
+}
+
+
 Level::Level(string lname) {
 
 	//TODO set current level???
@@ -122,6 +140,18 @@ void Level::render() {
 
 void Level::logic() {
 
+	if(finished){
+//		Levelresult levelresult;
+//		levelresult.time = this->time;
+//		levelresult.items = player->items;
+//		levelresult.slot = game->getCurrentSlot;
+//		...
+//
+//		levelresult.save();
+//		levelresult.show();
+		running = false;
+	}
+
 	for (int layer = 0; layer < 3; layer++) {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -137,7 +167,7 @@ void Level::logic() {
 
 	world->Step(timeStep, velocityIterations, positionIterations);
 
-	player->move();
+	player->logic();
 	mainCam->logic();
 
 }
@@ -197,17 +227,20 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		pauseMenu->show();
 		delete pauseMenu;
 		break;
-	case SDLK_LEFT:
+	case SDLK_a:
 		player->setDirection(LEFT);
 		break;
-	case SDLK_UP:
+	case SDLK_w:
 		player->setDirection(UP);
 		break;
-	case SDLK_DOWN:
+	case SDLK_s:
 		player->setDirection(DOWN);
 		break;
-	case SDLK_RIGHT:
+	case SDLK_d:
 		player->setDirection(RIGHT);
+		break;
+	case SDLK_e:
+		player->setUse(true);
 		break;
 	default:
 		break;
@@ -217,16 +250,16 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 
 void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	switch (sym) {
-	case SDLK_LEFT:
+	case SDLK_a:
 		player->delDirection(LEFT);
 		break;
-	case SDLK_UP:
+	case SDLK_w:
 		player->delDirection(UP);
 		break;
-	case SDLK_DOWN:
+	case SDLK_s:
 		player->delDirection(DOWN);
 		break;
-	case SDLK_RIGHT:
+	case SDLK_d:
 		player->delDirection(RIGHT);
 		break;
 	default:
@@ -278,6 +311,14 @@ Tile**** Level::getTilelist() const {
 
 SDL_Surface* Level::getBackground() const {
 	return bgImage;
+}
+
+bool Level::isFinished() const {
+	return finished;
+}
+
+void Level::setFinished(bool finished) {
+	this->finished = finished;
 }
 
 void Level::setRunning(bool running) {

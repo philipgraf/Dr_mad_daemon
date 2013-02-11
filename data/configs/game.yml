@@ -1,2 +1,3 @@
-language: de
+language: en
 audio rate: 22050
+active slot: 0

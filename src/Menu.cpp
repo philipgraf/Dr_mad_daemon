@@ -94,10 +94,24 @@ void Menu::build() {
 		labelactions.push_back(&Menu::back);
 		break;
 	case LEVELMENU:
-		for(int i=0; i< Game::levels.size(); i++){
-			labeltexts.push_back(Game::levelnames[Game::levels[i]]);
-			labelactions.push_back(&Menu::start);
+		labeltexts.push_back("Slot: "+ (Slot::slotnames.size() == 0 ? "None" : Slot::slotnames[Game::curGame->settings.activeSlot]));
+		labelactions.push_back(&Menu::slots);
+		if (Game::curGame->settings.activeSlot != -1) {
+			for (int i = 0; i <= Slot::slots[Slot::slotnames[Game::curGame->settings.activeSlot]]->getFinishedLevels(); i++) {
+				labeltexts.push_back(Level::levelnames[Level::levels[i]]);
+				labelactions.push_back(&Menu::start);
+			}
 		}
+		labeltexts.push_back(lang["back"]);
+		labelactions.push_back(&Menu::back);
+		break;
+	case SLOTMENU:
+		for(int i=0;i < Slot::slotnames.size();i++){
+			labeltexts.push_back(Slot::slotnames[i]);
+			labelactions.push_back(&Menu::changeSlot);
+		}
+		labeltexts.push_back(lang["new slot"]);
+		labelactions.push_back(&Menu::createSlot);
 		labeltexts.push_back(lang["back"]);
 		labelactions.push_back(&Menu::back);
 		break;
@@ -200,35 +214,53 @@ int Menu::show() {
 
 void Menu::start() {
 
-
-	Level level(Game::levels[currentItem]);
+	Level level(Level::levels[currentItem-1]);
 	level.play();
 }
 
 void Menu::changeLanguage() {
 	int index = -1;
-	for (int i = 0; i < Game::supLanguages.size(); i++) {
-		if (Game::supLanguages[i] == Game::curGame->settings.language) {
+	for (int i = 0; i < Language::supLanguages.size(); i++) {
+		if (Language::supLanguages[i] == Game::curGame->settings.language) {
 			index = i;
 		}
 	}
 
 	if (index != -1) {
 		index++;
-		if (index >= Game::supLanguages.size()) {
+		if (index >= Language::supLanguages.size()) {
 			index = 0;
 		}
-		Game::curGame->settings.language = Game::supLanguages[index];
+		Game::curGame->settings.language = Language::supLanguages[index];
 	} else {
 
-		Game::curGame->settings.language = Game::supLanguages[0];
+		Game::curGame->settings.language = Language::supLanguages[0];
 	}
 	build();
+}
+
+void Menu::changeSlot(){
+
+	Game::curGame->settings.activeSlot = currentItem;
+	running= false;
+}
+
+void Menu::createSlot(){
+	Slot::slots["TestSlot"] = new Slot("TestSlot");
+	Slot::slotnames.push_back("TestSlot");
+	Game::curGame->settings.activeSlot= Slot::slotnames.size()-1;
+	running=false;
 }
 
 void Menu::levels() {
 	Menu levelmenu(LEVELMENU);
 	levelmenu.show();
+}
+
+void Menu::slots(){
+	Menu slotmenu(SLOTMENU);
+	slotmenu.show();
+	build();
 }
 
 void Menu::continueGame() {
@@ -243,6 +275,7 @@ void Menu::options() {
 	Menu optionMenu(OPTIONMENU);
 	optionMenu.show();
 	build();
+	Game::curGame->saveSettings();
 }
 
 void Menu::exit() {

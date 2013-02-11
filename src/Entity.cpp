@@ -44,7 +44,6 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	}
 
 	alive = true;
-	flags = 0;
 	currentframe = 0;
 	action = ACTION_STAY;
 	direction = 0;
@@ -100,12 +99,33 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	entityList.push_back(this);
 }
 
+
+void Entity::logic() {
+
+	if(use){
+		switch(Game::curGame->getCurrentLevel()->getTilelist()[1][(int) body->GetPosition().x][(int) body->GetPosition().y]->getFlags()){
+		case 2:
+			Game::curGame->getCurrentLevel()->setFinished(true);
+			break;
+		default:
+			cout << "nothing" << endl;
+			break;
+		}
+		use=false;
+	}
+
+	move();
+	nextframe();
+}
+
 void Entity::nextframe() {
 	currentframe++;
 	if (currentframe >= actionframes[action]) {
 		currentframe = 0;
 	}
 }
+
+
 
 // FIXME better move algorithm needed
 /**
@@ -144,7 +164,7 @@ void Entity::move() {
 		}
 		//action = ACTION_JUMP_LEFT;
 	}
-	nextframe();
+
 
 }
 
@@ -191,14 +211,6 @@ void Entity::delDirection(Uint8 direction) {
 	this->direction &= ~direction;
 }
 
-int Entity::getFlags() const {
-	return flags;
-}
-
-void Entity::setFlags(int flags) {
-	this->flags = flags;
-}
-
 //TODO replace
 float Entity::getX() const {
 	return body->GetPosition().x;
@@ -234,6 +246,15 @@ float Entity::getWidth() const {
 
 void Entity::setWidth(float width) {
 	this->width = width;
+}
+
+bool Entity::isUse() const {
+	return use;
+}
+
+
+void Entity::setUse(bool use) {
+	this->use = use;
 }
 
 b2Body* Entity::getBody() {

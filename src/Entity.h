@@ -39,12 +39,14 @@ class Entity {
 private:
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
 	bool alive; /**< contain true if the entity is still alive and false if not */
+
+	bool use;
+	
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
 
 
-	int flags;
 	float width;
 	float height;
 
@@ -71,6 +73,7 @@ public:
 	Entity(string imagename,float w, float h,int x, int y);
 	virtual ~Entity();
 
+	void logic();
 	void move();
 
 
@@ -88,10 +91,6 @@ public:
 	void setDirection(Uint8 direction);
 
 	void  delDirection(Uint8 direction);
-
-	int getFlags() const;
-
-	void setFlags(int flags);
 
 	float getX() const;
 
@@ -112,6 +111,8 @@ public:
 	void setWidth(float width);
 
 	b2Body* getBody();
+	bool isUse() const;
+	void setUse(bool use);
 };
 
 #endif /* ENTITY_H_ */

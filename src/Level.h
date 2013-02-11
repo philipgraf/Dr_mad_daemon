@@ -28,6 +28,9 @@ class Camera;
  * @version 0.0.1 Class create
  */
 class Level : public Event {
+public:
+	static vector<string> levels;
+	static map<string,string> levelnames;
 private:
 
 	/**
@@ -46,6 +49,7 @@ private:
 	b2Vec2 *gravity2d;
 	Camera* mainCam;
 	bool running;
+	bool finished;
 
 #ifdef DEBUG
 	Debug b2Debug;
@@ -58,12 +62,16 @@ private:
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	
 public:
+	static void loadLevels();
+
 	Level(string lname="l000");
 	~Level();
 
 	void render();
 	void logic();
 	void play();
+
+
 
 
 
@@ -81,6 +89,8 @@ public:
 	SDL_Surface* getBackground() const;
 	b2World* getWorld() const;
 	void setRunning(bool running);
+	bool isFinished() const;
+	void setFinished(bool finished);
 };
 
 

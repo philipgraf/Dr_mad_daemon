@@ -69,6 +69,7 @@ private:
 
 	void start();
 	void levels();
+	void slots();
 	void exit();
 	void options();
 	void quitLevel();
@@ -78,6 +79,8 @@ private:
 	void controllerSettings();
 	void continueGame();
 	void changeLanguage();
+	void changeSlot();
+	void createSlot();
 
 public:
 	Menu(int menuType=0);

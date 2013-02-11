@@ -4,22 +4,27 @@ WiiControll
 
 Januar:
 KW1:
-	Camera
+	Camera -> done
 	Exceptionhandling
 KW2:
 	Collitiondetection
 KW3:
 	Jump / Gravitiy
-	Level change
+	Level change ->done
 KW1-4:
 	Animations
 	Graphics/Tileset/Player/BadGuys
 
 Februar:
-Menuclass (Sound/Resolution/Fullscreen/Credits)
+Menuclass (Sound/Resolution/Fullscreen/Credits)-> nearly done
 Leveleditor
 Story
 levelresults
 highscore
-savegames
+savegames -> nearly done
 
+-> no.1 priority:
+	refactor entity class (badguy, player, enviroment)
+	gameplay
+	sound (0,25,50,75,100) 
+	fonts (sizes,color, etc)

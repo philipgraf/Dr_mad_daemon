@@ -11,3 +11,4 @@ Tests/.cccc/
 *.gcno
 a.out
 Leveleditor/
+*.*~

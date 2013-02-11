@@ -38,6 +38,7 @@ private:
 	 */
 	Tile ****tilelist;
 
+	int levelnum;
 	string name; /**< the name of the Level. */
 	SDL_Surface *bgImage;
 	Mix_Music *bgMusic;
@@ -64,7 +65,7 @@ private:
 public:
 	static void loadLevels();
 
-	Level(string lname="l000");
+	Level(int levelnum);
 	~Level();
 
 	void render();

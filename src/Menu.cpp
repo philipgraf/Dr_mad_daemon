@@ -94,10 +94,10 @@ void Menu::build() {
 		labelactions.push_back(&Menu::back);
 		break;
 	case LEVELMENU:
-		labeltexts.push_back("Slot: "+ (Slot::slotnames.size() == 0 ? "None" : Slot::slotnames[Game::curGame->settings.activeSlot]));
+		labeltexts.push_back("Slot: "+ (Slot::slots.size() == 0 ? "None" : Slot::slots[Game::curGame->settings.activeSlot]->getName()));
 		labelactions.push_back(&Menu::slots);
 		if (Game::curGame->settings.activeSlot != -1) {
-			for (int i = 0; i <= Slot::slots[Slot::slotnames[Game::curGame->settings.activeSlot]]->getFinishedLevels(); i++) {
+			for (int i = 0; i <= Slot::slots[Game::curGame->settings.activeSlot]->getFinishedLevels(); i++) {
 				labeltexts.push_back(Level::levelnames[Level::levels[i]]);
 				labelactions.push_back(&Menu::start);
 			}
@@ -106,8 +106,8 @@ void Menu::build() {
 		labelactions.push_back(&Menu::back);
 		break;
 	case SLOTMENU:
-		for(int i=0;i < Slot::slotnames.size();i++){
-			labeltexts.push_back(Slot::slotnames[i]);
+		for(int i=0;i < Slot::slots.size();i++){
+			labeltexts.push_back(Slot::slots[i]->getName());
 			labelactions.push_back(&Menu::changeSlot);
 		}
 		labeltexts.push_back(lang["new slot"]);
@@ -214,8 +214,9 @@ int Menu::show() {
 
 void Menu::start() {
 
-	Level level(Level::levels[currentItem-1]);
+	Level level(currentItem-1);
 	level.play();
+	build();
 }
 
 void Menu::changeLanguage() {
@@ -246,9 +247,8 @@ void Menu::changeSlot(){
 }
 
 void Menu::createSlot(){
-	Slot::slots["TestSlot"] = new Slot("TestSlot");
-	Slot::slotnames.push_back("TestSlot");
-	Game::curGame->settings.activeSlot= Slot::slotnames.size()-1;
+	Slot::slots.push_back(new Slot("TestSlot"));
+	Game::curGame->settings.activeSlot= Slot::slots.size()-1;
 	running=false;
 }
 

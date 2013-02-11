@@ -18,8 +18,7 @@ using namespace std;
 
 class Slot {
 public:
-	static vector<string> slotnames;
-	static map<string,Slot*> slots;
+	static vector<Slot*> slots;
 	static int currentSlot;
 
 	static void loadSlots();
@@ -32,6 +31,9 @@ public:
 	Slot(string name="DrInSane");
 	Slot(Slot &copy);
 	virtual ~Slot();
+
+
+	void checkAndSetFinishedLevels(int levelnum);
 	int getFinishedLevels() const;
 	void setFinishedLevels(int finishedLevels);
 	const string& getName() const;

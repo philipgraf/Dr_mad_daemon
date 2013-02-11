@@ -18,7 +18,14 @@ void Level::loadLevels() {
 }
 
 
-Level::Level(string lname) {
+Level::Level(int levelnum) {
+
+	if(levelnum >= levels.size()){
+		//TODO throw exception
+		this->levelnum=0;
+	}else{
+		this->levelnum = levelnum;
+	}
 
 	//TODO set current level???
 	Game::curGame->setCurrentLevel(this);
@@ -28,7 +35,7 @@ Level::Level(string lname) {
 	running = true;
 	string background;
 	float gravity;
-	YAML::Node levelconfig = YAML::LoadFile(LEVELS + lname + ".yml");
+	YAML::Node levelconfig = YAML::LoadFile(LEVELS + levels[this->levelnum] + ".yml");
 
 	name = levelconfig["name"].Scalar();
 	width = levelconfig["width"].as<int>();
@@ -64,7 +71,7 @@ Level::Level(string lname) {
 		}
 	}
 
-	loadMapFile(lname);
+	loadMapFile(levels[this->levelnum]);
 
 	mainCam = new Camera(player);
 }
@@ -149,6 +156,10 @@ void Level::logic() {
 //
 //		levelresult.save();
 //		levelresult.show();
+
+		Slot::slots[Game::curGame->settings.activeSlot]->checkAndSetFinishedLevels(levelnum);
+		Slot::saveSlots();
+
 		running = false;
 	}
 

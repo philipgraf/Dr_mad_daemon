@@ -17,21 +17,13 @@
 #define CREDITS 4
 #define LEVELMENU 5
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
-#include <SDL/SDL_mixer.h>
-#include <iostream>
-#include <sstream>
 #include <vector>
+#include <string>
+#include <SDL/SDL.h>
 
-#include "define.h"
-#include "Event.h"
-#include "Game.h"
-#include "Level.h"
 #include "Language.h"
-#include "TextInput.h"
+#include "Event.h"
 
-class Level;
 using namespace std;
 
 typedef struct {

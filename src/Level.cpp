@@ -1,4 +1,9 @@
 #include "Level.h"
+#include "Game.h"
+#include "Slot.h"
+#include "BadGuy.h"
+#include <fstream>
+#include <yaml-cpp/yaml.h>
 
 vector<string> Level::levels;
 map<string,string> Level::levelnames;
@@ -33,6 +38,7 @@ Level::Level(int levelnum) {
 	tilelist = NULL;
 	bgImage = NULL;
 	running = true;
+	levelFinished=false;
 	string background;
 	float gravity;
 	YAML::Node levelconfig = YAML::LoadFile(LEVELS + levels[this->levelnum] + ".yml");
@@ -87,11 +93,17 @@ Level::~Level() {
 		delete[] tilelist[i];
 	}
 	delete[] tilelist;
+	for(int i=0;i<Entity::entityList.size(); i++){
+		delete Entity::entityList[i];
+	}
 	Entity::entityList.clear();
 	SDL_FreeSurface(Tile::tileset);
 }
 
 void Level::loadMapFile(string filename) {
+
+	//TODO only testing
+	BadGuy *test = new BadGuy("badguy.bmp",1,0.5,5,5);
 
 	tilelist = new Tile***[3];
 	for (int i = 0; i < 3; i++) {
@@ -111,7 +123,7 @@ void Level::loadMapFile(string filename) {
 
 				if (id & TF_START) {
 					//TODO: get width and height dynamically
-					player = new Entity("player.bmp", 1, 2, x, y);
+					player = new Player("player.bmp", 1, 2, x, y);
 				}
 
 				tilelist[i][x][y] = new Tile(id);
@@ -147,7 +159,7 @@ void Level::render() {
 
 void Level::logic() {
 
-	if(finished){
+	if(levelFinished){
 //		Levelresult levelresult;
 //		levelresult.time = this->time;
 //		levelresult.items = player->items;
@@ -178,7 +190,9 @@ void Level::logic() {
 
 	world->Step(timeStep, velocityIterations, positionIterations);
 
-	player->logic();
+	for(int i=0;i<Entity::entityList.size();i++){
+		Entity::entityList[i]->logic();
+	}
 	mainCam->logic();
 
 }
@@ -304,7 +318,7 @@ int Level::getTileID(int x, int y, int layer) {
 	return tilelist[layer][x][y]->getId();
 }
 
-Entity* Level::getPlayer() {
+Player* Level::getPlayer() {
 	return player;
 }
 
@@ -325,11 +339,11 @@ SDL_Surface* Level::getBackground() const {
 }
 
 bool Level::isFinished() const {
-	return finished;
+	return levelFinished;
 }
 
 void Level::setFinished(bool finished) {
-	this->finished = finished;
+	this->levelFinished = finished;
 }
 
 void Level::setRunning(bool running) {

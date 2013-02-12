@@ -6,17 +6,11 @@
  */
 
 #include "Debug.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_gfxPrimitives.h>
+#include "define.h"
 
 using namespace std;
-
-Debug::Debug() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Debug::~Debug() {
-	// TODO Auto-generated destructor stub
-}
 
 void Debug::DrawPolygon(const b2Vec2* vertices, int32 vertexCount,
 		const b2Color& color) {

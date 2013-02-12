@@ -10,6 +10,7 @@
 #include <SDL/SDL.h>
 
 #include "Entity.h"
+#include "define.h"
 
 #define	BACKGROUND 0
 #define	MAIN 1

@@ -10,7 +10,7 @@
 cwiid_mesg_callback_t wiimote_callback;
 
 Event::Event() {
-
+	wiimote = NULL;
 }
 
 Event::~Event() {

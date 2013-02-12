@@ -6,6 +6,7 @@
  */
 
 #include "Camera.h"
+#include "Game.h"
 /**
  * Constuctor.
  * Set the cameraMode to STICKY and target, width, height to the given values
@@ -23,7 +24,6 @@ Camera::Camera(Entity* target, int w, int h) {
 		x = target->getX() * TILESIZE - w / 2;
 		y = target->getY() * TILESIZE - h / 2;
 	}
-
 }
 
 /** constuctor

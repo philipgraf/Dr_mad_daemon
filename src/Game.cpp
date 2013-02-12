@@ -7,6 +7,11 @@
 
 #include "Game.h"
 
+#include <yaml-cpp/yaml.h>
+#include <fstream>
+
+#include "Slot.h"
+
 Game* Game::curGame;
 map<string, Mix_Chunk*> Game::sounds;
 

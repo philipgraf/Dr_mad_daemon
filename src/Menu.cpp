@@ -7,6 +7,15 @@
 
 #include "Menu.h"
 
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
+
+#include "define.h"
+#include "Game.h"
+#include "Level.h"
+#include "TextInput.h"
+#include "Slot.h"
+
 Menu::Menu(int menuType) {
 
 	backgroudFilter = NULL;

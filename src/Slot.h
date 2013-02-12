@@ -9,6 +9,7 @@
 #define SLOT_H_
 
 #include <string>
+#include <fstream>
 #include <yaml-cpp/yaml.h>
 
 #include "define.h"

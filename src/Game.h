@@ -8,18 +8,14 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include <string>
+#include <map>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
-#include <string>
-#include <yaml-cpp/yaml.h>
-#include <vector>
-#include <map>
 
 #include "Menu.h"
 #include "Level.h"
-#include "Slot.h"
-
 
 using namespace std;
 

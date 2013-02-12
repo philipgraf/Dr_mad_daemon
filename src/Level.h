@@ -2,22 +2,21 @@
 #define _LEVEL_H_
 
 #include <string>
-#include <fstream>
+#include <vector>
+#include <map>
 #include <Box2D/Box2D.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
-#include <yaml-cpp/yaml.h>
 
 #include "Tile.h"
-#include "Entity.h"
-#include "Camera.h"
-#include "Game.h"
 #include "Debug.h"
+#include "Player.h"
+#include "Camera.h"
 #include "Event.h"
 
 using namespace std;
 
-class Entity;
+class Player;
 class Camera;
 
 /** Level class.
@@ -43,14 +42,14 @@ private:
 	SDL_Surface *bgImage;
 	Mix_Music *bgMusic;
 	b2World *world;
-	Entity* player; 
+	Player* player;
 	int width;
 	int height;
 	int time;
 	b2Vec2 *gravity2d;
 	Camera* mainCam;
 	bool running;
-	bool finished;
+	bool levelFinished;
 
 #ifdef DEBUG
 	Debug b2Debug;
@@ -83,7 +82,7 @@ public:
 	int getTime() const;
 	void setTime(int time);
 	int getTileID(int x,int y,int layer=1);
-	Entity* getPlayer();
+	Player* getPlayer();
 	int getHeight() const;
 	int getWidth() const;
 	Tile**** getTilelist() const;

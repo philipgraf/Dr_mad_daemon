@@ -7,16 +7,12 @@
 //#include <algorithm>
 #include "Entity.h"
 
+#include "define.h"
+#include "Game.h"
+
 vector<Entity*> Entity::entityList;
 //TODO: get from file and save NOT static in Entity class
 int actionframes[] = { 1, 4, 4 };
-
-/**
- * currently do nothing
- */
-Entity::Entity() {
-	// TODO Auto-generated constructor stub
-}
 
 /** Constuctor
  * Set the given values an initial all other Entityvalues with default values
@@ -61,7 +57,7 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
 			&bodydef);
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(w / 2-0.1, h / 2 - radius/2);
+	dynamicBox.SetAsBox(w / 2, h / 2);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
@@ -101,19 +97,6 @@ Entity::Entity(string imagename, float w, float h, int x, int y) {
 
 
 void Entity::logic() {
-
-	if(use){
-		switch(Game::curGame->getCurrentLevel()->getTilelist()[1][(int) body->GetPosition().x][(int) body->GetPosition().y]->getFlags()){
-		case 2:
-			Game::curGame->getCurrentLevel()->setFinished(true);
-			break;
-		default:
-			cout << "nothing" << endl;
-			break;
-		}
-		use=false;
-	}
-
 	move();
 	nextframe();
 }
@@ -133,39 +116,6 @@ void Entity::nextframe() {
  * \todo better move algorithm needed
  */
 void Entity::move() {
-
-	if (direction & LEFT) {
-
-		body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0),
-				body->GetWorldCenter());
-		action = ACTION_WALK_LEFT;
-
-	}
-	if (direction & RIGHT) {
-		//b2Vec2 vel = body->GetLinearVelocity();
-
-		feet->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
-				body->GetWorldCenter());
-		action = ACTION_WALK_RIGHT;
-
-	}
-	if (direction & UP) {
-//		b2Vec2 vel = body->GetLinearVelocity();
-//		vel.y = -7;
-//		body->SetLinearVelocity(vel);
-		//	body->ApplyForce(b2Vec2(0.0f,-500.0f),body->GetWorldCenter());
-		if (feet->GetContactList() != NULL) {
-			float impulse = body->GetMass();
-			body->ApplyLinearImpulse(b2Vec2(0, -impulse),
-					body->GetWorldCenter());
-			Mix_PlayChannel(-1,Game::sounds["player jump"],0);
-
-
-		}
-		//action = ACTION_JUMP_LEFT;
-	}
-
-
 }
 
 Entity::~Entity() {
@@ -248,14 +198,6 @@ void Entity::setWidth(float width) {
 	this->width = width;
 }
 
-bool Entity::isUse() const {
-	return use;
-}
-
-
-void Entity::setUse(bool use) {
-	this->use = use;
-}
 
 b2Body* Entity::getBody() {
 	return body;

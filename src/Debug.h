@@ -9,17 +9,14 @@
 #define DEBUG_H_
 
 #include <Box2D/Box2D.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_gfxPrimitives.h>
-#include <iostream>
-#include "define.h"
+
 
 class Debug: public b2Draw {
 private:
 	int fps;
 public:
-	Debug();
-	virtual ~Debug();
+	Debug(){}
+	virtual ~Debug(){}
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount,
 			const b2Color& color);
 	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount,

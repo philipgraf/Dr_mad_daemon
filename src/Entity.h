@@ -13,22 +13,6 @@
 #include <SDL/SDL_mixer.h>
 #include <Box2D/Box2D.h>
 
-#include "define.h"
-#include "Game.h"
-
-#define UP 0x01
-#define RIGHT 0x02
-#define DOWN 0x04
-#define LEFT 0x08
-
-#define ACTION_STAY 0
-#define ACTION_WALK_LEFT 1
-#define ACTION_WALK_RIGHT 2
-#define ACTION_JUMP_LEFT  3
-#define ACTION_JUMP_RIGHT 4
-#define ACTION_DUCK_LEFT 5
-#define ACTION_DUCK_RIGHT 6
-
 
 using namespace std;
 
@@ -36,11 +20,11 @@ using namespace std;
  * Entity Class all things you can interact with.
  */
 class Entity {
-private:
+protected:
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
 	bool alive; /**< contain true if the entity is still alive and false if not */
 
-	bool use;
+
 	
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
@@ -69,12 +53,11 @@ private:
 public:
 	static vector<Entity*> entityList;
 
-	Entity();
 	Entity(string imagename,float w, float h,int x, int y);
 	virtual ~Entity();
 
-	void logic();
-	void move();
+	virtual void logic();
+	virtual void move();
 
 
 
@@ -111,8 +94,7 @@ public:
 	void setWidth(float width);
 
 	b2Body* getBody();
-	bool isUse() const;
-	void setUse(bool use);
+
 };
 
 #endif /* ENTITY_H_ */

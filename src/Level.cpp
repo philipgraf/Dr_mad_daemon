@@ -266,6 +266,9 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	case SDLK_d:
 		player->setDirection(RIGHT);
 		break;
+	case SDLK_LALT:
+		player->setRunning(true);
+		break;
 	case SDLK_e:
 		player->use();
 		break;
@@ -289,6 +292,9 @@ void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	case SDLK_d:
 		player->delDirection(RIGHT);
 		break;
+	case SDLK_LALT:
+			player->setRunning(false);
+			break;
 	default:
 		break;
 	}

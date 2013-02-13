@@ -17,6 +17,11 @@ Player::Player(int x, int y) :
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
 
+	//TODO get from config
+	maxVelocity = 5;
+
+	running = false;
+
 	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
 
 	if (!tmp) {
@@ -93,17 +98,19 @@ void Player::logic() {
 	int contacts = 0;
 	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge;
 			contactEdge = contactEdge->next) {
-			b2WorldManifold worldMani;
-			contactEdge->contact->GetWorldManifold(&worldMani);
-			double collideY = worldMani.points[0].y - body->GetPosition().y;
-			if(collideY <= 1.0 && collideY >= 0.9){
-				contacts++;
-			}
-
+		b2WorldManifold worldMani;
+		contactEdge->contact->GetWorldManifold(&worldMani);
+		double collideY = worldMani.points[0].y - body->GetPosition().y;
+		if (collideY <= 1.0 && collideY >= 0.9) {
+			contacts++;
+		}
+		// recalculate friction of contact
+		contactEdge->contact->ResetFriction();
 	}
 
 	if (contacts) {
 		grounded = true;
+
 	} else {
 		grounded = false;
 	}
@@ -112,29 +119,43 @@ void Player::logic() {
 }
 
 void Player::move() {
+	if(running){
+		maxVelocity*=1.5;
+	}
 
 	if (direction & LEFT) {
+		feetFixture->SetFriction(0.2);
+		if (body->GetLinearVelocity().x > -maxVelocity) {
+			body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0),
+					body->GetWorldCenter());
+		}
 
-		body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0),
-				body->GetWorldCenter());
 		action = ACTION_WALK_LEFT;
 
 	}
 	if (direction & RIGHT) {
-
-		body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
-				body->GetWorldCenter());
+		feetFixture->SetFriction(0.2);
+		if (body->GetLinearVelocity().x < maxVelocity) {
+			body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
+					body->GetWorldCenter());
+		}
 		action = ACTION_WALK_RIGHT;
 
 	}
 	if (direction & UP) {
-	if (grounded) {
-		float impulse = body->GetMass();
-		body->ApplyLinearImpulse(b2Vec2(0, -impulse*10), body->GetWorldCenter());
-		Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
-	}
+		if (grounded) {
+			float impulse = body->GetMass();
+			body->ApplyLinearImpulse(b2Vec2(0, -impulse * 8),
+					body->GetWorldCenter());
+			Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
+		}
 		//action = ACTION_JUMP_LEFT;
 	}
+
+	if(!(direction & ( LEFT | RIGHT ))){
+		feetFixture->SetFriction(200.0);
+	}
+
 
 }
 

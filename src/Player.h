@@ -23,6 +23,8 @@
 class Player: public Entity {
 private:
 	Uint8 direction;
+	float maxVelocity;
+	bool running;
 public:
 	Player(int x, int y);
 	virtual ~Player();
@@ -36,6 +38,14 @@ public:
 	Uint8 getDirection() const;
 	void setDirection(Uint8 direction);
 	void delDirection(Uint8 direction);
+
+	bool isRunning() const {
+		return running;
+	}
+
+	void setRunning(bool running) {
+		this->running = running;
+	}
 };
 
 #endif /* PLAYER_H_ */

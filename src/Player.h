@@ -5,6 +5,7 @@
  *      Author: philip
  */
 
+
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
@@ -14,13 +15,6 @@
 #define DOWN 0x04
 #define LEFT 0x08
 
-#define ACTION_STAY 0
-#define ACTION_WALK_LEFT 1
-#define ACTION_WALK_RIGHT 2
-#define ACTION_JUMP_LEFT  3
-#define ACTION_JUMP_RIGHT 4
-#define ACTION_DUCK_LEFT 5
-#define ACTION_DUCK_RIGHT 6
 
 #include "Entity.h"
 
@@ -28,8 +22,9 @@
 class Player: public Entity {
 private:
 	bool use;
+	Uint8 direction;
 public:
-	Player(string imagename,float w, float h,int x, int y);
+	Player(int x, int y);
 	virtual ~Player();
 
 	void logic();
@@ -38,6 +33,9 @@ public:
 
 	bool isUse() const;
 	void setUse(bool use);
+	Uint8 getDirection() const;
+	void setDirection(Uint8 direction);
+	void delDirection(Uint8 direction);
 };
 
 #endif /* PLAYER_H_ */

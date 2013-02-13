@@ -51,7 +51,7 @@ private:
 	bool running;
 	bool levelFinished;
 
-#ifdef DEBUG
+#if DEBUG >= 3
 	Debug b2Debug;
 #endif
 
@@ -64,7 +64,7 @@ private:
 public:
 	static void loadLevels();
 
-	Level(int levelnum);
+	Level(unsigned levelnum);
 	~Level();
 
 	void render();

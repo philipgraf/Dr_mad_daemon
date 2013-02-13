@@ -13,6 +13,14 @@
 #include <SDL/SDL_mixer.h>
 #include <Box2D/Box2D.h>
 
+#define ACTION_STAY 0
+#define ACTION_WALK_LEFT 1
+#define ACTION_WALK_RIGHT 2
+#define ACTION_JUMP_LEFT  3
+#define ACTION_JUMP_RIGHT 4
+#define ACTION_DUCK_LEFT 5
+#define ACTION_DUCK_RIGHT 6
+
 
 using namespace std;
 
@@ -24,12 +32,9 @@ protected:
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
 	bool alive; /**< contain true if the entity is still alive and false if not */
 
-
-	
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
-
 
 	float width;
 	float height;
@@ -37,14 +42,6 @@ protected:
 	bool ground; //TODO test only
 
 	b2Body *body;
-	b2FixtureDef *fixtureDef;
-
-	b2Body *feet;
-	b2FixtureDef *feetFixture;
-
-	b2RevoluteJoint *joint;
-
-	Uint8 direction;
 
 	void nextframe();
 
@@ -53,7 +50,7 @@ protected:
 public:
 	static vector<Entity*> entityList;
 
-	Entity(string imagename,float w, float h,int x, int y);
+	Entity();
 	virtual ~Entity();
 
 	virtual void logic();
@@ -64,35 +61,17 @@ public:
 	//----------------------------------- Getter and Setter ------------------------------
 
 	SDL_Rect getCurFrameRect();
-
 	bool isAlive() const;
-
 	void setAlive(bool alive);
-
-	Uint8 getDirection() const;
-
-	void setDirection(Uint8 direction);
-
-	void  delDirection(Uint8 direction);
-
 	float getX() const;
-
 	float getY() const;
-
 	SDL_Surface* getImage();
-
 	int getCurrentframe() const;
-
 	void setCurrentframe(int currentframe);
-
 	float getHeight() const;
-
 	void setHeight(float height);
-
 	float getWidth() const;
-
 	void setWidth(float width);
-
 	b2Body* getBody();
 
 };

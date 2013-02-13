@@ -103,10 +103,17 @@ void Menu::build() {
 		labelactions.push_back(&Menu::back);
 		break;
 	case LEVELMENU:
-		labeltexts.push_back("Slot: "+ (Slot::slots.size() == 0 ?"None" :Slot::slots[Game::curGame->settings.activeSlot]->getName()));
+		labeltexts.push_back(
+				"Slot: "
+						+ (Slot::slots.size() == 0 ?
+								"None" :
+								Slot::slots[Game::curGame->settings.activeSlot]->getName()));
 		labelactions.push_back(&Menu::slots);
 		if (Game::curGame->settings.activeSlot != -1) {
-			for (int i = 0; i <= Slot::slots[Game::curGame->settings.activeSlot]->getFinishedLevels();i++) {
+			for (int i = 0;
+					i
+							<= Slot::slots[Game::curGame->settings.activeSlot]->getFinishedLevels();
+					i++) {
 				labeltexts.push_back(Level::levelnames[Level::levels[i]]);
 				labelactions.push_back(&Menu::start);
 			}
@@ -115,7 +122,7 @@ void Menu::build() {
 		labelactions.push_back(&Menu::back);
 		break;
 	case SLOTMENU:
-		for (int i = 0; i < Slot::slots.size(); i++) {
+		for (unsigned i = 0; i < Slot::slots.size(); i++) {
 			labeltexts.push_back(Slot::slots[i]->getName());
 			labelactions.push_back(&Menu::changeSlot);
 		}
@@ -163,10 +170,9 @@ void Menu::render() {
 
 	if (background != NULL) {
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE,
-				backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
-		SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h
-				- 2 * TILESIZE };
+		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE,backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
+		SDL_Rect srcRect = { 0, 0, (Uint16) screen->w - 6 * TILESIZE,
+				(Uint16) screen->h - 2 * TILESIZE };
 		SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	}
@@ -223,14 +229,14 @@ int Menu::show() {
 
 void Menu::start() {
 
-	Level level(currentItem - 1);
+	Level level((unsigned) currentItem - 1);
 	level.play();
 	build();
 }
 
 void Menu::changeLanguage() {
 	int index = -1;
-	for (int i = 0; i < Language::supLanguages.size(); i++) {
+	for (unsigned i = 0; i < Language::supLanguages.size(); i++) {
 		if (Language::supLanguages[i] == Game::curGame->settings.language) {
 			index = i;
 		}
@@ -238,7 +244,7 @@ void Menu::changeLanguage() {
 
 	if (index != -1) {
 		index++;
-		if (index >= Language::supLanguages.size()) {
+		if (index >= (int) Language::supLanguages.size()) {
 			index = 0;
 		}
 		Game::curGame->settings.language = Language::supLanguages[index];
@@ -328,7 +334,6 @@ void Menu::onExit() {
 }
 
 void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
-	TTF_Font *menufont = Game::curGame->getFont();
 	switch (sym) {
 	case SDLK_TAB:
 		initWiimote();
@@ -352,7 +357,6 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 }
 
 void Menu::onWiiButtonEvent(int buttons) {
-	TTF_Font *menufont = Game::curGame->getFont();
 	switch (buttons) {
 	// if the wiimote is horizontal Left is down
 	case WII_BTN_LEFT:
@@ -373,7 +377,7 @@ void Menu::onWiiButtonEvent(int buttons) {
 void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left,
 		bool right, bool middle) {
 	TTF_Font *menufont = Game::curGame->getFont();
-	for (int i = 0; i < labeltexts.size(); i++) {
+	for (unsigned i = 0; i < labeltexts.size(); i++) {
 		if (mX > items[i].position.x
 				&& mX < items[i].position.x + items[i].position.w
 				&& mY > items[i].position.y

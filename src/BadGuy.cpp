@@ -7,7 +7,7 @@
 
 #include "BadGuy.h"
 
-BadGuy::BadGuy(string imagename,float w, float h,int x, int y):Entity(imagename,w,h,x,y){
+BadGuy::BadGuy(string imagename,float w, float h,int x, int y):Entity(){
 	// TODO Auto-generated constructor stub
 }
 

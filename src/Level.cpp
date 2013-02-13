@@ -15,7 +15,7 @@ void Level::loadLevels() {
 	levels.push_back("l003");
 
 
-	for(int i=0; i< levels.size();i++){
+	for(unsigned i=0; i< levels.size();i++){
 		YAML::Node levelconfig = YAML::LoadFile(LEVELS+levels[i]+".yml");
 		levelnames[levels[i]] = levelconfig["name"].Scalar();
 	}
@@ -23,7 +23,7 @@ void Level::loadLevels() {
 }
 
 
-Level::Level(int levelnum) {
+Level::Level(unsigned levelnum) {
 
 	if(levelnum >= levels.size()){
 		//TODO throw exception
@@ -52,7 +52,7 @@ Level::Level(int levelnum) {
 	bgMusic = Mix_LoadMUS((MUSIC+levelconfig["bgMusic"].Scalar()).c_str());
 
 
-	gravity2d = new b2Vec2(0.0f, gravity * 10);
+	gravity2d = new b2Vec2(0.0f, gravity * 9.81);
 	world = new b2World(*gravity2d);
 
 
@@ -93,7 +93,7 @@ Level::~Level() {
 		delete[] tilelist[i];
 	}
 	delete[] tilelist;
-	for(int i=0;i<Entity::entityList.size(); i++){
+	for(unsigned i=0;i<Entity::entityList.size(); i++){
 		delete Entity::entityList[i];
 	}
 	Entity::entityList.clear();
@@ -103,7 +103,7 @@ Level::~Level() {
 void Level::loadMapFile(string filename) {
 
 	//TODO only testing
-	BadGuy *test = new BadGuy("badguy.bmp",1,0.5,5,5);
+	//BadGuy *test = new BadGuy("badguy.bmp",1,0.5,5,5);
 
 	tilelist = new Tile***[3];
 	for (int i = 0; i < 3; i++) {
@@ -123,7 +123,7 @@ void Level::loadMapFile(string filename) {
 
 				if (id & TF_START) {
 					//TODO: get width and height dynamically
-					player = new Player("player.bmp", 1, 2, x, y);
+					player = new Player( x, y);
 				}
 
 				tilelist[i][x][y] = new Tile(id);
@@ -190,7 +190,7 @@ void Level::logic() {
 
 	world->Step(timeStep, velocityIterations, positionIterations);
 
-	for(int i=0;i<Entity::entityList.size();i++){
+	for(unsigned i=0;i<Entity::entityList.size();i++){
 		Entity::entityList[i]->logic();
 	}
 	mainCam->logic();

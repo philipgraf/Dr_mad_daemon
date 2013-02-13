@@ -22,75 +22,19 @@ int actionframes[] = { 1, 4, 4 };
  * @param x The x value of the entity
  * @param y the y value of the entity
  */
-Entity::Entity(string imagename, float w, float h, int x, int y) {
+Entity::Entity() {
 
-	SDL_Surface *tmp = SDL_LoadBMP((IMG+imagename).c_str());
-
-	if (!tmp) {
-		//TODO Throw DISException
-		cout << "unable to load BMP file" << imagename << endl;
-	} else {
-		image = SDL_DisplayFormat(tmp);
-		SDL_FreeSurface(tmp);
-		if (image != 0) {
-			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL,
-					SDL_MapRGB(image->format, 255, 0, 255));
-
-		}
-	}
+	image = NULL;
+	body=NULL;
 
 	alive = true;
 	currentframe = 0;
 	action = ACTION_STAY;
-	direction = 0;
-	width = w;
-	height = h;
 
-	float radius =  w/2;
+	width = 0;
+	height = 0;
 
 	ground = true; //TODO test only
-
-	b2BodyDef bodydef;
-	bodydef.type = b2_dynamicBody;
-	bodydef.fixedRotation = true;
-	bodydef.position.Set(x + w / 2, y + h / 2);
-	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
-			&bodydef);
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(w / 2, h / 2);
-
-	fixtureDef = new b2FixtureDef;
-	fixtureDef->shape = &dynamicBox;
-	fixtureDef->density = 35.0f;
-	fixtureDef->friction = 5.0f;
-
-	body->CreateFixture(fixtureDef);
-
-	b2BodyDef feetdef;
-	feetdef.type = b2_dynamicBody;
-	//bodydef.fixedRotation = true;
-	feetdef.position.Set(x + w / 2, y + h -radius);
-	this->feet = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
-			&feetdef);
-	b2CircleShape feetShape;
-	feetShape.m_radius=radius;
-
-	feetFixture = new b2FixtureDef;
-	feetFixture->shape = &feetShape;
-	feetFixture->density = 10.0f;
-	feetFixture->friction = 5.0f;
-
-	feet->CreateFixture(feetFixture);
-
-	b2RevoluteJointDef joinDef;
-	joinDef.Initialize(body,feet,body->GetWorldCenter());
-	joinDef.localAnchorA=b2Vec2(0,h/2-radius);
-	joinDef.localAnchorB=b2Vec2(0,0);
-	joinDef.enableLimit=true;
-
-
-	joint =(b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&joinDef);
-
 
 	entityList.push_back(this);
 }
@@ -125,7 +69,6 @@ Entity::~Entity() {
 			!= entityList.end()) {
 		entityList.erase(pos);
 	}
-	delete fixtureDef;
 }
 
 /**
@@ -147,18 +90,6 @@ bool Entity::isAlive() const {
 
 void Entity::setAlive(bool alive) {
 	this->alive = alive;
-}
-
-Uint8 Entity::getDirection() const {
-	return direction;
-}
-
-void Entity::setDirection(Uint8 direction) {
-	this->direction |= direction;
-}
-
-void Entity::delDirection(Uint8 direction) {
-	this->direction &= ~direction;
 }
 
 //TODO replace

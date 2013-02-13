@@ -1,5 +1,5 @@
 
-DEBUG = 3
+DEBUG = 1
 CC=g++
 
 debug: CPPFLAGS = -Wall -g -O0 -DDEBUG=$(DEBUG)

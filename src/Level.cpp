@@ -59,7 +59,7 @@ Level::Level(unsigned levelnum) {
 
 	Tile::loadTileset();
 
-#ifdef DEBUG
+#if DEBUG >= 3
 	b2Debug.SetFlags(b2Draw::e_shapeBit); // | b2Draw::e_aabbBit);
 	world->SetDebugDraw(&b2Debug);
 #endif
@@ -151,7 +151,7 @@ void Level::loadMapFile(string filename) {
 void Level::render() {
 
 	mainCam->drawImage();
-#ifdef DEBUG
+#if DEBUG >= 3
 	world->DrawDebugData();
 #endif
 	SDL_Flip(SDL_GetVideoSurface());
@@ -203,12 +203,12 @@ void Level::play() {
 
 	Mix_PlayMusic(bgMusic,-1);
 
-#ifdef DEBUG
+#if DEBUG >= 1
 	int fps=0;
 	int fpstime=0;
 #endif
 	while (running) {
-#ifdef DEBUG
+#if DEBUG >=1
 		fps++;
 #endif
 		start = SDL_GetTicks();
@@ -224,7 +224,8 @@ void Level::play() {
 
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
 		}
-#else
+#endif
+#if DEBUG >= 1
 
 		if(SDL_GetTicks() - fpstime > 1000) {
 			char buffer[10];

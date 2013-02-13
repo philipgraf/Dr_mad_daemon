@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Slot.h"
 #include "BadGuy.h"
+#include "sstream"
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 
@@ -228,10 +229,10 @@ void Level::play() {
 #if DEBUG >= 1
 
 		if(SDL_GetTicks() - fpstime > 1000) {
-			char buffer[10];
-			sprintf(buffer,"FPS: %d",fps);
-			SDL_WM_SetCaption(buffer,NULL);
-			cout << buffer << endl;
+			stringstream out;
+			out << "FPS: " << fps;
+			SDL_WM_SetCaption(out.str().c_str(),NULL);
+			cout << out << endl;
 			fps=0;
 			fpstime = SDL_GetTicks();
 		}
@@ -266,7 +267,7 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->setDirection(RIGHT);
 		break;
 	case SDLK_e:
-		player->setUse(true);
+		player->use();
 		break;
 	default:
 		break;

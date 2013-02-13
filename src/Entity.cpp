@@ -33,8 +33,7 @@ Entity::Entity() {
 
 	width = 0;
 	height = 0;
-
-	ground = true; //TODO test only
+	grounded = false;
 
 	entityList.push_back(this);
 }
@@ -56,8 +55,9 @@ void Entity::nextframe() {
 
 // FIXME better move algorithm needed
 /**
- * handle player movement
- * \todo better move algorithm needed
+ * virtual function
+ * movement defined from inheriting classes
+ *
  */
 void Entity::move() {
 }

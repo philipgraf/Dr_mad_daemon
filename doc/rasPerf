@@ -1,0 +1,8 @@
+debug level 3 / 800x600 / window / stdSDL / ARM Turbo  / HWSurface / DoubleBuff : 22FPS
+debug level 3 / 528x360 / window / stdSDL / ARM Turbo / HWSurface / DoubleBuff : 48FPS
+debug level 1 / 528x260 / window / stdSDL / ARM Turbo / HWSurface / DoubleBuff : 53FPS
+debug level 1 / 528x260 / FullScreen / stdSDL / ARM Turbo / HWSurface / DoubleBuff: 54FPS <- not stable <- not scaled
+debug level 1 / 528x260 / FullScreen / stdSDL / ARM Turbo / SWSurface / DoubleBuff: 55FPS <- stable <- not scaled
+debug level 1 / 528x260 / FullScreen / stdSDL / ARM Turbo / SWSurface : 55FPS <- stable <- not scaled
+debug level 1 / 528x260 / FullScreen / DispmanxSDL / ARM Turbo / SWSurface : 53FPS <- stable <- not scaled
+debug level 1 / 528x260 / FullScreen / DispmanxSDL / ARM Turbo / HWSurface : 52FPS <- not stable <- not scaled

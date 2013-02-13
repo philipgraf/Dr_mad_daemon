@@ -17,22 +17,22 @@
 
 
 #include "Entity.h"
+#include <Box2D/Box2D.h>
 
 
 class Player: public Entity {
 private:
-	bool use;
 	Uint8 direction;
 public:
 	Player(int x, int y);
 	virtual ~Player();
 
+	b2Fixture *feetFixture;
+
 	void logic();
-
 	void move();
+	void use();
 
-	bool isUse() const;
-	void setUse(bool use);
 	Uint8 getDirection() const;
 	void setDirection(Uint8 direction);
 	void delDirection(Uint8 direction);

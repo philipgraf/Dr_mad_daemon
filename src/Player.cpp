@@ -8,10 +8,14 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player(int x, int y) :Entity() {
+Player::Player(int x, int y) :
+		Entity() {
 
-	width=1;
-	height=2;
+	width = 1;
+	height = 2;
+
+	float halfWidth = width / 2;
+	float halfHeight = height / 2;
 
 	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
 
@@ -30,87 +34,81 @@ Player::Player(int x, int y) :Entity() {
 
 	direction = 0;
 
-	use = false;
-	float radius =  width/2;
+	float radius = halfWidth - 0.15;
 
 	b2BodyDef bodydef;
-		bodydef.type = b2_dynamicBody;
-		bodydef.fixedRotation = true;
-		bodydef.position.Set(x + width / 2, y + height / 2);
-		this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
-				&bodydef);
-		b2PolygonShape dynamicBox;
+	bodydef.type = b2_dynamicBody;
+	bodydef.fixedRotation = true;
+	bodydef.position.Set(x + width, y + height);
+	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
+			&bodydef);
+	b2PolygonShape dynamicBox;
 
-		//dynamicBox.SetAsBox(width / 2, height / 2);
-		b2Vec2 vertices[6];
-		vertices[0].Set(width/2,-height/2);
-		vertices[1].Set(width/2,height/2-0.2);
-		vertices[2].Set(width/2-0.2,height/2);
-		vertices[3].Set(-width/2+0.2,height/2);
-		vertices[4].Set(-width/2,height/2-0.2);
-		vertices[5].Set(-width/2,-height/2);
-		dynamicBox.Set(vertices,6);
+	//dynamicBox.SetAsBox(width / 2, height / 2);
+	b2Vec2 vertices[6];
+	vertices[0].Set(halfWidth, -halfHeight);
+	vertices[1].Set(halfWidth, 0);
+	vertices[2].Set(halfWidth - 0.2, halfHeight - radius);
+	vertices[3].Set(-(halfWidth - 0.2), halfHeight - radius);
+	vertices[4].Set(-halfWidth, 0);
+	vertices[5].Set(-halfWidth, -halfHeight);
+	dynamicBox.Set(vertices, 6);
 
-		b2FixtureDef *fixtureDef = new b2FixtureDef;
-		fixtureDef->shape = &dynamicBox;
-		fixtureDef->density = 35.0f;
-		fixtureDef->friction = 5.0f;
+	b2FixtureDef *fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &dynamicBox;
+	fixtureDef->density = 40.0f;
+	fixtureDef->friction = 0.0f;
+	body->CreateFixture(fixtureDef);
 
-		body->CreateFixture(fixtureDef);
+	b2CircleShape feetShape;
+	feetShape.m_radius = radius;
+	feetShape.m_p = b2Vec2(0, halfWidth + radius - 0.2);
 
-//		b2BodyDef feetdef;
-//		feetdef.type = b2_dynamicBody;
-//		//bodydef.fixedRotation = true;
-//		feetdef.position.Set(x + w / 2, y + h -radius);
-//		this->feet = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
-//				&feetdef);
-//		b2CircleShape feetShape;
-//		feetShape.m_radius=radius;
-//
-//		feetFixture = new b2FixtureDef;
-//		feetFixture->shape = &feetShape;
-//		feetFixture->density = 10.0f;
-//		feetFixture->friction = 5.0f;
-//
-//		feet->CreateFixture(feetFixture);
-//
-//		b2RevoluteJointDef joinDef;
-//		joinDef.Initialize(body,feet,body->GetWorldCenter());
-//		joinDef.localAnchorA=b2Vec2(0,h/2-radius);
-//		joinDef.localAnchorB=b2Vec2(0,0);
-//		joinDef.enableLimit=true;
-//
-//
-//		joint =(b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&joinDef);
+	fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &feetShape;
+	fixtureDef->density = 40.0f;
+	fixtureDef->friction = 0.2;
+
+	feetFixture = body->CreateFixture(fixtureDef);
 }
 
 Player::~Player() {
 	// TODO Auto-generated destructor stub
 }
 
-bool Player::isUse() const {
-	return use;
+void Player::use() {
+
+	switch (Game::curGame->getCurrentLevel()->getTilelist()[1][(int) body->GetPosition().x][(int) body->GetPosition().y]->getFlags()) {
+	case 2:
+		Game::curGame->getCurrentLevel()->setFinished(true);
+		break;
+	default:
+		cout << "nothing" << endl;
+		break;
+	}
 }
 
 void Player::logic() {
+//TODO check connected tiles for shock and other game events
+	int contacts = 0;
+	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge;
+			contactEdge = contactEdge->next) {
+			b2WorldManifold worldMani;
+			contactEdge->contact->GetWorldManifold(&worldMani);
+			double collideY = worldMani.points[0].y - body->GetPosition().y;
+			if(collideY <= 1.0 && collideY >= 0.9){
+				contacts++;
+			}
 
-	if (use) {
-		switch (Game::curGame->getCurrentLevel()->getTilelist()[1][(int) body->GetPosition().x][(int) body->GetPosition().y]->getFlags()) {
-		case 2:
-			Game::curGame->getCurrentLevel()->setFinished(true);
-			break;
-		default:
-			cout << "nothing" << endl;
-			break;
-		}
-		use = false;
+	}
+
+	if (contacts) {
+		grounded = true;
+	} else {
+		grounded = false;
 	}
 
 	Entity::logic();
-}
-
-void Player::setUse(bool use) {
-	this->use = use;
 }
 
 void Player::move() {
@@ -130,19 +128,15 @@ void Player::move() {
 
 	}
 	if (direction & UP) {
-		//	body->ApplyForce(b2Vec2(0.0f,-500.0f),body->GetWorldCenter());
-		if (body->GetContactList() != NULL) {
-			float impulse = body->GetMass();
-			body->ApplyLinearImpulse(b2Vec2(0, -impulse),
-					body->GetWorldCenter());
-			Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
-
-		}
+	if (grounded) {
+		float impulse = body->GetMass();
+		body->ApplyLinearImpulse(b2Vec2(0, -impulse*10), body->GetWorldCenter());
+		Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
+	}
 		//action = ACTION_JUMP_LEFT;
 	}
 
 }
-
 
 Uint8 Player::getDirection() const {
 	return direction;

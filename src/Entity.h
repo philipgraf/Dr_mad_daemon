@@ -36,16 +36,14 @@ protected:
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
 
-	float width;
-	float height;
+	float width;/**< width of the entity in meter */
+	float height;/**< height of the entity in meter */
 
-	bool ground; //TODO test only
+	bool grounded;
 
 	b2Body *body;
 
 	void nextframe();
-
-
 
 public:
 	static vector<Entity*> entityList;

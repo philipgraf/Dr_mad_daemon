@@ -119,25 +119,39 @@ void Player::logic() {
 }
 
 void Player::move() {
-	if(running){
-		maxVelocity*=1.5;
+	if (running) {
+		maxVelocity = 8;
+	}else{
+		maxVelocity = 4;
 	}
 
 	if (direction & LEFT) {
-		feetFixture->SetFriction(0.2);
-		if (body->GetLinearVelocity().x > -maxVelocity) {
-			body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0),
-					body->GetWorldCenter());
+		if (grounded) {
+			feetFixture->SetFriction(0.2);
+			if (body->GetLinearVelocity().x > -maxVelocity) {
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass()/2, 0),
+						body->GetWorldCenter());
+			}
+		} else {
+			if (body->GetLinearVelocity().x > -maxVelocity) {
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass()/8, 0), body->GetWorldCenter());
+			}
 		}
 
 		action = ACTION_WALK_LEFT;
 
 	}
 	if (direction & RIGHT) {
-		feetFixture->SetFriction(0.2);
-		if (body->GetLinearVelocity().x < maxVelocity) {
-			body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
-					body->GetWorldCenter());
+		if (grounded) {
+			feetFixture->SetFriction(0.2);
+			if (body->GetLinearVelocity().x < maxVelocity) {
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass()/2, 0),
+						body->GetWorldCenter());
+			}
+		} else {
+			if (body->GetLinearVelocity().x < maxVelocity) {
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass()/8, 0), body->GetWorldCenter());
+			}
 		}
 		action = ACTION_WALK_RIGHT;
 
@@ -152,10 +166,10 @@ void Player::move() {
 		//action = ACTION_JUMP_LEFT;
 	}
 
-	if(!(direction & ( LEFT | RIGHT ))){
+	if (!(direction & (LEFT | RIGHT | UP))) {
 		feetFixture->SetFriction(200.0);
+		action=ACTION_STAY;
 	}
-
 
 }
 

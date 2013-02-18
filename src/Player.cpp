@@ -14,9 +14,9 @@ Player::Player(int x, int y) :
 	width = 1;
 	height = 2;
 
-	actionframes[ACTION_STAY]=1;
-	actionframes[ACTION_WALK_RIGHT]=4;
-	actionframes[ACTION_WALK_LEFT]=4;
+	actionframes[ACTION_STAY] = 1;
+	actionframes[ACTION_WALK_RIGHT] = 4;
+	actionframes[ACTION_WALK_LEFT] = 4;
 
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
@@ -25,6 +25,8 @@ Player::Player(int x, int y) :
 	maxVelocity = 5;
 
 	running = false;
+
+	impactSoundPlayed = 0;
 
 	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
 
@@ -35,33 +37,23 @@ Player::Player(int x, int y) :
 		image = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
 		if (image != 0) {
-			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL,
-					SDL_MapRGB(image->format, 255, 0, 255));
+			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(image->format, 255, 0, 255));
 
 		}
 	}
 
 	direction = 0;
 
-	float radius = halfWidth - 0.15;
+	float radius = halfWidth;
 
 	b2BodyDef bodydef;
 	bodydef.type = b2_dynamicBody;
 	bodydef.fixedRotation = true;
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
-	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
-			&bodydef);
-	b2PolygonShape dynamicBox;
+	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 
-	//dynamicBox.SetAsBox(width / 2, height / 2);
-	b2Vec2 vertices[6];
-	vertices[0].Set(halfWidth, -halfHeight);
-	vertices[1].Set(halfWidth, 0);
-	vertices[2].Set(halfWidth - 0.2, halfHeight - radius);
-	vertices[3].Set(-(halfWidth - 0.2), halfHeight - radius);
-	vertices[4].Set(-halfWidth, 0);
-	vertices[5].Set(-halfWidth, -halfHeight);
-	dynamicBox.Set(vertices, 6);
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(halfWidth, halfHeight - radius / 2);
 
 	b2FixtureDef *fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
@@ -71,7 +63,7 @@ Player::Player(int x, int y) :
 
 	b2CircleShape feetShape;
 	feetShape.m_radius = radius;
-	feetShape.m_p = b2Vec2(0, halfWidth + radius - 0.2);
+	feetShape.m_p = b2Vec2(0, halfWidth + radius / 2);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &feetShape;
@@ -79,10 +71,44 @@ Player::Player(int x, int y) :
 	fixtureDef->friction = 0.2;
 
 	feetFixture = body->CreateFixture(fixtureDef);
+
+	b2PolygonShape sensorRight;
+	sensorRight.SetAsBox(0.01, halfHeight - radius / 2 - 0.1, b2Vec2(halfWidth, 0), 0);
+
+	fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &sensorRight;
+	fixtureDef->isSensor = true;
+	this->sensorRight = body->CreateFixture(fixtureDef);
+
+	b2PolygonShape sensorLeft;
+	sensorLeft.SetAsBox(0.01, halfHeight - radius / 2 - 0.1, b2Vec2(-halfWidth, 0), 0);
+
+	fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &sensorLeft;
+	fixtureDef->isSensor = true;
+	this->sensorLeft = body->CreateFixture(fixtureDef);
+
+	b2PolygonShape sensorTop;
+	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight + radius / 2), 0);
+
+	fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &sensorTop;
+	fixtureDef->isSensor = true;
+	this->sensorTop = body->CreateFixture(fixtureDef);
+
+	b2CircleShape sensorBottom;
+	sensorBottom.m_radius= radius - 0.01;
+	sensorBottom.m_p = b2Vec2(0, halfWidth + radius / 2 +0.01);
+
+	fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &sensorBottom;
+	fixtureDef->isSensor = true;
+	this->sensorBottom = body->CreateFixture(fixtureDef);
+
 }
 
 Player::~Player() {
-	// TODO Auto-generated destructor stub
+// TODO Auto-generated destructor stub
 }
 
 void Player::use() {
@@ -99,25 +125,20 @@ void Player::use() {
 
 void Player::logic() {
 //TODO check connected tiles for shock and other game events
-	int contacts = 0;
-	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge;
-			contactEdge = contactEdge->next) {
-		b2WorldManifold worldMani;
-		contactEdge->contact->GetWorldManifold(&worldMani);
-		double collideY = worldMani.points[0].y - body->GetPosition().y;
-		if (collideY <= 1.0 && collideY >= 0.9) {
-			contacts++;
-		}
-		// recalculate friction of contact
-		contactEdge->contact->ResetFriction();
+	int collision = checkCollision();
+
+	if(grounded && impactSoundPlayed > 10) {
+		//play sound
+		cout << "play sound" << endl;
+
+	}else if(!grounded) {
+		impactSoundPlayed++;
+	}
+	if(grounded) {
+		impactSoundPlayed = 0;
 	}
 
-	if (contacts) {
-		grounded = true;
 
-	} else {
-		grounded = false;
-	}
 
 	Entity::logic();
 }
@@ -125,20 +146,19 @@ void Player::logic() {
 void Player::move() {
 	if (running) {
 		maxVelocity = 8;
-	}else{
+	} else {
 		maxVelocity = 4;
 	}
 
 	if (direction & LEFT) {
-		if (grounded) {
-			feetFixture->SetFriction(0.2);
+		feetFixture->SetFriction(0.2);
+		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x > -maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(-body->GetMass()/2, 0),
-						body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0), body->GetWorldCenter());
 			}
 		} else {
 			if (body->GetLinearVelocity().x > -maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(-body->GetMass()/8, 0), body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 8, 0), body->GetWorldCenter());
 			}
 		}
 
@@ -146,45 +166,32 @@ void Player::move() {
 
 	}
 	if (direction & RIGHT) {
-		if (grounded) {
-			feetFixture->SetFriction(0.2);
+		feetFixture->SetFriction(0.2);
+		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x < maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(body->GetMass()/2, 0),
-						body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0), body->GetWorldCenter());
 			}
 		} else {
 			if (body->GetLinearVelocity().x < maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(body->GetMass()/8, 0), body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 8, 0), body->GetWorldCenter());
 			}
 		}
 		action = ACTION_WALK_RIGHT;
 
 	}
 	if (direction & UP) {
-		if (grounded) {
-			float impulse = body->GetMass();
-			body->ApplyLinearImpulse(b2Vec2(0, -impulse * 8),
-					body->GetWorldCenter());
-			Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
+		if (checkCollision() & DOWN) {
+		float impulse = body->GetMass();
+		body->ApplyLinearImpulse(b2Vec2(0, -impulse * 4), body->GetWorldCenter());
+		Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
 		}
 		//action = ACTION_JUMP_LEFT;
 	}
 
 	if (!(direction & (LEFT | RIGHT | UP))) {
 		feetFixture->SetFriction(200.0);
-		action=ACTION_STAY;
+		action = ACTION_STAY;
 	}
 
 }
 
-Uint8 Player::getDirection() const {
-	return direction;
-}
-
-void Player::setDirection(Uint8 direction) {
-	this->direction |= direction;
-}
-
-void Player::delDirection(Uint8 direction) {
-	this->direction &= ~direction;
-}

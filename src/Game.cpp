@@ -59,8 +59,7 @@ void Game::init() {
 	 * Create Game Window with defined width and height and Bits per pixel use by the system
 	 */
 	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT,
-			SDL_GetVideoInfo()->vfmt->BitsPerPixel,
-			SDL_SWSURFACE)) == NULL) {
+			SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE)) == NULL) {
 		cout << "unable to initialize display" << endl;
 	}
 
@@ -112,22 +111,35 @@ void Game::loadSettings() {
 
 	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
 
-	if (settings["language"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.language = "en";
-		} else {
-			this->settings.language = settings["language"].Scalar();
-		}
-	if (settings["audio rate"].Scalar() == YAML::detail::node_data::empty_scalar) {
+	if (settings["language"].Scalar()
+			== YAML::detail::node_data::empty_scalar) {
+		this->settings.language = "en";
+	} else {
+		this->settings.language = settings["language"].Scalar();
+	}
+	if (settings["audio rate"].Scalar()
+			== YAML::detail::node_data::empty_scalar) {
 		this->settings.audioRate = 22050;
 	} else {
 		this->settings.audioRate = settings["audio rate"].as<int>();
 	}
 
-	if (settings["active slot"].Scalar() == YAML::detail::node_data::empty_scalar) {
+	if (settings["active slot"].Scalar()
+			== YAML::detail::node_data::empty_scalar) {
 		this->settings.activeSlot = -1;
 	} else {
 		this->settings.activeSlot = settings["active slot"].as<int>();
 	}
+
+	this->settings.controller.left = settings["keyboard settings"]["left"].as<int>();
+	this->settings.controller.right = settings["keyboard settings"]["right"].as<int>();
+	this->settings.controller.up = settings["keyboard settings"]["up"].as<int>();
+	this->settings.controller.down = settings["keyboard settings"]["down"].as<int>();
+	this->settings.controller.run = settings["keyboard settings"]["run"].as<int>();
+	this->settings.controller.jump = settings["keyboard settings"]["jump"].as<int>();
+	this->settings.controller.use = settings["keyboard settings"]["use"].as<int>();
+
+
 }
 
 void Game::loadSounds() {
@@ -146,17 +158,33 @@ void Game::saveSettings() {
 	out << YAML::Value << settings.audioRate;
 	out << YAML::Key << "active slot";
 	out << YAML::Value << settings.activeSlot;
+	out << YAML::Key << "keyboard settings";
+	out << YAML::BeginMap;
+	out << YAML::Key << "left";
+	out << YAML::Value << settings.controller.left;
+	out << YAML::Key << "right";
+	out << YAML::Value << settings.controller.right;
+	out << YAML::Key << "up";
+	out << YAML::Value << settings.controller.up;
+	out << YAML::Key << "down";
+	out << YAML::Value << settings.controller.down;
+	out << YAML::Key << "run";
+	out << YAML::Value << settings.controller.run;
+	out << YAML::Key << "jump";
+	out << YAML::Value << settings.controller.jump;
+	out << YAML::Key << "use";
+	out << YAML::Value << settings.controller.use;
+	out << YAML::EndMap;
 	out << YAML::EndMap;
 
 	fstream filestream;
-	filestream.open(CONFIGS"game.yml",fstream::out);
+	filestream.open(CONFIGS"game.yml", fstream::out);
 
 	filestream << out.c_str();
 
 	filestream.close();
 
 }
-
 
 /********************************** GETTER AND SETTER **********************************************************/
 
@@ -173,7 +201,6 @@ void Game::destroyCurrentLevel() {
 		currentLevel = NULL;
 	}
 }
-
 
 TTF_Font* Game::getFont() {
 	return font;

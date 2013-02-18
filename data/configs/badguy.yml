@@ -1,0 +1,5 @@
+vacuuBoy:
+  width: 1.0
+  height: 0.5
+  image: vacuuBoy.bmp
+  max velocity: 1.0 

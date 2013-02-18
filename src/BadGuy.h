@@ -16,7 +16,7 @@ using namespace std;
 
 class BadGuy: public Entity {
 public:
-	BadGuy(string imagename,float w, float h,int x, int y);
+	BadGuy(string type,int x, int y);
 	virtual ~BadGuy();
 
 	void move();

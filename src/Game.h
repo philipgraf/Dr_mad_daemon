@@ -18,11 +18,21 @@
 #include "Level.h"
 
 using namespace std;
+typedef struct{
+		int left;
+		int right;
+		int up;
+		int down;
+		int jump;
+		int run;
+		int use;
+	}controll_t;
 
 typedef struct{
 	string language;
 	int audioRate;
 	int activeSlot;
+	controll_t controller;
 }settings_t;
 
 class Game {

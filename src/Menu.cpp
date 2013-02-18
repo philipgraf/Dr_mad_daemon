@@ -87,8 +87,7 @@ void Menu::build() {
 	case OPTIONMENU:
 		labeltexts.push_back(lang["sound"]);
 		labelactions.push_back(&Menu::sound);
-		labeltexts.push_back(
-				lang["language"] + ":" + Game::curGame->settings.language);
+		labeltexts.push_back(lang["language"] + ":" + Game::curGame->settings.language);
 		labelactions.push_back(&Menu::changeLanguage);
 		labeltexts.push_back(lang["controller"]);
 		labelactions.push_back(&Menu::controllerSettings);
@@ -103,17 +102,10 @@ void Menu::build() {
 		labelactions.push_back(&Menu::back);
 		break;
 	case LEVELMENU:
-		labeltexts.push_back(
-				"Slot: "
-						+ (Slot::slots.size() == 0 ?
-								"None" :
-								Slot::slots[Game::curGame->settings.activeSlot]->getName()));
+		labeltexts.push_back("Slot: " + (Slot::slots.size() == 0 ? "None" : Slot::slots[Game::curGame->settings.activeSlot]->getName()));
 		labelactions.push_back(&Menu::slots);
 		if (Game::curGame->settings.activeSlot != -1) {
-			for (int i = 0;
-					i
-							<= Slot::slots[Game::curGame->settings.activeSlot]->getFinishedLevels();
-					i++) {
+			for (int i = 0; i <= Slot::slots[Game::curGame->settings.activeSlot]->getFinishedLevels(); i++) {
 				labeltexts.push_back(Level::levelnames[Level::levels[i]]);
 				labelactions.push_back(&Menu::start);
 			}
@@ -133,32 +125,23 @@ void Menu::build() {
 		break;
 	}
 
-	backgroudFilter = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h,
-			SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask,
-			screen->format->Gmask, screen->format->Bmask,
-			screen->format->Amask);
+	backgroudFilter = SDL_CreateRGBSurface(SDL_HWSURFACE, screen->w, screen->h, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
 
-	SDL_FillRect(backgroudFilter, &screen->clip_rect,
-			SDL_MapRGB(screen->format, 0, 0, 0));
+	SDL_FillRect(backgroudFilter, &screen->clip_rect, SDL_MapRGB(screen->format, 0, 0, 0));
 
 	SDL_SetAlpha(backgroudFilter, SDL_SRCALPHA, 128);
 
 	SDL_SetAlpha(backgroudFilter, SDL_SRCALPHA, 128);
-	SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w,
-			backgroudFilter->clip_rect.h };
-	SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h
-			- 2 * TILESIZE };
+	SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
+	SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h - 2 * TILESIZE };
 	SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	items = new menuitem[labeltexts.size()];
 
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		items[i].labelText = labeltexts[i];
-		items[i].labelSurface = TTF_RenderUTF8_Solid(Game::curGame->getFont(),
-				items[i].labelText.c_str(),
-				i == currentItem ? colors[1] : colors[0]);
-		items[i].position.x = screen->clip_rect.w / 2
-				- items[i].labelSurface->clip_rect.w / 2;
+		items[i].labelSurface = TTF_RenderUTF8_Solid(Game::curGame->getFont(), items[i].labelText.c_str(), i == currentItem ? colors[1] : colors[0]);
+		items[i].position.x = screen->clip_rect.w / 2 - items[i].labelSurface->clip_rect.w / 2;
 		items[i].position.y = (i + 1) * items[i].labelSurface->clip_rect.h;
 		items[i].selected = false;
 	}
@@ -170,16 +153,14 @@ void Menu::render() {
 
 	if (background != NULL) {
 		SDL_BlitSurface(background, NULL, screen, NULL);
-		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE,backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
-		SDL_Rect srcRect = { 0, 0, (Uint16) screen->w - 6 * TILESIZE,
-				(Uint16) screen->h - 2 * TILESIZE };
+		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
+		SDL_Rect srcRect = { 0, 0, (Uint16) screen->w - 6 * TILESIZE, (Uint16) screen->h - 2 * TILESIZE };
 		SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	}
 
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(),
-				&(items[i].position));
+		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(), &(items[i].position));
 	}
 }
 
@@ -189,21 +170,17 @@ void Menu::select(int direction) {
 
 	TTF_Font *menufont = Game::curGame->getFont();
 	SDL_FreeSurface(items[currentItem].labelSurface);
-	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont,
-			items[currentItem].labelText.c_str(), colors[0]);
+	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[0]);
 
 	//item below
 	if (direction & DOWN) {
-		currentItem =
-				(currentItem >= labeltexts.size() - 1) ?
-						labeltexts.size() - 1 : currentItem + 1;
+		currentItem = (currentItem >= labeltexts.size() - 1) ? labeltexts.size() - 1 : currentItem + 1;
 		//item above
 	} else if (direction & UP) {
 		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
 	}
 
-	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont,
-			items[currentItem].labelText.c_str(), colors[1]);
+	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[1]);
 }
 
 int Menu::show() {
@@ -306,6 +283,7 @@ void Menu::exit() {
 
 	//Game::curGame->getCurrentLevel()->setRunning(false);
 	running = false;
+
 }
 
 void Menu::credits() {
@@ -374,20 +352,14 @@ void Menu::onWiiButtonEvent(int buttons) {
 	}
 }
 
-void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left,
-		bool right, bool middle) {
+void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle) {
 	TTF_Font *menufont = Game::curGame->getFont();
 	for (unsigned i = 0; i < labeltexts.size(); i++) {
-		if (mX > items[i].position.x
-				&& mX < items[i].position.x + items[i].position.w
-				&& mY > items[i].position.y
-				&& mY < items[i].position.y + items[i].position.h) {
+		if (mX > items[i].position.x && mX < items[i].position.x + items[i].position.w && mY > items[i].position.y && mY < items[i].position.y + items[i].position.h) {
 			SDL_FreeSurface(items[currentItem].labelSurface);
-			items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont,
-					items[currentItem].labelText.c_str(), colors[0]);
+			items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[0]);
 			currentItem = i;
-			items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont,
-					items[currentItem].labelText.c_str(), colors[1]);
+			items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[1]);
 		}
 	}
 }

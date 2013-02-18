@@ -7,7 +7,7 @@
 #include <yaml-cpp/yaml.h>
 
 vector<string> Level::levels;
-map<string,string> Level::levelnames;
+map<string, string> Level::levelnames;
 
 void Level::loadLevels() {
 	levels.push_back("l000");
@@ -15,21 +15,19 @@ void Level::loadLevels() {
 	levels.push_back("l002");
 	levels.push_back("l003");
 
-
-	for(unsigned i=0; i< levels.size();i++){
-		YAML::Node levelconfig = YAML::LoadFile(LEVELS+levels[i]+".yml");
+	for (unsigned i = 0; i < levels.size(); i++) {
+		YAML::Node levelconfig = YAML::LoadFile(LEVELS + levels[i] + ".yml");
 		levelnames[levels[i]] = levelconfig["name"].Scalar();
 	}
 
 }
 
-
 Level::Level(unsigned levelnum) {
 
-	if(levelnum >= levels.size()){
+	if (levelnum >= levels.size()) {
 		//TODO throw exception
-		this->levelnum=0;
-	}else{
+		this->levelnum = 0;
+	} else {
 		this->levelnum = levelnum;
 	}
 
@@ -39,7 +37,7 @@ Level::Level(unsigned levelnum) {
 	tilelist = NULL;
 	bgImage = NULL;
 	running = true;
-	levelFinished=false;
+	levelFinished = false;
 	string background;
 	float gravity;
 	YAML::Node levelconfig = YAML::LoadFile(LEVELS + levels[this->levelnum] + ".yml");
@@ -50,13 +48,10 @@ Level::Level(unsigned levelnum) {
 	background = levelconfig["bgImage"].Scalar();
 	gravity = levelconfig["gravity"].as<float>();
 	time = levelconfig["time"].as<int>();
-	bgMusic = Mix_LoadMUS((MUSIC+levelconfig["bgMusic"].Scalar()).c_str());
-
+	bgMusic = Mix_LoadMUS((MUSIC + levelconfig["bgMusic"].Scalar()).c_str());
 
 	gravity2d = new b2Vec2(0.0f, gravity * 9.81);
 	world = new b2World(*gravity2d);
-
-
 
 	Tile::loadTileset();
 
@@ -73,8 +68,7 @@ Level::Level(unsigned levelnum) {
 		this->bgImage = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
 		if (this->bgImage != 0) {
-			SDL_SetColorKey(this->bgImage, SDL_SRCCOLORKEY | SDL_RLEACCEL,
-					SDL_MapRGB(this->bgImage->format, 255, 0, 255));
+			SDL_SetColorKey(this->bgImage, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(this->bgImage->format, 255, 0, 255));
 		}
 	}
 
@@ -94,7 +88,7 @@ Level::~Level() {
 		delete[] tilelist[i];
 	}
 	delete[] tilelist;
-	for(unsigned i=0;i<Entity::entityList.size(); i++){
+	for (unsigned i = 0; i < Entity::entityList.size(); i++) {
 		delete Entity::entityList[i];
 	}
 	Entity::entityList.clear();
@@ -104,7 +98,7 @@ Level::~Level() {
 void Level::loadMapFile(string filename) {
 
 	//TODO only testing
-	test = new BadGuy("badguy.bmp",1,0.5,5,5);
+	BadGuy *test = new BadGuy("vacuuBoy", 5, 5);
 
 	tilelist = new Tile***[3];
 	for (int i = 0; i < 3; i++) {
@@ -124,7 +118,7 @@ void Level::loadMapFile(string filename) {
 
 				if (id & TF_START) {
 					//TODO: get width and height dynamically
-					player = new Player( x, y);
+					player = new Player(x, y);
 				}
 
 				tilelist[i][x][y] = new Tile(id);
@@ -160,7 +154,7 @@ void Level::render() {
 
 void Level::logic() {
 
-	if(levelFinished){
+	if (levelFinished) {
 //		Levelresult levelresult;
 //		levelresult.time = this->time;
 //		levelresult.items = player->items;
@@ -191,7 +185,7 @@ void Level::logic() {
 
 	world->Step(timeStep, velocityIterations, positionIterations);
 
-	for(unsigned i=0;i<Entity::entityList.size();i++){
+	for (unsigned i = 0; i < Entity::entityList.size(); i++) {
 		Entity::entityList[i]->logic();
 	}
 	mainCam->logic();
@@ -200,9 +194,10 @@ void Level::logic() {
 
 void Level::play() {
 	SDL_Event event;
+#ifndef DEBUG
 	Uint32 start;
-
-	Mix_PlayMusic(bgMusic,-1);
+#endif
+	Mix_PlayMusic(bgMusic, -1);
 
 #if DEBUG >= 1
 	int fps=0;
@@ -211,9 +206,9 @@ void Level::play() {
 	while (running) {
 #if DEBUG >=1
 		fps++;
-#endif
+#else
 		start = SDL_GetTicks();
-
+#endif
 		while (SDL_PollEvent(&event)) {
 			onEvent(&event);
 		}
@@ -232,7 +227,7 @@ void Level::play() {
 			stringstream out;
 			out << "FPS: " << fps;
 			SDL_WM_SetCaption(out.str().c_str(),NULL);
-			cout << out << endl;
+			cout << out.str() << endl;
 			fps=0;
 			fpstime = SDL_GetTicks();
 		}
@@ -246,57 +241,40 @@ void Level::play() {
 
 void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 
-	switch (sym) {
-	case SDLK_ESCAPE:
+	if (sym == SDLK_ESCAPE) {
+
 		//TODO check out
 		Menu *pauseMenu;
 		pauseMenu = new Menu(PAUSEMENU);
 		pauseMenu->show();
 		delete pauseMenu;
-		break;
-	case SDLK_a:
+	} else if (sym == Game::curGame->settings.controller.left) {
 		player->setDirection(LEFT);
-		break;
-	case SDLK_w:
+	} else if (sym == Game::curGame->settings.controller.jump) {
 		player->setDirection(UP);
-		break;
-	case SDLK_s:
+	} else if (sym == Game::curGame->settings.controller.down) {
 		player->setDirection(DOWN);
-		break;
-	case SDLK_d:
+	} else if (sym == Game::curGame->settings.controller.right) {
 		player->setDirection(RIGHT);
-		break;
-	case SDLK_LALT:
+	} else if (sym == Game::curGame->settings.controller.run) {
 		player->setRunning(true);
-		break;
-	case SDLK_e:
+	} else if (sym == Game::curGame->settings.controller.use) {
 		player->use();
-		break;
-	default:
-		break;
 	}
 
 }
 
 void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
-	switch (sym) {
-	case SDLK_a:
+	if (sym == Game::curGame->settings.controller.left) {
 		player->delDirection(LEFT);
-		break;
-	case SDLK_w:
+	} else if (sym == Game::curGame->settings.controller.jump) {
 		player->delDirection(UP);
-		break;
-	case SDLK_s:
+	} else if (sym == Game::curGame->settings.controller.down) {
 		player->delDirection(DOWN);
-		break;
-	case SDLK_d:
+	} else if (sym == Game::curGame->settings.controller.right) {
 		player->delDirection(RIGHT);
-		break;
-	case SDLK_LALT:
-			player->setRunning(false);
-			break;
-	default:
-		break;
+	} else if (sym == Game::curGame->settings.controller.run) {
+		player->setRunning(false);
 	}
 }
 

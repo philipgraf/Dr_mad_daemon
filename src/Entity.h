@@ -21,6 +21,10 @@
 #define ACTION_DUCK_LEFT 5
 #define ACTION_DUCK_RIGHT 6
 
+#define UP 0x01
+#define RIGHT 0x02
+#define DOWN 0x04
+#define LEFT 0x08
 
 using namespace std;
 
@@ -31,6 +35,8 @@ class Entity {
 protected:
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
 	bool alive; /**< contain true if the entity is still alive and false if not */
+
+	Uint8 direction;
 
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
@@ -43,6 +49,11 @@ protected:
 	float maxVelocity;
 
 	bool grounded;
+
+	b2Fixture *sensorRight;
+	b2Fixture *sensorLeft;
+	b2Fixture *sensorTop;
+	b2Fixture *sensorBottom;
 
 	b2Body *body;
 
@@ -57,7 +68,7 @@ public:
 	virtual void logic();
 	virtual void move();
 
-
+	int checkCollision();
 
 	//----------------------------------- Getter and Setter ------------------------------
 
@@ -74,6 +85,9 @@ public:
 	float getWidth() const;
 	void setWidth(float width);
 	b2Body* getBody();
+	Uint8 getDirection() const;
+	void setDirection(Uint8 direction);
+	void delDirection(Uint8 direction);
 
 };
 

@@ -33,8 +33,6 @@ public:
 	static map<string,string> levelnames;
 private:
 
-	BadGuy *test;
-
 	/**
 	 * 3D Tilearray [0=bg,1=main,2=fg][x][y]
 	 */

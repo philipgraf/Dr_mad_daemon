@@ -12,3 +12,5 @@ Tests/.cccc/
 a.out
 Leveleditor/
 *.*~
+data/configs/game.yml
+data/configs/slots.yml

@@ -13,7 +13,8 @@ void Slot::loadSlots() {
 	YAML::Node slots;
 	try {
 		slots = YAML::LoadFile(CONFIGS"slots.yml");
-	} catch (...) {
+	} catch (YAML::Exception &e) {
+		cout << e.msg << ": " << e.what() << endl;
 		//TODO create new default slots.yml
 	}
 	int i = 0;
@@ -48,7 +49,7 @@ void Slot::saveSlots() {
 	out << YAML::EndMap;
 
 	fstream filestream;
-	filestream.open(CONFIGS"slots.yml");
+	filestream.open(CONFIGS"slots.yml",fstream::out);
 	filestream << out.c_str();
 
 	filestream.close();

@@ -58,8 +58,7 @@ void Game::init() {
 	/**
 	 * Create Game Window with defined width and height and Bits per pixel use by the system
 	 */
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT,
-			SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE)) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE)) == NULL) {
 		cout << "unable to initialize display" << endl;
 	}
 
@@ -108,36 +107,81 @@ void Game::init() {
 
 void Game::loadSettings() {
 	//TODO if file not exist load default settings and store in file
+	YAML::Node settings;
+	try{
+	settings = YAML::LoadFile(CONFIGS"game.yml");
+	}catch(YAML::Exception &e){
+		cout << e.msg << endl;
+	}
 
-	YAML::Node settings = YAML::LoadFile(CONFIGS"game.yml");
-
-	if (settings["language"].Scalar()
-			== YAML::detail::node_data::empty_scalar) {
+	if (settings["language"].Scalar() == YAML::detail::node_data::empty_scalar) {
 		this->settings.language = "en";
 	} else {
 		this->settings.language = settings["language"].Scalar();
 	}
-	if (settings["audio rate"].Scalar()
-			== YAML::detail::node_data::empty_scalar) {
+	if (settings["audio rate"].Scalar() == YAML::detail::node_data::empty_scalar) {
 		this->settings.audioRate = 22050;
 	} else {
 		this->settings.audioRate = settings["audio rate"].as<int>();
 	}
 
-	if (settings["active slot"].Scalar()
-			== YAML::detail::node_data::empty_scalar) {
+	if (settings["active slot"].Scalar() == YAML::detail::node_data::empty_scalar) {
 		this->settings.activeSlot = -1;
 	} else {
 		this->settings.activeSlot = settings["active slot"].as<int>();
 	}
 
-	this->settings.controller.left = settings["keyboard settings"]["left"].as<int>();
-	this->settings.controller.right = settings["keyboard settings"]["right"].as<int>();
-	this->settings.controller.up = settings["keyboard settings"]["up"].as<int>();
-	this->settings.controller.down = settings["keyboard settings"]["down"].as<int>();
-	this->settings.controller.run = settings["keyboard settings"]["run"].as<int>();
-	this->settings.controller.jump = settings["keyboard settings"]["jump"].as<int>();
-	this->settings.controller.use = settings["keyboard settings"]["use"].as<int>();
+	if (settings["keyboard settings"].Scalar() == YAML::detail::node_data::empty_scalar) {
+		this->settings.controller.left = SDLK_a;
+		this->settings.controller.right = SDLK_d;
+		this->settings.controller.up = SDLK_w;
+		this->settings.controller.down = SDLK_s;
+		this->settings.controller.run = SDLK_LSHIFT;
+		this->settings.controller.jump = SDLK_SPACE;
+		this->settings.controller.use = SDLK_e;
+	} else {
+		if (settings["keyboard settings"]["left"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.controller.left = SDLK_a;
+		} else {
+			this->settings.controller.left = settings["keyboard settings"]["left"].as<int>();
+		}
+
+		if (settings["keyboard settings"]["right"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.controller.right = SDLK_d;
+		} else {
+			this->settings.controller.right = settings["keyboard settings"]["right"].as<int>();
+		}
+
+		if (settings["keyboard settings"]["up"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.controller.up = SDLK_w;
+		} else {
+			this->settings.controller.up = settings["keyboard settings"]["up"].as<int>();
+		}
+
+		if (settings["keyboard settings"]["down"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.controller.down = SDLK_s;
+		} else {
+			this->settings.controller.down = settings["keyboard settings"]["down"].as<int>();
+		}
+
+		if (settings["keyboard settings"]["run"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.controller.run = SDLK_LSHIFT;
+		} else {
+			this->settings.controller.run = settings["keyboard settings"]["run"].as<int>();
+		}
+
+		if (settings["keyboard settings"]["jump"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.controller.jump = SDLK_SPACE;
+		} else {
+			this->settings.controller.jump = settings["keyboard settings"]["jump"].as<int>();
+		}
+
+		if (settings["keyboard settings"]["use"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.controller.use = SDLK_e;
+		} else {
+			this->settings.controller.use = settings["keyboard settings"]["use"].as<int>();
+		}
+	}
 
 
 }

@@ -9,10 +9,14 @@
 #include "Game.h"
 
 Player::Player(int x, int y) :
-		Entity() {
+		Entity(3) {
 
 	width = 1;
 	height = 2;
+
+	actionframes[ACTION_STAY]=1;
+	actionframes[ACTION_WALK_RIGHT]=4;
+	actionframes[ACTION_WALK_LEFT]=4;
 
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
@@ -44,7 +48,7 @@ Player::Player(int x, int y) :
 	b2BodyDef bodydef;
 	bodydef.type = b2_dynamicBody;
 	bodydef.fixedRotation = true;
-	bodydef.position.Set(x + width, y + height);
+	bodydef.position.Set(x + halfWidth, y + halfHeight);
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
 			&bodydef);
 	b2PolygonShape dynamicBox;

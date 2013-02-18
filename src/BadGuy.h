@@ -20,6 +20,7 @@ public:
 	virtual ~BadGuy();
 
 	void move();
+	void logic();
 };
 
 #endif /* BADGUY_H_ */

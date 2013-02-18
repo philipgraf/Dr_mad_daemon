@@ -11,8 +11,7 @@
 #include "Game.h"
 
 vector<Entity*> Entity::entityList;
-//TODO: get from file and save NOT static in Entity class
-int actionframes[] = { 1, 4, 4 };
+
 
 /** Constuctor
  * Set the given values an initial all other Entityvalues with default values
@@ -22,10 +21,11 @@ int actionframes[] = { 1, 4, 4 };
  * @param x The x value of the entity
  * @param y the y value of the entity
  */
-Entity::Entity() {
+Entity::Entity(int numOfActions) {
 
 	image = NULL;
 	body=NULL;
+	actionframes = new int[numOfActions];
 
 	alive = true;
 	currentframe = 0;
@@ -34,6 +34,7 @@ Entity::Entity() {
 	width = 0;
 	height = 0;
 	grounded = false;
+	maxVelocity=0;
 
 	entityList.push_back(this);
 }
@@ -69,6 +70,7 @@ Entity::~Entity() {
 			!= entityList.end()) {
 		entityList.erase(pos);
 	}
+	delete [] actionframes;
 }
 
 /**

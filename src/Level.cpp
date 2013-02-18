@@ -104,7 +104,7 @@ Level::~Level() {
 void Level::loadMapFile(string filename) {
 
 	//TODO only testing
-	//BadGuy *test = new BadGuy("badguy.bmp",1,0.5,5,5);
+	test = new BadGuy("badguy.bmp",1,0.5,5,5);
 
 	tilelist = new Tile***[3];
 	for (int i = 0; i < 3; i++) {

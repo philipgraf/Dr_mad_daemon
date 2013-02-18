@@ -35,9 +35,12 @@ protected:
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
+	int *actionframes;
 
 	float width;/**< width of the entity in meter */
 	float height;/**< height of the entity in meter */
+
+	float maxVelocity;
 
 	bool grounded;
 
@@ -48,7 +51,7 @@ protected:
 public:
 	static vector<Entity*> entityList;
 
-	Entity();
+	Entity(int numOfActions);
 	virtual ~Entity();
 
 	virtual void logic();

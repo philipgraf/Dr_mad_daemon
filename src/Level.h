@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "Event.h"
+#include "BadGuy.h"
 
 using namespace std;
 
@@ -31,6 +32,8 @@ public:
 	static vector<string> levels;
 	static map<string,string> levelnames;
 private:
+
+	BadGuy *test;
 
 	/**
 	 * 3D Tilearray [0=bg,1=main,2=fg][x][y]

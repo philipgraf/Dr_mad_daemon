@@ -23,7 +23,6 @@
 class Player: public Entity {
 private:
 	Uint8 direction;
-	float maxVelocity;
 	bool running;
 public:
 	Player(int x, int y);

@@ -2,9 +2,12 @@
 #include "Game.h"
 #include "Slot.h"
 #include "BadGuy.h"
-#include "sstream"
+#include "Notification.h"
+#include <sstream>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
+
+#include "Notification.h"
 
 vector<string> Level::levels;
 map<string, string> Level::levelnames;
@@ -189,7 +192,12 @@ void Level::logic() {
 		Entity::entityList[i]->logic();
 	}
 	mainCam->logic();
-
+	for (std::vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
+		(*it)->timeout();
+		if(it == Notification::notificationList.end()){
+			break;
+		}
+	}
 }
 
 void Level::play() {
@@ -246,7 +254,10 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		//TODO check out
 		Menu *pauseMenu;
 		pauseMenu = new Menu(PAUSEMENU);
-		pauseMenu->show();
+		if(pauseMenu->show()==-1){
+			//TODO only temporary! need to free all allocated memory and so on
+			exit(0);
+		}
 		delete pauseMenu;
 	} else if (sym == Game::curGame->settings.controller.left) {
 		player->setDirection(LEFT);
@@ -260,8 +271,11 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->setRunning(true);
 	} else if (sym == Game::curGame->settings.controller.use) {
 		player->use();
+	} else if( sym == SDLK_n){
+		new Notification("Test notification",5,NOTIFICATION_INFO);
+	}else if( sym == SDLK_b){
+		new Notification("Test ba",10,NOTIFICATION_WARNING);
 	}
-
 }
 
 void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {

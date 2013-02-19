@@ -8,6 +8,10 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#define FONT_MENU_ITEM 0
+#define FONT_MENU_HEADER 1
+#define FONT_NOTIFICATION 2
+
 #include <string>
 #include <map>
 #include <SDL/SDL.h>
@@ -44,7 +48,7 @@ public:
 private:
 
 	SDL_Surface * display;
-	TTF_Font *font;
+	TTF_Font *font[3];
 
 	Level *currentLevel;
 
@@ -67,7 +71,7 @@ public:
 	Level* getCurrentLevel();
 	void destroyCurrentLevel();
 	void setCurrentLevel(Level *curLev);
-	TTF_Font* getFont();
+	TTF_Font* getFont(int which=0);
 };
 
 

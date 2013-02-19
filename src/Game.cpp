@@ -18,7 +18,6 @@ map<string, Mix_Chunk*> Game::sounds;
 Game::Game() {
 	curGame = this;
 	display = NULL;
-	font = NULL;
 	currentLevel = NULL;
 
 }
@@ -75,10 +74,16 @@ void Game::init() {
 	}
 
 	/**
-	 * Load the menu font
+	 * Load the menu Header font
 	 */
-	if ((font = TTF_OpenFont(FONTS "menu.ttf", 40)) == NULL) {
-		cout << "unable to load menufont" << endl;
+	if ((font[FONT_MENU_HEADER] = TTF_OpenFont(FONTS "menu.ttf", 40)) == NULL) {
+		cout << "unable to load menu header font" << endl;
+	}
+	if ((font[FONT_MENU_ITEM] = TTF_OpenFont(FONTS "menu.ttf", 30)) == NULL) {
+		cout << "unable to load menu item font" << endl;
+	}
+	if ((font[FONT_NOTIFICATION] = TTF_OpenFont(FONTS "menu.ttf", 16)) == NULL) {
+		cout << "unable to load notification Font" << endl;
 	}
 
 	/**
@@ -246,7 +251,7 @@ void Game::destroyCurrentLevel() {
 	}
 }
 
-TTF_Font* Game::getFont() {
-	return font;
+TTF_Font* Game::getFont(int which) {
+	return font[which];
 }
 

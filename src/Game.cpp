@@ -41,8 +41,22 @@ int Game::execute() {
 	init();
 
 	Menu mainMenu;
+	int ret = mainMenu.show();
+	SDL_FillRect(SDL_GetVideoSurface(),&SDL_GetVideoSurface()->clip_rect,SDL_MapRGB(SDL_GetVideoSurface()->format,0,0,0));
+	SDL_Color white;
+	white.b=255;
+	white.r=255;
+	white.g=255;
+	SDL_Surface *text = TTF_RenderUTF8_Blended(TTF_OpenFont(FONTS"menu.ttf",72),"Good Bye!",white);
+	SDL_Rect dest;
+	dest.x = 200;
+	dest.y = 200;
+	dest.w = text->w;
+	dest.h = text->h;
+	SDL_BlitSurface(text,NULL,SDL_GetVideoSurface(),&dest);
 
-	return mainMenu.show();
+	SDL_Flip(SDL_GetVideoSurface());
+	return ret;
 }
 
 void Game::init() {

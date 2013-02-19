@@ -140,7 +140,7 @@ void Menu::build() {
 
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		items[i].labelText = labeltexts[i];
-		items[i].labelSurface = TTF_RenderUTF8_Solid(Game::curGame->getFont(), items[i].labelText.c_str(), i == currentItem ? colors[1] : colors[0]);
+		items[i].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(), items[i].labelText.c_str(), i == currentItem ? colors[1] : colors[0]);
 		items[i].position.x = screen->clip_rect.w / 2 - items[i].labelSurface->clip_rect.w / 2;
 		items[i].position.y = (i + 1) * items[i].labelSurface->clip_rect.h;
 		items[i].selected = false;
@@ -170,7 +170,7 @@ void Menu::select(int direction) {
 
 	TTF_Font *menufont = Game::curGame->getFont();
 	SDL_FreeSurface(items[currentItem].labelSurface);
-	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[0]);
+	items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, items[currentItem].labelText.c_str(), colors[0]);
 
 	//item below
 	if (direction & DOWN) {
@@ -180,7 +180,7 @@ void Menu::select(int direction) {
 		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
 	}
 
-	items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[1]);
+	items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, items[currentItem].labelText.c_str(), colors[1]);
 }
 
 int Menu::show() {
@@ -358,9 +358,9 @@ void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right
 	for (unsigned i = 0; i < labeltexts.size(); i++) {
 		if (mX > items[i].position.x && mX < items[i].position.x + items[i].position.w && mY > items[i].position.y && mY < items[i].position.y + items[i].position.h) {
 			SDL_FreeSurface(items[currentItem].labelSurface);
-			items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[0]);
+			items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, items[currentItem].labelText.c_str(), colors[0]);
 			currentItem = i;
-			items[currentItem].labelSurface = TTF_RenderUTF8_Solid(menufont, items[currentItem].labelText.c_str(), colors[1]);
+			items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, items[currentItem].labelText.c_str(), colors[1]);
 		}
 	}
 }

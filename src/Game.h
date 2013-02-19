@@ -71,7 +71,7 @@ public:
 	Level* getCurrentLevel();
 	void destroyCurrentLevel();
 	void setCurrentLevel(Level *curLev);
-	TTF_Font* getFont(int which=0);
+	TTF_Font* getFont(int which=1);
 };
 
 

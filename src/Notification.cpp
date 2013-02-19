@@ -61,7 +61,7 @@ Notification::Notification(string message, int displaySecs, int type, string ico
 
 	SDL_BlitSurface(icon,NULL,notificationSurface,&dRect);
 
-	SDL_Surface *text = TTF_RenderUTF8_Solid(Game::curGame->getFont(FONT_NOTIFICATION), message.c_str(), color);
+	SDL_Surface *text = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_NOTIFICATION), message.c_str(), color);
 
 	dRect.x=100;
 	dRect.y = 6;

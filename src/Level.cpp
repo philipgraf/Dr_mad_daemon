@@ -206,7 +206,8 @@ void Level::play() {
 	Uint32 start;
 #endif
 	Mix_PlayMusic(bgMusic, -1);
-
+	//TODO implement to settings
+	Mix_VolumeMusic(64);
 #if DEBUG >= 1
 	int fps=0;
 	int fpstime=0;

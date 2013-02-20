@@ -33,7 +33,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 
 	float halfWidth = width/2;
 	float halfHeight= height/2;
-
+	float radius = 0.1;
 	SDL_Surface *tmp = SDL_LoadBMP((IMG+badguy["image"].Scalar()).c_str());
 
 	if (!tmp) {
@@ -52,11 +52,33 @@ BadGuy::BadGuy(string type, int x, int y) :
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(halfWidth, halfHeight);
+	dynamicBox.SetAsBox(halfWidth, halfHeight-radius);
 	b2FixtureDef *fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
 	fixtureDef->density = 35.0;
 	fixtureDef->friction = 0.3;
+	body->CreateFixture(fixtureDef);
+
+	b2CircleShape leftWheelShape;
+	leftWheelShape.m_radius = radius;
+	leftWheelShape.m_p = b2Vec2(-halfWidth+radius, halfHeight-radius);
+
+	fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &leftWheelShape;
+	fixtureDef->density = 1.0f;
+	fixtureDef->friction = 0.2;
+
+	body->CreateFixture(fixtureDef);
+
+	b2CircleShape rightWheelShape;
+	rightWheelShape.m_radius = radius;
+	rightWheelShape.m_p = b2Vec2(+halfWidth-radius, halfHeight-radius);
+
+	fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = &rightWheelShape;
+	fixtureDef->density = 1.0f;
+	fixtureDef->friction = 0.2;
+
 	body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorRight;
@@ -76,7 +98,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	this->sensorLeft = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorTop;
-	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight), 0);
+	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight+radius), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorTop;

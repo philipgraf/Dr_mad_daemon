@@ -210,7 +210,8 @@ void Game::loadSettings() {
 void Game::loadSounds() {
 	sounds["menu select"] = Mix_LoadWAV(SOUNDS"menu_select.ogg");
 	sounds["menu confirm"] = Mix_LoadWAV(SOUNDS"menu_confirm.ogg");
-	sounds["player jump"] = Mix_LoadWAV(SOUNDS"playerJump.ogg");
+	sounds["player jump"] = Mix_LoadWAV(SOUNDS"player_jump.ogg");
+	sounds["player jump impact"] = Mix_LoadWAV(SOUNDS"player_jump_impact.ogg");
 }
 
 void Game::saveSettings() {

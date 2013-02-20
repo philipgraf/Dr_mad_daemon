@@ -127,8 +127,8 @@ void Player::logic() {
 //TODO check connected tiles for shock and other game events
 	int collision = checkCollision();
 
-	if(grounded && impactSoundPlayed > 10) {
-		//play sound
+	if(grounded && impactSoundPlayed > 20) {
+		Mix_PlayChannel(-1, Game::sounds["player jump impact"], 0);
 		cout << "play sound" << endl;
 
 	}else if(!grounded) {

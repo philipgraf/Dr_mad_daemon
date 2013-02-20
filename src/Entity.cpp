@@ -172,10 +172,6 @@ void Entity::setDirection(Uint8 direction) {
 	this->direction |= direction;
 }
 
-Uint8 Entity::getDirection() const {
-	return direction;
-}
-
 void Entity::delDirection(Uint8 direction) {
 	this->direction &= ~direction;
 }

@@ -49,8 +49,8 @@ int Game::execute() {
 	white.g=255;
 	SDL_Surface *text = TTF_RenderUTF8_Blended(TTF_OpenFont(FONTS"menu.ttf",72),"Good Bye!",white);
 	SDL_Rect dest;
-	dest.x = 200;
-	dest.y = 200;
+	dest.x = (display->w-text->w)/2;
+	dest.y = (display->h-text->h)/2;
 	dest.w = text->w;
 	dest.h = text->h;
 	SDL_BlitSurface(text,NULL,SDL_GetVideoSurface(),&dest);
@@ -79,7 +79,6 @@ void Game::init() {
 	 * Set Title
 	 */
 	SDL_WM_SetCaption(TITLE, NULL);
-
 	/**
 	 * Initialize SDL_ttf for Fonts
 	 */
@@ -97,6 +96,9 @@ void Game::init() {
 		cout << "unable to load menu item font" << endl;
 	}
 	if ((font[FONT_NOTIFICATION] = TTF_OpenFont(FONTS "menu.ttf", 16)) == NULL) {
+		cout << "unable to load notification Font" << endl;
+	}
+	if ((font[FONT_PDA_CLOCK] = TTF_OpenFont(FONTS "digital.ttf", 18)) == NULL) {
 		cout << "unable to load notification Font" << endl;
 	}
 

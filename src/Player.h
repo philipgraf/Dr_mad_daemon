@@ -10,12 +10,12 @@
 #define PLAYER_H_
 
 #include "Entity.h"
+#include "PDA.h"
 #include <Box2D/Box2D.h>
 
 
 class Player: public Entity {
 private:
-
 
 	bool running;
 	int impactSoundPlayed;
@@ -24,6 +24,7 @@ public:
 	virtual ~Player();
 
 	b2Fixture *feetFixture;
+	PDA pda;
 
 	void logic();
 	void move();

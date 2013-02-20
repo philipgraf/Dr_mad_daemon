@@ -3,6 +3,8 @@
 #include "Slot.h"
 #include "BadGuy.h"
 #include "Notification.h"
+#include "PDA.h"
+
 #include <sstream>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
@@ -273,8 +275,10 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->use();
 	} else if( sym == SDLK_n){
 		new Notification("Test notification",5,NOTIFICATION_INFO);
-	}else if( sym == SDLK_b){
+	} else if( sym == SDLK_b){
 		new Notification("Test ba",10,NOTIFICATION_WARNING);
+	}else if( sym == SDLK_p){
+		player->pda.show();
 	}
 }
 

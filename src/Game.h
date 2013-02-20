@@ -11,6 +11,7 @@
 #define FONT_MENU_ITEM 0
 #define FONT_MENU_HEADER 1
 #define FONT_NOTIFICATION 2
+#define FONT_PDA_CLOCK 3
 
 #include <string>
 #include <map>
@@ -48,7 +49,7 @@ public:
 private:
 
 	SDL_Surface * display;
-	TTF_Font *font[3];
+	TTF_Font *font[4];
 
 	Level *currentLevel;
 

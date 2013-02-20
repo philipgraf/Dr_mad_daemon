@@ -86,7 +86,7 @@ void Camera::drawImage() {
 void Camera::drawNotification() {
 	int i = 0;
 	for (std::vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
-		SDL_Rect destRect = { 80, i * 40, (*it)->getNotificationSurface()->w, (*it)->getNotificationSurface()->h };
+		SDL_Rect destRect = { 300, i * 40, (*it)->getNotificationSurface()->w, (*it)->getNotificationSurface()->h };
 		SDL_BlitSurface((*it)->getNotificationSurface(), NULL, SDL_GetVideoSurface(), &destRect);
 		i++;
 	}

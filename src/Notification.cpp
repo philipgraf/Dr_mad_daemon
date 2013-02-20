@@ -26,7 +26,6 @@ Notification::Notification(string message, int displaySecs, int type, string ico
 	SDL_FreeSurface(temp);
 
 	counter = displaySecs * FPS;
-	visible = true;
 
 	SDL_Color color;
 	if (type == NOTIFICATION_INFO) {
@@ -40,30 +39,36 @@ Notification::Notification(string message, int displaySecs, int type, string ico
 	}
 	if (iconName == "") {
 		if (type == NOTIFICATION_INFO) {
-			iconName = IMG"info.png";
+			iconName = IMG"info.bmp";
 		} else if (type == NOTIFICATION_WARNING) {
-			iconName = IMG"warning.png";
+			iconName = IMG"warning.bmp";
+		}
+	}
+	SDL_Surface *icon;
+
+	if ((temp = SDL_LoadBMP(iconName.c_str())) == NULL) {
+		//TODO Throw exception
+		std::cout << "unable to load :" << iconName << std::endl;
+	} else {
+		icon = SDL_DisplayFormat(temp);
+		SDL_FreeSurface(temp);
+		if (temp != 0) {
+			SDL_SetColorKey(icon, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(icon->format, 255, 0, 255));
+
 		}
 	}
 
-	if ((temp = IMG_Load(iconName.c_str())) == NULL) {
-		//TODO Throw exception
-		std::cout << "unable to load :" << iconName << std::endl;
-	}
-	SDL_Surface *icon = SDL_DisplayFormatAlpha(temp);
-	SDL_FreeSurface(temp);
-
 	SDL_Rect dRect;
-	dRect.x=10;
-	dRect.y=6;
+	dRect.x = 10;
+	dRect.y = 6;
 	dRect.w = icon->w;
 	dRect.h = icon->h;
 
-	SDL_BlitSurface(icon,NULL,notificationSurface,&dRect);
+	SDL_BlitSurface(icon, NULL, notificationSurface, &dRect);
 
-	SDL_Surface *text = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_NOTIFICATION), message.c_str(), color);
+	SDL_Surface *text = TTF_RenderUTF8_Solid(Game::curGame->getFont(FONT_NOTIFICATION), message.c_str(), color);
 
-	dRect.x=100;
+	dRect.x = 60;
 	dRect.y = 6;
 	dRect.w = text->w;
 	dRect.h = text->h;
@@ -85,14 +90,6 @@ void Notification::timeout() {
 	if (--counter <= 0) {
 		delete this;
 	}
-}
-
-bool Notification::isVisible() const {
-	return visible;
-}
-
-void Notification::setVisible(bool visible) {
-	this->visible = visible;
 }
 
 SDL_Surface* Notification::getNotificationSurface() {

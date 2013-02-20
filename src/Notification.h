@@ -22,7 +22,6 @@ public:
 private:
 	SDL_Surface *notificationSurface;
 	int counter;
-	bool visible;
 public:
 	Notification(std::string message,int displaySecs ,int type=NOTIFICATION_INFO, std::string iconName="");
 	virtual ~Notification();
@@ -30,8 +29,6 @@ public:
 	void timeout();
 
 	SDL_Surface* getNotificationSurface();
-	bool isVisible() const;
-	void setVisible(bool visible);
 };
 
 #endif /* NOTIFICATION_H_ */

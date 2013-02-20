@@ -34,7 +34,7 @@ using namespace std;
 class Entity {
 protected:
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
-	bool alive; /**< contain true if the entity is still alive and false if not */
+	bool alive; /**< contains true if the entity is still alive and false if not */
 
 	Uint8 direction;
 
@@ -46,9 +46,9 @@ protected:
 	float width;/**< width of the entity in meter */
 	float height;/**< height of the entity in meter */
 
-	float maxVelocity;
+	float maxVelocity; /**< the maximal velocity of the entity. May be manipulated for running, etc. **/
 
-	bool grounded;
+	bool grounded; /**< is true when sensorBottom collide with something. */
 
 	b2Fixture *sensorRight;
 	b2Fixture *sensorLeft;
@@ -85,10 +85,10 @@ public:
 	float getWidth() const;
 	void setWidth(float width);
 	b2Body* getBody();
-	Uint8 getDirection() const;
+
 	void setDirection(Uint8 direction);
 	void delDirection(Uint8 direction);
-
+	Uint8 getDirection() const;
 };
 
 #endif /* ENTITY_H_ */

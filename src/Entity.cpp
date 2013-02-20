@@ -27,9 +27,15 @@ Entity::Entity(int numOfActions) {
 	body=NULL;
 	actionframes = new int[numOfActions];
 
+	sensorBottom=NULL;
+	sensorLeft=NULL;
+	sensorRight=NULL;
+	sensorTop=NULL;
+
 	alive = true;
 	currentframe = 0;
 	action = ACTION_STAY;
+	direction = 0;
 
 	grounded=false;
 
@@ -39,7 +45,6 @@ Entity::Entity(int numOfActions) {
 
 	entityList.push_back(this);
 }
-
 
 void Entity::logic() {
 	move();
@@ -52,7 +57,6 @@ void Entity::nextframe() {
 		currentframe = 0;
 	}
 }
-
 
 int Entity::checkCollision() {
 	int retValue=0;
@@ -78,7 +82,6 @@ int Entity::checkCollision() {
 
 	return retValue;
 }
-
 
 // FIXME better move algorithm needed
 /**
@@ -157,11 +160,9 @@ void Entity::setWidth(float width) {
 	this->width = width;
 }
 
-
 b2Body* Entity::getBody() {
 	return body;
 }
-
 
 Uint8 Entity::getDirection() const {
 	return direction;
@@ -169,6 +170,10 @@ Uint8 Entity::getDirection() const {
 
 void Entity::setDirection(Uint8 direction) {
 	this->direction |= direction;
+}
+
+Uint8 Entity::getDirection() const {
+	return direction;
 }
 
 void Entity::delDirection(Uint8 direction) {

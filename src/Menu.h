@@ -24,20 +24,16 @@
 #include "Language.h"
 #include "Event.h"
 
-using namespace std;
-
 typedef struct {
-	string labelText;
 	SDL_Surface *labelSurface;
 	SDL_Rect position;
-	bool selected;
 } menuitem;
 
 class Menu: public Event {
 	typedef void (Menu::*fptr)();
 private:
-	vector<fptr> labelactions;
-	vector<string> labeltexts;
+	std::vector<fptr> labelactions;
+	std::vector<std::string> labeltexts;
 	SDL_Surface *background;
 	SDL_Surface *backgroudFilter;
 	menuitem *items;

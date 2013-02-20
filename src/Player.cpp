@@ -7,6 +7,7 @@
 
 #include "Player.h"
 #include "Game.h"
+#include "Slot.h"
 
 Player::Player(int x, int y) :
 		Entity(3) {
@@ -27,6 +28,9 @@ Player::Player(int x, int y) :
 	running = false;
 
 	impactSoundPlayed = 0;
+
+	items = Slot::slots[Game::curGame->settings.activeSlot]->getPlayerItems();
+	cout << Slot::slots[Game::curGame->settings.activeSlot]->getPlayerItems()["screw"]<< endl;
 
 	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
 
@@ -111,6 +115,10 @@ Player::~Player() {
 // TODO Auto-generated destructor stub
 }
 
+std::map<std::string,int>& Player::getItems(){
+	return items;
+}
+
 void Player::use() {
 
 	switch (Game::curGame->getCurrentLevel()->getTilelist()[1][(int) body->GetPosition().x][(int) body->GetPosition().y]->getFlags()) {
@@ -129,8 +137,6 @@ void Player::logic() {
 
 	if(grounded && impactSoundPlayed > 20) {
 		Mix_PlayChannel(-1, Game::sounds["player jump impact"], 0);
-		cout << "play sound" << endl;
-
 	}else if(!grounded) {
 		impactSoundPlayed++;
 	}

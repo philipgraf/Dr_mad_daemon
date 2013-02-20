@@ -6,6 +6,7 @@
  */
 
 #include "Slot.h"
+using namespace std;
 
 vector<Slot*> Slot::slots;
 
@@ -22,8 +23,9 @@ void Slot::loadSlots() {
 	for (YAML::iterator it = slots.begin(); it != slots.end(); ++it) {
 
 		Slot slot;
-		slot.setName(it->first.Scalar());
-		slot.setFinishedLevels(it->second["finished levels"].as<int>());
+		slot.name = it->first.Scalar();
+		slot.finishedLevels = it->second["finished levels"].as<int>();
+		slot.playerItems = it->second["items"].as< map<string,int> >();
 		Slot::slots.push_back(new Slot(slot));
 	}
 	if (Game::curGame->settings.activeSlot < 0 || Game::curGame->settings.activeSlot >= Slot::slots.size()) {
@@ -43,13 +45,15 @@ void Slot::saveSlots() {
 		out << YAML::Value << YAML::BeginMap;
 		out << YAML::Key << "finished levels";
 		out << YAML::Value << slots[i]->finishedLevels;
+		out << YAML::Key << "items";
+		out << YAML::Value << slots[i]->playerItems;
 		out << YAML::EndMap;
 	}
 
 	out << YAML::EndMap;
 
 	fstream filestream;
-	filestream.open(CONFIGS"slots.yml",fstream::out);
+	filestream.open(CONFIGS"slots.yml", fstream::out);
 	filestream << out.c_str();
 
 	filestream.close();
@@ -60,11 +64,6 @@ Slot::Slot(string name) {
 	this->name = name;
 	finishedLevels = 0;
 	//Slot::slotnames.push_back(this->name);
-}
-
-Slot::Slot(Slot &copy) {
-	this->name = copy.name;
-	this->finishedLevels = copy.finishedLevels;
 }
 
 /*******************************************GETTER AND SETTER *************************************************/
@@ -84,6 +83,14 @@ void Slot::setFinishedLevels(int finishedLevels) {
 
 const string& Slot::getName() const {
 	return name;
+}
+
+map<string, int> Slot::getPlayerItems(){
+	return playerItems;
+}
+
+void Slot::setPlayerItems(const std::map<std::string, int>& playerItems) {
+	this->playerItems = playerItems;
 }
 
 void Slot::setName(const string& name) {

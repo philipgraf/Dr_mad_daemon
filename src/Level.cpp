@@ -169,6 +169,7 @@ void Level::logic() {
 //		levelresult.save();
 //		levelresult.show();
 
+		Slot::slots[Game::curGame->settings.activeSlot]->setPlayerItems(player->getItems());
 		Slot::slots[Game::curGame->settings.activeSlot]->checkAndSetFinishedLevels(levelnum);
 		Slot::saveSlots();
 
@@ -280,6 +281,12 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		new Notification("Test ba",10,NOTIFICATION_WARNING);
 	}else if( sym == SDLK_p){
 		player->pda.show();
+	}else if( sym == SDLK_F6){
+		player->getItems()["screw"]++;
+		new Notification("Screw fund",3);
+	}else if( sym == SDLK_F7){
+		player->getItems()["inductor"]++;
+		new Notification("inductor fund",3);
 	}
 }
 

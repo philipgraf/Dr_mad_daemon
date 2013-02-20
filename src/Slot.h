@@ -11,34 +11,35 @@
 #include <string>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
+#include <map>
 
 #include "define.h"
 #include "Game.h"
 
-using namespace std;
-
 class Slot {
 public:
-	static vector<Slot*> slots;
+	static std::vector<Slot*> slots;
 	static int currentSlot;
 
 	static void loadSlots();
 	static void saveSlots();
 private:
-	string name;
+	std::string name;
 	int finishedLevels;
+	std::map<std::string,int> playerItems;
 
 public:
-	Slot(string name="DrInSane");
-	Slot(Slot &copy);
+	Slot(std::string name="DrInSane");
 	virtual ~Slot();
 
 
 	void checkAndSetFinishedLevels(int levelnum);
 	int getFinishedLevels() const;
 	void setFinishedLevels(int finishedLevels);
-	const string& getName() const;
-	void setName(const string& name);
+	const std::string& getName() const;
+	void setName(const std::string& name);
+	void setPlayerItems(const std::map<std::string, int>& playerItems);
+	std::map<std::string, int> getPlayerItems();
 };
 
 #endif /* SLOT_H_ */

@@ -12,11 +12,13 @@
 #include "Entity.h"
 #include "PDA.h"
 #include <Box2D/Box2D.h>
+#include <map>
+#include <string>
 
 
 class Player: public Entity {
 private:
-
+	map<std::string,int> items;
 	bool running;
 	int impactSoundPlayed;
 public:
@@ -39,6 +41,8 @@ public:
 	void setRunning(bool running) {
 		this->running = running;
 	}
+
+	std::map<std::string,int>& getItems();
 };
 
 #endif /* PLAYER_H_ */

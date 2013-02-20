@@ -22,7 +22,7 @@
 #include "Menu.h"
 #include "Level.h"
 
-using namespace std;
+
 typedef struct{
 		int left;
 		int right;
@@ -44,7 +44,7 @@ class Game {
 
 public:
 	static Game *curGame;
-	static map<string,Mix_Chunk*> sounds;
+	static map<std::string,Mix_Chunk*> sounds;
 
 private:
 

@@ -13,6 +13,12 @@
 #include "Event.h"
 
 #include <SDL/SDL.h>
+#include <vector>
+
+typedef struct{
+	SDL_Surface *itemname;
+	SDL_Surface *amound;
+}items_t;
 
 class PDA : public Event {
 private:
@@ -21,10 +27,18 @@ private:
 	SDL_Surface *curser;
 	SDL_Color green;
 
+	SDL_Rect displayRect;
+	SDL_Rect imageRect;
+	SDL_Rect curserRect;
+
 	int level;
 	int currentItem;
+	std::vector<items_t> itemlist;
 
 	bool running;
+
+	void render();
+	void build();
 
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 

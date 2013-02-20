@@ -12,6 +12,8 @@
 
 #include "Slot.h"
 
+using namespace std;
+
 Game* Game::curGame;
 map<string, Mix_Chunk*> Game::sounds;
 

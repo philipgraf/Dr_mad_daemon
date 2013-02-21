@@ -264,11 +264,6 @@ void Game::setCurrentLevel(Level *curLev) {
 	currentLevel = curLev;
 }
 
-void Game::destroyCurrentLevel() {
-	if (currentLevel != NULL) {
-		currentLevel = NULL;
-	}
-}
 
 TTF_Font* Game::getFont(int which) {
 	return font[which];

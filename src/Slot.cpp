@@ -16,7 +16,6 @@ void Slot::loadSlots() {
 		slots = YAML::LoadFile(CONFIGS"slots.yml");
 	} catch (YAML::Exception &e) {
 		cout << e.msg << ": " << e.what() << endl;
-		//TODO create new default slots.yml
 	}
 	int i = 0;
 

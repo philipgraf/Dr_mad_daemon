@@ -83,7 +83,6 @@ int Entity::checkCollision() {
 	return retValue;
 }
 
-// FIXME better move algorithm needed
 /**
  * virtual function
  * movement defined from inheriting classes
@@ -99,6 +98,7 @@ Entity::~Entity() {
 			!= entityList.end()) {
 		entityList.erase(pos);
 	}
+	Game::curGame->getCurrentLevel()->getWorld()->DestroyBody(body);
 	delete [] actionframes;
 }
 

@@ -17,11 +17,12 @@
 using namespace std;
 
 BadGuy::BadGuy(string type, int x, int y) :
-		Entity(3) {
+		Entity(4) {
 
 	actionframes[ACTION_STAY] = 1;
 	actionframes[ACTION_WALK_RIGHT] = 1;
 	actionframes[ACTION_WALK_LEFT] = 1;
+	actionframes[ACTION_DEAD] = 1;
 
 	YAML::Node badguys = YAML::LoadFile(CONFIGS"badguy.yml");
 
@@ -31,8 +32,8 @@ BadGuy::BadGuy(string type, int x, int y) :
 	width = badguy["width"].as<float>();
 	height = badguy["height"].as<float>();
 
-	float halfWidth = width/2;
-	float halfHeight= height/2;
+	float halfWidth = width / 2;
+	float halfHeight = height / 2;
 	float radius = 0.1;
 	SDL_Surface *tmp = SDL_LoadBMP((IMG+badguy["image"].Scalar()).c_str());
 
@@ -43,16 +44,21 @@ BadGuy::BadGuy(string type, int x, int y) :
 		image = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
 		if (image != 0) {
-			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(image->format, 255, 0, 255));
+			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL,
+					SDL_MapRGB(image->format, 255, 0, 255));
 		}
 	}
 	b2BodyDef bodydef;
 	bodydef.type = b2_dynamicBody;
 	bodydef.fixedRotation = true;
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
-	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
+	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
+			&bodydef);
+
+	body->SetUserData(this);
+
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(halfWidth, halfHeight-radius);
+	dynamicBox.SetAsBox(halfWidth, halfHeight - radius);
 	b2FixtureDef *fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
 	fixtureDef->density = 35.0;
@@ -61,7 +67,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 
 	b2CircleShape leftWheelShape;
 	leftWheelShape.m_radius = radius;
-	leftWheelShape.m_p = b2Vec2(-halfWidth+radius, halfHeight-radius);
+	leftWheelShape.m_p = b2Vec2(-halfWidth + radius, halfHeight - radius);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &leftWheelShape;
@@ -72,7 +78,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 
 	b2CircleShape rightWheelShape;
 	rightWheelShape.m_radius = radius;
-	rightWheelShape.m_p = b2Vec2(+halfWidth-radius, halfHeight-radius);
+	rightWheelShape.m_p = b2Vec2(+halfWidth - radius, halfHeight - radius);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &rightWheelShape;
@@ -98,7 +104,8 @@ BadGuy::BadGuy(string type, int x, int y) :
 	this->sensorLeft = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorTop;
-	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight+radius), 0);
+	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight + radius),
+			0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorTop;
@@ -114,12 +121,12 @@ BadGuy::BadGuy(string type, int x, int y) :
 	this->sensorBottom = body->CreateFixture(fixtureDef);
 
 	direction = RIGHT;
-	grounded=false;
+	grounded = false;
 
 }
 
 BadGuy::~BadGuy() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void BadGuy::move() {
@@ -128,7 +135,8 @@ void BadGuy::move() {
 		if (body->GetLinearVelocity().x < maxVelocity && direction == RIGHT) {
 			body->ApplyLinearImpulse(b2Vec2(5, 0), body->GetWorldCenter());
 			action = ACTION_WALK_RIGHT;
-		} else if (body->GetLinearVelocity().x > -maxVelocity && direction == LEFT) {
+		} else if (body->GetLinearVelocity().x
+				> -maxVelocity&& direction == LEFT) {
 			body->ApplyLinearImpulse(b2Vec2(-5, 0), body->GetWorldCenter());
 			action = ACTION_WALK_LEFT;
 		}
@@ -138,11 +146,16 @@ void BadGuy::move() {
 void BadGuy::logic() {
 	int collision = checkCollision();
 
-	if(collision & RIGHT){
-		direction = LEFT;
-	}else if(collision & LEFT){
-		direction = RIGHT;
-	}
+	if (collision & UP) {
+		alive = false;
+		action = ACTION_DEAD;
+	} else {
+		if (collision & RIGHT) {
+			direction = LEFT;
+		} else if (collision & LEFT) {
+			direction = RIGHT;
+		}
 
-	Entity::logic();
+		Entity::logic();
+	}
 }

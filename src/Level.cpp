@@ -96,8 +96,10 @@ Level::~Level() {
 	for (unsigned i = 0; i < Entity::entityList.size(); i++) {
 		delete Entity::entityList[i];
 	}
+
 	Entity::entityList.clear();
 	SDL_FreeSurface(Tile::tileset);
+	Game::curGame->setCurrentLevel(NULL);
 }
 
 void Level::loadMapFile(string filename) {
@@ -121,8 +123,8 @@ void Level::loadMapFile(string filename) {
 				u_int64_t id;
 				filestream >> id;
 
+				//TODO get startpoint from levelconfig
 				if (id & TF_START) {
-					//TODO: get width and height dynamically
 					player = new Player(x, y);
 				}
 
@@ -192,7 +194,9 @@ void Level::logic() {
 	world->Step(timeStep, velocityIterations, positionIterations);
 
 	for (unsigned i = 0; i < Entity::entityList.size(); i++) {
-		Entity::entityList[i]->logic();
+		if(Entity::entityList[i]->isAlive()){
+			Entity::entityList[i]->logic();
+		}
 	}
 	mainCam->logic();
 	for (std::vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
@@ -248,14 +252,11 @@ void Level::play() {
 	}
 	Mix_HaltMusic();
 	Mix_FreeMusic(bgMusic);
-	Game::curGame->destroyCurrentLevel();
 }
 
 void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 
 	if (sym == SDLK_ESCAPE) {
-
-		//TODO check out
 		Menu *pauseMenu;
 		pauseMenu = new Menu(PAUSEMENU);
 		if(pauseMenu->show()==-1){
@@ -287,6 +288,9 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	}else if( sym == SDLK_F7){
 		player->getItems()["inductor"]++;
 		new Notification("inductor fund",3);
+	}else if( sym == SDLK_F8){
+		player->getItems()["capacitor"]++;
+		new Notification("capacitor fund",3);
 	}
 }
 

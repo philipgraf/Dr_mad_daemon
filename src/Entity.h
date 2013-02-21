@@ -13,6 +13,7 @@
 #include <SDL/SDL_mixer.h>
 #include <Box2D/Box2D.h>
 
+//TODO find a better way
 #define ACTION_STAY 0
 #define ACTION_WALK_LEFT 1
 #define ACTION_WALK_RIGHT 2
@@ -20,6 +21,7 @@
 #define ACTION_JUMP_RIGHT 4
 #define ACTION_DUCK_LEFT 5
 #define ACTION_DUCK_RIGHT 6
+#define ACTION_DEAD 3
 
 #define UP 0x01
 #define RIGHT 0x02

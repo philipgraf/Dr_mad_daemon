@@ -3,8 +3,8 @@ vacuuBoy:
   height: 0.5
   image: vacuuBoy.bmp
   max velocity: 1.0 
-  action frames: [1,1,1]
-  animation duration: [9999,9999,9999]
+  action frames: [4,24,24,1]
+  animation duration: [500,80,80,9999]
   items:
     screw: 1
     inductor: 3

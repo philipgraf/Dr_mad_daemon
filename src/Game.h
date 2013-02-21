@@ -22,29 +22,28 @@
 #include "Menu.h"
 #include "Level.h"
 
+typedef struct {
+	int left;
+	int right;
+	int up;
+	int down;
+	int jump;
+	int run;
+	int use;
+} controll_t;
 
-typedef struct{
-		int left;
-		int right;
-		int up;
-		int down;
-		int jump;
-		int run;
-		int use;
-	}controll_t;
-
-typedef struct{
+typedef struct {
 	string language;
 	int audioRate;
 	int activeSlot;
 	controll_t controller;
-}settings_t;
+} settings_t;
 
 class Game {
 
 public:
 	static Game *curGame;
-	static map<std::string,Mix_Chunk*> sounds;
+	static map<std::string, Mix_Chunk*> sounds;
 
 private:
 
@@ -67,12 +66,9 @@ public:
 
 	void saveSettings();
 
-
-
 	Level* getCurrentLevel();
 	void setCurrentLevel(Level *curLev);
-	TTF_Font* getFont(int which=1);
+	TTF_Font* getFont(int which = 1);
 };
-
 
 #endif /* GAME_H_ */

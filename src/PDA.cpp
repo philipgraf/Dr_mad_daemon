@@ -144,7 +144,7 @@ void PDA::build() {
 
 	for (map<string, int>::iterator it = playerItems.begin(); it != playerItems.end(); ++it) {
 		items_t item;
-		item.itemname = TTF_RenderUTF8_Blended(font, (*it).first.c_str(), green);
+		item.itemname = TTF_RenderUTF8_Blended(font, lang[(*it).first].c_str(), green);
 		stringstream s;
 		s << (*it).second;
 		item.amound = TTF_RenderUTF8_Blended(font, s.str().c_str(), green);

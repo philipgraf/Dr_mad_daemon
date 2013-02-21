@@ -27,10 +27,10 @@ class Camera;
  * @date 04.11.2012
  * @version 0.0.1 Class create
  */
-class Level : public Event {
+class Level: public Event {
 public:
 	static vector<string> levels;
-	static map<string,string> levelnames;
+	static map<string, string> levelnames;
 private:
 
 	/**
@@ -56,12 +56,10 @@ private:
 	Debug b2Debug;
 #endif
 
-
-
 	void loadMapFile(string filename);
-	void onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) ;
+	void onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
-	
+
 public:
 	static void loadLevels();
 
@@ -72,17 +70,13 @@ public:
 	void logic();
 	void play();
 
-
-
-
-
 	/*********************** GETTER / SETTER ************************/
 	int getGravity() const;
 	void setGravity(int gravity);
 	const string& getName() const;
 	int getTime() const;
 	void setTime(int time);
-	int getTileID(int x,int y,int layer=1);
+	int getTileID(int x, int y, int layer = 1);
 	Player* getPlayer();
 	int getHeight() const;
 	int getWidth() const;
@@ -93,6 +87,5 @@ public:
 	bool isFinished() const;
 	void setFinished(bool finished);
 };
-
 
 #endif

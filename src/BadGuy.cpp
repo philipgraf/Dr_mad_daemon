@@ -11,6 +11,7 @@
 #include <Box2D/Box2D.h>
 #include <SDL/SDL.h>
 #include <yaml-cpp/yaml.h>
+#include <map>
 
 #include "Game.h"
 
@@ -32,6 +33,8 @@ BadGuy::BadGuy(string type, int x, int y) :
 	width = badguy["width"].as<float>();
 	height = badguy["height"].as<float>();
 
+	items = badguy["items"].as< map<string,int> >();
+
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
 	float radius = 0.1;
@@ -44,16 +47,14 @@ BadGuy::BadGuy(string type, int x, int y) :
 		image = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
 		if (image != 0) {
-			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL,
-					SDL_MapRGB(image->format, 255, 0, 255));
+			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(image->format, 255, 0, 255));
 		}
 	}
 	b2BodyDef bodydef;
 	bodydef.type = b2_dynamicBody;
 	bodydef.fixedRotation = true;
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
-	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
-			&bodydef);
+	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 
 	body->SetUserData(this);
 
@@ -104,8 +105,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	this->sensorLeft = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorTop;
-	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight + radius),
-			0);
+	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight + radius), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorTop;
@@ -135,8 +135,7 @@ void BadGuy::move() {
 		if (body->GetLinearVelocity().x < maxVelocity && direction == RIGHT) {
 			body->ApplyLinearImpulse(b2Vec2(5, 0), body->GetWorldCenter());
 			action = ACTION_WALK_RIGHT;
-		} else if (body->GetLinearVelocity().x
-				> -maxVelocity&& direction == LEFT) {
+		} else if (body->GetLinearVelocity().x > -maxVelocity && direction == LEFT) {
 			body->ApplyLinearImpulse(b2Vec2(-5, 0), body->GetWorldCenter());
 			action = ACTION_WALK_LEFT;
 		}

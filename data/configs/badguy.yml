@@ -3,3 +3,7 @@ vacuuBoy:
   height: 0.5
   image: vacuuBoy.bmp
   max velocity: 1.0 
+  items:
+    screw: 1
+    inductor: 3
+    capacitor: 2

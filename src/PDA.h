@@ -11,16 +11,18 @@
 #define PDA_CLOCK 0
 
 #include "Event.h"
+#include "Language.h"
 
 #include <SDL/SDL.h>
 #include <vector>
 
-typedef struct{
+
+typedef struct {
 	SDL_Surface *itemname;
 	SDL_Surface *amound;
-}items_t;
+} items_t;
 
-class PDA : public Event {
+class PDA: public Event {
 private:
 	SDL_Surface *image;
 	SDL_Surface *display;
@@ -30,6 +32,8 @@ private:
 	SDL_Rect displayRect;
 	SDL_Rect imageRect;
 	SDL_Rect curserRect;
+
+	Language lang;
 
 	int level;
 	int currentItem;
@@ -43,7 +47,7 @@ private:
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 
 public:
-	PDA(int level=0);
+	PDA(int level = 0);
 	virtual ~PDA();
 
 	int show();

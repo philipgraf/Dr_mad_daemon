@@ -192,7 +192,6 @@ int Menu::show() {
 		}
 		render();
 
-
 		SDL_Flip(SDL_GetVideoSurface());
 		if (SDL_GetTicks() - start < 1000 / FPS) {
 			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
@@ -282,7 +281,7 @@ void Menu::exit() {
 
 	//Game::curGame->getCurrentLevel()->setRunning(false);
 	running = false;
-	returnValue =-1;
+	returnValue = -1;
 }
 
 void Menu::credits() {

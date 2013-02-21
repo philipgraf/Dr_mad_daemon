@@ -85,27 +85,21 @@ void Camera::drawImage() {
 
 void Camera::drawNotification() {
 	int i = 0;
-	for (std::vector<Notification*>::iterator it =
-			Notification::notificationList.begin();
-			it != Notification::notificationList.end(); ++it) {
-		SDL_Rect destRect = { 10, i * 40, (*it)->getNotificationSurface()->w,
-				(*it)->getNotificationSurface()->h };
-		SDL_BlitSurface((*it)->getNotificationSurface(), NULL,
-				SDL_GetVideoSurface(), &destRect);
+	for (std::vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
+		SDL_Rect destRect = { 10, i * 40, (*it)->getNotificationSurface()->w, (*it)->getNotificationSurface()->h };
+		SDL_BlitSurface((*it)->getNotificationSurface(), NULL, SDL_GetVideoSurface(), &destRect);
 		i++;
 	}
 }
 
 void Camera::drawEntities() {
 
-	for (std::vector<Entity*>::iterator it = Entity::entityList.begin();
-			it != Entity::entityList.end(); ++it) {
+	for (std::vector<Entity*>::iterator it = Entity::entityList.begin(); it != Entity::entityList.end(); ++it) {
 
 		Entity* curEntity = *it;
 
 		// if entcurEntityy left of camera
-		if (curEntity->getX() * TILESIZE
-				+ curEntity->getImage()->clip_rect.w / 2 < x) {
+		if (curEntity->getX() * TILESIZE + curEntity->getImage()->clip_rect.w / 2 < x) {
 			continue;
 		}
 		// if entcurEntityy right of camera
@@ -113,8 +107,7 @@ void Camera::drawEntities() {
 			continue;
 		}
 		// if entcurEntityy on top of camera
-		if (curEntity->getY() * TILESIZE + curEntity->getImage()->clip_rect.h
-				< y) {
+		if (curEntity->getY() * TILESIZE + curEntity->getImage()->clip_rect.h < y) {
 			continue;
 		}
 		// if entcurEntityy below bottom of camera
@@ -123,18 +116,15 @@ void Camera::drawEntities() {
 		}
 
 		SDL_Rect destRect;
-		destRect.x = (curEntity->getX() - curEntity->getWidth() / 2) * TILESIZE
-				- x;
-		destRect.y = (curEntity->getY() - curEntity->getHeight() / 2) * TILESIZE
-				- y;
+		destRect.x = (curEntity->getX() - curEntity->getWidth() / 2) * TILESIZE - x;
+		destRect.y = (curEntity->getY() - curEntity->getHeight() / 2) * TILESIZE - y;
 		destRect.w = curEntity->getWidth() * TILESIZE;
 		destRect.h = curEntity->getHeight() * TILESIZE;
 
 		SDL_Rect srcRect = curEntity->getCurFrameRect();
 
 		// TODO: curEntity correct Frame for animation
-		SDL_BlitSurface(curEntity->getImage(), &srcRect, SDL_GetVideoSurface(),
-				&destRect);
+		SDL_BlitSurface(curEntity->getImage(), &srcRect, SDL_GetVideoSurface(), &destRect);
 	}
 }
 
@@ -162,14 +152,11 @@ void Camera::drawTiles(int layer) {
 			u_int16_t id = tilelist[layer][x][y]->getId();
 			int currentframe = tilelist[layer][x][y]->getCurrentframe();
 
-			SDL_Rect srcRect = { currentframe * TILESIZE, id * TILESIZE,
-					TILESIZE, TILESIZE };
+			SDL_Rect srcRect = { currentframe * TILESIZE, id * TILESIZE, TILESIZE, TILESIZE };
 
-			SDL_Rect destRect = { x * TILESIZE - this->x, y * TILESIZE
-					- this->y, TILESIZE, TILESIZE };
+			SDL_Rect destRect = { x * TILESIZE - this->x, y * TILESIZE - this->y, TILESIZE, TILESIZE };
 
-			SDL_BlitSurface(Tile::tileset, &srcRect, SDL_GetVideoSurface(),
-					&destRect);
+			SDL_BlitSurface(Tile::tileset, &srcRect, SDL_GetVideoSurface(), &destRect);
 		}
 	}
 
@@ -184,14 +171,10 @@ void Camera::drawBackground() {
 
 	if (cameraMode == STICKY) {
 		// center background behind level and move it with half speed
-		SDL_Rect destRect = { lWidth / 2 - bgWidth / 2 - x / 2, lHeight / 2
-				- bgHeight / 2 - y / 2, curLevel->getBackground()->clip_rect.w,
-				curLevel->getBackground()->clip_rect.h };
-		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(),
-				&destRect);
+		SDL_Rect destRect = { lWidth / 2 - bgWidth / 2 - x / 2, lHeight / 2 - bgHeight / 2 - y / 2, curLevel->getBackground()->clip_rect.w, curLevel->getBackground()->clip_rect.h };
+		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(), &destRect);
 	} else {
-		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(),
-				NULL);
+		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(), NULL);
 	}
 
 }

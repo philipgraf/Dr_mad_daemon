@@ -9,6 +9,11 @@
 #include "Game.h"
 #include "Slot.h"
 #include "BadGuy.h"
+#include "Notification.h"
+
+#include <sstream>
+
+using namespace std;
 
 Player::Player(int x, int y) :
 		Entity(3) {
@@ -30,9 +35,6 @@ Player::Player(int x, int y) :
 	impactSoundPlayed = 0;
 
 	items = Slot::slots[Game::curGame->settings.activeSlot]->getPlayerItems();
-	cout
-			<< Slot::slots[Game::curGame->settings.activeSlot]->getPlayerItems()["screw"]
-			<< endl;
 
 	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
 
@@ -43,8 +45,7 @@ Player::Player(int x, int y) :
 		image = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
 		if (image != 0) {
-			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL,
-					SDL_MapRGB(image->format, 255, 0, 255));
+			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(image->format, 255, 0, 255));
 
 		}
 	}
@@ -57,8 +58,7 @@ Player::Player(int x, int y) :
 	bodydef.type = b2_dynamicBody;
 	bodydef.fixedRotation = true;
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
-	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(
-			&bodydef);
+	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(halfWidth, halfHeight - radius / 2);
@@ -81,8 +81,7 @@ Player::Player(int x, int y) :
 	feetFixture = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorRight;
-	sensorRight.SetAsBox(0.01, halfHeight - radius / 2 - 0.1,
-			b2Vec2(halfWidth, 0), 0);
+	sensorRight.SetAsBox(0.01, halfHeight - radius / 2 - 0.1, b2Vec2(halfWidth, 0), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorRight;
@@ -90,8 +89,7 @@ Player::Player(int x, int y) :
 	this->sensorRight = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorLeft;
-	sensorLeft.SetAsBox(0.01, halfHeight - radius / 2 - 0.1,
-			b2Vec2(-halfWidth, 0), 0);
+	sensorLeft.SetAsBox(0.01, halfHeight - radius / 2 - 0.1, b2Vec2(-halfWidth, 0), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorLeft;
@@ -99,8 +97,7 @@ Player::Player(int x, int y) :
 	this->sensorLeft = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorTop;
-	sensorTop.SetAsBox(halfWidth - 0.1, 0.01,
-			b2Vec2(0, -halfHeight + radius / 2), 0);
+	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight + radius / 2), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorTop;
@@ -121,30 +118,29 @@ Player::Player(int x, int y) :
 Player::~Player() {
 }
 
-std::map<std::string, int>& Player::getItems() {
-	return items;
-}
-
 void Player::use() {
 	BadGuy *badguy;
 	// check player contacts with dead bodys and loot them
-	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge;
-			contactEdge = contactEdge->next) {
-		if (contactEdge->contact->GetFixtureA() == sensorBottom
-				&& contactEdge->contact->IsTouching()) {
-			if ((badguy =
-					(BadGuy*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData())
-					!= NULL) {
-
+	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
+		if (contactEdge->contact->GetFixtureA() == sensorBottom && contactEdge->contact->IsTouching()) {
+			if ((badguy = (BadGuy*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData()) != NULL) {
+				for(map<string,int>::iterator it = badguy->getItems().begin(); it != badguy->getItems().end();++it){
+					std::stringstream s;
+					s << lang["looted"] << " " << lang[it->first] << ": " << it->second;
+					new Notification(s.str(),5,NOTIFICATION_INFO,it->first);
+					items[it->first] += it->second;
+				}
 				delete badguy;
 				break;
 			}
-		}else if (contactEdge->contact->GetFixtureB() == sensorBottom
-				&& contactEdge->contact->IsTouching()) {
-			if ((badguy =
-					(BadGuy*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData())
-					!= NULL) {
-				contactEdge->contact->GetFixtureB()->GetBody()->SetUserData(NULL);
+		} else if (contactEdge->contact->GetFixtureB() == sensorBottom && contactEdge->contact->IsTouching()) {
+			if ((badguy = (BadGuy*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData()) != NULL) {
+				for(map<string,int>::iterator it = badguy->getItems().begin(); it != badguy->getItems().end();++it){
+					std::stringstream s;
+					s << lang["looted"] << " " << lang[it->first] << ": " << it->second;
+					new Notification(s.str(),5,NOTIFICATION_INFO,it->first);
+					items[it->first] += it->second;
+				}
 				delete badguy;
 				break;
 			}
@@ -191,13 +187,11 @@ void Player::move() {
 		feetFixture->SetFriction(0.2);
 		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x > -maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0),
-						body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0), body->GetWorldCenter());
 			}
 		} else {
 			if (body->GetLinearVelocity().x > -maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 8, 0),
-						body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 8, 0), body->GetWorldCenter());
 			}
 		}
 
@@ -208,13 +202,11 @@ void Player::move() {
 		feetFixture->SetFriction(0.2);
 		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x < maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0),
-						body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0), body->GetWorldCenter());
 			}
 		} else {
 			if (body->GetLinearVelocity().x < maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 8, 0),
-						body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 8, 0), body->GetWorldCenter());
 			}
 		}
 		action = ACTION_WALK_RIGHT;
@@ -223,8 +215,7 @@ void Player::move() {
 	if (direction & UP) {
 		if (checkCollision() & DOWN) {
 			float impulse = body->GetMass();
-			body->ApplyLinearImpulse(b2Vec2(0, -impulse * 4),
-					body->GetWorldCenter());
+			body->ApplyLinearImpulse(b2Vec2(0, -impulse * 4), body->GetWorldCenter());
 			Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
 		}
 		//action = ACTION_JUMP_LEFT;

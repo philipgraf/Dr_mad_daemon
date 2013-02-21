@@ -46,9 +46,9 @@ Notification::Notification(string message, int displaySecs, int type, string ico
 	}
 	SDL_Surface *icon;
 
-	if ((temp = SDL_LoadBMP(iconName.c_str())) == NULL) {
+	if ((temp = SDL_LoadBMP((IMG+iconName+".bmp").c_str())) == NULL) {
 		//TODO Throw exception
-		std::cout << "unable to load :" << iconName << std::endl;
+		std::cout << "unable to load: " << IMG+iconName+".bmp" << std::endl;
 	} else {
 		icon = SDL_DisplayFormat(temp);
 		SDL_FreeSurface(temp);

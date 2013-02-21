@@ -26,12 +26,11 @@ public:
 private:
 	std::string name;
 	int finishedLevels;
-	std::map<std::string,int> playerItems;
+	std::map<std::string, int> playerItems;
 
 public:
-	Slot(std::string name="DrInSane");
+	Slot(std::string name = "DrInSane");
 	virtual ~Slot();
-
 
 	void checkAndSetFinishedLevels(int levelnum);
 	int getFinishedLevels() const;

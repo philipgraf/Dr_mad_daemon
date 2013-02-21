@@ -5,22 +5,22 @@
  *      Author: philip
  */
 /*
-#ifndef EXCEPTION_H_
-#define EXCEPTION_H_
+ #ifndef EXCEPTION_H_
+ #define EXCEPTION_H_
 
 
-class Exception: public std::exception {
-public:
-	enum ExceptionType{
-		UNKNOWN_EXCEPTION = 0,
-		UNKNOWN_ERRORSTR
-	};
-	Exception();
-	virtual ~Exception();
-};
+ class Exception: public std::exception {
+ public:
+ enum ExceptionType{
+ UNKNOWN_EXCEPTION = 0,
+ UNKNOWN_ERRORSTR
+ };
+ Exception();
+ virtual ~Exception();
+ };
 
-class FileOpenException : public Exception{
+ class FileOpenException : public Exception{
 
-};
+ };
 
-#endif*/ /* EXCEPTION_H_ */
+ #endif*//* EXCEPTION_H_ */

@@ -23,11 +23,9 @@ class Entity;
  */
 class Camera {
 public:
-	enum{
-			STICKY=0,
-			SMOOTH,
-			CUSTOM
-		}typedef mode;
+	enum {
+		STICKY = 0, SMOOTH, CUSTOM
+	}typedef mode;
 private:
 
 	int x; /**< The absolute x value of the camera. */
@@ -43,15 +41,15 @@ private:
 	void drawBackground();
 public:
 
-	Camera(Entity* target, int w=WIDTH, int h=HEIGHT);
-	Camera(float x=0,float y=0, int w=WIDTH, int h=HEIGHT);
+	Camera(Entity* target, int w = WIDTH, int h = HEIGHT);
+	Camera(float x = 0, float y = 0, int w = WIDTH, int h = HEIGHT);
 	virtual ~Camera();
 
 	void logic();
 	void drawImage();
-	void setPosition(int x,int y);
+	void setPosition(int x, int y);
 	void setPosition(Entity* target);
-	void move(int h,int v);
+	void move(int h, int v);
 
 	mode getCameraMode();
 	void setCameraMode(mode cameraMode);

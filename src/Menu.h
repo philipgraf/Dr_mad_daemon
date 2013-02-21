@@ -44,12 +44,11 @@ private:
 
 	Language lang;
 
-
 	bool running;
 	void onExit();
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle);
-	void onLButtonDown(int mX,int mY);
+	void onLButtonDown(int mX, int mY);
 	void onWiiButtonEvent(int buttons);
 
 	void render();
@@ -72,12 +71,10 @@ private:
 	void createSlot();
 
 public:
-	Menu(int menuType=0);
+	Menu(int menuType = 0);
 	virtual ~Menu();
 	int show();
 
 };
-
-
 
 #endif /* MENU_H_ */

@@ -24,7 +24,7 @@ void Slot::loadSlots() {
 		Slot slot;
 		slot.name = it->first.Scalar();
 		slot.finishedLevels = it->second["finished levels"].as<int>();
-		slot.playerItems = it->second["items"].as< map<string,int> >();
+		slot.playerItems = it->second["items"].as<map<string, int> >();
 		Slot::slots.push_back(new Slot(slot));
 	}
 	if (Game::curGame->settings.activeSlot < 0 || Game::curGame->settings.activeSlot >= Slot::slots.size()) {
@@ -84,7 +84,7 @@ const string& Slot::getName() const {
 	return name;
 }
 
-map<string, int> Slot::getPlayerItems(){
+map<string, int> Slot::getPlayerItems() {
 	return playerItems;
 }
 

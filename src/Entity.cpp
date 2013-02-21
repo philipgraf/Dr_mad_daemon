@@ -12,7 +12,6 @@
 
 vector<Entity*> Entity::entityList;
 
-
 /** Constuctor
  * Set the given values an initial all other Entityvalues with default values
  * @param imagename Name of the image which will be loaded and converted into a SDL_Surface
@@ -24,24 +23,24 @@ vector<Entity*> Entity::entityList;
 Entity::Entity(int numOfActions) {
 
 	image = NULL;
-	body=NULL;
+	body = NULL;
 	actionframes = new int[numOfActions];
 
-	sensorBottom=NULL;
-	sensorLeft=NULL;
-	sensorRight=NULL;
-	sensorTop=NULL;
+	sensorBottom = NULL;
+	sensorLeft = NULL;
+	sensorRight = NULL;
+	sensorTop = NULL;
 
 	alive = true;
 	currentframe = 0;
 	action = ACTION_STAY;
 	direction = 0;
 
-	grounded=false;
+	grounded = false;
 
 	width = 0;
 	height = 0;
-	maxVelocity=0;
+	maxVelocity = 0;
 
 	entityList.push_back(this);
 }
@@ -59,7 +58,7 @@ void Entity::nextframe() {
 }
 
 int Entity::checkCollision() {
-	int retValue=0;
+	int retValue = 0;
 	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
 		if ((contactEdge->contact->GetFixtureA() == sensorRight || contactEdge->contact->GetFixtureB() == sensorRight) && contactEdge->contact->IsTouching()) {
 			retValue |= RIGHT;
@@ -67,14 +66,14 @@ int Entity::checkCollision() {
 			retValue |= LEFT;
 		} else if ((contactEdge->contact->GetFixtureA() == sensorTop || contactEdge->contact->GetFixtureB() == sensorTop) && contactEdge->contact->IsTouching()) {
 			retValue |= UP;
-		}else if ((contactEdge->contact->GetFixtureA() == sensorBottom || contactEdge->contact->GetFixtureB() == sensorBottom) && contactEdge->contact->IsTouching()) {
+		} else if ((contactEdge->contact->GetFixtureA() == sensorBottom || contactEdge->contact->GetFixtureB() == sensorBottom) && contactEdge->contact->IsTouching()) {
 			retValue |= DOWN;
 		}
 		// recalculate friction of contact
 		contactEdge->contact->ResetFriction();
 	}
 
-	if(retValue & DOWN){
+	if (retValue & DOWN) {
 		grounded = true;
 	} else {
 		grounded = false;
@@ -94,12 +93,11 @@ void Entity::move() {
 Entity::~Entity() {
 	SDL_FreeSurface(image);
 	std::vector<Entity*>::iterator pos;
-	if ((pos = std::find(entityList.begin(), entityList.end(), this))
-			!= entityList.end()) {
+	if ((pos = std::find(entityList.begin(), entityList.end(), this)) != entityList.end()) {
 		entityList.erase(pos);
 	}
 	Game::curGame->getCurrentLevel()->getWorld()->DestroyBody(body);
-	delete [] actionframes;
+	delete[] actionframes;
 }
 
 /**
@@ -129,7 +127,7 @@ float Entity::getX() const {
 }
 
 float Entity::getY() const {
-	return body->GetPosition().y + height/8;
+	return body->GetPosition().y + height / 8;
 }
 
 SDL_Surface* Entity::getImage() {
@@ -174,4 +172,8 @@ void Entity::setDirection(Uint8 direction) {
 
 void Entity::delDirection(Uint8 direction) {
 	this->direction &= ~direction;
+}
+
+std::map<std::string, int>& Entity::getItems() {
+	return items;
 }

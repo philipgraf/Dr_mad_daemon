@@ -45,19 +45,13 @@ void Event::onEvent(SDL_Event *event) {
 		}
 		break;
 	case SDL_KEYDOWN:
-		onKeyDown(event->key.keysym.sym, event->key.keysym.mod,
-				event->key.keysym.unicode);
+		onKeyDown(event->key.keysym.sym, event->key.keysym.mod, event->key.keysym.unicode);
 		break;
 	case SDL_KEYUP:
-		onKeyUP(event->key.keysym.sym, event->key.keysym.mod,
-				event->key.keysym.unicode);
+		onKeyUP(event->key.keysym.sym, event->key.keysym.mod, event->key.keysym.unicode);
 		break;
 	case SDL_MOUSEMOTION:
-		onMouseMove(event->motion.x, event->motion.y, event->motion.xrel,
-				event->motion.yrel,
-				(event->motion.state & SDL_BUTTON_LEFT) != 0,
-				(event->motion.state & 4) != 0,
-				(event->motion.state & SDL_BUTTON_MIDDLE) != 0);
+		onMouseMove(event->motion.x, event->motion.y, event->motion.xrel, event->motion.yrel, (event->motion.state & SDL_BUTTON_LEFT) != 0, (event->motion.state & 4) != 0, (event->motion.state & SDL_BUTTON_MIDDLE) != 0);
 		break;
 
 	case SDL_MOUSEBUTTONDOWN:
@@ -107,7 +101,7 @@ void Event::onEvent(SDL_Event *event) {
 		onJoyHat(event->jhat.which, event->jhat.value);
 		break;
 	case SDL_JOYBALLMOTION:
-		onJoyBall(event->jball.which,event->jball.ball, event->jball.xrel, event->jball.yrel);
+		onJoyBall(event->jball.which, event->jball.ball, event->jball.xrel, event->jball.yrel);
 		break;
 	case SDL_QUIT:
 		onExit();
@@ -136,7 +130,6 @@ void Event::onEvent(SDL_Event *event) {
 
 }
 
-
 void Event::onInputFocus() {
 }
 void Event::onInputBlur() {
@@ -149,8 +142,7 @@ void Event::onMouseFocus() {
 }
 void Event::onMouseBlur() {
 }
-void Event::onMouseMove(int mX, int mY, int xRel, int yRel, bool left,
-		bool right, bool middle) {
+void Event::onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle) {
 }
 void Event::onMouseWheel(bool up, bool pressed) {
 }
@@ -196,8 +188,7 @@ void Event::onUser(Uint8 type, int code, void *data1, void *data2) {
 void Event::initWiimote() {
 	blueaddr = (bdaddr_t ) { { 0, 0, 0, 0, 0, 0 } };
 	SDL_Surface *wiimoteImage = SDL_LoadBMP("wiimote.bmp");
-	SDL_SetColorKey(wiimoteImage, SDL_SRCCOLORKEY,
-			SDL_MapRGB(wiimoteImage->format, 255, 0, 255));
+	SDL_SetColorKey(wiimoteImage, SDL_SRCCOLORKEY, SDL_MapRGB(wiimoteImage->format, 255, 0, 255));
 	SDL_BlitSurface(wiimoteImage, NULL, SDL_GetVideoSurface(), NULL);
 	SDL_Flip(SDL_GetVideoSurface());
 	wiimote = cwiid_connect(&blueaddr, CWIID_FLAG_MESG_IFC);
@@ -224,8 +215,7 @@ void Event::initWiimote() {
 
 }
 
-void wiimote_callback(cwiid_wiimote_t *wiimote_my, int mesg_count,
-		union cwiid_mesg mesg[], struct timespec *times) {
+void wiimote_callback(cwiid_wiimote_t *wiimote_my, int mesg_count, union cwiid_mesg mesg[], struct timespec *times) {
 
 	for (int i = 0; i < mesg_count; i++) {
 		switch (mesg[i].type) {

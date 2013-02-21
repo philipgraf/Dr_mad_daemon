@@ -84,3 +84,15 @@ language:
 new slot:
     en: New Slot
     de: Neuer Speicherplatz
+looted:
+    en: Looted
+    de: Aufgenommende
+screw:
+    en: Screws
+    de: Schreiben
+inductor:
+    en: Inductors
+    de: Spulen
+capacitor:
+    en: Capacitors
+    de: Kondensatoren

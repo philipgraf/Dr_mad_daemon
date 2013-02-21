@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 #include <Box2D/Box2D.h>
@@ -35,6 +36,7 @@ using namespace std;
  */
 class Entity {
 protected:
+	map<std::string, int> items;
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
 	bool alive; /**< contains true if the entity is still alive and false if not */
 
@@ -91,6 +93,7 @@ public:
 	void setDirection(Uint8 direction);
 	void delDirection(Uint8 direction);
 	Uint8 getDirection() const;
+	std::map<std::string, int>& getItems();
 };
 
 #endif /* ENTITY_H_ */

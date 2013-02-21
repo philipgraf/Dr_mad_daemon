@@ -1,6 +1,5 @@
 #include "Tile.h"
 
-
 //TODO: tileFrames get from file and not globle
 int tileconf[] = { 8, 1, 1, 1, 1, 1, 1, 9, 1 }; //definiert Anzahl der Frames; Index [0] = Anzahl der Tiles
 SDL_Surface *Tile::tileset;

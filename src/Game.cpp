@@ -44,18 +44,18 @@ int Game::execute() {
 
 	Menu mainMenu;
 	int ret = mainMenu.show();
-	SDL_FillRect(SDL_GetVideoSurface(),&SDL_GetVideoSurface()->clip_rect,SDL_MapRGB(SDL_GetVideoSurface()->format,0,0,0));
+	SDL_FillRect(SDL_GetVideoSurface(), &SDL_GetVideoSurface()->clip_rect, SDL_MapRGB(SDL_GetVideoSurface()->format, 0, 0, 0));
 	SDL_Color white;
-	white.b=255;
-	white.r=255;
-	white.g=255;
-	SDL_Surface *text = TTF_RenderUTF8_Blended(TTF_OpenFont(FONTS"menu.ttf",72),"Good Bye!",white);
+	white.b = 255;
+	white.r = 255;
+	white.g = 255;
+	SDL_Surface *text = TTF_RenderUTF8_Blended(TTF_OpenFont(FONTS"menu.ttf", 72), "Good Bye!", white);
 	SDL_Rect dest;
-	dest.x = (display->w-text->w)/2;
-	dest.y = (display->h-text->h)/2;
+	dest.x = (display->w - text->w) / 2;
+	dest.y = (display->h - text->h) / 2;
 	dest.w = text->w;
 	dest.h = text->h;
-	SDL_BlitSurface(text,NULL,SDL_GetVideoSurface(),&dest);
+	SDL_BlitSurface(text, NULL, SDL_GetVideoSurface(), &dest);
 
 	SDL_Flip(SDL_GetVideoSurface());
 	return ret;
@@ -131,9 +131,9 @@ void Game::init() {
 void Game::loadSettings() {
 	//TODO if file not exist load default settings and store in file
 	YAML::Node settings;
-	try{
-	settings = YAML::LoadFile(CONFIGS"game.yml");
-	}catch(YAML::Exception &e){
+	try {
+		settings = YAML::LoadFile(CONFIGS"game.yml");
+	} catch (YAML::Exception &e) {
 		cout << e.msg << endl;
 	}
 
@@ -206,7 +206,6 @@ void Game::loadSettings() {
 		}
 	}
 
-
 }
 
 void Game::loadSounds() {
@@ -263,7 +262,6 @@ Level* Game::getCurrentLevel() {
 void Game::setCurrentLevel(Level *curLev) {
 	currentLevel = curLev;
 }
-
 
 TTF_Font* Game::getFont(int which) {
 	return font[which];

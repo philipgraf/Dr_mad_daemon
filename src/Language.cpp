@@ -24,9 +24,9 @@ Language::~Language() {
 std::string Language::operator [](std::string key) {
 
 	std::string retVel;
-	if(root[key][Game::curGame->settings.language].Scalar() == detail::node_data::empty_scalar){
+	if (root[key][Game::curGame->settings.language].Scalar() == detail::node_data::empty_scalar) {
 		return root[key]["en"].Scalar();
-	}else{
+	} else {
 		return root[key][Game::curGame->settings.language].Scalar();
 
 	}
@@ -35,8 +35,7 @@ std::string Language::operator [](std::string key) {
 void Language::getSupportedLanguages() {
 	YAML::Node root = YAML::LoadFile(CONFIGS"lang.yml");
 
-	for (YAML::iterator it = root["greeting"].begin();
-			it != root["greeting"].end(); ++it) {
+	for (YAML::iterator it = root["greeting"].begin(); it != root["greeting"].end(); ++it) {
 		supLanguages.push_back(it->first.Scalar());
 	}
 

@@ -20,5 +20,4 @@
 #define BGIMG IMG "Badguy/"
 #define PDAIMG IMG "PDA/"
 
-
 #endif /* DEFINE_H_ */

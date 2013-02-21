@@ -7,7 +7,6 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 
-
 /*********************************** WII DEFINES ****************************************************************************/
 
 /* Message Types and SDL_UserEvent Codes */
@@ -29,8 +28,6 @@
 #define WII_BTN_DOWN	0x0400
 #define WII_BTN_UP		0x0800
 #define WII_BTN_PLUS	0x1000
-
-
 
 /****************************************************************************************************************************/
 
@@ -60,13 +57,13 @@ public:
 	virtual void onMouseBlur();
 	virtual void onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle);
 	virtual void onMouseWheel(bool up, bool down);
-	virtual void onLButtonDown(int mX,int mY);
-	virtual void onLButtonUp(int mX,int mY);
-	virtual void onRButtonDown(int mX,int mY);
-	virtual void onRButtonUp(int mX,int mY);
-	virtual void onMButtonDown(int mX,int mY);
-	virtual void onMButtonUp(int mX,int mY);
-	virtual void onJoyAxis(Uint8 which, Uint8 axis,Sint16 value);
+	virtual void onLButtonDown(int mX, int mY);
+	virtual void onLButtonUp(int mX, int mY);
+	virtual void onRButtonDown(int mX, int mY);
+	virtual void onRButtonUp(int mX, int mY);
+	virtual void onMButtonDown(int mX, int mY);
+	virtual void onMButtonUp(int mX, int mY);
+	virtual void onJoyAxis(Uint8 which, Uint8 axis, Sint16 value);
 	virtual void onJoyButtonDown(Uint8 which, Uint8 button);
 	virtual void onJoyButtonUp(Uint8 which, Uint8 button);
 	virtual void onJoyHat(Uint8 which, Uint8 value);

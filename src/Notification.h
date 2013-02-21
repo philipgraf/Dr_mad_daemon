@@ -11,7 +11,6 @@
 #define NOTIFICATION_INFO 0
 #define NOTIFICATION_WARNING 1
 
-
 #include <vector>
 #include <string>
 #include <SDL/SDL.h>
@@ -23,7 +22,7 @@ private:
 	SDL_Surface *notificationSurface;
 	int counter;
 public:
-	Notification(std::string message,int displaySecs ,int type=NOTIFICATION_INFO, std::string iconName="");
+	Notification(std::string message, int displaySecs, int type = NOTIFICATION_INFO, std::string iconName = "");
 	virtual ~Notification();
 
 	void timeout();

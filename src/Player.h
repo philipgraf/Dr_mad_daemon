@@ -5,20 +5,18 @@
  *      Author: philip
  */
 
-
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
 #include "Entity.h"
 #include "PDA.h"
+#include "Language.h"
 #include <Box2D/Box2D.h>
 #include <map>
 #include <string>
 
-
 class Player: public Entity {
 private:
-	map<std::string,int> items;
 	bool running;
 	int impactSoundPlayed;
 public:
@@ -28,11 +26,11 @@ public:
 	b2Fixture *feetFixture;
 	PDA pda;
 
+	Language lang;
+
 	void logic();
 	void move();
 	void use();
-
-
 
 	bool isRunning() const {
 		return running;
@@ -42,7 +40,7 @@ public:
 		this->running = running;
 	}
 
-	std::map<std::string,int>& getItems();
+
 };
 
 #endif /* PLAYER_H_ */

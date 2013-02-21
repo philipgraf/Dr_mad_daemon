@@ -20,11 +20,10 @@ vector<Entity*> Entity::entityList;
  * @param x The x value of the entity
  * @param y the y value of the entity
  */
-Entity::Entity(int numOfActions) {
+Entity::Entity() {
 
 	image = NULL;
 	body = NULL;
-	actionframes = new int[numOfActions];
 
 	sensorBottom = NULL;
 	sensorLeft = NULL;
@@ -51,7 +50,11 @@ void Entity::logic() {
 }
 
 void Entity::nextframe() {
-	currentframe++;
+	static Uint32 timer = SDL_GetTicks();
+	if (SDL_GetTicks() - timer > animationDuration[action]) {
+		currentframe++;
+		timer = SDL_GetTicks();
+	}
 	if (currentframe >= actionframes[action]) {
 		currentframe = 0;
 	}
@@ -97,7 +100,7 @@ Entity::~Entity() {
 		entityList.erase(pos);
 	}
 	Game::curGame->getCurrentLevel()->getWorld()->DestroyBody(body);
-	delete[] actionframes;
+	actionframes.clear();
 }
 
 /**

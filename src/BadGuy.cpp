@@ -17,14 +17,7 @@
 
 using namespace std;
 
-BadGuy::BadGuy(string type, int x, int y) :
-		Entity(4) {
-
-	actionframes[ACTION_STAY] = 1;
-	actionframes[ACTION_WALK_RIGHT] = 1;
-	actionframes[ACTION_WALK_LEFT] = 1;
-	actionframes[ACTION_DEAD] = 1;
-
+BadGuy::BadGuy(string type, int x, int y) :Entity() {
 	YAML::Node badguys = YAML::LoadFile(CONFIGS"badguy.yml");
 
 	YAML::Node badguy = badguys[type];
@@ -34,6 +27,8 @@ BadGuy::BadGuy(string type, int x, int y) :
 	height = badguy["height"].as<float>();
 
 	items = badguy["items"].as< map<string,int> >();
+	actionframes = badguy["action frames"].as< vector<int> >();
+	animationDuration = badguy["animation duration"].as< vector<int> >();
 
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;

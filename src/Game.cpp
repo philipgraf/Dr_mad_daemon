@@ -103,6 +103,9 @@ void Game::init() {
 	if ((font[FONT_PDA_CLOCK] = TTF_OpenFont(FONTS "digital.ttf", 18)) == NULL) {
 		cout << "unable to load notification Font" << endl;
 	}
+	if ((font[FONT_PDA_CLOCK_TIMER] = TTF_OpenFont(FONTS "digital.ttf", 32)) == NULL) {
+		cout << "unable to load notification Font" << endl;
+	}
 
 	/**
 	 * Load settings from game.yml file

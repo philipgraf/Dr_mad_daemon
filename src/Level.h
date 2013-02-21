@@ -52,6 +52,8 @@ private:
 	bool running;
 	bool levelFinished;
 
+	Uint32 timer;
+
 #if DEBUG >= 3
 	Debug b2Debug;
 #endif
@@ -59,6 +61,7 @@ private:
 	void loadMapFile(string filename);
 	void onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
+	void updateTime();
 
 public:
 	static void loadLevels();

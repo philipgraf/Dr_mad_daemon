@@ -3,7 +3,13 @@ vacuuBoy:
   height: 0.5
   image: vacuuBoy.bmp
   max velocity: 1.0 
+  action frames: [1,1,1]
+  animation duration: [9999,9999,9999]
   items:
     screw: 1
     inductor: 3
     capacitor: 2
+    battery: 2
+    resistor: 1
+    wire: 5
+    pcb: 1

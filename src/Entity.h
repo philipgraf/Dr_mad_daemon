@@ -29,14 +29,12 @@
 #define DOWN 0x04
 #define LEFT 0x08
 
-using namespace std;
-
 /**
  * Entity Class all things you can interact with.
  */
 class Entity {
 protected:
-	map<std::string, int> items;
+	std::map<std::string, int> items;
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
 	bool alive; /**< contains true if the entity is still alive and false if not */
 
@@ -45,7 +43,8 @@ protected:
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
-	int *actionframes;
+	std::vector<int> actionframes;
+	std::vector<int> animationDuration;
 
 	float width;/**< width of the entity in meter */
 	float height;/**< height of the entity in meter */
@@ -64,9 +63,9 @@ protected:
 	void nextframe();
 
 public:
-	static vector<Entity*> entityList;
+	static std::vector<Entity*> entityList;
 
-	Entity(int numOfActions);
+	Entity();
 	virtual ~Entity();
 
 	virtual void logic();

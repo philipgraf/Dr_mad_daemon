@@ -15,15 +15,18 @@
 
 using namespace std;
 
-Player::Player(int x, int y) :
-		Entity(3) {
+Player::Player(int x, int y) :Entity() {
 
 	width = 1;
 	height = 2;
 
-	actionframes[ACTION_STAY] = 1;
-	actionframes[ACTION_WALK_RIGHT] = 4;
-	actionframes[ACTION_WALK_LEFT] = 4;
+	actionframes.push_back(1);
+	actionframes.push_back(4);
+	actionframes.push_back(4);
+
+	animationDuration.push_back(9999);
+	animationDuration.push_back(60);
+	animationDuration.push_back(60);
 
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;

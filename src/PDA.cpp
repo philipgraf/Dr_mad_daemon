@@ -50,7 +50,7 @@ PDA::PDA(int level) {
 		}
 	}
 	curser = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), ">", green);
-
+	timer = NULL;
 	SDL_Surface *screen = SDL_GetVideoSurface();
 
 	display = SDL_CreateRGBSurface(SDL_HWSURFACE, 315, 290, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
@@ -108,17 +108,26 @@ int PDA::show() {
 
 void PDA::render() {
 	SDL_FillRect(display, &display->clip_rect, SDL_MapRGB(display->format, 0, 0, 0));
+
+	SDL_BlitSurface(timer, NULL, display, &timerRect);
+
 	if (itemlist.size() != 0) {
-		curserRect.y = (curser->h + 2) * currentItem;
+		// 20 pixel per line plus 50 pixel for the timer
+		curserRect.y = 20 * currentItem + 50;
 		SDL_BlitSurface(curser, NULL, display, &curserRect);
 	} else {
-		SDL_BlitSurface(TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), "Oh Boy  you have no items", green), NULL, display, NULL);
+		SDL_Rect textRect;
+		textRect.x = 0;
+		textRect.y = 50;
+		textRect.h = 20;
+		textRect.w = display->w;
+		SDL_BlitSurface(TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), "Oh Boy  you have no items", green), NULL, display, &textRect);
 	}
 
 	for (int i = 0; i < itemlist.size(); i++) {
 		SDL_Rect labelRect;
 		labelRect.x = 15;
-		labelRect.y = (itemlist[i].itemname->h + 2) * i;
+		labelRect.y = 20 * i + 50;
 		labelRect.w = itemlist[i].itemname->w;
 		labelRect.h = itemlist[i].itemname->h;
 		SDL_BlitSurface(itemlist[i].itemname, NULL, display, &labelRect);
@@ -141,6 +150,20 @@ void PDA::build() {
 		SDL_FreeSurface(itemlist[i].itemname);
 	}
 	itemlist.clear();
+
+	stringstream s;
+	s << Game::curGame->getCurrentLevel()->getTime();
+
+	if (timer != NULL) {
+		SDL_FreeSurface(timer);
+	}
+
+	timer = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK_TIMER), s.str().c_str(), green);
+
+	timerRect.y = 0;
+	timerRect.x = display->w - timer->w;
+	timerRect.h = timer->h;
+	timerRect.w = timer->w;
 
 	for (map<string, int>::iterator it = playerItems.begin(); it != playerItems.end(); ++it) {
 		items_t item;

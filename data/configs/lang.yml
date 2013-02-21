@@ -96,3 +96,14 @@ inductor:
 capacitor:
     en: Capacitors
     de: Kondensatoren
+wire:
+    en: Wires
+    de: Kabel
+pcb:
+    en: PCB
+resistor:
+    en: Resistors
+    de: Widerstände
+battery:
+    en: Battery
+    de: Batterie

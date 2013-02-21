@@ -14,7 +14,12 @@ Tile::Tile(u_int64_t id) {
 
 void Tile::nextFrame() {
 	if (id != 0 && tileconf[id] != 1) {
-		currentframe++;
+		static Uint32 timer = SDL_GetTicks();
+		if (SDL_GetTicks() - timer > 40) {
+			currentframe++;
+			timer = SDL_GetTicks();
+		}
+
 		if (currentframe >= tileconf[id])
 			currentframe = 0;
 	}

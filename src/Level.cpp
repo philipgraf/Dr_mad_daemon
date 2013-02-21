@@ -80,6 +80,7 @@ Level::Level(unsigned levelnum) {
 	loadMapFile(levels[this->levelnum]);
 
 	mainCam = new Camera(player);
+	timer = SDL_GetTicks();
 }
 
 Level::~Level() {
@@ -160,6 +161,8 @@ void Level::render() {
 }
 
 void Level::logic() {
+
+	updateTime();
 
 	if (levelFinished) {
 //		Levelresult levelresult;
@@ -253,6 +256,16 @@ void Level::play() {
 	Mix_HaltMusic();
 	Mix_FreeMusic(bgMusic);
 }
+
+
+void Level::updateTime(){
+
+	if(SDL_GetTicks() - timer > 1000){
+		time--;
+		timer = SDL_GetTicks();
+	}
+}
+
 
 void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 

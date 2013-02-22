@@ -142,6 +142,7 @@ void BadGuy::logic() {
 
 	if (collision & UP) {
 		alive = false;
+		currentframe=0;
 		action = ACTION_DEAD;
 	} else {
 		if (collision & RIGHT) {

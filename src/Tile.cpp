@@ -1,7 +1,7 @@
 #include "Tile.h"
 
 //TODO: tileFrames get from file and not globle
-int tileconf[] = { 8, 1, 1, 1, 1, 1, 1, 9, 1 }; //definiert Anzahl der Frames; Index [0] = Anzahl der Tiles
+int tileconf[] = { 20, 1, 1, 1, 1, 1, 1, 10, 1, 1, 10 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 }; //definiert Anzahl der Frames; Index [0] = Anzahl der Tiles
 SDL_Surface *Tile::tileset;
 
 Tile::Tile(u_int64_t id) {
@@ -27,13 +27,18 @@ void Tile::nextFrame() {
 
 void Tile::loadTileset() {
 
-	SDL_Surface *temp;
-	if ((temp = IMG_Load(IMG"tiles.png")) == NULL) {
+	SDL_Surface *tmp = SDL_LoadBMP(IMG"tiles.bmp");
+	if(!tmp){
 		//TODO Throw exception
-		std::cout << "unable to load tiles.png" << std::endl;
+		std::cout << "unable to load tiles.bmp" << std::endl;
 	}
-	tileset = SDL_DisplayFormatAlpha(temp);
-	SDL_FreeSurface(temp);
+	else {
+		tileset = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+		if (tileset != 0) {
+			SDL_SetColorKey(tileset, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(tileset->format, 255, 0, 255));
+		}
+	}
 
 }
 

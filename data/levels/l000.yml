@@ -8,3 +8,10 @@ time    : 300
 player:
     x: 2
     y: 0
+badguys:
+    vacuuBoy:
+        x: 3
+        y: 3
+    vacuuBoy:
+        x: 10
+        y: 3

@@ -80,6 +80,12 @@ Level::Level(unsigned levelnum) {
 
 	player = new Player(levelconfig["player"]["x"].as<int>(), levelconfig["player"]["y"].as<int>());
 
+	YAML::Node badguys = levelconfig["badguys"];
+
+	for(YAML::iterator it = badguys.begin();it != badguys.end(); ++it ){
+		new BadGuy(it->first.Scalar(),it->second["x"].as<int>(),it->second["y"].as<int>());
+	}
+
 	mainCam = new Camera(player);
 	timer = SDL_GetTicks();
 }

@@ -3,7 +3,7 @@ width   : 25
 height  : 20
 bgImage : bg.bmp
 bgMusic : LukHash_DigitalHeart.ogg
-gravity : 1.0
+gravity : 1.5
 time    : 300
 player:
     x: 2

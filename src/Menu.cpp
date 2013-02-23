@@ -133,7 +133,12 @@ void Menu::build() {
 
 	SDL_SetAlpha(backgroudFilter, SDL_SRCALPHA, 128);
 	SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
-	SDL_Rect srcRect = { 0, 0, screen->w - 6 * TILESIZE, screen->h - 2 * TILESIZE };
+	SDL_Rect srcRect;
+	srcRect.x = 0;
+	srcRect.y = 0;
+	srcRect.w = screen->clip_rect.w - 6 * TILESIZE;
+	srcRect.h = screen->clip_rect.h - 2 * TILESIZE;
+
 	SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	items = new menuitem[labeltexts.size()];
@@ -152,7 +157,11 @@ void Menu::render() {
 	if (background != NULL) {
 		SDL_BlitSurface(background, NULL, screen, NULL);
 		SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
-		SDL_Rect srcRect = { 0, 0, (Uint16) screen->w - 6 * TILESIZE, (Uint16) screen->h - 2 * TILESIZE };
+		SDL_Rect srcRect;
+		srcRect.x = 0;
+		srcRect.y = 0;
+		srcRect.w = screen->clip_rect.w - 6 * TILESIZE;
+		srcRect.h = screen->clip_rect.h - 2 * TILESIZE;
 		SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	}
@@ -275,9 +284,7 @@ void Menu::options() {
 }
 
 void Menu::exit() {
-	//TODO if level has the main gameloop then return -1 oder so
-	//	Game::curGame->setRunning(false);
-	//TODO set returnvalue to pass throw and quit the whole game
+	//TODO if level has the main gameloop then return -1 oder so. set returnvalue to pass throw and quit the whole game
 
 	//Game::curGame->getCurrentLevel()->setRunning(false);
 	running = false;

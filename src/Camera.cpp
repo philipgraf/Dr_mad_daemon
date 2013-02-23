@@ -45,7 +45,6 @@ Camera::Camera(float x, float y, int w, int h) {
 }
 
 Camera::~Camera() {
-	// TODO Auto-generated destructor stub
 }
 
 void Camera::logic() {
@@ -86,7 +85,11 @@ void Camera::drawImage() {
 void Camera::drawNotification() {
 	int i = 0;
 	for (std::vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
-		SDL_Rect destRect = { 10, i * 40, (*it)->getNotificationSurface()->w, (*it)->getNotificationSurface()->h };
+		SDL_Rect destRect;
+		destRect.x = 10;
+		destRect.y = i * 40;
+		destRect.w = (*it)->getNotificationSurface()->clip_rect.w;
+		destRect.h = (*it)->getNotificationSurface()->clip_rect.w;
 		SDL_BlitSurface((*it)->getNotificationSurface(), NULL, SDL_GetVideoSurface(), &destRect);
 		i++;
 	}
@@ -123,7 +126,6 @@ void Camera::drawEntities() {
 
 		SDL_Rect srcRect = curEntity->getCurFrameRect();
 
-		// TODO: curEntity correct Frame for animation
 		SDL_BlitSurface(curEntity->getImage(), &srcRect, SDL_GetVideoSurface(), &destRect);
 	}
 }
@@ -152,9 +154,17 @@ void Camera::drawTiles(int layer) {
 			u_int16_t id = tilelist[layer][x][y]->getId();
 			int currentframe = tilelist[layer][x][y]->getCurrentframe();
 
-			SDL_Rect srcRect = { currentframe * TILESIZE, id * TILESIZE, TILESIZE, TILESIZE };
+			SDL_Rect srcRect ;
+			srcRect.x=currentframe * TILESIZE;
+			srcRect.y=id * TILESIZE;
+			srcRect.w=TILESIZE;
+			srcRect.h=TILESIZE;
 
-			SDL_Rect destRect = { x * TILESIZE - this->x, y * TILESIZE - this->y, TILESIZE, TILESIZE };
+			SDL_Rect destRect;
+			destRect.x=x * TILESIZE - this->x;
+			destRect.y=y * TILESIZE - this->y;
+			destRect.w=TILESIZE;
+			destRect.h=TILESIZE;
 
 			SDL_BlitSurface(Tile::tileset, &srcRect, SDL_GetVideoSurface(), &destRect);
 		}
@@ -171,7 +181,12 @@ void Camera::drawBackground() {
 
 	if (cameraMode == STICKY) {
 		// center background behind level and move it with half speed
-		SDL_Rect destRect = { lWidth / 2 - bgWidth / 2 - x / 2, lHeight / 2 - bgHeight / 2 - y / 2, curLevel->getBackground()->clip_rect.w, curLevel->getBackground()->clip_rect.h };
+		SDL_Rect destRect;
+		destRect.x=lWidth / 2 - bgWidth / 2 - x / 2;
+		destRect.y=lHeight / 2 - bgHeight / 2 - y / 2;
+		destRect.w= curLevel->getBackground()->clip_rect.w;
+		destRect.h=curLevel->getBackground()->clip_rect.h;
+
 		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(), &destRect);
 	} else {
 		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(), NULL);

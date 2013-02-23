@@ -38,7 +38,7 @@ private:
 	Language lang;
 
 	int level;
-	int currentItem;
+	unsigned currentItem;
 	std::vector<items_t> itemlist;
 
 	bool running;

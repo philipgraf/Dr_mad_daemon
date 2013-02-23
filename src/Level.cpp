@@ -36,7 +36,6 @@ Level::Level(unsigned levelnum) {
 		this->levelnum = levelnum;
 	}
 
-	//TODO set current level???
 	Game::curGame->setCurrentLevel(this);
 
 	tilelist = NULL;
@@ -79,6 +78,8 @@ Level::Level(unsigned levelnum) {
 
 	loadMapFile(levels[this->levelnum]);
 
+	player = new Player(levelconfig["player"]["x"].as<int>(), levelconfig["player"]["y"].as<int>());
+
 	mainCam = new Camera(player);
 	timer = SDL_GetTicks();
 }
@@ -104,10 +105,6 @@ Level::~Level() {
 }
 
 void Level::loadMapFile(string filename) {
-
-	//TODO only testing
-	BadGuy *test = new BadGuy("vacuuBoy", 5, 5);
-
 	tilelist = new Tile***[3];
 	for (int i = 0; i < 3; i++) {
 		tilelist[i] = new Tile**[width];
@@ -123,11 +120,6 @@ void Level::loadMapFile(string filename) {
 			for (int x = 0; x < width; x++) {
 				u_int64_t id;
 				filestream >> id;
-
-				//TODO get startpoint from levelconfig
-				if (id & TF_START) {
-					player = new Player(x, y);
-				}
 
 				tilelist[i][x][y] = new Tile(id);
 

@@ -44,7 +44,7 @@ protected:
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
 	//TODO: actionframes get from File ?!?
 	std::vector<int> actionframes;
-	std::vector<int> animationDuration;
+	std::vector<unsigned> animationDuration;
 
 	float width;/**< width of the entity in meter */
 	float height;/**< height of the entity in meter */

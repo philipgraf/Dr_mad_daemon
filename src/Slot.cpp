@@ -17,8 +17,6 @@ void Slot::loadSlots() {
 	} catch (YAML::Exception &e) {
 		cout << e.msg << ": " << e.what() << endl;
 	}
-	int i = 0;
-
 	for (YAML::iterator it = slots.begin(); it != slots.end(); ++it) {
 
 		Slot slot;
@@ -27,7 +25,7 @@ void Slot::loadSlots() {
 		slot.playerItems = it->second["items"].as<map<string, int> >();
 		Slot::slots.push_back(new Slot(slot));
 	}
-	if (Game::curGame->settings.activeSlot < 0 || Game::curGame->settings.activeSlot >= Slot::slots.size()) {
+	if (Game::curGame->settings.activeSlot < 0 || Game::curGame->settings.activeSlot >= (int) Slot::slots.size()) {
 		Game::curGame->settings.activeSlot = Slot::slots.size() - 1;
 	}
 
@@ -43,7 +41,7 @@ void Slot::saveSlots() {
 
 	out << YAML::BeginMap;
 
-	for (int i = 0; i < slots.size(); i++) {
+	for (unsigned i = 0; i < slots.size(); i++) {
 		out << YAML::Key << slots[i]->getName();
 		out << YAML::Value << YAML::BeginMap;
 		out << YAML::Key << "finished levels";
@@ -101,6 +99,5 @@ void Slot::setName(const string& name) {
 }
 
 Slot::~Slot() {
-	// TODO Auto-generated destructor stub
 }
 

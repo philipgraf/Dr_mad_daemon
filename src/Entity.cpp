@@ -124,7 +124,6 @@ void Entity::setAlive(bool alive) {
 	this->alive = alive;
 }
 
-//TODO replace
 float Entity::getX() const {
 	return body->GetPosition().x;
 }

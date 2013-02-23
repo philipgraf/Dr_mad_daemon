@@ -28,7 +28,11 @@ Game::~Game() {
 	SDL_FreeSurface(display);
 	SDL_Quit();
 
-	//TODO Free all sounds via map iterator
+	for(map<string,Mix_Chunk*>::iterator it = sounds.begin(); it != sounds.end();++it){
+		Mix_FreeChunk((*it).second);
+	}
+
+	sounds.clear();
 
 	Language::supLanguages.clear();
 	Level::levels.clear();
@@ -132,7 +136,6 @@ void Game::init() {
 }
 
 void Game::loadSettings() {
-	//TODO if file not exist load default settings and store in file
 	YAML::Node settings;
 	try {
 		settings = YAML::LoadFile(CONFIGS"game.yml");

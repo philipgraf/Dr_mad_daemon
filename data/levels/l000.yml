@@ -5,3 +5,6 @@ bgImage : bg.bmp
 bgMusic : LukHash_DigitalHeart.ogg
 gravity : 1.0
 time    : 300
+player:
+    x: 2
+    y: 0

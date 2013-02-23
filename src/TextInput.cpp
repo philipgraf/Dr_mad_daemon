@@ -33,8 +33,17 @@ string TextInput::getInput() {
 	SDL_Event event;
 	bool running = true;
 
-	SDL_Rect backgroundDest = { screen->w / 2 - background->w / 2, screen->h / 2 - background->h / 2, background->w, background->h };
-	SDL_Rect textInputBackgroundDest = { 10, background->h - 65, textInputBackground->w, textInputBackground->h };
+	SDL_Rect backgroundDest;
+	backgroundDest.x=screen->clip_rect.w / 2 - background->clip_rect.w / 2;
+	backgroundDest.y=screen->h / 2 - background->clip_rect.h / 2;
+	backgroundDest.w= background->clip_rect.w;
+	backgroundDest.h= background->clip_rect.h;
+
+	SDL_Rect textInputBackgroundDest;
+	textInputBackgroundDest.x=10;
+	textInputBackgroundDest.y=background->clip_rect.h - 65;
+	textInputBackgroundDest.w=textInputBackground->clip_rect.w;
+	textInputBackgroundDest.h=textInputBackground->clip_rect.h ;
 
 	while (running) {
 		while (SDL_PollEvent(&event)) {

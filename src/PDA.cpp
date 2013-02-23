@@ -75,7 +75,7 @@ PDA::~PDA() {
 	SDL_FreeSurface(image);
 	SDL_FreeSurface(display);
 	SDL_FreeSurface(curser);
-	for (int i = 0; i < itemlist.size(); i++) {
+	for (unsigned i = 0; i < itemlist.size(); i++) {
 		SDL_FreeSurface(itemlist[i].amound);
 		SDL_FreeSurface(itemlist[i].itemname);
 	}
@@ -124,7 +124,7 @@ void PDA::render() {
 		SDL_BlitSurface(TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), "Oh Boy  you have no items", green), NULL, display, &textRect);
 	}
 
-	for (int i = 0; i < itemlist.size(); i++) {
+	for (unsigned i = 0; i < itemlist.size(); i++) {
 		SDL_Rect labelRect;
 		labelRect.x = 15;
 		labelRect.y = 20 * i + 50;
@@ -145,7 +145,7 @@ void PDA::build() {
 
 	TTF_Font *font = Game::curGame->getFont(FONT_PDA_CLOCK);
 
-	for (int i = 0; i < itemlist.size(); i++) {
+	for (unsigned i = 0; i < itemlist.size(); i++) {
 		SDL_FreeSurface(itemlist[i].amound);
 		SDL_FreeSurface(itemlist[i].itemname);
 	}
@@ -186,6 +186,8 @@ void PDA::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		break;
 	case SDLK_UP:
 		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
+		break;
+	default:
 		break;
 	}
 }

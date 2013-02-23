@@ -28,7 +28,7 @@ BadGuy::BadGuy(string type, int x, int y) :Entity() {
 
 	items = badguy["items"].as< map<string,int> >();
 	actionframes = badguy["action frames"].as< vector<int> >();
-	animationDuration = badguy["animation duration"].as< vector<int> >();
+	animationDuration = badguy["animation duration"].as< vector<unsigned> >();
 
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
@@ -36,7 +36,7 @@ BadGuy::BadGuy(string type, int x, int y) :Entity() {
 	SDL_Surface *tmp = SDL_LoadBMP((IMG+badguy["image"].Scalar()).c_str());
 
 	if (!tmp) {
-		//TODO Throw DISException
+		//TODO Throw Exception
 		cout << "unable to load BMP file: " << badguy["image"].Scalar() << endl;
 	} else {
 		image = SDL_DisplayFormat(tmp);

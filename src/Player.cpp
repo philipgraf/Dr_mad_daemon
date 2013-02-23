@@ -42,7 +42,7 @@ Player::Player(int x, int y) :Entity() {
 	SDL_Surface *tmp = SDL_LoadBMP(IMG"player.bmp");
 
 	if (!tmp) {
-		//TODO Throw DISException
+		//TODO Throw Exception
 		cout << "unable to load BMP file player.bmp" << endl;
 	} else {
 		image = SDL_DisplayFormat(tmp);
@@ -165,7 +165,9 @@ void Player::use() {
 
 void Player::logic() {
 //TODO check connected tiles for shock and other game events
-	int collision = checkCollision();
+	//int collision = checkCollision();
+
+	checkCollision();
 
 	if (grounded && impactSoundPlayed > 20) {
 		Mix_PlayChannel(-1, Game::sounds["player jump impact"], 0);

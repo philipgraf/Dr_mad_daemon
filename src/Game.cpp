@@ -85,6 +85,7 @@ void Game::init() {
 	 * Set Title
 	 */
 	SDL_WM_SetCaption(TITLE, NULL);
+
 	/**
 	 * Initialize SDL_ttf for Fonts
 	 */

@@ -10,6 +10,8 @@
 #define TF_FINISH 0x20000
 
 class Tile {
+public:
+	static SDL_Surface *tileset;
 private:
 	u_int16_t id;
 	u_int64_t flags;
@@ -17,8 +19,9 @@ private:
 	void nextFrame();
 	bool transparency;
 
+	Uint32 timer;
+
 public:
-	static SDL_Surface *tileset;
 	Tile(u_int64_t id = 0);
 	static void loadTileset();
 

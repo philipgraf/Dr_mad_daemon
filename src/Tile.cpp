@@ -2,6 +2,7 @@
 
 //TODO: tileFrames get from file and not globle
 int tileconf[] = { 20, 1, 1, 1, 1, 1, 1, 10, 1, 1, 10 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 }; //definiert Anzahl der Frames; Index [0] = Anzahl der Tiles
+int tileduration[] = { 1, 1, 1, 1, 1, 1, 1, 1000, 1, 1, 40 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 };
 SDL_Surface *Tile::tileset;
 
 Tile::Tile(u_int64_t id) {
@@ -10,12 +11,13 @@ Tile::Tile(u_int64_t id) {
 	currentframe = 0;
 	transparency = false;
 
+	timer = SDL_GetTicks();
+
 }
 
 void Tile::nextFrame() {
 	if (id != 0 && tileconf[id] != 1) {
-		static Uint32 timer = SDL_GetTicks();
-		if (SDL_GetTicks() - timer > 40) {
+		if (SDL_GetTicks() - timer > tileduration[id]) {
 			currentframe++;
 			timer = SDL_GetTicks();
 		}

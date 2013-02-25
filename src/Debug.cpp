@@ -10,7 +10,7 @@
 #include <SDL/SDL_gfxPrimitives.h>
 #include "define.h"
 
-#define SCALE 1
+#define SCALE 4
 
 using namespace std;
 

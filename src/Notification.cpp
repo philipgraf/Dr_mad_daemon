@@ -88,6 +88,7 @@ Notification::~Notification() {
 
 void Notification::timeout() {
 	if (--counter <= 0) {
+		//it's OK for an object to commit suicide
 		delete this;
 	}
 }

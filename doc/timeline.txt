@@ -20,7 +20,6 @@ Menuclass (Sound/Resolution/Fullscreen/Credits)-> nearly done
 Leveleditor
 Story
 levelresults
-highscore
 savegames -> nearly done
 
 -> no.1 priority:

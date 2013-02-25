@@ -2,14 +2,13 @@
 
 //TODO: tileFrames get from file and not globle
 int tileconf[] = { 20, 1, 1, 1, 1, 1, 1, 10, 1, 1, 10 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 }; //definiert Anzahl der Frames; Index [0] = Anzahl der Tiles
-int tileduration[] = { 1, 1, 1, 1, 1, 1, 1, 1000, 1, 1, 40 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 };
+unsigned tileduration[] = { 1, 1, 1, 1, 1, 1, 1, 500, 1, 1, 40 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 };
 SDL_Surface *Tile::tileset;
 
 Tile::Tile(u_int64_t id) {
 	this->id = id & 0xFFFF;
 	this->flags = id >> 16;
 	currentframe = 0;
-	transparency = false;
 
 	timer = SDL_GetTicks();
 
@@ -67,12 +66,4 @@ u_int64_t Tile::getFlags() const {
 
 void Tile::setFlags(u_int64_t flags) {
 	this->flags = flags;
-}
-
-bool Tile::isTransparency() const {
-	return transparency;
-}
-
-void Tile::setTransparency(bool transparency) {
-	this->transparency = transparency;
 }

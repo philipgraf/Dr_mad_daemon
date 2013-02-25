@@ -1,9 +1,9 @@
 name    : WTF!!
-width   : 25
+width   : 35
 height  : 20
 bgImage : city.bmp
 bgMusic : LukHash_DigitalHeart.ogg
-gravity : 1.5
+gravity : 1.0
 time    : 300
 player:
     x: 2

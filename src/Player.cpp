@@ -15,7 +15,8 @@
 
 using namespace std;
 
-Player::Player(int x, int y) :Entity() {
+Player::Player(int x, int y) :
+		Entity() {
 
 	width = 1;
 	height = 2;
@@ -63,6 +64,8 @@ Player::Player(int x, int y) :Entity() {
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 
+	body->SetUserData(this);
+
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(halfWidth, halfHeight - radius / 2);
 
@@ -70,6 +73,7 @@ Player::Player(int x, int y) :Entity() {
 	fixtureDef->shape = &dynamicBox;
 	fixtureDef->density = 40.0f;
 	fixtureDef->friction = 0.0f;
+	fixtureDef->filter.categoryBits = 2;
 	body->CreateFixture(fixtureDef);
 
 	b2CircleShape feetShape;
@@ -80,6 +84,7 @@ Player::Player(int x, int y) :Entity() {
 	fixtureDef->shape = &feetShape;
 	fixtureDef->density = 40.0f;
 	fixtureDef->friction = 0.2;
+	fixtureDef->filter.categoryBits = 2;
 
 	feetFixture = body->CreateFixture(fixtureDef);
 
@@ -89,6 +94,7 @@ Player::Player(int x, int y) :Entity() {
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorRight;
 	fixtureDef->isSensor = true;
+	fixtureDef->filter.categoryBits = 2;
 	this->sensorRight = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorLeft;
@@ -97,6 +103,7 @@ Player::Player(int x, int y) :Entity() {
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorLeft;
 	fixtureDef->isSensor = true;
+	fixtureDef->filter.categoryBits = 2;
 	this->sensorLeft = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorTop;
@@ -105,6 +112,7 @@ Player::Player(int x, int y) :Entity() {
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorTop;
 	fixtureDef->isSensor = true;
+	fixtureDef->filter.categoryBits = 2;
 	this->sensorTop = body->CreateFixture(fixtureDef);
 
 	b2CircleShape sensorBottom;
@@ -114,6 +122,7 @@ Player::Player(int x, int y) :Entity() {
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorBottom;
 	fixtureDef->isSensor = true;
+	fixtureDef->filter.categoryBits = 2;
 	this->sensorBottom = body->CreateFixture(fixtureDef);
 
 }
@@ -127,23 +136,11 @@ void Player::use() {
 	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
 		if (contactEdge->contact->GetFixtureA() == sensorBottom && contactEdge->contact->IsTouching()) {
 			if ((badguy = (BadGuy*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData()) != NULL) {
-				for(map<string,int>::iterator it = badguy->getItems().begin(); it != badguy->getItems().end();++it){
-					std::stringstream s;
-					s << lang["looted"] << " " << lang[it->first] << ": " << it->second;
-					new Notification(s.str(),5,NOTIFICATION_INFO,it->first);
-					items[it->first] += it->second;
-				}
 				delete badguy;
 				break;
 			}
 		} else if (contactEdge->contact->GetFixtureB() == sensorBottom && contactEdge->contact->IsTouching()) {
 			if ((badguy = (BadGuy*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData()) != NULL) {
-				for(map<string,int>::iterator it = badguy->getItems().begin(); it != badguy->getItems().end();++it){
-					std::stringstream s;
-					s << lang["looted"] << " " << lang[it->first] << ": " << it->second;
-					new Notification(s.str(),5,NOTIFICATION_INFO,it->first);
-					items[it->first] += it->second;
-				}
 				delete badguy;
 				break;
 			}
@@ -231,5 +228,13 @@ void Player::move() {
 		action = ACTION_STAY;
 	}
 
+}
+
+void Player::addItem(string item) {
+	Entity::addItem(item);
+
+	std::stringstream s;
+	s << lang["looted"] << " " << lang[item];
+	new Notification(s.str(), 5, NOTIFICATION_INFO, item);
 }
 

@@ -39,7 +39,7 @@ public:
 	void setRunning(bool running) {
 		this->running = running;
 	}
-
+	void addItem(std::string item);
 
 };
 

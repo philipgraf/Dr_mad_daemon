@@ -7,9 +7,3 @@ vacuuBoy:
   animation duration: [500,80,80,9999]
   items:
     screw: 1
-    inductor: 3
-    capacitor: 2
-    battery: 2
-    resistor: 1
-    wire: 5
-    pcb: 1

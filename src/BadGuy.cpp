@@ -5,19 +5,23 @@
  *      Author: philip
  */
 
-#include "BadGuy.h"
-#include "define.h"
 #include <iostream>
 #include <Box2D/Box2D.h>
 #include <SDL/SDL.h>
 #include <yaml-cpp/yaml.h>
 #include <map>
+#include <cstdlib>
+#include <ctime>
 
 #include "Game.h"
+#include "BadGuy.h"
+#include "define.h"
+#include "Item.h"
 
 using namespace std;
 
-BadGuy::BadGuy(string type, int x, int y) :Entity() {
+BadGuy::BadGuy(string type, int x, int y) :
+		Entity() {
 	YAML::Node badguys = YAML::LoadFile(CONFIGS"badguy.yml");
 
 	YAML::Node badguy = badguys[type];
@@ -26,9 +30,9 @@ BadGuy::BadGuy(string type, int x, int y) :Entity() {
 	width = badguy["width"].as<float>();
 	height = badguy["height"].as<float>();
 
-	items = badguy["items"].as< map<string,int> >();
-	actionframes = badguy["action frames"].as< vector<int> >();
-	animationDuration = badguy["animation duration"].as< vector<unsigned> >();
+	items = badguy["items"].as<map<string, int> >();
+	actionframes = badguy["action frames"].as<vector<int> >();
+	animationDuration = badguy["animation duration"].as<vector<unsigned> >();
 
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
@@ -121,7 +125,12 @@ BadGuy::BadGuy(string type, int x, int y) :Entity() {
 }
 
 BadGuy::~BadGuy() {
-
+	srand(time(NULL));
+	for (map<std::string, int>::iterator it = items.begin(); it != items.end(); ++it) {
+		for (int i = 0; i < it->second; i++) {
+			new Item(it->first, body->GetPosition().x, body->GetPosition().y, (rand() % 20) - 10, -(rand() % 10));
+		}
+	}
 }
 
 void BadGuy::move() {
@@ -142,7 +151,7 @@ void BadGuy::logic() {
 
 	if (collision & UP) {
 		alive = false;
-		currentframe=0;
+		currentframe = 0;
 		action = ACTION_DEAD;
 	} else {
 		if (collision & RIGHT) {

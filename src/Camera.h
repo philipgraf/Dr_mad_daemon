@@ -35,6 +35,7 @@ private:
 	Entity *target; /**< This contain an Entity if cameraMODE is STICKY and SMOOTH */
 	mode cameraMode;
 
+	void drawItems();
 	void drawNotification();
 	void drawEntities();
 	void drawTiles(int layer);

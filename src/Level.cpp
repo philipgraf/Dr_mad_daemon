@@ -4,12 +4,15 @@
 #include "BadGuy.h"
 #include "Notification.h"
 #include "PDA.h"
+#include "Item.h"
 
 #include <sstream>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 
 #include "Notification.h"
+
+using namespace std;
 
 vector<string> Level::levels;
 map<string, string> Level::levelnames;
@@ -82,8 +85,13 @@ Level::Level(unsigned levelnum) {
 
 	YAML::Node badguys = levelconfig["badguys"];
 
-	for(YAML::iterator it = badguys.begin();it != badguys.end(); ++it ){
-		new BadGuy(it->first.Scalar(),it->second["x"].as<int>(),it->second["y"].as<int>());
+	for (YAML::iterator it = badguys.begin(); it != badguys.end(); ++it) {
+		new BadGuy(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
+	}
+
+	YAML::Node items = levelconfig["items"];
+	for (YAML::iterator it = items.begin(); it != items.end(); ++it) {
+		new Item(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
 	}
 
 	mainCam = new Camera(player);
@@ -105,9 +113,15 @@ Level::~Level() {
 		delete Entity::entityList[i];
 	}
 
+	for (unsigned i = 0; i < Item::itemlist.size(); i++) {
+		delete Item::itemlist[i];
+	}
+	Item::itemlist.clear();
+
 	Entity::entityList.clear();
 	SDL_FreeSurface(Tile::tileset);
 	Game::curGame->setCurrentLevel(NULL);
+
 }
 
 void Level::loadMapFile(string filename) {
@@ -200,11 +214,15 @@ void Level::logic() {
 		}
 	}
 	mainCam->logic();
-	for (std::vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
+	for (vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
 		(*it)->timeout();
 		if (it == Notification::notificationList.end()) {
 			break;
 		}
+	}
+
+	for (unsigned i = 0; i < Item::itemlist.size(); i++) {
+		Item::itemlist[i]->logic();
 	}
 }
 
@@ -255,15 +273,13 @@ void Level::play() {
 	Mix_FreeMusic(bgMusic);
 }
 
+void Level::updateTime() {
 
-void Level::updateTime(){
-
-	if(SDL_GetTicks() - timer > 1000){
+	if (SDL_GetTicks() - timer > 1000) {
 		time--;
 		timer = SDL_GetTicks();
 	}
 }
-
 
 void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 

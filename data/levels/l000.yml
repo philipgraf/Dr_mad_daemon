@@ -15,3 +15,10 @@ badguys:
     vacuuBoy:
         x: 10
         y: 3
+items:
+    screw:
+        x: 15
+        y: 15
+    resistor:
+        x: 25
+        y: 10

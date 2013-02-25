@@ -20,12 +20,16 @@ private:
 	SDL_Surface *image;
 	std::string type;
 	b2Body *body;
-	b2Fixture *sensor;
+	Uint32 timer;
 public:
 	Item(std::string name, int x, int y, int relX=0,int relY=0);
 	virtual ~Item();
 
+	void logic();
+
 	std::string getType();
+	SDL_Surface *getImage();
+	SDL_Rect getClipRect();
 };
 
 #endif /* ITEM_H_ */

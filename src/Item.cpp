@@ -14,7 +14,6 @@ using namespace std;
 vector<Item*> Item::itemlist;
 
 Item::Item(std::string name, int x, int y, int relX, int relY) {
-
 	this->type = name;
 
 	SDL_Surface *tmp = SDL_LoadBMP((IMG+name+".bmp").c_str());
@@ -39,18 +38,18 @@ Item::Item(std::string name, int x, int y, int relX, int relY) {
 
 	b2FixtureDef *fixDef = new b2FixtureDef;
 	fixDef->shape = &polyshape;
-	fixDef->friction = 200;
-	fixDef->restitution = 0.5;
+	fixDef->friction = 0.5;
+	fixDef->restitution = 0.1;
 	fixDef->density = 5;
+	fixDef->filter.categoryBits = 1;
+	fixDef->filter.maskBits =1;
 
 	body->CreateFixture(fixDef);
 
-	b2PolygonShape sensorShape;
-	sensorShape.SetAsBox(0.3125, 0.32, b2Vec2(0.0, 0.01), 0);
-
-	sensor = body->CreateFixture(&sensorShape, 0);
 
 	body->ApplyLinearImpulse(b2Vec2(relX, relY), body->GetWorldCenter());
+
+	timer = SDL_GetTicks();
 
 	Item::itemlist.push_back(this);
 
@@ -58,10 +57,45 @@ Item::Item(std::string name, int x, int y, int relX, int relY) {
 
 Item::~Item() {
 	SDL_FreeSurface(image);
-	std::vector<Item*>::iterator pos;
-	if ((pos = std::find(itemlist.begin(), itemlist.end(), this)) != itemlist.end()) {
+	vector<Item*>::iterator pos;
+	if ((pos = find(itemlist.begin(), itemlist.end(), this)) != itemlist.end()) {
 		itemlist.erase(pos);
 	}
 	Game::curGame->getCurrentLevel()->getWorld()->DestroyBody(body);
 }
 
+void Item::logic() {
+	if(SDL_GetTicks() - timer > 1000){
+		body->GetFixtureList()->SetFilterData(b2Filter());
+	}
+	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
+		if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData() != NULL) {
+			((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData())->addItem(type);
+			//it's OK for an object to commit suicide
+			delete this;
+			break;
+		} else if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
+			((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData())->addItem(type);
+			//it's OK for an object to commit suicide
+			delete this;
+			break;
+		}
+	}
+}
+
+std::string Item::getType() {
+	return type;
+}
+
+SDL_Surface *Item::getImage() {
+	return image;
+}
+
+SDL_Rect Item::getClipRect() {
+	SDL_Rect retRect;
+	retRect.w = image->clip_rect.w;
+	retRect.h = image->clip_rect.h;
+	retRect.x = body->GetPosition().x * TILESIZE - retRect.w / 2;
+	retRect.y = body->GetPosition().y * TILESIZE - retRect.h / 2;
+	return retRect;
+}

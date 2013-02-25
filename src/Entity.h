@@ -95,7 +95,7 @@ public:
 	void delDirection(Uint8 direction);
 	Uint8 getDirection() const;
 	std::map<std::string, int>& getItems();
-	void addItem(std::string item);
+	virtual void addItem(std::string item);
 };
 
 #endif /* ENTITY_H_ */

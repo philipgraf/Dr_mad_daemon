@@ -8,6 +8,10 @@
 #include "Camera.h"
 #include "Game.h"
 #include "Notification.h"
+#include "Item.h"
+
+using namespace std;
+
 /**
  * Constuctor.
  * Set the cameraMode to STICKY and target, width, height to the given values
@@ -78,13 +82,14 @@ void Camera::drawImage() {
 	drawTiles(BACKGROUND);
 	drawEntities();
 	drawTiles(MAIN);
+	drawItems();
 	drawTiles(FOREGROUND);
 	drawNotification();
 }
 
 void Camera::drawNotification() {
 	int i = 0;
-	for (std::vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
+	for (vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
 		SDL_Rect destRect;
 		destRect.x = 10;
 		destRect.y = i * 40;
@@ -95,9 +100,18 @@ void Camera::drawNotification() {
 	}
 }
 
+void Camera::drawItems(){
+	for(unsigned i = 0; i < Item::itemlist.size(); i++){
+		SDL_Rect destRect = Item::itemlist[i]->getClipRect();
+		destRect.x = destRect.x  - x;
+		destRect.y = destRect.y  - y;
+		SDL_BlitSurface(Item::itemlist[i]->getImage(),NULL,SDL_GetVideoSurface(),&destRect);
+	}
+}
+
 void Camera::drawEntities() {
 
-	for (std::vector<Entity*>::iterator it = Entity::entityList.begin(); it != Entity::entityList.end(); ++it) {
+	for (vector<Entity*>::iterator it = Entity::entityList.begin(); it != Entity::entityList.end(); ++it) {
 
 		Entity* curEntity = *it;
 

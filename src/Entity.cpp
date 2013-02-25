@@ -41,6 +41,8 @@ Entity::Entity() {
 	height = 0;
 	maxVelocity = 0;
 
+	timer =  SDL_GetTicks();
+
 	entityList.push_back(this);
 }
 
@@ -50,7 +52,7 @@ void Entity::logic() {
 }
 
 void Entity::nextframe() {
-	static Uint32 timer = SDL_GetTicks();
+
 	if (SDL_GetTicks() - timer > animationDuration[action]) {
 		currentframe++;
 		timer = SDL_GetTicks();
@@ -178,4 +180,8 @@ void Entity::delDirection(Uint8 direction) {
 
 std::map<std::string, int>& Entity::getItems() {
 	return items;
+}
+
+void Entity::addItem(std::string item) {
+	items[item]++;
 }

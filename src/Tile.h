@@ -17,7 +17,6 @@ private:
 	u_int64_t flags;
 	int currentframe;
 	void nextFrame();
-	bool transparency;
 
 	Uint32 timer;
 
@@ -33,8 +32,6 @@ public:
 	void setCurrentframe(int currentframe);
 	u_int64_t getFlags() const;
 	void setFlags(u_int64_t flags);
-	bool isTransparency() const;
-	void setTransparency(bool transparency);
 };
 
 #endif

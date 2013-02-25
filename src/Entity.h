@@ -33,6 +33,8 @@
  * Entity Class all things you can interact with.
  */
 class Entity {
+private:
+	Uint32 timer;
 protected:
 	std::map<std::string, int> items;
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
@@ -93,6 +95,7 @@ public:
 	void delDirection(Uint8 direction);
 	Uint8 getDirection() const;
 	std::map<std::string, int>& getItems();
+	void addItem(std::string item);
 };
 
 #endif /* ENTITY_H_ */

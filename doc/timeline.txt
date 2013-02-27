@@ -23,7 +23,24 @@ levelresults
 savegames -> nearly done
 
 -> no.1 priority:
-	refactor entity class (badguy, player, enviroment)
+	refactor entity class (badguy, player, environment)
 	gameplay
-	sound (0,25,50,75,100) 
 	fonts (sizes,color, etc)
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Release 0.1
+Release Date: 15.3.13
+Feature Freeze: 11.3.13
+
+Features:
+	PDA upgrade
+	mortal Player
+	Environment Entities
+	(mouse)?
+	implement Wiimote settings
+	levelswitches (8 per Level , position via tiles)
+	battery(3 levels and use of the glover costs 1 level)
+	(badguy2)
+	sound (0,25,50,75,100)

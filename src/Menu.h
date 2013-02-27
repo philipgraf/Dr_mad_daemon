@@ -34,6 +34,7 @@ class Menu: public Event {
 private:
 	std::vector<fptr> labelactions;
 	std::vector<std::string> labeltexts;
+	std::vector<int> labelfonts;
 	SDL_Surface *background;
 	SDL_Surface *backgroudFilter;
 	menuitem *items;

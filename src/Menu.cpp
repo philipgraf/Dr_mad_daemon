@@ -62,65 +62,86 @@ void Menu::build() {
 
 	labelactions.clear();
 	labeltexts.clear();
+	labelfonts.clear();
 	switch (menuType) {
 
 	case MAINMENU:
 		labeltexts.push_back(lang["play"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::levels);
 		labeltexts.push_back(lang["options"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::options);
 		labeltexts.push_back(lang["credits"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::credits);
 		labeltexts.push_back(lang["exit"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::exit);
 		break;
 	case PAUSEMENU:
 		labeltexts.push_back(lang["continue"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::continueGame);
 		labeltexts.push_back(lang["sound"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::sound);
 		labeltexts.push_back(lang["quit level"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::quitLevel);
 		labeltexts.push_back(lang["quit game"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::exit);
 		break;
 	case OPTIONMENU:
 		labeltexts.push_back(lang["sound"]);
+		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::sound);
 		labeltexts.push_back(lang["language"] + ":" + Game::curGame->settings.language);
+		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::changeLanguage);
 		labeltexts.push_back(lang["controller"]);
+		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::controllerSettings);
 		labeltexts.push_back(lang["back"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::back);
 		break;
 	case CREDITS:
 		//TODO find better "visualization" ;)
 		labeltexts.push_back("Philip Graf");
+		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::back);
 		labeltexts.push_back("Felix Eckner");
+		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::back);
 		break;
 	case LEVELMENU:
 		labeltexts.push_back("Slot: " + (Slot::slots.size() == 0 ? "None" : Slot::slots[Game::curGame->settings.activeSlot]->getName()));
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::slots);
 		if (Game::curGame->settings.activeSlot != -1) {
 			for (int i = 0; i <= Slot::slots[Game::curGame->settings.activeSlot]->getFinishedLevels(); i++) {
 				labeltexts.push_back(Level::levelnames[Level::levels[i]]);
+				labelfonts.push_back(FONT_MENU_ITEM);
 				labelactions.push_back(&Menu::start);
 			}
 		}
 		labeltexts.push_back(lang["back"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::back);
 		break;
 	case SLOTMENU:
 		for (unsigned i = 0; i < Slot::slots.size(); i++) {
 			labeltexts.push_back(Slot::slots[i]->getName());
+			labelfonts.push_back(FONT_MENU_ITEM);
 			labelactions.push_back(&Menu::changeSlot);
 		}
 		labeltexts.push_back(lang["new slot"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::createSlot);
 		labeltexts.push_back(lang["back"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::back);
 		break;
 	}
@@ -142,11 +163,12 @@ void Menu::build() {
 	SDL_BlitSurface(backgroudFilter, &srcRect, screen, &dstRect);
 
 	items = new menuitem[labeltexts.size()];
-
+	int positionY = TILESIZE*2;
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		items[i].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(), labeltexts[i].c_str(), i == currentItem ? colors[1] : colors[0]);
+		items[i].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(labelfonts[i]), labeltexts[i].c_str(), i == currentItem ? colors[1] : colors[0]);
 		items[i].position.x = screen->clip_rect.w / 2 - items[i].labelSurface->clip_rect.w / 2;
-		items[i].position.y = (i + 1) * items[i].labelSurface->clip_rect.h;
+		items[i].position.y = positionY;
+		positionY += items[i].labelSurface->clip_rect.h;
 	}
 
 }
@@ -167,7 +189,7 @@ void Menu::render() {
 	}
 
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
-		SDL_BlitSurface(items[i].labelSurface, NULL, SDL_GetVideoSurface(), &(items[i].position));
+		SDL_BlitSurface(items[i].labelSurface, NULL, screen, &(items[i].position));
 	}
 }
 
@@ -175,9 +197,8 @@ void Menu::select(int direction) {
 
 	Mix_PlayChannel(-1, Game::sounds["menu select"], 0);
 
-	TTF_Font *menufont = Game::curGame->getFont();
 	SDL_FreeSurface(items[currentItem].labelSurface);
-	items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, labeltexts[currentItem].c_str(), colors[0]);
+	items[currentItem].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(labelfonts[currentItem]), labeltexts[currentItem].c_str(), colors[0]);
 
 	//item below
 	if (direction & DOWN) {
@@ -187,7 +208,7 @@ void Menu::select(int direction) {
 		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
 	}
 
-	items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, labeltexts[currentItem].c_str(), colors[1]);
+	items[currentItem].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(labelfonts[currentItem]), labeltexts[currentItem].c_str(), colors[1]);
 }
 
 int Menu::show() {
@@ -358,13 +379,12 @@ void Menu::onWiiButtonEvent(int buttons) {
 }
 
 void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle) {
-	TTF_Font *menufont = Game::curGame->getFont();
 	for (unsigned i = 0; i < labeltexts.size(); i++) {
 		if (mX > items[i].position.x && mX < items[i].position.x + items[i].position.w && mY > items[i].position.y && mY < items[i].position.y + items[i].position.h) {
 			SDL_FreeSurface(items[currentItem].labelSurface);
-			items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, labeltexts[currentItem].c_str(), colors[0]);
+			items[currentItem].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(labelfonts[currentItem]), labeltexts[currentItem].c_str(), colors[0]);
 			currentItem = i;
-			items[currentItem].labelSurface = TTF_RenderUTF8_Blended(menufont, labeltexts[currentItem].c_str(), colors[1]);
+			items[currentItem].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(labelfonts[currentItem]), labeltexts[currentItem].c_str(), colors[1]);
 		}
 	}
 }

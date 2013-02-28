@@ -20,7 +20,7 @@ private:
 	bool running;
 	int impactSoundPlayed;
 public:
-	Player(int x, int y);
+	Player(int x, int y, int level);
 	virtual ~Player();
 
 	PDA pda;

@@ -5,4 +5,20 @@ wooden crate:
   action frames: [1]
   animation duration: [9999]
   items:
-    screw: 1
+    screw: 5
+metal crate 1:
+  width: 1.0
+  height: 1.0
+  image: metal_crate_1.bmp
+  action frames: [1]
+  animation duration: [9999]
+  items:
+    pcb: 5
+metal crate 2:
+  width: 1.0
+  height: 1.0
+  image: metal_crate_2.bmp
+  action frames: [1]
+  animation duration: [9999]
+  items:
+    wire: 5

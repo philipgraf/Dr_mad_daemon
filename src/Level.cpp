@@ -84,7 +84,7 @@ Level::Level(unsigned levelnum) {
 
 	loadMapFile(levels[this->levelnum]);
 
-	player = new Player(levelconfig["player"]["x"].as<int>(), levelconfig["player"]["y"].as<int>());
+	player = new Player(levelconfig["player"]["x"].as<int>(), levelconfig["player"]["y"].as<int>(),Slot::slots[Game::curGame->settings.activeSlot]->getPdaLevel());
 
 	YAML::Node badguys = levelconfig["badguys"];
 

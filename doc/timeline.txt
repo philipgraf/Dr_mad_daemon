@@ -39,8 +39,9 @@ Features:
 	levelswitches (8 per Level , position via tiles) -> done
 	mortal Player --> done
 	implement Wiimote settings --> done
-	Environment Entities
+	Environment Entities --> done
 	PDA upgrade
-	(mouse)?
 	battery(3 levels and use of the glover costs 1 level)
+	throw environment entities
 	(badguy2)
+	(mouse)?

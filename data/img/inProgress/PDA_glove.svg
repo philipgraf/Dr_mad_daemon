@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="640"
+   height="480"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="PDA_glove.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ff00ff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="382.17994"
+     inkscape:cy="-1.4075933"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1476"
+     inkscape:window-height="905"
+     inkscape:window-x="0"
+     inkscape:window-y="57"
+     inkscape:window-maximized="0">
+    <sodipodi:guide
+       orientation="1,0"
+       position="127.27922,400.02041"
+       id="guide3094" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="241.42646,394.46457"
+       id="guide3096" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-572.36218)">
+    <rect
+       style="fill:#1a1a1a"
+       id="rect3122"
+       width="270"
+       height="180"
+       x="330"
+       y="762.36218"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#cccccc"
+       d="m 87.34177,703.68706 113.92405,0 c 75.96205,0 83.73417,7.43227 83.73417,81.75513 l 0,11.14842 15.00001,9.86383 0,80.74581 -15.00001,9.7262 0,11.14843 0,81.75516 c 0,7.1439 -3.45162,11.14846 -11.24999,11.14846 l -262.49322,0 C 3.797467,1000.9785 0,997.30817 0,990.36092 L 0,784.64745 c 0,-73.61987 7.594935,-80.96039 87.34177,-80.96039 z"
+       id="rect2985"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccccc"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#666666"
+       d="m 284.98219,800.8033 11.25,7.34055 0,36.70262 -11.25,0 z"
+       id="rect2994"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#666666"
+       d="m 284.91901,848.49119 11.24999,0 0,36.70265 -11.24999,7.34053 z"
+       id="rect2994-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#241c1c"
+       d="m 125.61886,652.3622 37.33335,0 c 37.33332,0 29.86665,11.04225 37.33332,51.53052 l -112,0 c 7.46667,-40.48827 0,-51.53052 37.33333,-51.53052 z"
+       id="rect3016"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:#241c1c"
+       d="m 163.41668,1052.3622 -37.33335,0 c -37.33333,0 -29.86666,-11.0423 -37.33333,-51.5305 l 112,0 c -7.46667,40.4882 0,51.5305 -37.33332,51.5305 z"
+       id="rect3016-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;display:inline"
+       id="rect3041"
+       width="250"
+       height="230"
+       x="16"
+       y="758.35938"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:29.67933846px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#803300;fill-opacity:1;stroke:none;font-family:Sans"
+       x="37.099167"
+       y="752.099"
+       id="text3043"
+       sodipodi:linespacing="125%"
+       transform="scale(1.0108041,0.98931138)"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan3045"
+         x="37.099167"
+         y="752.099">NERD WATCH</tspan></text>
+    <rect
+       style="fill:#000000;display:inline"
+       id="rect3041-2"
+       width="250"
+       height="160"
+       x="340"
+       y="772.36218"
+       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>

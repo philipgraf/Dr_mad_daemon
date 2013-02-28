@@ -27,7 +27,7 @@ private:
 	std::string name;
 	int finishedLevels;
 	std::map<std::string, int> playerItems;
-
+	int pdaLevel;
 public:
 	Slot(std::string name = "DrInSane");
 	virtual ~Slot();
@@ -39,6 +39,8 @@ public:
 	void setName(const std::string& name);
 	void setPlayerItems(const std::map<std::string, int>& playerItems);
 	std::map<std::string, int> getPlayerItems();
+	int getPdaLevel() const;
+	void setPdaLevel(int pdaLevel);
 };
 
 #endif /* SLOT_H_ */

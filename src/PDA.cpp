@@ -28,10 +28,13 @@ PDA::PDA(int level) {
 	green.b = 0;
 	string filename;
 	currentItem = 0;
-
+	std::cout << "pda-lvl:" << level << endl;
 	switch (level) {
 	case PDA_CLOCK:
 		filename = PDAIMG"clock.bmp";
+		break;
+	case PDA_GLOVE:
+		filename = PDAIMG"glove.bmp";
 		break;
 	default:
 		filename = PDAIMG"clock.bmp";
@@ -53,14 +56,27 @@ PDA::PDA(int level) {
 	timer = NULL;
 	SDL_Surface *screen = SDL_GetVideoSurface();
 
-	display = SDL_CreateRGBSurface(SDL_HWSURFACE, 315, 290, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
+	display = SDL_CreateRGBSurface(SDL_HWSURFACE, 250, 230 , SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
 
-	displayRect.x = 30;
-	displayRect.y = 150;
+	if (level>0) {
+		lcd = SDL_CreateRGBSurface(SDL_HWSURFACE, 240, 160, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
+	} else{
+		lcd= NULL;
+	}
+
+	displayRect.x = 16;
+	displayRect.y = 106;
 	displayRect.w = display->w;
 	displayRect.h = display->h;
+	if(lcd != NULL){
+		lcdRect.x = 340;
+		lcdRect.y = 120;
+		lcdRect.w = lcd->w;
+		lcdRect.h = lcd->h;
+	}
 
-	imageRect.x = 100;
+
+	imageRect.x = 16;
 	imageRect.y = 40;
 	imageRect.w = image->w;
 	imageRect.h = image->h;
@@ -75,6 +91,9 @@ PDA::~PDA() {
 	SDL_FreeSurface(image);
 	SDL_FreeSurface(display);
 	SDL_FreeSurface(curser);
+	if(lcd != NULL){
+		SDL_FreeSurface(lcd);
+	}
 	for (unsigned i = 0; i < itemlist.size(); i++) {
 		SDL_FreeSurface(itemlist[i].amound);
 		SDL_FreeSurface(itemlist[i].itemname);
@@ -131,11 +150,14 @@ void PDA::render() {
 		labelRect.w = itemlist[i].itemname->w;
 		labelRect.h = itemlist[i].itemname->h;
 		SDL_BlitSurface(itemlist[i].itemname, NULL, display, &labelRect);
-		labelRect.x = 280;
+		labelRect.x = displayRect.w-itemlist[i].amound->w;
 		SDL_BlitSurface(itemlist[i].amound, NULL, display, &labelRect);
 	}
 
 	SDL_BlitSurface(display, NULL, image, &displayRect);
+	if(lcd!= NULL){
+		SDL_BlitSurface(lcd, NULL, image, &lcdRect);
+	}
 	SDL_BlitSurface(image, NULL, SDL_GetVideoSurface(), &imageRect);
 	SDL_Flip(SDL_GetVideoSurface());
 }

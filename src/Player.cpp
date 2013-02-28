@@ -16,8 +16,8 @@
 
 using namespace std;
 
-Player::Player(int x, int y) :
-		Entity() {
+Player::Player(int x, int y,int level) :
+		Entity(),pda(level) {
 
 	width = 1;
 	height = 2;

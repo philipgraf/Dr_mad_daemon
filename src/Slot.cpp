@@ -23,6 +23,7 @@ void Slot::loadSlots() {
 		slot.name = it->first.Scalar();
 		slot.finishedLevels = it->second["finished levels"].as<int>();
 		slot.playerItems = it->second["items"].as<map<string, int> >();
+		slot.pdaLevel = it->second["pda level"].as<int>();
 		Slot::slots.push_back(new Slot(slot));
 	}
 	if (Game::curGame->settings.activeSlot < 0 || Game::curGame->settings.activeSlot >= (int) Slot::slots.size()) {
@@ -48,7 +49,10 @@ void Slot::saveSlots() {
 		out << YAML::Value << slots[i]->finishedLevels;
 		out << YAML::Key << "items";
 		out << YAML::Value << slots[i]->playerItems;
+		out << YAML::Key << "pda level";
+		out << YAML::Value << slots[i]->pdaLevel;
 		out << YAML::EndMap;
+
 	}
 	out << YAML::EndMap;
 
@@ -64,6 +68,7 @@ void Slot::saveSlots() {
 Slot::Slot(string name) {
 	this->name = name;
 	finishedLevels = 0;
+	pdaLevel=0;
 	//Slot::slotnames.push_back(this->name);
 }
 
@@ -84,6 +89,14 @@ void Slot::setFinishedLevels(int finishedLevels) {
 
 const string& Slot::getName() const {
 	return name;
+}
+
+int Slot::getPdaLevel() const {
+	return pdaLevel;
+}
+
+void Slot::setPdaLevel(int pdaLevel) {
+	this->pdaLevel = pdaLevel;
 }
 
 map<string, int> Slot::getPlayerItems() {

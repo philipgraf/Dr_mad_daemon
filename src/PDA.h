@@ -9,6 +9,7 @@
 #define PDA_H_
 
 #define PDA_CLOCK 0
+#define PDA_GLOVE 1
 
 #include "Event.h"
 #include "Language.h"
@@ -26,11 +27,13 @@ class PDA: public Event {
 private:
 	SDL_Surface *image;
 	SDL_Surface *display;
+	SDL_Surface *lcd;
 	SDL_Surface *curser;
 	SDL_Surface *timer;
 	SDL_Color green;
 
 	SDL_Rect displayRect;
+    SDL_Rect lcdRect;
 	SDL_Rect imageRect;
 	SDL_Rect curserRect;
 	SDL_Rect timerRect;

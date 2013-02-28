@@ -26,3 +26,9 @@ environments:
     wooden crate:
         x: 20
         y: 10
+    metal crate 1:
+        x: 14
+        y: 14
+    metal crate 2:
+        x: 14
+        y: 14

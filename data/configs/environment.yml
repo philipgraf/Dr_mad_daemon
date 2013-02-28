@@ -1,0 +1,8 @@
+wooden crate:
+  width: 1.0
+  height: 1.0
+  image: wooden_crate.bmp
+  action frames: [1]
+  animation duration: [9999]
+  items:
+    screw: 1

@@ -5,6 +5,7 @@
 #include "Notification.h"
 #include "PDA.h"
 #include "Item.h"
+#include "Environment.h"
 
 #include <sstream>
 #include <fstream>
@@ -95,9 +96,14 @@ Level::Level(unsigned levelnum) {
 	for (YAML::iterator it = items.begin(); it != items.end(); ++it) {
 		new Item(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
 	}
+	YAML::Node environments = levelconfig["environments"];
+	for(YAML::iterator it = environments.begin(); it != environments.end(); ++it){
+		new Environment(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
+	}
 
 	mainCam = new Camera(player);
 	timer = SDL_GetTicks();
+
 }
 
 Level::~Level() {

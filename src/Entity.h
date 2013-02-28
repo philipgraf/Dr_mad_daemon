@@ -82,7 +82,7 @@ public:
 	bool isAlive() const;
 	void setAlive(bool alive);
 	float getX() const;
-	float getY() const;
+	virtual float getY() const;
 	SDL_Surface* getImage();
 	int getCurrentframe() const;
 	void setCurrentframe(int currentframe);

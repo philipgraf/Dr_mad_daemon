@@ -22,3 +22,7 @@ items:
     resistor:
         x: 25
         y: 10
+environments:
+    wooden crate:
+        x: 20
+        y: 10

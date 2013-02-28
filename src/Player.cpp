@@ -259,3 +259,6 @@ void Player::addItem(string item) {
 	new Notification(s.str(), 5, NOTIFICATION_INFO, item);
 }
 
+float Player::getY() const {
+	return body->GetPosition().y + height/8;
+}

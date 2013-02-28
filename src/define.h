@@ -17,7 +17,10 @@
 #define SOUNDS DATA "sounds/"
 #define CONFIGS DATA "configs/"
 
-#define BGIMG IMG "Badguy/"
+#define BADGUY IMG "badguy/"
 #define PDAIMG IMG "PDA/"
+#define ENV IMG "environment/"
+#define ITEMS IMG "items/"
+#define NOTIFI IMG "notification/"
 
 #endif /* DEFINE_H_ */

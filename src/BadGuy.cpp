@@ -16,7 +16,6 @@
 #include "Game.h"
 #include "BadGuy.h"
 #include "define.h"
-#include "Item.h"
 
 using namespace std;
 
@@ -37,7 +36,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
 	float radius = 0.1;
-	SDL_Surface *tmp = SDL_LoadBMP((IMG+badguy["image"].Scalar()).c_str());
+	SDL_Surface *tmp = SDL_LoadBMP((BADGUY+badguy["image"].Scalar()).c_str());
 
 	if (!tmp) {
 		//TODO Throw Exception
@@ -58,7 +57,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	body->SetUserData(this);
 
 	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(halfWidth, halfHeight - radius);
+	dynamicBox.SetAsBox(halfWidth, halfHeight - radius/2);
 	b2FixtureDef *fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
 	fixtureDef->density = 35.0;
@@ -67,7 +66,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 
 	b2CircleShape leftWheelShape;
 	leftWheelShape.m_radius = radius;
-	leftWheelShape.m_p = b2Vec2(-halfWidth + radius, halfHeight - radius);
+	leftWheelShape.m_p = b2Vec2(-halfWidth + radius, halfHeight - radius/2);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &leftWheelShape;
@@ -78,7 +77,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 
 	b2CircleShape rightWheelShape;
 	rightWheelShape.m_radius = radius;
-	rightWheelShape.m_p = b2Vec2(+halfWidth - radius, halfHeight - radius);
+	rightWheelShape.m_p = b2Vec2(+halfWidth - radius, halfHeight - radius/2);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &rightWheelShape;
@@ -104,7 +103,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	this->sensorLeft = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorTop;
-	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight + radius), 0);
+	sensorTop.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, -halfHeight + radius/2), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorTop;
@@ -112,7 +111,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	this->sensorTop = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorBottom;
-	sensorBottom.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, halfHeight), 0);
+	sensorBottom.SetAsBox(halfWidth - 0.1, 0.01, b2Vec2(0, halfHeight + radius/2), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorBottom;
@@ -125,12 +124,6 @@ BadGuy::BadGuy(string type, int x, int y) :
 }
 
 BadGuy::~BadGuy() {
-	srand(time(NULL));
-	for (map<std::string, int>::iterator it = items.begin(); it != items.end(); ++it) {
-		for (int i = 0; i < it->second; i++) {
-			new Item(it->first, body->GetPosition().x, body->GetPosition().y, (rand() % 20) - 10, -(rand() % 10));
-		}
-	}
 }
 
 void BadGuy::move() {
@@ -154,7 +147,7 @@ void BadGuy::logic() {
 		currentframe = 0;
 		action = ACTION_DEAD;
 		for (int i=0 ; i< wheels.size();i++){
-			wheels[i]->SetFriction(20);
+			wheels[i]->SetFriction(10);
 		}
 	} else {
 		if (collision & RIGHT) {
@@ -165,4 +158,8 @@ void BadGuy::logic() {
 
 		Entity::logic();
 	}
+}
+
+float BadGuy::getY() const {
+	return body->GetPosition().y + 0.05;
 }

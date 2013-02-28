@@ -39,6 +39,7 @@ public:
 		this->running = running;
 	}
 	void addItem(std::string item);
+	float getY() const;
 
 };
 

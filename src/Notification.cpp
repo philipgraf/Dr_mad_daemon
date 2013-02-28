@@ -18,7 +18,7 @@ vector<Notification*> Notification::notificationList;
 
 Notification::Notification(string message, int displaySecs, int type, string iconName) {
 	SDL_Surface *temp;
-	if ((temp = IMG_Load(IMG"notification.png")) == NULL) {
+	if ((temp = IMG_Load(NOTIFI"notification.png")) == NULL) {
 		//TODO Throw exception
 		std::cout << "unable to load notification.png" << std::endl;
 	}
@@ -39,16 +39,16 @@ Notification::Notification(string message, int displaySecs, int type, string ico
 	}
 	if (iconName == "") {
 		if (type == NOTIFICATION_INFO) {
-			iconName = IMG"info.bmp";
+			iconName = NOTIFI"info.bmp";
 		} else if (type == NOTIFICATION_WARNING) {
-			iconName = IMG"warning.bmp";
+			iconName = NOTIFI"warning.bmp";
 		}
 	}
 	SDL_Surface *icon;
 
-	if ((temp = SDL_LoadBMP((IMG+iconName+".bmp").c_str())) == NULL) {
+	if ((temp = SDL_LoadBMP((ITEMS+iconName+".bmp").c_str())) == NULL) {
 		//TODO Throw exception
-		std::cout << "unable to load: " << IMG+iconName+".bmp" << std::endl;
+		std::cout << "unable to load: " << iconName+".bmp" << std::endl;
 	} else {
 		icon = SDL_DisplayFormat(temp);
 		SDL_FreeSurface(temp);

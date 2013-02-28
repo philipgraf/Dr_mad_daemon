@@ -16,7 +16,7 @@ vector<Item*> Item::itemlist;
 Item::Item(std::string name, int x, int y, int relX, int relY) {
 	this->type = name;
 
-	SDL_Surface *tmp = SDL_LoadBMP((IMG+name+".bmp").c_str());
+	SDL_Surface *tmp = SDL_LoadBMP((ITEMS+name+".bmp").c_str());
 	if (tmp != NULL) {
 		image = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);

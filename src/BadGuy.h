@@ -21,6 +21,8 @@ public:
 
 	void move();
 	void logic();
+
+	float getY() const;
 };
 
 #endif /* BADGUY_H_ */

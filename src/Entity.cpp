@@ -8,6 +8,7 @@
 #include "Entity.h"
 
 #include "define.h"
+#include "Item.h"
 #include "Game.h"
 
 vector<Entity*> Entity::entityList;
@@ -96,6 +97,12 @@ void Entity::move() {
 }
 
 Entity::~Entity() {
+	srand(time(NULL));
+	for (map<std::string, int>::iterator it = items.begin(); it != items.end(); ++it) {
+		for (int i = 0; i < it->second; i++) {
+			new Item(it->first, body->GetPosition().x, body->GetPosition().y, (rand() % 20) - 10, -(rand() % 10));
+		}
+	}
 	SDL_FreeSurface(image);
 	std::vector<Entity*>::iterator pos;
 	if ((pos = std::find(entityList.begin(), entityList.end(), this)) != entityList.end()) {
@@ -131,7 +138,7 @@ float Entity::getX() const {
 }
 
 float Entity::getY() const {
-	return body->GetPosition().y + height / 8;
+	return body->GetPosition().y ;
 }
 
 SDL_Surface* Entity::getImage() {

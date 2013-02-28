@@ -36,6 +36,7 @@ typedef struct {
 typedef struct {
 	string language;
 	int audioRate;
+	Uint8 volume;
 	int activeSlot;
 	controll_t controller;
 } settings_t;

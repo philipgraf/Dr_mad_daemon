@@ -5,11 +5,12 @@
  *      Author: philip
  */
 
-#include "Menu.h"
 
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
+#include <sstream>
 
+#include "Menu.h"
 #include "define.h"
 #include "Game.h"
 #include "Level.h"
@@ -54,6 +55,8 @@ Menu::~Menu() {
 }
 
 void Menu::build() {
+	std::stringstream vol;
+	vol << Game::curGame->settings.volume/128.0*100 << "%";
 
 	SDL_Surface *screen = SDL_GetVideoSurface();
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
@@ -94,10 +97,11 @@ void Menu::build() {
 		labelactions.push_back(&Menu::exit);
 		break;
 	case OPTIONMENU:
-		labeltexts.push_back(lang["sound"]);
+
+		labeltexts.push_back(lang["sound"] + ": " + vol.str());
 		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::sound);
-		labeltexts.push_back(lang["language"] + ":" + Game::curGame->settings.language);
+		labeltexts.push_back(lang["language"] + ": " + Game::curGame->settings.language);
 		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::changeLanguage);
 		labeltexts.push_back(lang["controller"]);
@@ -152,7 +156,6 @@ void Menu::build() {
 
 	SDL_SetAlpha(backgroudFilter, SDL_SRCALPHA, 128);
 
-	SDL_SetAlpha(backgroudFilter, SDL_SRCALPHA, 128);
 	SDL_Rect dstRect = { TILESIZE * 3, TILESIZE, backgroudFilter->clip_rect.w, backgroudFilter->clip_rect.h };
 	SDL_Rect srcRect;
 	srcRect.x = 0;
@@ -294,7 +297,13 @@ void Menu::continueGame() {
 }
 
 void Menu::sound() {
-	cout << "Audio an/aus!" << endl;
+	Game::curGame->settings.volume=(Game::curGame->settings.volume+32)%(MIX_MAX_VOLUME+32);
+	Mix_VolumeMusic(Game::curGame->settings.volume/2);
+	Mix_Volume(-1,Game::curGame->settings.volume);
+	// TODO make current volume visible in Pausemenu
+	if (menuType != PAUSEMENU) {
+		build();
+	}
 }
 
 void Menu::options() {

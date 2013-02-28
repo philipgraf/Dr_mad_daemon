@@ -124,6 +124,9 @@ void Game::init() {
 
 	Mix_OpenAudio(settings.audioRate, AUDIO_S16, 2, 1024);
 
+	Mix_VolumeMusic(settings.volume/2);
+	Mix_Volume(-1,settings.volume);
+
 	/**
 	 * load all the sound files
 	 */
@@ -154,7 +157,11 @@ void Game::loadSettings() {
 	} else {
 		this->settings.audioRate = settings["audio rate"].as<int>();
 	}
-
+	if (settings["volume"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.volume = 64;
+		} else {
+			this->settings.volume = settings["volume"].as<int>();
+		}
 	if (settings["active slot"].Scalar() == YAML::detail::node_data::empty_scalar) {
 		this->settings.activeSlot = -1;
 	} else {
@@ -232,6 +239,8 @@ void Game::saveSettings() {
 	out << YAML::Value << settings.audioRate;
 	out << YAML::Key << "active slot";
 	out << YAML::Value << settings.activeSlot;
+	out << YAML::Key << "volume";
+	out << YAML::Value << (unsigned)settings.volume;
 	out << YAML::Key << "keyboard settings";
 	out << YAML::BeginMap;
 	out << YAML::Key << "left";

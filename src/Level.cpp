@@ -120,6 +120,8 @@ Level::~Level() {
 
 	Entity::entityList.clear();
 	SDL_FreeSurface(Tile::tileset);
+	Mix_HaltMusic();
+	Mix_FreeMusic(bgMusic);
 	Game::curGame->setCurrentLevel(NULL);
 
 }
@@ -232,8 +234,7 @@ void Level::play() {
 	Uint32 start;
 #endif
 	Mix_PlayMusic(bgMusic, -1);
-	//TODO implement to settings
-	Mix_VolumeMusic(64);
+
 #if DEBUG >= 1
 	int fps=0;
 	int fpstime=0;
@@ -269,8 +270,6 @@ void Level::play() {
 #endif
 
 	}
-	Mix_HaltMusic();
-	Mix_FreeMusic(bgMusic);
 }
 
 void Level::updateTime() {

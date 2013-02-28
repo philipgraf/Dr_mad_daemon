@@ -90,7 +90,7 @@ Player::Player(int x, int y) :
 	wheels.push_back(body->CreateFixture(fixtureDef));
 
 	b2PolygonShape sensorRight;
-	sensorRight.SetAsBox(0.01, halfHeight - radius / 2 - 0.1, b2Vec2(halfWidth, 0), 0);
+	sensorRight.SetAsBox(0.01, halfHeight - radius / 2, b2Vec2(halfWidth, 0.2), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorRight;
@@ -99,7 +99,7 @@ Player::Player(int x, int y) :
 	this->sensorRight = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorLeft;
-	sensorLeft.SetAsBox(0.01, halfHeight - radius / 2 - 0.1, b2Vec2(-halfWidth, 0), 0);
+	sensorLeft.SetAsBox(0.01, halfHeight - radius / 2 , b2Vec2(-halfWidth, 0.2), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorLeft;
@@ -166,6 +166,26 @@ void Player::logic() {
 	//int collision = checkCollision();
 
 	checkCollision();
+
+	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
+		if ((contactEdge->contact->GetFixtureA() == sensorRight || contactEdge->contact->GetFixtureA() == sensorLeft || contactEdge->contact->GetFixtureA() == sensorTop) && contactEdge->contact->IsTouching()) {
+			if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
+				if (((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData())->isAlive()) {
+					alive = false;
+				}
+			}
+		} else if ((contactEdge->contact->GetFixtureB() == sensorRight || contactEdge->contact->GetFixtureB() == sensorLeft || contactEdge->contact->GetFixtureB() == sensorTop) && contactEdge->contact->IsTouching()) {
+			if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData() != NULL) {
+				if (((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData())->isAlive()) {
+					alive = false;
+				}
+			}
+		}
+	}
+
+	if(body->GetPosition().y -height/2 > Game::curGame->getCurrentLevel()->getHeight()){
+		alive=false;
+	}
 
 	if (grounded && impactSoundPlayed > 20) {
 		Mix_PlayChannel(-1, Game::sounds["player jump impact"], 0);

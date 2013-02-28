@@ -75,6 +75,8 @@ quit game:
     fr: Quitter le Jeu
     ru: покинуть игру
     ls: Qu17 64m3
+game over:
+    en: Game Over
 language:
     en: Language
     de: Sprache

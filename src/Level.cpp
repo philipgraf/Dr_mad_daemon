@@ -171,9 +171,6 @@ void Level::loadMapFile(string filename) {
 }
 
 void Level::render() {
-
-	cout << (int) switches << endl;
-
 	mainCam->drawImage();
 #if DEBUG >= 3
 	world->DrawDebugData();
@@ -184,6 +181,11 @@ void Level::render() {
 void Level::logic() {
 
 	updateTime();
+
+	if(!player->isAlive()){
+		Menu *gameOverMenu = new Menu(GAMEOVER);
+		gameOverMenu->show();
+	}
 
 	if (levelFinished) {
 //		Levelresult levelresult;
@@ -290,8 +292,7 @@ void Level::updateTime() {
 void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 
 	if (sym == SDLK_ESCAPE) {
-		Menu *pauseMenu;
-		pauseMenu = new Menu(PAUSEMENU);
+		Menu *pauseMenu = new Menu(PAUSEMENU);
 		if (pauseMenu->show() == -1) {
 			//TODO only temporary! need to free all allocated memory and so on
 			exit(0);

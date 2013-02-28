@@ -36,7 +36,7 @@ Menu::Menu(int menuType) {
 
 	build();
 
-	if (menuType != PAUSEMENU) {
+	if (menuType != PAUSEMENU && menuType != GAMEOVER ) {
 		SDL_Surface *tmp = SDL_LoadBMP(IMG"menubg.bmp");
 		background = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
@@ -147,6 +147,11 @@ void Menu::build() {
 		labeltexts.push_back(lang["back"]);
 		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::back);
+		break;
+	case GAMEOVER:
+		labeltexts.push_back(lang["game over"]);
+		labelfonts.push_back(FONT_MENU_HEADER);
+		labelactions.push_back(&Menu::quitLevel);
 		break;
 	}
 

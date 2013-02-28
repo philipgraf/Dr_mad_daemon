@@ -16,6 +16,7 @@
 #define PAUSEMENU 3
 #define CREDITS 4
 #define LEVELMENU 5
+#define GAMEOVER 6
 
 #include <vector>
 #include <string>

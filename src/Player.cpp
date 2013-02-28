@@ -87,7 +87,7 @@ Player::Player(int x, int y) :
 	fixtureDef->friction = 0.2;
 	fixtureDef->filter.categoryBits = 2;
 
-	feetFixture = body->CreateFixture(fixtureDef);
+	wheels.push_back(body->CreateFixture(fixtureDef));
 
 	b2PolygonShape sensorRight;
 	sensorRight.SetAsBox(0.01, halfHeight - radius / 2 - 0.1, b2Vec2(halfWidth, 0), 0);
@@ -187,7 +187,7 @@ void Player::move() {
 	}
 
 	if (direction & LEFT) {
-		feetFixture->SetFriction(0.2);
+		wheels[0]->SetFriction(0.2);
 		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x > -maxVelocity) {
 				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0), body->GetWorldCenter());
@@ -202,7 +202,7 @@ void Player::move() {
 
 	}
 	if (direction & RIGHT) {
-		feetFixture->SetFriction(0.2);
+		wheels[0]->SetFriction(0.2);
 		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x < maxVelocity) {
 				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0), body->GetWorldCenter());
@@ -225,7 +225,7 @@ void Player::move() {
 	}
 
 	if (!(direction & (LEFT | RIGHT | UP))) {
-		feetFixture->SetFriction(200.0);
+		wheels[0]->SetFriction(10.0);
 		action = ACTION_STAY;
 	}
 

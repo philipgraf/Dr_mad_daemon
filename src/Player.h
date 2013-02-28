@@ -23,7 +23,6 @@ public:
 	Player(int x, int y);
 	virtual ~Player();
 
-	b2Fixture *feetFixture;
 	PDA pda;
 
 	Language lang;

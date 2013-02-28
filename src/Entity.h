@@ -62,6 +62,7 @@ protected:
 
 	b2Body *body;
 
+	std::vector<b2Fixture*> wheels;
 	void nextframe();
 
 public:

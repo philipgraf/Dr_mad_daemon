@@ -28,7 +28,7 @@ Game::~Game() {
 	SDL_FreeSurface(display);
 	SDL_Quit();
 
-	for(map<string,Mix_Chunk*>::iterator it = sounds.begin(); it != sounds.end();++it){
+	for (map<string, Mix_Chunk*>::iterator it = sounds.begin(); it != sounds.end(); ++it) {
 		Mix_FreeChunk((*it).second);
 	}
 
@@ -124,8 +124,8 @@ void Game::init() {
 
 	Mix_OpenAudio(settings.audioRate, AUDIO_S16, 2, 1024);
 
-	Mix_VolumeMusic(settings.volume/2);
-	Mix_Volume(-1,settings.volume);
+	Mix_VolumeMusic(settings.volume / 2);
+	Mix_Volume(-1, settings.volume);
 
 	/**
 	 * load all the sound files
@@ -158,66 +158,136 @@ void Game::loadSettings() {
 		this->settings.audioRate = settings["audio rate"].as<int>();
 	}
 	if (settings["volume"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.volume = 64;
-		} else {
-			this->settings.volume = settings["volume"].as<int>();
-		}
+		this->settings.volume = 64;
+	} else {
+		this->settings.volume = settings["volume"].as<int>();
+	}
 	if (settings["active slot"].Scalar() == YAML::detail::node_data::empty_scalar) {
 		this->settings.activeSlot = -1;
 	} else {
 		this->settings.activeSlot = settings["active slot"].as<int>();
 	}
 
-	if (settings["keyboard settings"].Scalar() == YAML::detail::node_data::empty_scalar) {
-		this->settings.controller.left = SDLK_a;
-		this->settings.controller.right = SDLK_d;
-		this->settings.controller.up = SDLK_w;
-		this->settings.controller.down = SDLK_s;
-		this->settings.controller.run = SDLK_LSHIFT;
-		this->settings.controller.jump = SDLK_SPACE;
-		this->settings.controller.use = SDLK_e;
+	if (settings["control"].Scalar() == YAML::detail::node_data::empty_scalar) {
+		this->settings.keyboard.left = SDLK_a;
+		this->settings.keyboard.right = SDLK_d;
+		this->settings.keyboard.up = SDLK_w;
+		this->settings.keyboard.down = SDLK_s;
+		this->settings.keyboard.run = SDLK_LSHIFT;
+		this->settings.keyboard.jump = SDLK_SPACE;
+		this->settings.keyboard.use = SDLK_e;
+		this->settings.wiimote.left = WII_BTN_UP;
+		this->settings.wiimote.right = WII_BTN_DOWN;
+		this->settings.wiimote.up = WII_BTN_RIGHT;
+		this->settings.wiimote.down = WII_BTN_LEFT;
+		this->settings.wiimote.run = WII_BTN_1;
+		this->settings.wiimote.jump = WII_BTN_2;
+		this->settings.wiimote.use = WII_BTN_A;
 	} else {
-		if (settings["keyboard settings"]["left"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.controller.left = SDLK_a;
+		if (settings["control"]["keyboard"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.keyboard.left = SDLK_a;
+			this->settings.keyboard.right = SDLK_d;
+			this->settings.keyboard.up = SDLK_w;
+			this->settings.keyboard.down = SDLK_s;
+			this->settings.keyboard.run = SDLK_LSHIFT;
+			this->settings.keyboard.jump = SDLK_SPACE;
+			this->settings.keyboard.use = SDLK_e;
 		} else {
-			this->settings.controller.left = settings["keyboard settings"]["left"].as<int>();
+			if (settings["control"]["keyboard"]["left"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.left = SDLK_a;
+			} else {
+				this->settings.keyboard.left = settings["control"]["keyboard"]["left"].as<int>();
+			}
+
+			if (settings["control"]["keyboard"]["right"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.right = SDLK_d;
+			} else {
+				this->settings.keyboard.right = settings["control"]["keyboard"]["right"].as<int>();
+			}
+
+			if (settings["control"]["keyboard"]["up"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.up = SDLK_w;
+			} else {
+				this->settings.keyboard.up = settings["control"]["keyboard"]["up"].as<int>();
+			}
+
+			if (settings["control"]["keyboard"]["down"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.down = SDLK_s;
+			} else {
+				this->settings.keyboard.down = settings["control"]["keyboard"]["down"].as<int>();
+			}
+
+			if (settings["control"]["keyboard"]["run"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.run = SDLK_LSHIFT;
+			} else {
+				this->settings.keyboard.run = settings["control"]["keyboard"]["run"].as<int>();
+			}
+
+			if (settings["control"]["keyboard"]["jump"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.jump = SDLK_SPACE;
+			} else {
+				this->settings.keyboard.jump = settings["control"]["keyboard"]["jump"].as<int>();
+			}
+
+			if (settings["control"]["keyboard"]["use"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.use = SDLK_e;
+			} else {
+				this->settings.keyboard.use = settings["control"]["keyboard"]["use"].as<int>();
+			}
 		}
 
-		if (settings["keyboard settings"]["right"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.controller.right = SDLK_d;
+		if (settings["control"]["wiimote"].Scalar() == YAML::detail::node_data::empty_scalar) {
+			this->settings.wiimote.left = WII_BTN_UP;
+			this->settings.wiimote.right = WII_BTN_DOWN;
+			this->settings.wiimote.up = WII_BTN_RIGHT;
+			this->settings.wiimote.down = WII_BTN_LEFT;
+			this->settings.wiimote.run = WII_BTN_1;
+			this->settings.wiimote.jump = WII_BTN_2;
+			this->settings.wiimote.use = WII_BTN_A;
 		} else {
-			this->settings.controller.right = settings["keyboard settings"]["right"].as<int>();
+			if (settings["control"]["wiimote"]["left"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.left = WII_BTN_UP;
+			} else {
+				this->settings.keyboard.left = settings["control"]["wiimote"]["left"].as<int>();
+			}
+
+			if (settings["control"]["wiimote"]["right"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.right = WII_BTN_DOWN;
+			} else {
+				this->settings.keyboard.right = settings["control"]["wiimote"]["right"].as<int>();
+			}
+
+			if (settings["control"]["wiimote"]["up"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.up = WII_BTN_RIGHT;
+			} else {
+				this->settings.keyboard.up = settings["control"]["wiimote"]["up"].as<int>();
+			}
+
+			if (settings["control"]["wiimote"]["down"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.down = WII_BTN_LEFT;
+			} else {
+				this->settings.keyboard.down = settings["control"]["wiimote"]["down"].as<int>();
+			}
+
+			if (settings["control"]["wiimote"]["run"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.run = WII_BTN_1;
+			} else {
+				this->settings.keyboard.run = settings["control"]["wiimote"]["run"].as<int>();
+			}
+
+			if (settings["control"]["wiimote"]["jump"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.jump = WII_BTN_2;
+			} else {
+				this->settings.keyboard.jump = settings["control"]["wiimote"]["jump"].as<int>();
+			}
+
+			if (settings["control"]["wiimote"]["use"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.use = WII_BTN_A;
+			} else {
+				this->settings.keyboard.use = settings["control"]["wiimote"]["use"].as<int>();
+			}
 		}
 
-		if (settings["keyboard settings"]["up"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.controller.up = SDLK_w;
-		} else {
-			this->settings.controller.up = settings["keyboard settings"]["up"].as<int>();
-		}
-
-		if (settings["keyboard settings"]["down"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.controller.down = SDLK_s;
-		} else {
-			this->settings.controller.down = settings["keyboard settings"]["down"].as<int>();
-		}
-
-		if (settings["keyboard settings"]["run"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.controller.run = SDLK_LSHIFT;
-		} else {
-			this->settings.controller.run = settings["keyboard settings"]["run"].as<int>();
-		}
-
-		if (settings["keyboard settings"]["jump"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.controller.jump = SDLK_SPACE;
-		} else {
-			this->settings.controller.jump = settings["keyboard settings"]["jump"].as<int>();
-		}
-
-		if (settings["keyboard settings"]["use"].Scalar() == YAML::detail::node_data::empty_scalar) {
-			this->settings.controller.use = SDLK_e;
-		} else {
-			this->settings.controller.use = settings["keyboard settings"]["use"].as<int>();
-		}
 	}
 
 }
@@ -240,24 +310,45 @@ void Game::saveSettings() {
 	out << YAML::Key << "active slot";
 	out << YAML::Value << settings.activeSlot;
 	out << YAML::Key << "volume";
-	out << YAML::Value << (unsigned)settings.volume;
-	out << YAML::Key << "keyboard settings";
-	out << YAML::BeginMap;
+	out << YAML::Value << (unsigned) settings.volume;
+	out << YAML::Key << "control";
+	out << YAML::Value << YAML::BeginMap;
+	out << YAML::Key << "keyboard";
+	out << YAML::Value << YAML::BeginMap;
 	out << YAML::Key << "left";
-	out << YAML::Value << settings.controller.left;
+	out << YAML::Value << settings.keyboard.left;
 	out << YAML::Key << "right";
-	out << YAML::Value << settings.controller.right;
+	out << YAML::Value << settings.keyboard.right;
 	out << YAML::Key << "up";
-	out << YAML::Value << settings.controller.up;
+	out << YAML::Value << settings.keyboard.up;
 	out << YAML::Key << "down";
-	out << YAML::Value << settings.controller.down;
+	out << YAML::Value << settings.keyboard.down;
 	out << YAML::Key << "run";
-	out << YAML::Value << settings.controller.run;
+	out << YAML::Value << settings.keyboard.run;
 	out << YAML::Key << "jump";
-	out << YAML::Value << settings.controller.jump;
+	out << YAML::Value << settings.keyboard.jump;
 	out << YAML::Key << "use";
-	out << YAML::Value << settings.controller.use;
+	out << YAML::Value << settings.keyboard.use;
 	out << YAML::EndMap;
+	out << YAML::Key << "wiimote";
+	out << YAML::Value << YAML::BeginMap;
+	out << YAML::Key << "left";
+	out << YAML::Value << settings.wiimote.left;
+	out << YAML::Key << "right";
+	out << YAML::Value << settings.wiimote.right;
+	out << YAML::Key << "up";
+	out << YAML::Value << settings.wiimote.up;
+	out << YAML::Key << "down";
+	out << YAML::Value << settings.wiimote.down;
+	out << YAML::Key << "run";
+	out << YAML::Value << settings.wiimote.run;
+	out << YAML::Key << "jump";
+	out << YAML::Value << settings.wiimote.jump;
+	out << YAML::Key << "use";
+	out << YAML::Value << settings.wiimote.use;
+	out << YAML::EndMap;
+	out << YAML::EndMap;
+
 	out << YAML::EndMap;
 
 	fstream filestream;

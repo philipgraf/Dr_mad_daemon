@@ -38,7 +38,8 @@ typedef struct {
 	int audioRate;
 	Uint8 volume;
 	int activeSlot;
-	controll_t controller;
+	controll_t keyboard;
+	controll_t wiimote;
 } settings_t;
 
 class Game {

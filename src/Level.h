@@ -62,6 +62,7 @@ private:
 	void loadMapFile(string filename);
 	void onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
+	void onWiiButtonEvent(int button);
 	void updateTime();
 
 public:

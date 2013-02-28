@@ -192,3 +192,17 @@ void PDA::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	}
 }
 
+void PDA::onWiiButtonEvent(int button){
+	if(button & WII_BTN_LEFT){
+		currentItem = (currentItem >= itemlist.size() - 1) ? itemlist.size() - 1 : currentItem + 1;
+	}
+
+	if(button & WII_BTN_RIGHT){
+		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
+	}
+
+	if((button & WII_BTN_1) || (button & WII_BTN_PLUS)){
+		running = false;
+	}
+}
+

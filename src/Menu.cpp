@@ -104,9 +104,9 @@ void Menu::build() {
 		labeltexts.push_back(lang["language"] + ": " + Game::curGame->settings.language);
 		labelfonts.push_back(FONT_MENU_ITEM);
 		labelactions.push_back(&Menu::changeLanguage);
-		labeltexts.push_back(lang["controller"]);
+		labeltexts.push_back(lang["connect wiimote"]);
 		labelfonts.push_back(FONT_MENU_ITEM);
-		labelactions.push_back(&Menu::controllerSettings);
+		labelactions.push_back(&Menu::initWiimote);
 		labeltexts.push_back(lang["back"]);
 		labelfonts.push_back(FONT_MENU_HEADER);
 		labelactions.push_back(&Menu::back);
@@ -353,9 +353,6 @@ void Menu::onExit() {
 
 void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	switch (sym) {
-	case SDLK_TAB:
-		initWiimote();
-		break;
 	case SDLK_ESCAPE:
 		running = false;
 		break;
@@ -385,6 +382,10 @@ void Menu::onWiiButtonEvent(int buttons) {
 		break;
 	case WII_BTN_2:
 		(this->*labelactions[currentItem])();
+		break;
+	case WII_BTN_1:
+	case WII_BTN_HOME:
+		running=false;
 		break;
 	default:
 		break;

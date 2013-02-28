@@ -37,8 +37,8 @@ Feature Freeze: 11.3.13
 Features:
 	sound (0,25,50,75,100) <- game config and save -> done
 	levelswitches (8 per Level , position via tiles) -> done
-	mortal Player
-	implement Wiimote settings
+	mortal Player --> done
+	implement Wiimote settings --> done
 	Environment Entities
 	PDA upgrade
 	(mouse)?

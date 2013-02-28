@@ -47,6 +47,7 @@ private:
 	void build();
 
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
+	void onWiiButtonEvent(int button);
 
 public:
 	PDA(int level = 0);

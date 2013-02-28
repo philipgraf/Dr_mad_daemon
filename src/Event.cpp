@@ -191,27 +191,28 @@ void Event::initWiimote() {
 	SDL_SetColorKey(wiimoteImage, SDL_SRCCOLORKEY, SDL_MapRGB(wiimoteImage->format, 255, 0, 255));
 	SDL_BlitSurface(wiimoteImage, NULL, SDL_GetVideoSurface(), NULL);
 	SDL_Flip(SDL_GetVideoSurface());
-	wiimote = cwiid_connect(&blueaddr, CWIID_FLAG_MESG_IFC);
+	if ((wiimote = cwiid_connect(&blueaddr, CWIID_FLAG_MESG_IFC)) != NULL) {
+
+		/**
+		 * Set the callback function for the wiimote
+		 * @param wiimote wiimote struct to identifiere whicht wiimote
+		 * @param wiimote_callback pointer to the callbackfunction
+		 */
+		cwiid_set_mesg_callback(wiimote, wiimote_callback);
+
+		/**
+		 * Set the Reportmodes
+		 * Available Modes:
+		 * 	CWIID_RPT_STATUS     <- I think battery and extensions and so on
+		 * 	CWIID_RPT_BTN		 <- enable buttons
+		 * 	CWIID_RPT_ACC		 <- enable acceleration
+		 * 	CWIID_RPT_IR		 <- enable infrared
+		 * 	CWIID_RPT_NUNCHUK    <- enable nunchuk
+		 * 	CWIID_RPT_CLASSIC    <- enable nintendo classic controller
+		 */
+		cwiid_command(wiimote, CWIID_CMD_RPT_MODE, CWIID_RPT_BTN);
+	}
 	SDL_FreeSurface(wiimoteImage);
-
-	/**
-	 * Set the callback function for the wiimote
-	 * @param wiimote wiimote struct to identifiere whicht wiimote
-	 * @param wiimote_callback pointer to the callbackfunction
-	 */
-	cwiid_set_mesg_callback(wiimote, wiimote_callback);
-
-	/**
-	 * Set the Reportmodes
-	 * Available Modes:
-	 * 	CWIID_RPT_STATUS     <- I think battery and extensions and so on
-	 * 	CWIID_RPT_BTN		 <- enable buttons
-	 * 	CWIID_RPT_ACC		 <- enable acceleration
-	 * 	CWIID_RPT_IR		 <- enable infrared
-	 * 	CWIID_RPT_NUNCHUK    <- enable nunchuk
-	 * 	CWIID_RPT_CLASSIC    <- enable nintendo classic controller
-	 */
-	cwiid_command(wiimote, CWIID_CMD_RPT_MODE, CWIID_RPT_BTN);
 
 }
 

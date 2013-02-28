@@ -157,8 +157,8 @@ void Level::loadMapFile(string filename) {
 					groundBody->CreateFixture(&groundBox, 0.0f);
 				}
 
-				if((id>>16)&0xFF){
-					switches &= ~((id>>16)&0xFF);
+				if ((id >> 16) & 0xFF) {
+					switches &= ~((id >> 16) & 0xFF);
 				}
 			}
 		}
@@ -182,7 +182,7 @@ void Level::logic() {
 
 	updateTime();
 
-	if(!player->isAlive()){
+	if (!player->isAlive()) {
 		Menu *gameOverMenu = new Menu(GAMEOVER);
 		gameOverMenu->show();
 	}
@@ -298,47 +298,83 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 			exit(0);
 		}
 		delete pauseMenu;
-	} else if (sym == Game::curGame->settings.controller.left) {
+	} else if (sym == Game::curGame->settings.keyboard.left) {
 		player->setDirection(LEFT);
-	} else if (sym == Game::curGame->settings.controller.jump) {
+	} else if (sym == Game::curGame->settings.keyboard.jump) {
 		player->setDirection(UP);
-	} else if (sym == Game::curGame->settings.controller.down) {
+	} else if (sym == Game::curGame->settings.keyboard.down) {
 		player->setDirection(DOWN);
-	} else if (sym == Game::curGame->settings.controller.right) {
+	} else if (sym == Game::curGame->settings.keyboard.right) {
 		player->setDirection(RIGHT);
-	} else if (sym == Game::curGame->settings.controller.run) {
+	} else if (sym == Game::curGame->settings.keyboard.run) {
 		player->setRunning(true);
-	} else if (sym == Game::curGame->settings.controller.use) {
+	} else if (sym == Game::curGame->settings.keyboard.use) {
 		player->use();
-	} else if (sym == SDLK_n) {
-		new Notification("Test notification", 5, NOTIFICATION_INFO);
-	} else if (sym == SDLK_b) {
-		new Notification("Test ba", 10, NOTIFICATION_WARNING);
 	} else if (sym == SDLK_p) {
 		player->pda.show();
-	} else if (sym == SDLK_F6) {
-		player->getItems()["screw"]++;
-		new Notification("Screw fund", 3);
-	} else if (sym == SDLK_F7) {
-		player->getItems()["inductor"]++;
-		new Notification("inductor fund", 3);
-	} else if (sym == SDLK_F8) {
-		player->getItems()["capacitor"]++;
-		new Notification("capacitor fund", 3);
 	}
 }
 
 void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
-	if (sym == Game::curGame->settings.controller.left) {
+	if (sym == Game::curGame->settings.keyboard.left) {
 		player->delDirection(LEFT);
-	} else if (sym == Game::curGame->settings.controller.jump) {
+	} else if (sym == Game::curGame->settings.keyboard.jump) {
 		player->delDirection(UP);
-	} else if (sym == Game::curGame->settings.controller.down) {
+	} else if (sym == Game::curGame->settings.keyboard.down) {
 		player->delDirection(DOWN);
-	} else if (sym == Game::curGame->settings.controller.right) {
+	} else if (sym == Game::curGame->settings.keyboard.right) {
 		player->delDirection(RIGHT);
-	} else if (sym == Game::curGame->settings.controller.run) {
+	} else if (sym == Game::curGame->settings.keyboard.run) {
 		player->setRunning(false);
+	}
+}
+
+void Level::onWiiButtonEvent(int button) {
+	cout << button << endl;
+	if (button == WII_BTN_HOME) {
+		Menu *pauseMenu = new Menu(PAUSEMENU);
+		if (pauseMenu->show() == -1) {
+			//TODO only temporary! need to free all allocated memory and so on
+			exit(0);
+		}
+		delete pauseMenu;
+	}
+
+	if (button & Game::curGame->settings.wiimote.left) {
+		player->setDirection(LEFT);
+	}else{
+		player->delDirection(LEFT);
+	}
+
+	if (button & Game::curGame->settings.wiimote.jump) {
+		player->setDirection(UP);
+	}else{
+		player->delDirection(UP);
+	}
+
+	if (button & Game::curGame->settings.wiimote.down) {
+		player->setDirection(DOWN);
+	}else{
+		player->delDirection(DOWN);
+	}
+
+	if (button & Game::curGame->settings.wiimote.right) {
+		player->setDirection(RIGHT);
+	} else{
+		player->delDirection(RIGHT);
+	}
+	if (button & Game::curGame->settings.wiimote.run) {
+		player->setRunning(true);
+	} else{
+		player->setRunning(false);
+	}
+
+	if (button & Game::curGame->settings.wiimote.use) {
+		player->use();
+	}
+
+	if (button & WII_BTN_PLUS) {
+		player->pda.show();
 	}
 }
 

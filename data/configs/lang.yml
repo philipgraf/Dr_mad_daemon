@@ -109,3 +109,6 @@ resistor:
 battery:
     en: Battery
     de: Batterie
+connect wiimote:
+    en: Connect Wiimote
+    de: Wiimote verbinden

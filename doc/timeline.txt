@@ -35,12 +35,12 @@ Release Date: 15.3.13
 Feature Freeze: 11.3.13
 
 Features:
-	PDA upgrade
-	mortal Player
-	Environment Entities
-	(mouse)?
-	implement Wiimote settings
+	sound (0,25,50,75,100) <- game config and save -> done
 	levelswitches (8 per Level , position via tiles)
+	mortal Player
+	implement Wiimote settings
+	Environment Entities
+	PDA upgrade
+	(mouse)?
 	battery(3 levels and use of the glover costs 1 level)
 	(badguy2)
-	sound (0,25,50,75,100)

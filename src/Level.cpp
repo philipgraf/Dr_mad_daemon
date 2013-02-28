@@ -41,6 +41,8 @@ Level::Level(unsigned levelnum) {
 
 	Game::curGame->setCurrentLevel(this);
 
+	switches = 0xFF;
+
 	tilelist = NULL;
 	bgImage = NULL;
 	running = true;
@@ -152,8 +154,11 @@ void Level::loadMapFile(string filename) {
 					b2Body* groundBody = world->CreateBody(&groundBodyDef);
 					b2PolygonShape groundBox;
 					groundBox.SetAsBox(0.5, 0.5);
-
 					groundBody->CreateFixture(&groundBox, 0.0f);
+				}
+
+				if((id>>16)&0xFF){
+					switches &= ~((id>>16)&0xFF);
 				}
 			}
 		}
@@ -166,6 +171,8 @@ void Level::loadMapFile(string filename) {
 }
 
 void Level::render() {
+
+	cout << (int) switches << endl;
 
 	mainCam->drawImage();
 #if DEBUG >= 3
@@ -394,4 +401,8 @@ void Level::setRunning(bool running) {
 
 b2World* Level::getWorld() const {
 	return world;
+}
+
+void Level::toggleSwitch(Uint8 flags) {
+	switches ^= flags;
 }

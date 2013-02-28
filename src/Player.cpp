@@ -6,6 +6,7 @@
  */
 
 #include "Player.h"
+#include "Tile.h"
 #include "Game.h"
 #include "Slot.h"
 #include "BadGuy.h"
@@ -147,16 +148,16 @@ void Player::use() {
 		}
 	}
 
+	unsigned flags = Game::curGame->getCurrentLevel()->getTilelist()[0][(int) body->GetPosition().x][(int) body->GetPosition().y]->getFlags();
+
 	// check player position an get the flags of the tiles there
-	switch (Game::curGame->getCurrentLevel()->getTilelist()[1][(int) body->GetPosition().x][(int) body->GetPosition().y]->getFlags()) {
+	if (flags & 0xFF) {
+		Game::curGame->getCurrentLevel()->toggleSwitch(flags);
+	}
 
 	// if flag is finishpoint
-	case 2:
+	if (flags & TF_FINISH) {
 		Game::curGame->getCurrentLevel()->setFinished(true);
-		break;
-	default:
-		cout << "nothing" << endl;
-		break;
 	}
 }
 

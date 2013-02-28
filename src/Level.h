@@ -49,6 +49,7 @@ private:
 	int time;
 	b2Vec2 *gravity2d;
 	Camera* mainCam;
+	Uint8 switches;
 	bool running;
 	bool levelFinished;
 
@@ -89,6 +90,7 @@ public:
 	void setRunning(bool running);
 	bool isFinished() const;
 	void setFinished(bool finished);
+	void toggleSwitch(Uint8 flags);
 };
 
 #endif

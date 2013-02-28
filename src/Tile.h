@@ -6,8 +6,15 @@
 #include <iostream>
 #include "define.h"
 
-#define TF_START 0x10000
-#define TF_FINISH 0x20000
+#define TF_SWITCH1 0x1
+#define TF_SWITCH2 0x2
+#define TF_SWITCH3 0x4
+#define TF_SWITCH4 0x8
+#define TF_SWITCH5 0x10
+#define TF_SWITCH6 0x20
+#define TF_SWITCH7 0x40
+#define TF_SWITCH8 0x80
+#define TF_FINISH 0x100
 
 class Tile {
 public:

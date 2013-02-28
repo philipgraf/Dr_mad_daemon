@@ -74,7 +74,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	fixtureDef->density = 1.0f;
 	fixtureDef->friction = 0.2;
 
-	body->CreateFixture(fixtureDef);
+	wheels.push_back(body->CreateFixture(fixtureDef));
 
 	b2CircleShape rightWheelShape;
 	rightWheelShape.m_radius = radius;
@@ -85,7 +85,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	fixtureDef->density = 1.0f;
 	fixtureDef->friction = 0.2;
 
-	body->CreateFixture(fixtureDef);
+	wheels.push_back(body->CreateFixture(fixtureDef));
 
 	b2PolygonShape sensorRight;
 	sensorRight.SetAsBox(0.01, halfHeight - 0.1, b2Vec2(halfWidth, 0), 0);
@@ -153,6 +153,9 @@ void BadGuy::logic() {
 		alive = false;
 		currentframe = 0;
 		action = ACTION_DEAD;
+		for (int i=0 ; i< wheels.size();i++){
+			wheels[i]->SetFriction(20);
+		}
 	} else {
 		if (collision & RIGHT) {
 			direction = LEFT;

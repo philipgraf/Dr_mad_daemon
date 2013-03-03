@@ -16,9 +16,7 @@
 
 using namespace std;
 
-Player::Player(int x, int y,int level) :
-		Entity(),pda(level) {
-
+Player::Player(int x, int y,int level) : Entity(),pda(level) {
 	width = 1;
 	height = 2;
 
@@ -34,6 +32,8 @@ Player::Player(int x, int y,int level) :
 	float halfHeight = height / 2;
 
 	maxVelocity = 5;
+
+	selectedEntity = 0;
 
 	running = false;
 
@@ -161,43 +161,6 @@ void Player::use() {
 	}
 }
 
-void Player::logic() {
-//TODO check connected tiles for shock and other game events
-	//int collision = checkCollision();
-
-	checkCollision();
-
-	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
-		if ((contactEdge->contact->GetFixtureA() == sensorRight || contactEdge->contact->GetFixtureA() == sensorLeft || contactEdge->contact->GetFixtureA() == sensorTop) && contactEdge->contact->IsTouching()) {
-			if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
-				if (((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData())->isAlive()) {
-					alive = false;
-				}
-			}
-		} else if ((contactEdge->contact->GetFixtureB() == sensorRight || contactEdge->contact->GetFixtureB() == sensorLeft || contactEdge->contact->GetFixtureB() == sensorTop) && contactEdge->contact->IsTouching()) {
-			if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData() != NULL) {
-				if (((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData())->isAlive()) {
-					alive = false;
-				}
-			}
-		}
-	}
-
-	if(body->GetPosition().y -height/2 > Game::curGame->getCurrentLevel()->getHeight()){
-		alive=false;
-	}
-
-	if (grounded && impactSoundPlayed > 20) {
-		Mix_PlayChannel(-1, Game::sounds["player jump impact"], 0);
-	} else if (!grounded) {
-		impactSoundPlayed++;
-	}
-	if (grounded) {
-		impactSoundPlayed = 0;
-	}
-
-	Entity::logic();
-}
 
 void Player::move() {
 	if (running) {
@@ -250,7 +213,64 @@ void Player::move() {
 	}
 
 }
+void Player::grab() {
+	if (selectedEntity == 0){
+		for(unsigned i = 0; i < entityList.size(); i++){
+			// get all dead entitys within 3 m
+			//TODO get the range from PDA
+			if(!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()< 3.0){
+				cout << "entity " << i << ": " << (entityList[i]->getBody()->GetWorldCenter()-this->getBody()->GetWorldCenter()).Length() <<  endl;
+				selectedEntity = i;
+				break;
+			}
+		}
+	// check if selected entity is out of range
+	} else if((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()> 3.0) {
+		selectedEntity = 0;
+	} else {
+		cout << selectedEntity << endl;
+	}
 
+}
+void Player::logic() {
+//TODO check connected tiles for shock and other game events
+	grab();
+
+	//int collision = checkCollision();
+
+	checkCollision();
+
+	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
+		if ((contactEdge->contact->GetFixtureA() == sensorRight || contactEdge->contact->GetFixtureA() == sensorLeft || contactEdge->contact->GetFixtureA() == sensorTop) && contactEdge->contact->IsTouching()) {
+			if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
+				if (((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData())->isAlive()) {
+					alive = false;
+				}
+			}
+		} else if ((contactEdge->contact->GetFixtureB() == sensorRight || contactEdge->contact->GetFixtureB() == sensorLeft || contactEdge->contact->GetFixtureB() == sensorTop) && contactEdge->contact->IsTouching()) {
+			if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData() != NULL) {
+				if (((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData())->isAlive()) {
+					alive = false;
+				}
+			}
+		}
+	}
+
+	if(body->GetPosition().y -height/2 > Game::curGame->getCurrentLevel()->getHeight()){
+		alive=false;
+	}
+
+	if (grounded && impactSoundPlayed > 20) {
+		Mix_PlayChannel(-1, Game::sounds["player jump impact"], 0);
+	} else if (!grounded) {
+		impactSoundPlayed++;
+	}
+	if (grounded) {
+		impactSoundPlayed = 0;
+	}
+
+	Entity::logic();
+}
 void Player::addItem(string item) {
 	Entity::addItem(item);
 

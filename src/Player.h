@@ -18,6 +18,7 @@
 class Player: public Entity {
 private:
 	bool running;
+	unsigned selectedEntity;
 	int impactSoundPlayed;
 public:
 	Player(int x, int y, int level);
@@ -27,9 +28,10 @@ public:
 
 	Language lang;
 
-	void logic();
-	void move();
 	void use();
+	void move();
+	void grab();
+	void logic();
 
 	bool isRunning() const {
 		return running;

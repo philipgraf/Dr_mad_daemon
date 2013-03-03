@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="640"
@@ -14,9 +15,34 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="PDA_glove.svg">
+   sodipodi:docname="PDA_glove.svg"
+   inkscape:export-filename="/home/philip/programming/Dr_mad_daemon/data/img/inProgress/PDA_glovetest.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
-     id="defs4" />
+     id="defs4">
+    <linearGradient
+       id="linearGradient3786">
+      <stop
+         style="stop-color:#292526;stop-opacity:1;"
+         offset="0"
+         id="stop3788" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0.62869197;"
+         offset="1"
+         id="stop3790" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3786"
+       id="linearGradient3796"
+       x1="-104.78571"
+       y1="336.96945"
+       x2="912.07471"
+       y2="336.96945"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.88073477,0,0,1.0001122,5.5316039,-52.0378)" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ff00ff"
@@ -24,28 +50,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="382.17994"
-     inkscape:cy="-1.4075933"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="80.366911"
+     inkscape:cy="77.978157"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1476"
-     inkscape:window-height="905"
+     inkscape:window-width="1438"
+     inkscape:window-height="817"
      inkscape:window-x="0"
-     inkscape:window-y="57"
-     inkscape:window-maximized="0">
-    <sodipodi:guide
-       orientation="1,0"
-       position="127.27922,400.02041"
-       id="guide3094" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="241.42646,394.46457"
-       id="guide3096" />
-  </sodipodi:namedview>
+     inkscape:window-y="25"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -59,6 +76,43 @@
     </rdf:RDF>
   </metadata>
   <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="hand">
+    <path
+       style="fill:url(#linearGradient3796);fill-opacity:1;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M -82.541873,96.550298 23.146299,93.692837 161.54748,86.549176 c 75.81409,1.573636 120.70273,-28.180611 189.98707,-52.863073 76.58132,5.86211 90.07956,-33.268687 202.56899,-20.002239 l 41.52036,21.43097 c 37.43148,15.911378 86.30422,27.285513 79.26613,52.863072 -10.83742,15.492824 35.68411,17.596444 62.90962,36.555224 11.78658,17.78381 12.58193,17.43742 12.58193,37.73882 l -2.51639,8.57239 -2.51638,7.14366 c 31.65757,14.01651 54.48701,19.03794 61.65143,54.2918 4.67044,27.38973 -4.61892,30.9859 -22.64747,47.14815 15.789,21.78249 25.26307,41.43797 23.90566,65.72166 -3.79034,22.60975 1.11933,25.21421 -39.19365,40.00449 l -19.48346,5.64313 c -8.58635,4.23873 -16.46087,4.63791 -25.53236,4.35799 l -23.55024,8.83239 c -11.40977,2.68547 -22.92518,4.70893 -34.41604,6.88365 l -40.26217,1.42873 c -5.96227,-2.86869 -6.3284,-9.13883 -11.36873,-10.5007 -21.36017,-5.77137 -41.31331,3.91582 -65.381,0.49958 l -13.84013,0 c -16.55423,7.21796 0.95789,13.84675 10.06554,21.43098 l 22.64747,11.42985 30.19662,10.00113 c 18.26912,-4.43601 28.88853,21.88584 39.00397,-1.42873 l 15.09831,-10.00113 17.61469,-11.42986 c 30.18198,-19.80539 55.79684,-34.26313 69.20059,-11.42985 l -12.58192,32.86084 -28.93842,42.86194 -13.84013,44.29068 c -7.49906,48.64987 -49.58742,20.45032 -91.84805,15.71605 l -49.06951,-10.00112 -21.38927,0 -37.74578,-10.00112 -28.93843,-12.85858 -35.22939,-21.43099 -42.77854,-25.71716 -50.32771,-27.1459 -21.38927,-15.71605 -27.68023,-20.00224 -35.22939,-22.85971 -57.87686,0 -86.815286,1.42873 -70.458777,-2.85746 -113.237323,-4.2862 z"
+       id="path3006"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccscccccccccccccccccccccccccccc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 673.63183,92.264097 619.52956,73.690594 576.75101,52.25961"
+       id="path3008"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.78146166px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 741.65276,175.20907 706.08375,159.40663 679.19011,146.47737"
+       id="path3010"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.83306158px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 781.88912,279.48068 687.26113,260.80171"
+       id="path3012"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 721.44315,396.58395 -26.42205,-7.14366 -6.29095,-10.00112"
+       id="path3014"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 743.58255,383.81203 c -32.00125,-7.55625 -49.37896,-7.31372 -80.01625,-1.5154 l -54.10228,21.43098"
+       id="path3016"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+  </g>
+  <g
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
@@ -68,14 +122,14 @@
        id="rect3122"
        width="270"
        height="180"
-       x="330"
-       y="762.36218"
+       x="348"
+       y="710.36218"
        inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
        style="fill:#cccccc"
-       d="m 87.34177,703.68706 113.92405,0 c 75.96205,0 83.73417,7.43227 83.73417,81.75513 l 0,11.14842 15.00001,9.86383 0,80.74581 -15.00001,9.7262 0,11.14843 0,81.75516 c 0,7.1439 -3.45162,11.14846 -11.24999,11.14846 l -262.49322,0 C 3.797467,1000.9785 0,997.30817 0,990.36092 L 0,784.64745 c 0,-73.61987 7.594935,-80.96039 87.34177,-80.96039 z"
+       d="m 105.34177,651.68706 113.92405,0 c 75.96205,0 83.73417,7.43227 83.73417,81.75513 l 0,11.14842 15.00001,9.86383 0,80.74581 -15.00001,9.7262 0,11.14843 0,81.75516 c 0,7.1439 -3.45162,11.14846 -11.24999,11.14846 l -262.49322,0 C 21.797467,948.9785 18,945.30817 18,938.36092 l 0,-205.71347 c 0,-73.61987 7.594935,-80.96039 87.34177,-80.96039 z"
        id="rect2985"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccccccc"
@@ -84,7 +138,7 @@
        inkscape:export-ydpi="90" />
     <path
        style="fill:#666666"
-       d="m 284.98219,800.8033 11.25,7.34055 0,36.70262 -11.25,0 z"
+       d="m 302.98219,748.8033 11.25,7.34055 0,36.70262 -11.25,0 z"
        id="rect2994"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
@@ -93,7 +147,7 @@
        inkscape:export-ydpi="90" />
     <path
        style="fill:#666666"
-       d="m 284.91901,848.49119 11.24999,0 0,36.70265 -11.24999,7.34053 z"
+       d="m 302.91901,796.49119 11.24999,0 0,36.70265 -11.24999,7.34053 z"
        id="rect2994-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
@@ -102,7 +156,7 @@
        inkscape:export-ydpi="90" />
     <path
        style="fill:#241c1c"
-       d="m 125.61886,652.3622 37.33335,0 c 37.33332,0 29.86665,11.04225 37.33332,51.53052 l -112,0 c 7.46667,-40.48827 0,-51.53052 37.33333,-51.53052 z"
+       d="m 143.61886,600.3622 37.33335,0 c 37.33332,0 29.86665,11.04225 37.33332,51.53052 l -112,0 c 7.46667,-40.48827 0,-51.53052 37.33333,-51.53052 z"
        id="rect3016"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
@@ -111,7 +165,7 @@
        inkscape:export-ydpi="90" />
     <path
        style="fill:#241c1c"
-       d="m 163.41668,1052.3622 -37.33335,0 c -37.33333,0 -29.86666,-11.0423 -37.33333,-51.5305 l 112,0 c -7.46667,40.4882 0,51.5305 -37.33332,51.5305 z"
+       d="m 181.41668,1000.3622 -37.33335,0 c -37.33333,0 -29.86666,-11.0423 -37.33333,-51.5305 l 112,0 c -7.46667,40.4882 0,51.5305 -37.33332,51.5305 z"
        id="rect3016-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
@@ -123,16 +177,16 @@
        id="rect3041"
        width="250"
        height="230"
-       x="16"
-       y="758.35938"
+       x="34"
+       y="706.35938"
        inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <text
        xml:space="preserve"
        style="font-size:29.67933846px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#803300;fill-opacity:1;stroke:none;font-family:Sans"
-       x="37.099167"
-       y="752.099"
+       x="54.906769"
+       y="699.53723"
        id="text3043"
        sodipodi:linespacing="125%"
        transform="scale(1.0108041,0.98931138)"
@@ -141,15 +195,15 @@
        inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
          id="tspan3045"
-         x="37.099167"
-         y="752.099">NERD WATCH</tspan></text>
+         x="54.906769"
+         y="699.53723">NERD WATCH</tspan></text>
     <rect
        style="fill:#000000;display:inline"
        id="rect3041-2"
        width="250"
        height="160"
-       x="340"
-       y="772.36218"
+       x="358"
+       y="720.36218"
        inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />

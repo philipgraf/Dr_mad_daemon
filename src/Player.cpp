@@ -216,7 +216,7 @@ void Player::move() {
 void Player::grab() {
 	if (selectedEntity == 0){
 		for(unsigned i = 0; i < entityList.size(); i++){
-			// get all dead entitys within 3 m
+			// get all dead entities within 3 m
 			//TODO get the range from PDA
 			if(!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()< 3.0){
 				cout << "entity " << i << ": " << (entityList[i]->getBody()->GetWorldCenter()-this->getBody()->GetWorldCenter()).Length() <<  endl;

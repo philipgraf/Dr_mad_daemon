@@ -19,7 +19,6 @@
 class Slot {
 public:
 	static std::vector<Slot*> slots;
-	static int currentSlot;
 
 	static void loadSlots();
 	static void saveSlots();

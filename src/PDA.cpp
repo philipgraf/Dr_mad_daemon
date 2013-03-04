@@ -22,13 +22,12 @@ using namespace std;
 PDA::PDA(int level) {
 
 	this->level = level;
-	running = true;
+	running = false;
 	green.g = 255;
 	green.r = 0;
 	green.b = 0;
-	string filename;
 	currentItem = 0;
-	std::cout << "pda-lvl:" << level << endl;
+	string filename;
 	switch (level) {
 	case PDA_CLOCK:
 		filename = PDAIMG"clock.bmp";
@@ -68,6 +67,7 @@ PDA::PDA(int level) {
 	displayRect.y = 106;
 	displayRect.w = display->w;
 	displayRect.h = display->h;
+
 	if(lcd != NULL){
 		lcdRect.x = 340;
 		lcdRect.y = 120;
@@ -140,7 +140,7 @@ void PDA::render() {
 		textRect.y = 50;
 		textRect.h = 20;
 		textRect.w = display->w;
-		SDL_BlitSurface(TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), "Oh Boy  you have no items", green), NULL, display, &textRect);
+		SDL_BlitSurface(TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), "Oh No Boy!! You have no items", green), NULL, display, &textRect);
 	}
 
 	for (unsigned i = 0; i < itemlist.size(); i++) {

@@ -34,10 +34,6 @@ void Slot::loadSlots() {
 
 void Slot::saveSlots() {
 
-	std::vector<int> test;
-	test.push_back(3);
-	test.push_back(72);
-	test.push_back(1);
 	YAML::Emitter out;
 
 	out << YAML::BeginMap;

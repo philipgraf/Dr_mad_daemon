@@ -19,6 +19,8 @@
 
 using namespace std;
 
+vector<map<string, int> > PDA::updateReqList;
+
 PDA::PDA(int level) {
 
 	this->level = level;
@@ -27,6 +29,106 @@ PDA::PDA(int level) {
 	green.r = 0;
 	green.b = 0;
 	currentItem = 0;
+	timer = NULL;
+	image = NULL;
+	lcd = NULL;
+
+	curser = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), ">", green);
+	SDL_Surface *screen = SDL_GetVideoSurface();
+
+	display = SDL_CreateRGBSurface(SDL_HWSURFACE, 250, 230, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
+
+	displayRect.x = 16;
+	displayRect.y = 106;
+	displayRect.w = display->w;
+	displayRect.h = display->h;
+
+	curserRect.x = 0;
+	curserRect.y = 0;
+	curserRect.w = curser->w;
+	curserRect.h = curser->h;
+
+	updateText = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK_SMALL), "Press \"A\" to Update PDA", green);
+	updateRequirements = NULL;
+
+	init();
+
+}
+
+PDA::~PDA() {
+	SDL_FreeSurface(image);
+	SDL_FreeSurface(display);
+	SDL_FreeSurface(curser);
+	if (lcd != NULL) {
+		SDL_FreeSurface(lcd);
+	}
+	for (unsigned i = 0; i < itemlist.size(); i++) {
+		SDL_FreeSurface(itemlist[i].amound);
+		SDL_FreeSurface(itemlist[i].itemname);
+	}
+	itemlist.clear();
+}
+
+void PDA::loadRequirements() {
+
+	map<string, int> req;
+
+	//Level 1 Requirements
+	req["screw"] = 4;
+	req["inductor"] = 2;
+	req["wire"] = 5;
+	req["pcb"] = 2;
+	req["slot"] = 1;
+	updateReqList.push_back(req);
+
+	req.clear();
+	//Level 2 Requirements
+	req["screw"] = 4;
+	req["capacitor"] = 2;
+	req["antimatter"] = 2;
+
+	updateReqList.push_back(req);
+
+}
+
+int PDA::getLevel() const {
+	return level;
+}
+
+int PDA::show() {
+	SDL_Event event;
+
+	build();
+
+	running = true;
+	Uint32 start;
+	while (running) {
+		start = SDL_GetTicks();
+		while (SDL_PollEvent(&event)) {
+			onEvent(&event);
+		}
+
+		render();
+
+		if (SDL_GetTicks() - start < 1000 / FPS) {
+			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
+		}
+	}
+
+	return 0;
+
+}
+
+void PDA::init() {
+
+	if (image != NULL) {
+		SDL_FreeSurface(image);
+	}
+
+	if (lcd != NULL) {
+		SDL_FreeSurface(lcd);
+	}
+
 	string filename;
 	switch (level) {
 	case PDA_CLOCK:
@@ -51,77 +153,40 @@ PDA::PDA(int level) {
 			SDL_SetColorKey(image, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(image->format, 255, 0, 255));
 		}
 	}
-	curser = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), ">", green);
-	timer = NULL;
+	imageRect.x = 16;
+	imageRect.y = 40;
+	imageRect.w = image->w;
+	imageRect.h = image->h;
 	SDL_Surface *screen = SDL_GetVideoSurface();
 
-	display = SDL_CreateRGBSurface(SDL_HWSURFACE, 250, 230 , SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
-
-	if (level>0) {
+	if (level > 0) {
 		lcd = SDL_CreateRGBSurface(SDL_HWSURFACE, 240, 160, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
-	} else{
-		lcd= NULL;
+	} else {
+		lcd = NULL;
 	}
 
-	displayRect.x = 16;
-	displayRect.y = 106;
-	displayRect.w = display->w;
-	displayRect.h = display->h;
-
-	if(lcd != NULL){
+	if (lcd != NULL) {
 		lcdRect.x = 340;
 		lcdRect.y = 120;
 		lcdRect.w = lcd->w;
 		lcdRect.h = lcd->h;
 	}
 
-
-	imageRect.x = 16;
-	imageRect.y = 40;
-	imageRect.w = image->w;
-	imageRect.h = image->h;
-
-	curserRect.x = 0;
-	curserRect.y = 0;
-	curserRect.w = curser->w;
-	curserRect.h = curser->h;
-}
-
-PDA::~PDA() {
-	SDL_FreeSurface(image);
-	SDL_FreeSurface(display);
-	SDL_FreeSurface(curser);
-	if(lcd != NULL){
-		SDL_FreeSurface(lcd);
+	stringstream reqString;
+	for (map<string, int>::iterator it = updateReqList[level].begin(); it != updateReqList[level].end(); ++it) {
+		reqString << it->first << ": " << it->second << ", ";
 	}
-	for (unsigned i = 0; i < itemlist.size(); i++) {
-		SDL_FreeSurface(itemlist[i].amound);
-		SDL_FreeSurface(itemlist[i].itemname);
-	}
-	itemlist.clear();
-}
+	updateRequirements = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK_SMALL), reqString.str().c_str(), green);
 
-int PDA::show() {
-	SDL_Event event;
+	updateTextRect.x = 0;
+	updateTextRect.y = displayRect.h - updateText->clip_rect.h - updateRequirements->clip_rect.h;
+	updateTextRect.h = updateText->clip_rect.h;
+	updateTextRect.w = updateText->clip_rect.w;
 
-	build();
-
-	running = true;
-	Uint32 start;
-	while (running) {
-		start = SDL_GetTicks();
-		while (SDL_PollEvent(&event)) {
-			onEvent(&event);
-		}
-
-		render();
-
-		if (SDL_GetTicks() - start < 1000 / FPS) {
-			SDL_Delay(1000 / FPS - (SDL_GetTicks() - start));
-		}
-	}
-
-	return 0;
+	updateRequirementsRect.x = 0;
+	updateRequirementsRect.y = displayRect.h - updateRequirements->clip_rect.h;
+	updateRequirementsRect.h = updateRequirements->clip_rect.h;
+	updateRequirementsRect.w = updateRequirements->clip_rect.w;
 
 }
 
@@ -150,12 +215,15 @@ void PDA::render() {
 		labelRect.w = itemlist[i].itemname->w;
 		labelRect.h = itemlist[i].itemname->h;
 		SDL_BlitSurface(itemlist[i].itemname, NULL, display, &labelRect);
-		labelRect.x = displayRect.w-itemlist[i].amound->w;
+		labelRect.x = displayRect.w - itemlist[i].amound->w;
 		SDL_BlitSurface(itemlist[i].amound, NULL, display, &labelRect);
 	}
 
+	SDL_BlitSurface(updateText, NULL, display, &updateTextRect);
+	SDL_BlitSurface(updateRequirements, NULL, display, &updateRequirementsRect);
+
 	SDL_BlitSurface(display, NULL, image, &displayRect);
-	if(lcd!= NULL){
+	if (lcd != NULL) {
 		SDL_BlitSurface(lcd, NULL, image, &lcdRect);
 	}
 	SDL_BlitSurface(image, NULL, SDL_GetVideoSurface(), &imageRect);
@@ -188,13 +256,39 @@ void PDA::build() {
 	timerRect.w = timer->w;
 
 	for (map<string, int>::iterator it = playerItems.begin(); it != playerItems.end(); ++it) {
-		items_t item;
-		item.itemname = TTF_RenderUTF8_Blended(font, lang[(*it).first].c_str(), green);
-		stringstream s;
-		s << (*it).second;
-		item.amound = TTF_RenderUTF8_Blended(font, s.str().c_str(), green);
-		itemlist.push_back(item);
+		if (it->second > 0) {
+			items_t item;
+			item.itemname = TTF_RenderUTF8_Blended(font, lang[(*it).first].c_str(), green);
+			stringstream s;
+			s << it->second;
+			item.amound = TTF_RenderUTF8_Blended(font, s.str().c_str(), green);
+			itemlist.push_back(item);
+		}
 	}
+}
+
+void PDA::update() {
+	map<string, int> &playerItems = Game::curGame->getCurrentLevel()->getPlayer()->getItems();
+
+	bool itemsOk = true;
+
+	for (map<string, int>::iterator it = updateReqList[level].begin(); it != updateReqList[level].end(); ++it) {
+		if (playerItems[it->first] < it->second) {
+			itemsOk = false;
+			break;
+		}
+	}
+
+	if (itemsOk) {
+		cout << "test" << endl;
+		for (map<string, int>::iterator it = updateReqList[level].begin(); it != updateReqList[level].end(); ++it) {
+			playerItems[it->first] -= it->second;
+		}
+		level++;
+		init();
+		build();
+	}
+
 }
 
 void PDA::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
@@ -209,21 +303,24 @@ void PDA::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	case SDLK_UP:
 		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
 		break;
+	case SDLK_a:
+		update();
+		break;
 	default:
 		break;
 	}
 }
 
-void PDA::onWiiButtonEvent(int button){
-	if(button & WII_BTN_LEFT){
+void PDA::onWiiButtonEvent(int button) {
+	if (button & WII_BTN_LEFT) {
 		currentItem = (currentItem >= itemlist.size() - 1) ? itemlist.size() - 1 : currentItem + 1;
 	}
 
-	if(button & WII_BTN_RIGHT){
+	if (button & WII_BTN_RIGHT) {
 		currentItem = (currentItem <= 0) ? 0 : (currentItem - 1);
 	}
 
-	if((button & WII_BTN_1) || (button & WII_BTN_PLUS)){
+	if ((button & WII_BTN_1) || (button & WII_BTN_PLUS)) {
 		running = false;
 	}
 }

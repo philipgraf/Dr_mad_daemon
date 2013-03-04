@@ -40,8 +40,8 @@ Features:
 	mortal Player --> done
 	implement Wiimote settings --> done
 	Environment Entities --> done
-	PDA upgrade
-	battery(3 levels and use of the glover costs 1 level)
+	PDA upgrade --> done
 	throw environment entities
+	battery(3 levels and use of the glover costs 1 level)
 	(badguy2)
 	(mouse)?

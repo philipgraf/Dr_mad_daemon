@@ -16,6 +16,8 @@
 
 #include <SDL/SDL.h>
 #include <vector>
+#include <map>
+#include <string>
 
 
 typedef struct {
@@ -24,12 +26,19 @@ typedef struct {
 } items_t;
 
 class PDA: public Event {
+public:
+	static std::vector<std::map<std::string,int> > updateReqList;
+	static void loadRequirements();
 private:
 	SDL_Surface *image;
 	SDL_Surface *display;
 	SDL_Surface *lcd;
 	SDL_Surface *curser;
 	SDL_Surface *timer;
+
+	SDL_Surface *updateText;
+	SDL_Surface *updateRequirements;
+
 	SDL_Color green;
 
 	SDL_Rect displayRect;
@@ -37,6 +46,9 @@ private:
 	SDL_Rect imageRect;
 	SDL_Rect curserRect;
 	SDL_Rect timerRect;
+
+	SDL_Rect updateTextRect;
+	SDL_Rect updateRequirementsRect;
 
 	Language lang;
 
@@ -46,8 +58,10 @@ private:
 
 	bool running;
 
+	void init();
 	void render();
 	void build();
+	void update();
 
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onWiiButtonEvent(int button);
@@ -57,6 +71,7 @@ public:
 	virtual ~PDA();
 
 	int show();
+	int getLevel() const;
 };
 
 #endif /* PDA_H_ */

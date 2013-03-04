@@ -109,6 +109,10 @@ resistor:
 battery:
     en: Battery
     de: Batterie
+slot:
+    en: slot
+antimatter:
+    en: antimatter
 connect wiimote:
     en: Connect Wiimote
     de: Wiimote verbinden

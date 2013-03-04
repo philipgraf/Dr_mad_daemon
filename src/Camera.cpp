@@ -29,6 +29,17 @@ Camera::Camera(Entity* target, int w, int h) {
 		x = target->getX() * TILESIZE - w / 2;
 		y = target->getY() * TILESIZE - h / 2;
 	}
+
+	SDL_Surface *tmp = SDL_LoadBMP(IMG"cross.bmp");
+	if (tmp != NULL) {
+		crosshairs = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+		if (crosshairs != 0) {
+			SDL_SetColorKey(crosshairs, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(crosshairs->format, 255, 0, 255));
+
+		}
+	}
+
 }
 
 /** constuctor
@@ -45,6 +56,15 @@ Camera::Camera(float x, float y, int w, int h) {
 	width = w;
 	height = h;
 	cameraMode = CUSTOM;
+	SDL_Surface *tmp = SDL_LoadBMP(IMG"cross.bmp");
+	if (tmp != NULL) {
+		crosshairs = SDL_DisplayFormat(tmp);
+		SDL_FreeSurface(tmp);
+		if (crosshairs != 0) {
+			SDL_SetColorKey(crosshairs, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(crosshairs->format, 255, 0, 255));
+
+		}
+	}
 
 }
 
@@ -100,12 +120,12 @@ void Camera::drawNotification() {
 	}
 }
 
-void Camera::drawItems(){
-	for(unsigned i = 0; i < Item::itemlist.size(); i++){
+void Camera::drawItems() {
+	for (unsigned i = 0; i < Item::itemlist.size(); i++) {
 		SDL_Rect destRect = Item::itemlist[i]->getClipRect();
-		destRect.x = destRect.x  - x;
-		destRect.y = destRect.y  - y;
-		SDL_BlitSurface(Item::itemlist[i]->getImage(),NULL,SDL_GetVideoSurface(),&destRect);
+		destRect.x = destRect.x - x;
+		destRect.y = destRect.y - y;
+		SDL_BlitSurface(Item::itemlist[i]->getImage(), NULL, SDL_GetVideoSurface(), &destRect);
 	}
 }
 
@@ -142,6 +162,16 @@ void Camera::drawEntities() {
 
 		SDL_BlitSurface(curEntity->getImage(), &srcRect, SDL_GetVideoSurface(), &destRect);
 	}
+	if (Game::curGame->getCurrentLevel()->getPlayer()->getSelectedEntity() > 0) {
+		Entity* selectedEntity = Entity::entityList[Game::curGame->getCurrentLevel()->getPlayer()->getSelectedEntity()];
+		SDL_Rect destRect;
+		destRect.x = (selectedEntity->getX() * TILESIZE) - crosshairs->w/2 - x;
+		destRect.y = (selectedEntity->getY() * TILESIZE) - crosshairs->h/2 - y;
+		destRect.w = selectedEntity->getWidth() * TILESIZE;
+		destRect.h = selectedEntity->getHeight() * TILESIZE;
+
+		SDL_BlitSurface(crosshairs, NULL, SDL_GetVideoSurface(), &destRect);
+	}
 }
 
 void Camera::drawTiles(int layer) {
@@ -168,17 +198,17 @@ void Camera::drawTiles(int layer) {
 			u_int16_t id = tilelist[layer][x][y]->getId();
 			int currentframe = tilelist[layer][x][y]->getCurrentframe();
 
-			SDL_Rect srcRect ;
-			srcRect.x=currentframe * TILESIZE;
-			srcRect.y=id * TILESIZE;
-			srcRect.w=TILESIZE;
-			srcRect.h=TILESIZE;
+			SDL_Rect srcRect;
+			srcRect.x = currentframe * TILESIZE;
+			srcRect.y = id * TILESIZE;
+			srcRect.w = TILESIZE;
+			srcRect.h = TILESIZE;
 
 			SDL_Rect destRect;
-			destRect.x=x * TILESIZE - this->x;
-			destRect.y=y * TILESIZE - this->y;
-			destRect.w=TILESIZE;
-			destRect.h=TILESIZE;
+			destRect.x = x * TILESIZE - this->x;
+			destRect.y = y * TILESIZE - this->y;
+			destRect.w = TILESIZE;
+			destRect.h = TILESIZE;
 
 			SDL_BlitSurface(Tile::tileset, &srcRect, SDL_GetVideoSurface(), &destRect);
 		}
@@ -196,10 +226,10 @@ void Camera::drawBackground() {
 	if (cameraMode == STICKY) {
 		// center background behind level and move it with half speed
 		SDL_Rect destRect;
-		destRect.x=lWidth / 2 - bgWidth / 2 - x / 2;
-		destRect.y=lHeight / 2 - bgHeight / 2 - y / 2;
-		destRect.w= curLevel->getBackground()->clip_rect.w;
-		destRect.h=curLevel->getBackground()->clip_rect.h;
+		destRect.x = lWidth / 2 - bgWidth / 2 - x / 2;
+		destRect.y = lHeight / 2 - bgHeight / 2 - y / 2;
+		destRect.w = curLevel->getBackground()->clip_rect.w;
+		destRect.h = curLevel->getBackground()->clip_rect.h;
 
 		SDL_BlitSurface(curLevel->getBackground(), NULL, SDL_GetVideoSurface(), &destRect);
 	} else {

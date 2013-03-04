@@ -204,6 +204,7 @@ void Level::logic() {
 //		levelresult.show();
 
 		Slot::slots[Game::curGame->settings.activeSlot]->setPlayerItems(player->getItems());
+		Slot::slots[Game::curGame->settings.activeSlot]->setPdaLevel(player->getpda().getLevel());
 		Slot::slots[Game::curGame->settings.activeSlot]->checkAndSetFinishedLevels(levelnum);
 		Slot::saveSlots();
 

@@ -41,8 +41,9 @@ public:
 		this->running = running;
 	}
 	void addItem(std::string item);
+	PDA &getpda();
 	float getY() const;
-
+	unsigned getSelectedEntity() const;
 };
 
 #endif /* PLAYER_H_ */

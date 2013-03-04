@@ -34,6 +34,7 @@ private:
 	int height; /**< The camera height */
 	Entity *target; /**< This contain an Entity if cameraMODE is STICKY and SMOOTH */
 	mode cameraMode;
+	SDL_Surface *crosshairs;
 
 	void drawItems();
 	void drawNotification();

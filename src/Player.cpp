@@ -279,6 +279,14 @@ void Player::addItem(string item) {
 	new Notification(s.str(), 5, NOTIFICATION_INFO, item);
 }
 
+PDA &Player::getpda(){
+	return pda;
+}
+
+unsigned Player::getSelectedEntity() const {
+	return selectedEntity;
+}
+
 float Player::getY() const {
 	return body->GetPosition().y + height/8;
 }

@@ -187,6 +187,10 @@ void Level::render() {
 void Level::logic() {
 
 	updateTime();
+	if (time <= 0){
+		player->setAlive(false);
+	}
+
 
 	if (!player->isAlive()) {
 		Menu *gameOverMenu = new Menu(GAMEOVER);

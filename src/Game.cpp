@@ -77,7 +77,7 @@ void Game::init() {
 	/**
 	 * Create Game Window with defined width and height and Bits per pixel use by the system
 	 */
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE)) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE )) == NULL) {
 		cout << "unable to initialize display" << endl;
 	}
 

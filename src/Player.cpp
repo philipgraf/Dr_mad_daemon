@@ -21,8 +21,8 @@ Player::Player(int x, int y,int level) : Entity(),pda(level) {
 	height = 2;
 
 	actionframes.push_back(1);
-	actionframes.push_back(4);
-	actionframes.push_back(4);
+	actionframes.push_back(8);
+	actionframes.push_back(8);
 
 	animationDuration.push_back(9999);
 	animationDuration.push_back(60);

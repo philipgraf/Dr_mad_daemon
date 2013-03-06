@@ -1,7 +1,7 @@
 name    : Tutorial
 width   : 35
 height  : 20
-bgImage : bg.bmp
+bgImage : store.bmp
 bgMusic : LukHash_DigitalHeart.ogg
 gravity : 1.5
 time    : 300

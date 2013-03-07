@@ -341,7 +341,6 @@ void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 }
 
 void Level::onWiiButtonEvent(int button) {
-	cout << button << endl;
 	if (button == WII_BTN_HOME) {
 		Menu *pauseMenu = new Menu(PAUSEMENU);
 		if (pauseMenu->show() == -1) {

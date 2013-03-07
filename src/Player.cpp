@@ -219,7 +219,6 @@ void Player::grab() {
 			// get all dead entities within 3 m
 			//TODO get the range from PDA
 			if(!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()< 3.0){
-				cout << "entity " << i << ": " << (entityList[i]->getBody()->GetWorldCenter()-this->getBody()->GetWorldCenter()).Length() <<  endl;
 				selectedEntity = i;
 				break;
 			}
@@ -227,8 +226,6 @@ void Player::grab() {
 	// check if selected entity is out of range
 	} else if(selectedEntity >= entityList.size() || ((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()> 3.0)) {
 		selectedEntity = 0;
-	} else {
-		cout << selectedEntity << endl;
 	}
 
 }

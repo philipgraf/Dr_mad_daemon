@@ -6,14 +6,23 @@
  */
 
 #include "Slot.h"
+#include <cstdlib>
 using namespace std;
 
 vector<Slot*> Slot::slots;
 
 void Slot::loadSlots() {
+
+	string home="";
+	if(getenv("HOME")!=NULL){
+		home= getenv("HOME");
+	}else{
+		home=".";
+	}
+
 	YAML::Node slots;
 	try {
-		slots = YAML::LoadFile(CONFIGS"slots.yml");
+		slots = YAML::LoadFile(home+"/.DIS/slots.yml");
 	} catch (YAML::Exception &e) {
 		cout << e.msg << ": " << e.what() << endl;
 	}
@@ -52,9 +61,16 @@ void Slot::saveSlots() {
 	}
 	out << YAML::EndMap;
 
+	string home="";
+		if(getenv("HOME")!=NULL){
+			home= getenv("HOME");
+		}else{
+			home=".";
+		}
+
 
 	fstream filestream;
-	filestream.open(CONFIGS"slots.yml", fstream::out);
+	filestream.open((home+"/.DIS/slots.yml").c_str(), fstream::out);
 	filestream << out.c_str();
 
 	filestream.close();

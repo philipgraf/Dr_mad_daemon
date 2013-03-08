@@ -12,13 +12,11 @@
 #include <string>
 #include <vector>
 
-using namespace YAML;
-
 class Language {
 public:
 	static std::vector<std::string> supLanguages;
 private:
-	Node root;
+	YAML::Node root;
 
 public:
 	Language();

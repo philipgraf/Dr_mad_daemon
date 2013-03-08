@@ -77,7 +77,7 @@ void Game::init() {
 	/**
 	 * Create Game Window with defined width and height and Bits per pixel use by the system
 	 */
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE|SDL_FULLSCREEN )) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE )) == NULL) {
 		cout << "unable to initialize display" << endl;
 	}
 
@@ -146,9 +146,15 @@ void Game::init() {
 }
 
 void Game::loadSettings() {
+	string home="";
+		if(getenv("HOME")!=NULL){
+			home= getenv("HOME");
+		}else{
+			home=".";
+		}
 	YAML::Node settings;
 	try {
-		settings = YAML::LoadFile(CONFIGS"game.yml");
+		settings = YAML::LoadFile(home+"/.DIS/game.yml");
 	} catch (YAML::Exception &e) {
 		cout << e.msg << endl;
 	}
@@ -357,8 +363,15 @@ void Game::saveSettings() {
 
 	out << YAML::EndMap;
 
+	string home="";
+		if(getenv("HOME")!=NULL){
+			home= getenv("HOME");
+		}else{
+			home=".";
+		}
+
 	fstream filestream;
-	filestream.open(CONFIGS"game.yml", fstream::out);
+	filestream.open((home+"/.DIS/game.yml").c_str(), fstream::out);
 
 	filestream << out.c_str();
 

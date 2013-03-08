@@ -6,6 +6,7 @@
  */
 
 #include "Event.h"
+#include "define.h"
 
 cwiid_mesg_callback_t wiimote_callback;
 
@@ -187,7 +188,7 @@ void Event::onUser(Uint8 type, int code, void *data1, void *data2) {
 
 void Event::initWiimote() {
 	blueaddr = (bdaddr_t ) { { 0, 0, 0, 0, 0, 0 } };
-	SDL_Surface *wiimoteImage = SDL_LoadBMP("wiimote.bmp");
+	SDL_Surface *wiimoteImage = SDL_LoadBMP(IMG"wiimote.bmp");
 	SDL_SetColorKey(wiimoteImage, SDL_SRCCOLORKEY, SDL_MapRGB(wiimoteImage->format, 255, 0, 255));
 	SDL_BlitSurface(wiimoteImage, NULL, SDL_GetVideoSurface(), NULL);
 	SDL_Flip(SDL_GetVideoSurface());

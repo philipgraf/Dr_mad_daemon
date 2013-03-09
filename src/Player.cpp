@@ -214,24 +214,26 @@ void Player::move() {
 
 }
 void Player::grab() {
-	if (selectedEntity == 0){
-		for(unsigned i = 0; i < entityList.size(); i++){
-			// get all dead entities within 3 m
-			//TODO get the range from PDA
-			if(!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()< 3.0){
-				selectedEntity = i;
-				break;
-			}
-		}
-	// check if selected entity is out of range
-	} else if(selectedEntity >= entityList.size() || ((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()> 3.0)) {
-		selectedEntity = 0;
-	}
 
 }
+
 void Player::logic() {
 //TODO check connected tiles for shock and other game events
-	grab();
+	if (pda.getLevel() > 0 /*& items["gravitiy module"] > 0*/ ) {
+		if (selectedEntity == 0){
+				for(unsigned i = 0; i < entityList.size(); i++){
+					// get all dead entities within 3 m
+					//TODO get the range from PDA
+					if(!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()< 3.0){
+						selectedEntity = i;
+						break;
+					}
+				}
+			// check if selected entity is out of range
+			} else if(selectedEntity >= entityList.size() || ((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()> 3.0)) {
+				selectedEntity = 0;
+			}
+	}
 
 	//int collision = checkCollision();
 

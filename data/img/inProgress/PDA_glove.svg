@@ -41,7 +41,7 @@
        x2="912.07471"
        y2="336.96945"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.88073477,0,0,1.0001122,5.5316039,-52.0378)" />
+       gradientTransform="matrix(0.78663661,0,0,1.0002061,82.565873,-52.069468)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -54,7 +54,7 @@
      inkscape:cx="80.366911"
      inkscape:cy="77.978157"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -71,7 +71,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -80,37 +80,55 @@
      id="layer2"
      inkscape:label="hand">
     <path
-       style="fill:url(#linearGradient3796);fill-opacity:1;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M -82.541873,96.550298 23.146299,93.692837 161.54748,86.549176 c 75.81409,1.573636 120.70273,-28.180611 189.98707,-52.863073 76.58132,5.86211 90.07956,-33.268687 202.56899,-20.002239 l 41.52036,21.43097 c 37.43148,15.911378 86.30422,27.285513 79.26613,52.863072 -10.83742,15.492824 35.68411,17.596444 62.90962,36.555224 11.78658,17.78381 12.58193,17.43742 12.58193,37.73882 l -2.51639,8.57239 -2.51638,7.14366 c 31.65757,14.01651 54.48701,19.03794 61.65143,54.2918 4.67044,27.38973 -4.61892,30.9859 -22.64747,47.14815 15.789,21.78249 25.26307,41.43797 23.90566,65.72166 -3.79034,22.60975 1.11933,25.21421 -39.19365,40.00449 l -19.48346,5.64313 c -8.58635,4.23873 -16.46087,4.63791 -25.53236,4.35799 l -23.55024,8.83239 c -11.40977,2.68547 -22.92518,4.70893 -34.41604,6.88365 l -40.26217,1.42873 c -5.96227,-2.86869 -6.3284,-9.13883 -11.36873,-10.5007 -21.36017,-5.77137 -41.31331,3.91582 -65.381,0.49958 l -13.84013,0 c -16.55423,7.21796 0.95789,13.84675 10.06554,21.43098 l 22.64747,11.42985 30.19662,10.00113 c 18.26912,-4.43601 28.88853,21.88584 39.00397,-1.42873 l 15.09831,-10.00113 17.61469,-11.42986 c 30.18198,-19.80539 55.79684,-34.26313 69.20059,-11.42985 l -12.58192,32.86084 -28.93842,42.86194 -13.84013,44.29068 c -7.49906,48.64987 -49.58742,20.45032 -91.84805,15.71605 l -49.06951,-10.00112 -21.38927,0 -37.74578,-10.00112 -28.93843,-12.85858 -35.22939,-21.43099 -42.77854,-25.71716 -50.32771,-27.1459 -21.38927,-15.71605 -27.68023,-20.00224 -35.22939,-22.85971 -57.87686,0 -86.815286,1.42873 -70.458777,-2.85746 -113.237323,-4.2862 z"
+       style="fill:url(#linearGradient3796);fill-opacity:1;stroke:#000000;stroke-width:0.88701683px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 3.9022125,96.532589 98.298604,93.674861 221.91293,86.530528 C 289.627,88.104312 329.71972,58.347269 391.60168,33.662486 460.00101,39.525147 472.0571,0.39067362 572.52809,13.658368 l 37.08431,21.432984 c 33.43228,15.912874 77.08343,27.288078 70.79729,52.868041 -9.67955,15.494277 31.8716,17.598097 56.18832,36.558657 10.5273,17.78548 11.23767,17.43907 11.23767,37.74236 l -2.24754,8.5732 -2.24753,7.14434 c 28.27527,14.01783 48.66558,19.03972 55.06456,54.2969 4.17145,27.39231 -4.12543,30.98881 -20.2278,47.15258 14.10209,21.78453 22.56395,41.44187 21.35157,65.72783 -3.38538,22.61189 0.99974,25.21658 -35.00618,40.00825 l -17.40184,5.64367 c -7.66897,4.23912 -14.70218,4.63833 -22.80446,4.35839 l -21.03413,8.83323 c -10.19074,2.68571 -20.47584,4.70937 -30.73901,6.88429 l -35.96054,1.42887 c -5.32525,-2.86896 -5.65226,-9.1397 -10.15409,-10.50169 -19.07804,-5.77191 -36.89937,3.91619 -58.39566,0.49963 l -12.36143,0 c -14.78558,7.21863 0.85554,13.84805 8.99013,21.43299 l 20.2278,11.43093 26.9704,10.00207 c 16.31723,-4.43643 25.80206,21.88789 34.83676,-1.42887 l 13.48519,-10.00206 15.73274,-11.43094 c 26.95732,-19.80725 49.83547,-34.26636 61.80716,-11.43093 l -11.23766,32.86393 -25.84663,42.86597 -12.36144,44.29484 c -6.69786,48.65445 -44.28948,20.45225 -82.03496,15.71753 l -43.82689,-10.00206 -19.10404,0 -33.71299,-10.00206 -25.84664,-12.85978 -31.46545,-21.43301 -38.20806,-25.71958 -44.95068,-27.14846 -19.10403,-15.71752 -24.72286,-20.00412 -31.46546,-22.86186 -51.69326,0 -77.5399,1.42887 -62.93093,-2.85773 -101.13898301,-4.2866 z"
        id="path3006"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccccccccscccccccccccccccccccccccccccc" />
+       sodipodi:nodetypes="ccccccccccccccccccccscccccccccccccccccccccccccccc"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 673.63183,92.264097 619.52956,73.690594 576.75101,52.25961"
        id="path3008"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.78146166px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 741.65276,175.20907 706.08375,159.40663 679.19011,146.47737"
        id="path3010"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.83306158px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 781.88912,279.48068 687.26113,260.80171"
        id="path3012"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 721.44315,396.58395 -26.42205,-7.14366 -6.29095,-10.00112"
        id="path3014"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.93852735px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 743.58255,383.81203 c -32.00125,-7.55625 -49.37896,-7.31372 -80.01625,-1.5154 l -54.10228,21.43098"
        id="path3016"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccc" />
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
   <g
      inkscape:label="Ebene 1"
@@ -124,7 +142,7 @@
        height="180"
        x="348"
        y="710.36218"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/glove2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
@@ -133,7 +151,7 @@
        id="rect2985"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccccccc"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
@@ -142,7 +160,7 @@
        id="rect2994"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
@@ -151,7 +169,7 @@
        id="rect2994-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
@@ -160,7 +178,7 @@
        id="rect3016"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <path
@@ -169,7 +187,7 @@
        id="rect3016-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
@@ -179,7 +197,7 @@
        height="230"
        x="34"
        y="706.35938"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <text
@@ -190,7 +208,7 @@
        id="text3043"
        sodipodi:linespacing="125%"
        transform="scale(1.0108041,0.98931138)"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/clock2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90"><tspan
          sodipodi:role="line"
@@ -204,7 +222,7 @@
        height="160"
        x="358"
        y="720.36218"
-       inkscape:export-filename="/home/ecki/workspace/Dr_mad_daemon/data/img/PDA/glove.bmp.png"
+       inkscape:export-filename="/run/media/philip/da4273c5-2f12-470a-9947-c788b067eb8f/programming/Dr_mad_daemon/data/img/PDA/glove2.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
   </g>

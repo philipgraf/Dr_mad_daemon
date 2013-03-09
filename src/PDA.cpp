@@ -38,8 +38,8 @@ PDA::PDA(int level) {
 
 	display = SDL_CreateRGBSurface(SDL_HWSURFACE, 250, 230, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
 
-	displayRect.x = 16;
-	displayRect.y = 106;
+	displayRect.x = 32;
+	displayRect.y = 123;
 	displayRect.w = display->w;
 	displayRect.h = display->h;
 
@@ -166,8 +166,8 @@ void PDA::init() {
 	}
 
 	if (lcd != NULL) {
-		lcdRect.x = 340;
-		lcdRect.y = 120;
+		lcdRect.x = 358;
+		lcdRect.y = 137;
 		lcdRect.w = lcd->w;
 		lcdRect.h = lcd->h;
 	}
@@ -322,6 +322,9 @@ void PDA::onWiiButtonEvent(int button) {
 
 	if ((button & WII_BTN_1) || (button & WII_BTN_PLUS)) {
 		running = false;
+	}
+	if(button & WII_BTN_A){
+		update();
 	}
 }
 

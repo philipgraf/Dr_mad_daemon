@@ -16,15 +16,33 @@ items:
         x: 25
         y: 10
     slot:
-        x: 20
-        y: 15
+        x: 38
+        y: 10
 environments:
     wooden crate:
-        x: 20
+        x: 4
+        y: 16
+    wooden crate:
+        x: 4
+        y: 15
+    wooden crate:
+        x: 4
+        y: 14
+    wooden crate:
+        x: 5
+        y: 16
+    wooden crate:
+        x: 5
+        y: 15
+    wooden crate:
+        x: 6
+        y: 16
+    metal crate 1:
+        x: 32
         y: 10
     metal crate 1:
-        x: 14
-        y: 14
+        x: 32
+        y: 9
     metal crate 2:
-        x: 14
-        y: 14
+        x: 33
+        y: 10

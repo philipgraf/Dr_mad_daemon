@@ -1,20 +1,13 @@
 name    : Tutorial
-width   : 35
+width   : 40
 height  : 20
 bgImage : store.bmp
 bgMusic : LukHash_DigitalHeart.ogg
-gravity : 2
+gravity : 2.0
 time    : 300
 player:
     x: 2
     y: 0
-badguys:
-    vacuuBoy:
-        x: 3
-        y: 3
-    vacuuBoy:
-        x: 10
-        y: 3
 items:
     screw:
         x: 15

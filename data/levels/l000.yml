@@ -6,37 +6,49 @@ bgMusic : LukHash_DigitalHeart.ogg
 gravity : 2.0
 time    : 300
 player:
-    x: 2
-    y: 0
+    x: 15
+    y: 15
 items:
-    screw:
-        x: 15
-        y: 15
     resistor:
-        x: 25
-        y: 10
+        x: 9
+        y: 16
+    screw:
+        x: 11
+        y: 16
+    inductor:
+        x: 13
+        y: 16
+    pcb:
+        x: 18
+        y: 15
+    capacitor:
+        x: 20
+        y: 16
+    battery:
+        x: 22
+        y: 14
     slot:
         x: 38
         y: 10
 environments:
     wooden crate:
         x: 4
+        y: 17
+    wooden crate:
+        x: 4
         y: 16
     wooden crate:
         x: 4
         y: 15
     wooden crate:
-        x: 4
-        y: 14
+        x: 5
+        y: 17
     wooden crate:
         x: 5
         y: 16
-    wooden crate:
-        x: 5
-        y: 15
     wooden crate:
         x: 6
-        y: 16
+        y: 17
     metal crate 1:
         x: 32
         y: 10

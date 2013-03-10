@@ -296,7 +296,7 @@ void Player::addItem(string item) {
 
 	std::stringstream s;
 	s << lang["looted"] << " " << lang[item];
-	new Notification(s.str(), 5, NOTIFICATION_INFO, item);
+	new Notification(s.str(), 2, NOTIFICATION_INFO, item);
 }
 
 PDA &Player::getpda() {

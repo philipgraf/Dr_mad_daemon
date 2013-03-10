@@ -32,6 +32,8 @@ typedef struct {
 	int jump;
 	int run;
 	int use;
+	int grab;
+	int pda;
 } controll_t;
 
 typedef struct {

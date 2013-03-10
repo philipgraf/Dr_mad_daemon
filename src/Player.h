@@ -20,6 +20,7 @@ private:
 	bool running;
 	unsigned selectedEntity;
 	int impactSoundPlayed;
+	b2RevoluteJoint *grebJoin;
 public:
 	Player(int x, int y, int level);
 	virtual ~Player();
@@ -27,6 +28,7 @@ public:
 	PDA pda;
 
 	Language lang;
+
 
 	void use();
 	void move();

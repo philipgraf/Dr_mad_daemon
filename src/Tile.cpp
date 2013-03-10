@@ -83,6 +83,10 @@ u_int64_t Tile::getFlags() const {
 	return flags;
 }
 
+void Tile::setId(u_int16_t id) {
+	this->id = id;
+}
+
 void Tile::setFlags(u_int64_t flags) {
 	this->flags = flags;
 }

@@ -380,7 +380,7 @@ EXTRACT_ALL            = NO
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class 
 # will be included in the documentation.
 
-EXTRACT_PRIVATE        = NO
+EXTRACT_PRIVATE        = YES
 
 # If the EXTRACT_PACKAGE tag is set to YES all members with package or internal 
 # scope will be included in the documentation.
@@ -390,7 +390,7 @@ EXTRACT_PACKAGE        = NO
 # If the EXTRACT_STATIC tag is set to YES all static members of a file 
 # will be included in the documentation.
 
-EXTRACT_STATIC         = NO
+EXTRACT_STATIC         = YES
 
 # If the EXTRACT_LOCAL_CLASSES tag is set to YES classes (and structs) 
 # defined locally in source files will be included in the documentation. 
@@ -1687,7 +1687,7 @@ PERL_PATH              = /usr/bin/perl
 # this option also works with HAVE_DOT disabled, but it is recommended to 
 # install and use dot, since it yields more powerful graphs.
 
-CLASS_DIAGRAMS         = NO
+CLASS_DIAGRAMS         = YES
 
 # You can define message sequence charts within doxygen comments using the \msc 
 # command. Doxygen will then run the mscgen tool (see 

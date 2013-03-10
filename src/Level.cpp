@@ -66,7 +66,7 @@ Level::Level(unsigned levelnum) {
 	Tile::loadTileset();
 
 #if DEBUG >= 3
-	b2Debug.SetFlags(b2Draw::e_shapeBit); // | b2Draw::e_aabbBit);
+	b2Debug.SetFlags(b2Draw::e_shapeBit|b2Draw::e_jointBit); // | b2Draw::e_aabbBit);
 	world->SetDebugDraw(&b2Debug);
 #endif
 
@@ -309,6 +309,7 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 			exit(0);
 		}
 		delete pauseMenu;
+		player->delDirection(0xFFFF);
 	} else if (sym == Game::curGame->settings.keyboard.left) {
 		player->setDirection(LEFT);
 	} else if (sym == Game::curGame->settings.keyboard.jump) {
@@ -321,8 +322,11 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->setRunning(true);
 	} else if (sym == Game::curGame->settings.keyboard.use) {
 		player->use();
-	} else if (sym == SDLK_p) {
+	} else if (sym == Game::curGame->settings.keyboard.pda) {
 		player->pda.show();
+		player->delDirection(0xFFFF);
+	} else if (sym == Game::curGame->settings.keyboard.grab){
+		player->grab();
 	}
 }
 
@@ -348,6 +352,7 @@ void Level::onWiiButtonEvent(int button) {
 			exit(0);
 		}
 		delete pauseMenu;
+		player->delDirection(0xFFFF);
 	}
 
 	if (button & Game::curGame->settings.wiimote.left) {
@@ -383,10 +388,52 @@ void Level::onWiiButtonEvent(int button) {
 		player->use();
 	}
 
-	if (button & WII_BTN_PLUS) {
+	if (button & Game::curGame->settings.wiimote.pda) {
 		player->pda.show();
+		player->delDirection(0xFFFF);
+	}
+
+	if(button & Game::curGame->settings.wiimote.grab){
+		player->grab();
+		player->delDirection(0xFFFF);
 	}
 }
+
+void Level::switchActions(){
+	switch(levelnum){
+	case 0:
+		level0Logic();
+		break;
+	case 1:
+		level1Logic();
+		break;
+	case 2:
+		level2Logic();
+		break;
+	case 3:
+		level3Logic();
+		break;
+	}
+}
+
+/******************************** LEVEL DEPENDENT SWITCH LOGICS ************************/
+
+void Level::level0Logic(){
+
+}
+
+void Level::level1Logic(){
+
+}
+
+void Level::level2Logic(){
+
+}
+
+void Level::level3Logic(){
+
+}
+
 
 /******************************* GETTER / SETTER ***************************************/
 
@@ -448,6 +495,10 @@ void Level::setRunning(bool running) {
 
 b2World* Level::getWorld() const {
 	return world;
+}
+
+Uint8 Level::getSwitches() const {
+	return switches;
 }
 
 void Level::toggleSwitch(Uint8 flags) {

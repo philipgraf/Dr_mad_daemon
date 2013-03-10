@@ -39,6 +39,7 @@ public:
 	void setCurrentframe(int currentframe);
 	u_int64_t getFlags() const;
 	void setFlags(u_int64_t flags);
+	void setId(u_int16_t id);
 };
 
 #endif

@@ -16,9 +16,12 @@
 
 using namespace std;
 
-Player::Player(int x, int y,int level) : Entity(),pda(level) {
+Player::Player(int x, int y, int level) :
+		Entity(), pda(level) {
 	width = 1;
 	height = 2;
+
+	grebJoin = NULL;
 
 	actionframes.push_back(1);
 	actionframes.push_back(8);
@@ -99,7 +102,7 @@ Player::Player(int x, int y,int level) : Entity(),pda(level) {
 	this->sensorRight = body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorLeft;
-	sensorLeft.SetAsBox(0.01, halfHeight - radius / 2 , b2Vec2(-halfWidth, 0.2), 0);
+	sensorLeft.SetAsBox(0.01, halfHeight - radius / 2, b2Vec2(-halfWidth, 0.2), 0);
 
 	fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &sensorLeft;
@@ -153,14 +156,16 @@ void Player::use() {
 	// check player position an get the flags of the tiles there
 	if (flags & 0xFF) {
 		Game::curGame->getCurrentLevel()->toggleSwitch(flags);
+		Game::curGame->getCurrentLevel()->switchActions();
 	}
 
 	// if flag is finishpoint
 	if (flags & TF_FINISH) {
-		Game::curGame->getCurrentLevel()->setFinished(true);
+		if (Game::curGame->getCurrentLevel()->getSwitches() == 0xFF) {
+			Game::curGame->getCurrentLevel()->setFinished(true);
+		}
 	}
 }
-
 
 void Player::move() {
 	if (running) {
@@ -214,25 +219,41 @@ void Player::move() {
 
 }
 void Player::grab() {
-
+	if (selectedEntity != 0) {
+		b2Body *selectedBody = entityList[selectedEntity]->getBody();
+		if (grebJoin == NULL) {
+			selectedBody->SetTransform(selectedBody->GetPosition() - b2Vec2(0, 1), 0.0);
+			b2RevoluteJointDef rjd;
+			rjd.Initialize(entityList[selectedEntity]->getBody(), body, body->GetWorldCenter());
+			rjd.enableLimit = true;
+			grebJoin = (b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&rjd);
+		} else {
+			b2Vec2 force = grebJoin->GetLocalAnchorB() - grebJoin->GetLocalAnchorA();
+			force.x *= 10;
+			force.y *= 10;
+			Game::curGame->getCurrentLevel()->getWorld()->DestroyJoint(grebJoin);
+			grebJoin = NULL;
+			selectedBody->ApplyForceToCenter(force);
+		}
+	}
 }
 
 void Player::logic() {
 //TODO check connected tiles for shock and other game events
-	if (pda.getLevel() > 0 /*& items["gravitiy module"] > 0*/ ) {
-		if (selectedEntity == 0){
-				for(unsigned i = 0; i < entityList.size(); i++){
-					// get all dead entities within 3 m
-					//TODO get the range from PDA
-					if(!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()< 3.0){
-						selectedEntity = i;
-						break;
-					}
+	if (pda.getLevel() > 0 /*& items["gravitiy module"] > 0*/) {
+		if (selectedEntity == 0) {
+			for (unsigned i = 0; i < entityList.size(); i++) {
+				// get all dead entities within 3 m
+				//TODO get the range from PDA
+				if (!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length() < 3.0) {
+					selectedEntity = i;
+					break;
 				}
-			// check if selected entity is out of range
-			} else if(selectedEntity >= entityList.size() || ((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length()> 3.0)) {
-				selectedEntity = 0;
 			}
+			// check if selected entity is out of range
+		} else if (selectedEntity >= entityList.size() || ((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length() > 3.0)) {
+			selectedEntity = 0;
+		}
 	}
 
 	//int collision = checkCollision();
@@ -255,8 +276,8 @@ void Player::logic() {
 		}
 	}
 
-	if(body->GetPosition().y -height/2 > Game::curGame->getCurrentLevel()->getHeight()){
-		alive=false;
+	if (body->GetPosition().y - height / 2 > Game::curGame->getCurrentLevel()->getHeight()) {
+		alive = false;
 	}
 
 	if (grounded && impactSoundPlayed > 20) {
@@ -278,7 +299,7 @@ void Player::addItem(string item) {
 	new Notification(s.str(), 5, NOTIFICATION_INFO, item);
 }
 
-PDA &Player::getpda(){
+PDA &Player::getpda() {
 	return pda;
 }
 
@@ -287,5 +308,5 @@ unsigned Player::getSelectedEntity() const {
 }
 
 float Player::getY() const {
-	return body->GetPosition().y + height/8;
+	return body->GetPosition().y + height / 8;
 }

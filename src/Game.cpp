@@ -77,7 +77,7 @@ void Game::init() {
 	/**
 	 * Create Game Window with defined width and height and Bits per pixel use by the system
 	 */
-	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE )) == NULL) {
+	if ((display = SDL_SetVideoMode(WIDTH, HEIGHT, SDL_GetVideoInfo()->vfmt->BitsPerPixel, SDL_SWSURFACE)) == NULL) {
 		cout << "unable to initialize display" << endl;
 	}
 
@@ -109,12 +109,11 @@ void Game::init() {
 		cout << "unable to load notification Font" << endl;
 	}
 	if ((font[FONT_PDA_CLOCK_SMALL] = TTF_OpenFont(FONTS "digital.ttf", 12)) == NULL) {
-			cout << "unable to load notification Font" << endl;
+		cout << "unable to load notification Font" << endl;
 	}
 	if ((font[FONT_PDA_CLOCK_TIMER] = TTF_OpenFont(FONTS "digital.ttf", 32)) == NULL) {
 		cout << "unable to load notification Font" << endl;
 	}
-
 
 	/**
 	 * Load settings from game.yml file
@@ -146,15 +145,15 @@ void Game::init() {
 }
 
 void Game::loadSettings() {
-	string home="";
-		if(getenv("HOME")!=NULL){
-			home= getenv("HOME");
-		}else{
-			home=".";
-		}
+	string home = "";
+	if (getenv("HOME") != NULL) {
+		home = getenv("HOME");
+	} else {
+		home = ".";
+	}
 	YAML::Node settings;
 	try {
-		settings = YAML::LoadFile(home+"/.DIS/game.yml");
+		settings = YAML::LoadFile(home + "/.DIS/game.yml");
 	} catch (YAML::Exception &e) {
 		cout << e.msg << endl;
 	}
@@ -188,6 +187,8 @@ void Game::loadSettings() {
 		this->settings.keyboard.run = SDLK_LSHIFT;
 		this->settings.keyboard.jump = SDLK_SPACE;
 		this->settings.keyboard.use = SDLK_e;
+		this->settings.keyboard.pda = SDLK_p;
+		this->settings.keyboard.grab = SDLK_f;
 		this->settings.wiimote.left = WII_BTN_UP;
 		this->settings.wiimote.right = WII_BTN_DOWN;
 		this->settings.wiimote.up = WII_BTN_RIGHT;
@@ -195,6 +196,8 @@ void Game::loadSettings() {
 		this->settings.wiimote.run = WII_BTN_1;
 		this->settings.wiimote.jump = WII_BTN_2;
 		this->settings.wiimote.use = WII_BTN_A;
+		this->settings.wiimote.pda = WII_BTN_PLUS;
+		this->settings.wiimote.grab = WII_BTN_B;
 	} else {
 		if (settings["control"]["keyboard"].Scalar() == YAML::detail::node_data::empty_scalar) {
 			this->settings.keyboard.left = SDLK_a;
@@ -204,6 +207,8 @@ void Game::loadSettings() {
 			this->settings.keyboard.run = SDLK_LSHIFT;
 			this->settings.keyboard.jump = SDLK_SPACE;
 			this->settings.keyboard.use = SDLK_e;
+			this->settings.keyboard.pda = SDLK_p;
+			this->settings.keyboard.grab = SDLK_f;
 		} else {
 			if (settings["control"]["keyboard"]["left"].Scalar() == YAML::detail::node_data::empty_scalar) {
 				this->settings.keyboard.left = SDLK_a;
@@ -246,6 +251,18 @@ void Game::loadSettings() {
 			} else {
 				this->settings.keyboard.use = settings["control"]["keyboard"]["use"].as<int>();
 			}
+
+			if (settings["control"]["keyboard"]["pda"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.pda = SDLK_p;
+			} else {
+				this->settings.keyboard.pda = settings["control"]["keyboard"]["pda"].as<int>();
+			}
+
+			if (settings["control"]["keyboard"]["grab"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.grab = SDLK_f;
+			} else {
+				this->settings.keyboard.grab = settings["control"]["keyboard"]["grab"].as<int>();
+			}
 		}
 
 		if (settings["control"]["wiimote"].Scalar() == YAML::detail::node_data::empty_scalar) {
@@ -256,6 +273,8 @@ void Game::loadSettings() {
 			this->settings.wiimote.run = WII_BTN_1;
 			this->settings.wiimote.jump = WII_BTN_2;
 			this->settings.wiimote.use = WII_BTN_A;
+			this->settings.wiimote.pda = WII_BTN_PLUS;
+			this->settings.wiimote.grab = WII_BTN_B;
 		} else {
 			if (settings["control"]["wiimote"]["left"].Scalar() == YAML::detail::node_data::empty_scalar) {
 				this->settings.keyboard.left = WII_BTN_UP;
@@ -297,6 +316,17 @@ void Game::loadSettings() {
 				this->settings.keyboard.use = WII_BTN_A;
 			} else {
 				this->settings.keyboard.use = settings["control"]["wiimote"]["use"].as<int>();
+			}
+			if (settings["control"]["wiimote"]["pda"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.pda = WII_BTN_PLUS;
+			} else {
+				this->settings.keyboard.pda = settings["control"]["wiimote"]["pda"].as<int>();
+			}
+
+			if (settings["control"]["wiimote"]["grab"].Scalar() == YAML::detail::node_data::empty_scalar) {
+				this->settings.keyboard.grab = WII_BTN_B;
+			} else {
+				this->settings.keyboard.grab = settings["control"]["wiimote"]["grab"].as<int>();
 			}
 		}
 
@@ -341,6 +371,10 @@ void Game::saveSettings() {
 	out << YAML::Value << settings.keyboard.jump;
 	out << YAML::Key << "use";
 	out << YAML::Value << settings.keyboard.use;
+	out << YAML::Key << "pda";
+	out << YAML::Value << settings.keyboard.pda;
+	out << YAML::Key << "grab";
+	out << YAML::Value << settings.keyboard.grab;
 	out << YAML::EndMap;
 	out << YAML::Key << "wiimote";
 	out << YAML::Value << YAML::BeginMap;
@@ -358,20 +392,24 @@ void Game::saveSettings() {
 	out << YAML::Value << settings.wiimote.jump;
 	out << YAML::Key << "use";
 	out << YAML::Value << settings.wiimote.use;
+	out << YAML::Key << "pda";
+	out << YAML::Value << settings.wiimote.pda;
+	out << YAML::Key << "grab";
+	out << YAML::Value << settings.wiimote.grab;
 	out << YAML::EndMap;
 	out << YAML::EndMap;
 
 	out << YAML::EndMap;
 
-	string home="";
-		if(getenv("HOME")!=NULL){
-			home= getenv("HOME");
-		}else{
-			home=".";
-		}
+	string home = "";
+	if (getenv("HOME") != NULL) {
+		home = getenv("HOME");
+	} else {
+		home = ".";
+	}
 
 	fstream filestream;
-	filestream.open((home+"/.DIS/game.yml").c_str(), fstream::out);
+	filestream.open((home + "/.DIS/game.yml").c_str(), fstream::out);
 
 	filestream << out.c_str();
 

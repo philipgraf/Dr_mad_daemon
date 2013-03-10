@@ -14,6 +14,7 @@
 #include "Camera.h"
 #include "Event.h"
 #include "BadGuy.h"
+#include "Language.h"
 
 using namespace std;
 
@@ -52,6 +53,7 @@ private:
 	Uint8 switches;
 	bool running; /**< while this is true the level will be rendered */
 	bool levelFinished;
+	Language lang;
 
 	Uint32 timer;
 

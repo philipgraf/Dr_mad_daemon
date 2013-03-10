@@ -39,14 +39,16 @@ Notification::Notification(string message, int displaySecs, int type, string ico
 	}
 	if (iconName == "") {
 		if (type == NOTIFICATION_INFO) {
-			iconName = NOTIFI"info.bmp";
+			iconName = NOTIFI"info";
 		} else if (type == NOTIFICATION_WARNING) {
-			iconName = NOTIFI"warning.bmp";
+			iconName = NOTIFI"warning";
 		}
+	} else {
+		iconName = ITEMS+iconName;
 	}
 	SDL_Surface *icon;
 
-	if ((temp = SDL_LoadBMP((ITEMS+iconName+".bmp").c_str())) == NULL) {
+	if ((temp = SDL_LoadBMP((iconName+".bmp").c_str())) == NULL) {
 		//TODO Throw exception
 		std::cout << "unable to load: " << iconName+".bmp" << std::endl;
 	} else {

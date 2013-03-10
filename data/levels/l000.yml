@@ -12,9 +12,6 @@ items:
     resistor:
         x: 9
         y: 16
-    screw:
-        x: 11
-        y: 16
     inductor:
         x: 13
         y: 16

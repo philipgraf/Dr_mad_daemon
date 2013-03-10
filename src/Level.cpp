@@ -50,7 +50,8 @@ Level::Level(unsigned levelnum) {
 	levelFinished = false;
 	string background;
 	float gravity;
-	YAML::Node levelconfig = YAML::LoadFile(LEVELS + levels[this->levelnum] + ".yml");
+	YAML::Node levelconfig = YAML::LoadFile(
+			LEVELS + levels[this->levelnum] + ".yml");
 
 	name = levelconfig["name"].Scalar();
 	width = levelconfig["width"].as<int>();
@@ -78,27 +79,34 @@ Level::Level(unsigned levelnum) {
 		this->bgImage = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
 		if (this->bgImage != 0) {
-			SDL_SetColorKey(this->bgImage, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(this->bgImage->format, 255, 0, 255));
+			SDL_SetColorKey(this->bgImage, SDL_SRCCOLORKEY | SDL_RLEACCEL,
+					SDL_MapRGB(this->bgImage->format, 255, 0, 255));
 		}
 	}
 
 	loadMapFile(levels[this->levelnum]);
 
-	player = new Player(levelconfig["player"]["x"].as<int>(), levelconfig["player"]["y"].as<int>(),Slot::slots[Game::curGame->settings.activeSlot]->getPdaLevel());
+	player = new Player(levelconfig["player"]["x"].as<int>(),
+			levelconfig["player"]["y"].as<int>(),
+			Slot::slots[Game::curGame->settings.activeSlot]->getPdaLevel());
 
 	YAML::Node badguys = levelconfig["badguys"];
 
 	for (YAML::iterator it = badguys.begin(); it != badguys.end(); ++it) {
-		new BadGuy(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
+		new BadGuy(it->first.Scalar(), it->second["x"].as<int>(),
+				it->second["y"].as<int>());
 	}
 
 	YAML::Node items = levelconfig["items"];
 	for (YAML::iterator it = items.begin(); it != items.end(); ++it) {
-		new Item(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
+		new Item(it->first.Scalar(), it->second["x"].as<int>(),
+				it->second["y"].as<int>());
 	}
 	YAML::Node environments = levelconfig["environments"];
-	for(YAML::iterator it = environments.begin(); it != environments.end(); ++it){
-		new Environment(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
+	for (YAML::iterator it = environments.begin(); it != environments.end();
+			++it) {
+		new Environment(it->first.Scalar(), it->second["x"].as<int>(),
+				it->second["y"].as<int>());
 	}
 
 	mainCam = new Camera(player);
@@ -187,10 +195,9 @@ void Level::render() {
 void Level::logic() {
 
 	updateTime();
-	if (time <= 0){
+	if (time <= 0) {
 		player->setAlive(false);
 	}
-
 
 	if (!player->isAlive()) {
 		Menu *gameOverMenu = new Menu(GAMEOVER);
@@ -207,9 +214,12 @@ void Level::logic() {
 //		levelresult.save();
 //		levelresult.show();
 
-		Slot::slots[Game::curGame->settings.activeSlot]->setPlayerItems(player->getItems());
-		Slot::slots[Game::curGame->settings.activeSlot]->setPdaLevel(player->getpda().getLevel());
-		Slot::slots[Game::curGame->settings.activeSlot]->checkAndSetFinishedLevels(levelnum);
+		Slot::slots[Game::curGame->settings.activeSlot]->setPlayerItems(
+				player->getItems());
+		Slot::slots[Game::curGame->settings.activeSlot]->setPdaLevel(
+				player->getpda().getLevel());
+		Slot::slots[Game::curGame->settings.activeSlot]->checkAndSetFinishedLevels(
+				levelnum);
 		Slot::saveSlots();
 
 		running = false;
@@ -236,7 +246,9 @@ void Level::logic() {
 		}
 	}
 	mainCam->logic();
-	for (vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
+	for (vector<Notification*>::iterator it =
+			Notification::notificationList.begin();
+			it != Notification::notificationList.end(); ++it) {
 		(*it)->timeout();
 		if (it == Notification::notificationList.end()) {
 			break;
@@ -309,7 +321,7 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 			exit(0);
 		}
 		delete pauseMenu;
-		player->delDirection(0xFFFF);
+		player->delDirection(0xFF);
 	} else if (sym == Game::curGame->settings.keyboard.left) {
 		player->setDirection(LEFT);
 	} else if (sym == Game::curGame->settings.keyboard.jump) {
@@ -324,8 +336,8 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->use();
 	} else if (sym == Game::curGame->settings.keyboard.pda) {
 		player->pda.show();
-		player->delDirection(0xFFFF);
-	} else if (sym == Game::curGame->settings.keyboard.grab){
+		player->delDirection(0xFF);
+	} else if (sym == Game::curGame->settings.keyboard.grab) {
 		player->grab();
 	}
 }
@@ -352,35 +364,35 @@ void Level::onWiiButtonEvent(int button) {
 			exit(0);
 		}
 		delete pauseMenu;
-		player->delDirection(0xFFFF);
+		player->delDirection(0xFF);
 	}
 
 	if (button & Game::curGame->settings.wiimote.left) {
 		player->setDirection(LEFT);
-	}else{
+	} else {
 		player->delDirection(LEFT);
 	}
 
 	if (button & Game::curGame->settings.wiimote.jump) {
 		player->setDirection(UP);
-	}else{
+	} else {
 		player->delDirection(UP);
 	}
 
 	if (button & Game::curGame->settings.wiimote.down) {
 		player->setDirection(DOWN);
-	}else{
+	} else {
 		player->delDirection(DOWN);
 	}
 
 	if (button & Game::curGame->settings.wiimote.right) {
 		player->setDirection(RIGHT);
-	} else{
+	} else {
 		player->delDirection(RIGHT);
 	}
 	if (button & Game::curGame->settings.wiimote.run) {
 		player->setRunning(true);
-	} else{
+	} else {
 		player->setRunning(false);
 	}
 
@@ -390,17 +402,17 @@ void Level::onWiiButtonEvent(int button) {
 
 	if (button & Game::curGame->settings.wiimote.pda) {
 		player->pda.show();
-		player->delDirection(0xFFFF);
+		player->delDirection(0xFF);
 	}
 
-	if(button & Game::curGame->settings.wiimote.grab){
+	if (button & Game::curGame->settings.wiimote.grab) {
 		player->grab();
-		player->delDirection(0xFFFF);
+		player->delDirection(0xFF);
 	}
 }
 
-void Level::switchActions(){
-	switch(levelnum){
+void Level::switchActions() {
+	switch (levelnum) {
 	case 0:
 		level0Logic();
 		break;
@@ -418,22 +430,48 @@ void Level::switchActions(){
 
 /******************************** LEVEL DEPENDENT SWITCH LOGICS ************************/
 
-void Level::level0Logic(){
+void Level::level0Logic() {
+	if (switches & TF_SWITCH1) {
+		if(player->getItems()["slot"] < 1){
+			switches &= ~TF_SWITCH1;	//unsets switch1 if slot is not in the inventory
+			new Notification(lang["item missing"],5);
+		}else{
+			switches = 0xFF;
+			tilelist[0][27][16]->setCurrentframe(1);
+			tilelist[0][34][16]->setCurrentframe(2);
+			tilelist[0][38][16]->setCurrentframe(2);
+
+			tilelist[0][35][16]->setFlags(TF_FINISH);
+			tilelist[0][36][16]->setFlags(TF_FINISH);
+			tilelist[0][37][16]->setFlags(TF_FINISH);
+
+		}
+	}
+	else {
+		tilelist[0][27][16]->setCurrentframe(0);
+		tilelist[0][34][16]->setCurrentframe(0);
+		tilelist[0][38][16]->setCurrentframe(0);
+	}
+
+	if (switches & TF_SWITCH2) {
+		new Notification(lang["pay first"],5);
+		tilelist[0][34][16]->setCurrentframe(1);
+		tilelist[0][38][16]->setCurrentframe(1);
+	}
 
 }
 
-void Level::level1Logic(){
+void Level::level1Logic() {
 
 }
 
-void Level::level2Logic(){
+void Level::level2Logic() {
 
 }
 
-void Level::level3Logic(){
+void Level::level3Logic() {
 
 }
-
 
 /******************************* GETTER / SETTER ***************************************/
 

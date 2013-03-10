@@ -116,3 +116,9 @@ antimatter:
 connect wiimote:
     en: Connect Wiimote
     de: Wiimote verbinden
+item missing:
+    en: I don't have everything I need!
+    de: Mir fehlt noch etwas!
+pay first:
+    en: I remember clearly the 7. commandment!
+    de: Ich erinnere mich gerade an das 7. Gebot!

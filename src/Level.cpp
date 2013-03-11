@@ -50,8 +50,7 @@ Level::Level(unsigned levelnum) {
 	levelFinished = false;
 	string background;
 	float gravity;
-	YAML::Node levelconfig = YAML::LoadFile(
-			LEVELS + levels[this->levelnum] + ".yml");
+	YAML::Node levelconfig = YAML::LoadFile(LEVELS + levels[this->levelnum] + ".yml");
 
 	name = levelconfig["name"].Scalar();
 	width = levelconfig["width"].as<int>();
@@ -79,34 +78,27 @@ Level::Level(unsigned levelnum) {
 		this->bgImage = SDL_DisplayFormat(tmp);
 		SDL_FreeSurface(tmp);
 		if (this->bgImage != 0) {
-			SDL_SetColorKey(this->bgImage, SDL_SRCCOLORKEY | SDL_RLEACCEL,
-					SDL_MapRGB(this->bgImage->format, 255, 0, 255));
+			SDL_SetColorKey(this->bgImage, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB(this->bgImage->format, 255, 0, 255));
 		}
 	}
 
 	loadMapFile(levels[this->levelnum]);
 
-	player = new Player(levelconfig["player"]["x"].as<int>(),
-			levelconfig["player"]["y"].as<int>(),
-			Slot::slots[Game::curGame->settings.activeSlot]->getPdaLevel());
+	player = new Player(levelconfig["player"]["x"].as<int>(), levelconfig["player"]["y"].as<int>(), Slot::slots[Game::curGame->settings.activeSlot]->getPdaLevel());
 
 	YAML::Node badguys = levelconfig["badguys"];
 
 	for (YAML::iterator it = badguys.begin(); it != badguys.end(); ++it) {
-		new BadGuy(it->first.Scalar(), it->second["x"].as<int>(),
-				it->second["y"].as<int>());
+		new BadGuy(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
 	}
 
 	YAML::Node items = levelconfig["items"];
 	for (YAML::iterator it = items.begin(); it != items.end(); ++it) {
-		new Item(it->first.Scalar(), it->second["x"].as<int>(),
-				it->second["y"].as<int>());
+		new Item(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
 	}
 	YAML::Node environments = levelconfig["environments"];
-	for (YAML::iterator it = environments.begin(); it != environments.end();
-			++it) {
-		new Environment(it->first.Scalar(), it->second["x"].as<int>(),
-				it->second["y"].as<int>());
+	for (YAML::iterator it = environments.begin(); it != environments.end(); ++it) {
+		new Environment(it->first.Scalar(), it->second["x"].as<int>(), it->second["y"].as<int>());
 	}
 
 	mainCam = new Camera(player);
@@ -214,12 +206,9 @@ void Level::logic() {
 //		levelresult.save();
 //		levelresult.show();
 
-		Slot::slots[Game::curGame->settings.activeSlot]->setPlayerItems(
-				player->getItems());
-		Slot::slots[Game::curGame->settings.activeSlot]->setPdaLevel(
-				player->getpda().getLevel());
-		Slot::slots[Game::curGame->settings.activeSlot]->checkAndSetFinishedLevels(
-				levelnum);
+		Slot::slots[Game::curGame->settings.activeSlot]->setPlayerItems(player->getItems());
+		Slot::slots[Game::curGame->settings.activeSlot]->setPdaLevel(player->getpda().getLevel());
+		Slot::slots[Game::curGame->settings.activeSlot]->checkAndSetFinishedLevels(levelnum);
 		Slot::saveSlots();
 
 		running = false;
@@ -246,9 +235,7 @@ void Level::logic() {
 		}
 	}
 	mainCam->logic();
-	for (vector<Notification*>::iterator it =
-			Notification::notificationList.begin();
-			it != Notification::notificationList.end(); ++it) {
+	for (vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
 		(*it)->timeout();
 		if (it == Notification::notificationList.end()) {
 			break;
@@ -432,29 +419,37 @@ void Level::switchActions() {
 
 void Level::level0Logic() {
 	if (switches & TF_SWITCH1) {
-		if(player->getItems()["slot"] < 1){
-			switches &= ~TF_SWITCH1;	//unsets switch1 if slot is not in the inventory
-			new Notification(lang["item missing"],5);
-		}else{
+		if (player->getItems()["slot"] < 1) {
+			switches &= ~TF_SWITCH1;	//unset switch1 if slot is not in the inventory
+			new Notification(lang["item missing"], 5);
+		} else {
 			switches = 0xFF;
+			// switch hand to green
 			tilelist[0][27][16]->setCurrentframe(1);
+
+			// switch checkpoint lights to green
 			tilelist[0][34][16]->setCurrentframe(2);
 			tilelist[0][38][16]->setCurrentframe(2);
 
+			// change tileflag of the doors to finish
 			tilelist[0][35][16]->setFlags(TF_FINISH);
 			tilelist[0][36][16]->setFlags(TF_FINISH);
 			tilelist[0][37][16]->setFlags(TF_FINISH);
 
 		}
-	}
-	else {
+	} else {
+		// switch hand to red
 		tilelist[0][27][16]->setCurrentframe(0);
+
+		// turn off checkpoint lights
 		tilelist[0][34][16]->setCurrentframe(0);
 		tilelist[0][38][16]->setCurrentframe(0);
 	}
 
-	if (switches & TF_SWITCH2) {
-		new Notification(lang["pay first"],5);
+	if (switches & TF_SWITCH2 && !(switches & TF_SWITCH1)) {
+		new Notification(lang["pay first"], 5);
+
+		// switch checkpoint lights to red
 		tilelist[0][34][16]->setCurrentframe(1);
 		tilelist[0][38][16]->setCurrentframe(1);
 	}

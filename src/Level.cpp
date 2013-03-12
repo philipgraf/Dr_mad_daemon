@@ -254,7 +254,6 @@ void Level::logic() {
 	}
 }
 
-
 /** Play function of the level.
  * the main loop which runs until running is false.
  * @see running
@@ -338,7 +337,7 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->delDirection(0xFF);
 	} else if (sym == Game::curGame->settings.keyboard.grab) {
 		player->grab();
-	}else if (sym == Game::curGame->settings.keyboard.up) {
+	} else if (sym == Game::curGame->settings.keyboard.up) {
 		player->setDirection(UP);
 	}
 }
@@ -354,7 +353,7 @@ void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->delDirection(RIGHT);
 	} else if (sym == Game::curGame->settings.keyboard.run) {
 		player->setRunning(false);
-	}else if (sym == Game::curGame->settings.keyboard.up) {
+	} else if (sym == Game::curGame->settings.keyboard.up) {
 		player->delDirection(UP);
 	}
 }
@@ -484,6 +483,33 @@ void Level::level0Logic() {
 }
 
 void Level::level1Logic() {
+	if (switches & TF_SWITCH1) {
+		//switch hand to green
+		tilelist[0][97][16]->setCurrentframe(1);
+
+		// open door
+		tilelist[0][96][15]->setCurrentframe(1);
+		tilelist[0][96][16]->setCurrentframe(1);
+		tilelist[0][96][17]->setCurrentframe(1);
+
+		//add finish flag
+		tilelist[0][96][15]->setFlags(TF_FINISH);
+		tilelist[0][96][16]->setFlags(TF_FINISH);
+		tilelist[0][96][17]->setFlags(TF_FINISH);
+	} else {
+		//switch hand to green
+		tilelist[0][97][16]->setCurrentframe(0);
+
+		// open door
+		tilelist[0][96][15]->setCurrentframe(0);
+		tilelist[0][96][16]->setCurrentframe(0);
+		tilelist[0][96][17]->setCurrentframe(0);
+
+		//add finish flag
+		tilelist[0][96][15]->setFlags(0);
+		tilelist[0][96][16]->setFlags(0);
+		tilelist[0][96][17]->setFlags(0);
+	}
 
 }
 

@@ -176,6 +176,9 @@ void Level::loadMapFile(string filename) {
 	filestream.close();
 }
 
+/** Render function from level.
+ *	tell the main camera to render the level and flip the surface
+ */
 void Level::render() {
 	mainCam->drawImage();
 #if DEBUG >= 3
@@ -184,6 +187,10 @@ void Level::render() {
 	SDL_Flip(SDL_GetVideoSurface());
 }
 
+/** Logic function of the level.
+ * update the time, call all tile, entity, items, notification and camera logic.
+ * also check if the player is alive and if the level is finished.
+ */
 void Level::logic() {
 
 	updateTime();
@@ -247,6 +254,11 @@ void Level::logic() {
 	}
 }
 
+
+/** Play function of the level.
+ * the main loop which runs until running is false.
+ * @see running
+ */
 void Level::play() {
 	SDL_Event event;
 #ifndef DEBUG
@@ -312,7 +324,7 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	} else if (sym == Game::curGame->settings.keyboard.left) {
 		player->setDirection(LEFT);
 	} else if (sym == Game::curGame->settings.keyboard.jump) {
-		player->setDirection(UP);
+		player->setJumping(true);
 	} else if (sym == Game::curGame->settings.keyboard.down) {
 		player->setDirection(DOWN);
 	} else if (sym == Game::curGame->settings.keyboard.right) {
@@ -333,7 +345,7 @@ void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	if (sym == Game::curGame->settings.keyboard.left) {
 		player->delDirection(LEFT);
 	} else if (sym == Game::curGame->settings.keyboard.jump) {
-		player->delDirection(UP);
+		player->setJumping(false);
 	} else if (sym == Game::curGame->settings.keyboard.down) {
 		player->delDirection(DOWN);
 	} else if (sym == Game::curGame->settings.keyboard.right) {
@@ -398,6 +410,14 @@ void Level::onWiiButtonEvent(int button) {
 	}
 }
 
+/** Call the right level-Switch logic
+ * call the level logic depend on the levelnumber.
+ * @see level0logic()
+ * @see level1logic()
+ * @see level2logic()
+ * @see level3logic()
+ * @see levelnum()
+ */
 void Level::switchActions() {
 	switch (levelnum) {
 	case 0:
@@ -417,6 +437,9 @@ void Level::switchActions() {
 
 /******************************** LEVEL DEPENDENT SWITCH LOGICS ************************/
 
+/** Switch logic of level0.
+ * switch1 (paystation) if slot is in the inventory, turn lights to green and and switch the flags of the door to finish
+ */
 void Level::level0Logic() {
 	if (switches & TF_SWITCH1) {
 		if (player->getItems()["slot"] < 1) {
@@ -446,7 +469,7 @@ void Level::level0Logic() {
 		tilelist[0][38][16]->setCurrentframe(0);
 	}
 
-	if (switches & TF_SWITCH2 && !(switches & TF_SWITCH1)) {
+	if ((switches & TF_SWITCH2) && !(switches & TF_SWITCH1)) {
 		new Notification(lang["pay first"], 5);
 
 		// switch checkpoint lights to red
@@ -470,6 +493,9 @@ void Level::level3Logic() {
 
 /******************************* GETTER / SETTER ***************************************/
 
+/** Get the gravity of the level.
+ * @return the y value of the gravity vector
+ */
 int Level::getGravity() const {
 	return gravity2d->y;
 }

@@ -57,8 +57,18 @@ Environment::Environment(string type, int x, int y) :
 	dynamicBox.SetAsBox(halfWidth, halfHeight);
 	b2FixtureDef *fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = &dynamicBox;
-	fixtureDef->density = 35.0;
-	fixtureDef->friction = 0.3;
+
+	if(type == "wooden crate"){
+		fixtureDef->density = 30.0;
+	}else if (type == "matal create"){
+		fixtureDef->density = 150.0;
+	}else if (type == "matal create 2"){
+		fixtureDef->density = 90.0;
+	}else{
+		fixtureDef->density = 60.0;
+	}
+
+	fixtureDef->friction = 0.5;
 	body->CreateFixture(fixtureDef);
 
 	b2PolygonShape sensorRight;

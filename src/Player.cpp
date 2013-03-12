@@ -39,6 +39,7 @@ Player::Player(int x, int y, int level) :
 	selectedEntity = 0;
 
 	running = false;
+	jumping = false;
 
 	impactSoundPlayed = 0;
 
@@ -203,7 +204,7 @@ void Player::move() {
 		action = ACTION_WALK_RIGHT;
 
 	}
-	if (direction & UP) {
+	if (jumping) {
 		if (checkCollision() & DOWN) {
 			float impulse = body->GetMass();
 			body->ApplyLinearImpulse(b2Vec2(0, -impulse * 4), body->GetWorldCenter());
@@ -218,19 +219,25 @@ void Player::move() {
 	}
 
 }
+
 void Player::grab() {
 	if (selectedEntity != 0) {
 		b2Body *selectedBody = entityList[selectedEntity]->getBody();
 		if (grebJoin == NULL) {
-			selectedBody->SetTransform(selectedBody->GetPosition() - b2Vec2(0, 1), 0.0);
+			b2Vec2 distanceVec = entityList[selectedEntity]->getBody()->GetWorldCenter() - body->GetWorldCenter();
+
+			distanceVec = addAngle(distanceVec,45);
+
+			selectedBody->SetTransform(body->GetPosition() + distanceVec, 0.0);
 			b2RevoluteJointDef rjd;
 			rjd.Initialize(entityList[selectedEntity]->getBody(), body, body->GetWorldCenter());
 			rjd.enableLimit = true;
 			grebJoin = (b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&rjd);
 		} else {
 			b2Vec2 force = grebJoin->GetLocalAnchorB() - grebJoin->GetLocalAnchorA();
-			force.x *= 10;
-			force.y *= 10;
+			force.x *= 10000;
+			force.y *= 100000;
+//			force *= 10000;
 			Game::curGame->getCurrentLevel()->getWorld()->DestroyJoint(grebJoin);
 			grebJoin = NULL;
 			selectedBody->ApplyForceToCenter(force);
@@ -291,6 +298,7 @@ void Player::logic() {
 
 	Entity::logic();
 }
+
 void Player::addItem(string item) {
 	Entity::addItem(item);
 
@@ -303,10 +311,48 @@ PDA &Player::getpda() {
 	return pda;
 }
 
+bool Player::isJumping() const {
+	return jumping;
+}
+
+void Player::setJumping(bool jumping) {
+	this->jumping = jumping;
+}
+
 unsigned Player::getSelectedEntity() const {
 	return selectedEntity;
 }
 
 float Player::getY() const {
 	return body->GetPosition().y + height / 8;
+}
+
+
+b2Vec2 addAngle(b2Vec2 vector, float angle){
+	b2Vec2 newVector;
+
+	float r = vector.Length();
+	float phi;
+	if(vector.x > 0 )
+		phi = atan2f(vector.y,vector.x) - (angle * (M_PI/180));
+	else{
+		phi = atan2f(vector.y,vector.x) + (angle * (M_PI/180));
+	}
+
+	newVector.x = r*cosf(phi);
+	newVector.y = r*sinf(phi);
+
+	return newVector;
+}
+
+b2Vec2 setAngle(b2Vec2 vector, float angle){
+	b2Vec2 newVector;
+
+	float r = vector.Length();
+	float phi = angle * (M_PI/180);
+
+	newVector.x = r*cosf(phi);
+	newVector.y = r*sinf(phi);
+
+	return newVector;
 }

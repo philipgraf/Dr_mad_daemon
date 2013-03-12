@@ -125,4 +125,3 @@ void Slot::setName(const string& name) {
 
 Slot::~Slot() {
 }
-

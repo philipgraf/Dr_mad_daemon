@@ -78,31 +78,12 @@ public:
 	Level(unsigned levelnum);
 	~Level();
 
-	/** Render function from level.
-	 *	tell the main camera to render the level and flip the surface
-	 */
 	void render();
 
-	/** Logic function of the level.
-	 * update the time, call all tile, entity, items, notification and camera logic.
-	 * also check if the player is alive and if the level is finished.
-	 */
 	void logic();
 
-	/** Play function of the level.
-	 * the main loop which runs until running is false.
-	 * @see running()
-	 */
 	void play();
 
-	/** Call the right level-Switch logic
-	 * call the level logic depend on the levelnumber.
-	 * @see level0logic()
-	 * @see level1logic()
-	 * @see level2logic()
-	 * @see level3logic()
-	 * @see levelnum()
-	 */
 	void switchActions();
 
 	/*********************** GETTER / SETTER ************************/

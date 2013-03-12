@@ -14,10 +14,12 @@
 #include <Box2D/Box2D.h>
 #include <map>
 #include <string>
+#include <cmath>
 
 class Player: public Entity {
 private:
 	bool running;
+	bool jumping;
 	unsigned selectedEntity;
 	int impactSoundPlayed;
 	b2RevoluteJoint *grebJoin;
@@ -46,6 +48,11 @@ public:
 	PDA &getpda();
 	float getY() const;
 	unsigned getSelectedEntity() const;
+	bool isJumping() const;
+	void setJumping(bool jumping);
 };
+
+b2Vec2 addAngle(b2Vec2 vector, float angle);
+b2Vec2 setAngle(b2Vec2 vector, float angle);
 
 #endif /* PLAYER_H_ */

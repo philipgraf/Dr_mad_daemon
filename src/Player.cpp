@@ -204,6 +204,32 @@ void Player::move() {
 		action = ACTION_WALK_RIGHT;
 
 	}
+
+	if ((direction & UP) && grebJoin != NULL) {
+		if (selectedEntity != 0) {
+			Game::curGame->getCurrentLevel()->getWorld()->DestroyJoint(grebJoin);
+			*distanceVec = addAngle(*distanceVec, 5);
+			entityList[selectedEntity]->getBody()->SetTransform(body->GetPosition() + *distanceVec, 0.0);
+			b2RevoluteJointDef rjd;
+			rjd.Initialize(entityList[selectedEntity]->getBody(), body, body->GetWorldCenter());
+
+			grebJoin = (b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&rjd);
+		}
+	}
+
+	if ((direction & DOWN) && grebJoin != NULL) {
+		if (selectedEntity != 0) {
+			Game::curGame->getCurrentLevel()->getWorld()->DestroyJoint(grebJoin);
+
+			*distanceVec = addAngle(*distanceVec, -5);
+			entityList[selectedEntity]->getBody()->SetTransform(body->GetPosition() + *distanceVec, 0.0);
+			b2RevoluteJointDef rjd;
+			rjd.Initialize(entityList[selectedEntity]->getBody(), body, body->GetWorldCenter());
+
+			grebJoin = (b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&rjd);
+		}
+	}
+
 	if (jumping) {
 		if (checkCollision() & DOWN) {
 			float impulse = body->GetMass();
@@ -213,7 +239,7 @@ void Player::move() {
 		//action = ACTION_JUMP_LEFT;
 	}
 
-	if (!(direction & (LEFT | RIGHT | UP))) {
+	if ((!(direction & (LEFT | RIGHT)) && !jumping)) {
 		wheels[0]->SetFriction(10.0);
 		action = ACTION_STAY;
 	}
@@ -224,22 +250,28 @@ void Player::grab() {
 	if (selectedEntity != 0) {
 		b2Body *selectedBody = entityList[selectedEntity]->getBody();
 		if (grebJoin == NULL) {
-			b2Vec2 distanceVec = entityList[selectedEntity]->getBody()->GetWorldCenter() - body->GetWorldCenter();
+			distanceVec = new b2Vec2(entityList[selectedEntity]->getBody()->GetWorldCenter() - body->GetWorldCenter());
 
-			distanceVec = addAngle(distanceVec,45);
+			*distanceVec = addAngle(*distanceVec, 45, false);
 
-			selectedBody->SetTransform(body->GetPosition() + distanceVec, 0.0);
+			selectedBody->SetTransform(body->GetPosition() + *distanceVec, 0.0);
 			b2RevoluteJointDef rjd;
 			rjd.Initialize(entityList[selectedEntity]->getBody(), body, body->GetWorldCenter());
-			rjd.enableLimit = true;
+			//rjd.enableLimit = true;
+			rjd.lowerAngle = -M_PI;
+			rjd.upperAngle = M_PI;
+
 			grebJoin = (b2RevoluteJoint*) Game::curGame->getCurrentLevel()->getWorld()->CreateJoint(&rjd);
+
 		} else {
-			b2Vec2 force = grebJoin->GetLocalAnchorB() - grebJoin->GetLocalAnchorA();
+			b2Vec2 force = *distanceVec;
 			force.x *= 10000;
-			force.y *= 100000;
+			force.y *= 10000;
 //			force *= 10000;
 			Game::curGame->getCurrentLevel()->getWorld()->DestroyJoint(grebJoin);
 			grebJoin = NULL;
+			delete distanceVec;
+			distanceVec = NULL;
 			selectedBody->ApplyForceToCenter(force);
 		}
 	}
@@ -248,18 +280,20 @@ void Player::grab() {
 void Player::logic() {
 //TODO check connected tiles for shock and other game events
 	if (pda.getLevel() > 0 /*& items["gravitiy module"] > 0*/) {
-		if (selectedEntity == 0) {
-			for (unsigned i = 0; i < entityList.size(); i++) {
-				// get all dead entities within 3 m
-				//TODO get the range from PDA
-				if (!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length() < 3.0) {
-					selectedEntity = i;
-					break;
+		if (grebJoin == NULL) {
+			if (selectedEntity == 0) {
+				for (unsigned i = 0; i < entityList.size(); i++) {
+					// get all dead entities within 3 m
+					//TODO get the range from PDA
+					if (!entityList[i]->isAlive() && (entityList[i]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length() < 3.0) {
+						selectedEntity = i;
+						break;
+					}
 				}
+				// check if selected entity is out of range
+			} else if (selectedEntity >= entityList.size() || ((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length() > 3.0)) {
+				selectedEntity = 0;
 			}
-			// check if selected entity is out of range
-		} else if (selectedEntity >= entityList.size() || ((selectedEntity > 0) && (entityList[selectedEntity]->getBody()->GetWorldCenter() - this->getBody()->GetWorldCenter()).Length() > 3.0)) {
-			selectedEntity = 0;
 		}
 	}
 
@@ -327,32 +361,39 @@ float Player::getY() const {
 	return body->GetPosition().y + height / 8;
 }
 
-
-b2Vec2 addAngle(b2Vec2 vector, float angle){
+b2Vec2 addAngle(b2Vec2 vector, float angle, bool limit) {
 	b2Vec2 newVector;
 
 	float r = vector.Length();
-	float phi;
-	if(vector.x > 0 )
-		phi = atan2f(vector.y,vector.x) - (angle * (M_PI/180));
-	else{
-		phi = atan2f(vector.y,vector.x) + (angle * (M_PI/180));
+	float phi = atan2f(vector.y, vector.x);
+	if ((!limit) || (phi <= 0.0 && phi > -M_PI)) {
+		if (vector.x > 0)
+			phi -= (angle * (M_PI / 180));
+		else {
+			phi += (angle * (M_PI / 180));
+		}
+	} else if (phi > 0 && phi < M_PI_2) {
+		phi = 0;
+	} else if (phi <= -M_PI || phi > M_PI_2) {
+		phi = -M_PI + 0.01;
 	}
 
-	newVector.x = r*cosf(phi);
-	newVector.y = r*sinf(phi);
+	cout << phi << endl;
+
+	newVector.x = r * cosf(phi);
+	newVector.y = r * sinf(phi);
 
 	return newVector;
 }
 
-b2Vec2 setAngle(b2Vec2 vector, float angle){
+b2Vec2 setAngle(b2Vec2 vector, float angle) {
 	b2Vec2 newVector;
 
 	float r = vector.Length();
-	float phi = angle * (M_PI/180);
+	float phi = angle * (M_PI / 180);
 
-	newVector.x = r*cosf(phi);
-	newVector.y = r*sinf(phi);
+	newVector.x = r * cosf(phi);
+	newVector.y = r * sinf(phi);
 
 	return newVector;
 }

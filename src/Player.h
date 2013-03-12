@@ -23,6 +23,7 @@ private:
 	unsigned selectedEntity;
 	int impactSoundPlayed;
 	b2RevoluteJoint *grebJoin;
+	b2Vec2 *distanceVec;
 public:
 	Player(int x, int y, int level);
 	virtual ~Player();
@@ -52,7 +53,7 @@ public:
 	void setJumping(bool jumping);
 };
 
-b2Vec2 addAngle(b2Vec2 vector, float angle);
+b2Vec2 addAngle(b2Vec2 vector, float angle,bool limit=true);
 b2Vec2 setAngle(b2Vec2 vector, float angle);
 
 #endif /* PLAYER_H_ */

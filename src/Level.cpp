@@ -338,6 +338,8 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->delDirection(0xFF);
 	} else if (sym == Game::curGame->settings.keyboard.grab) {
 		player->grab();
+	}else if (sym == Game::curGame->settings.keyboard.up) {
+		player->setDirection(UP);
 	}
 }
 
@@ -352,6 +354,8 @@ void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 		player->delDirection(RIGHT);
 	} else if (sym == Game::curGame->settings.keyboard.run) {
 		player->setRunning(false);
+	}else if (sym == Game::curGame->settings.keyboard.up) {
+		player->delDirection(UP);
 	}
 }
 
@@ -373,9 +377,9 @@ void Level::onWiiButtonEvent(int button) {
 	}
 
 	if (button & Game::curGame->settings.wiimote.jump) {
-		player->setDirection(UP);
+		player->setJumping(true);
 	} else {
-		player->delDirection(UP);
+		player->setJumping(false);
 	}
 
 	if (button & Game::curGame->settings.wiimote.down) {

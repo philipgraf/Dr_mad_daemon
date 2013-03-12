@@ -1,5 +1,5 @@
 name    : WTF!!
-width   : 70
+width   : 100
 height  : 20
 bgImage : city.bmp
 bgMusic : LukHash_DigitalHeart.ogg
@@ -11,22 +11,22 @@ player:
 badguys:
     vacuuBoy:
         x: 5
-        y: 15
+        y: 5
     vacuuBoy:
         x: 15
-        y: 15
+        y: 5
     vacuuBoy:
         x: 25
-        y: 15
+        y: 5
     vacuuBoy:
         x: 35
-        y: 15
+        y: 5
     vacuuBoy:
         x: 45
-        y: 15
+        y: 5
     vacuuBoy:
         x: 55
-        y: 15
+        y: 5
     vacuuBoy:
         x: 65
-        y: 15
+        y: 5

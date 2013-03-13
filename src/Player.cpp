@@ -22,6 +22,7 @@ Player::Player(int x, int y, int level) :
 	height = 2;
 
 	grebJoin = NULL;
+	distanceVec = NULL;
 
 	actionframes.push_back(1);
 	actionframes.push_back(8);

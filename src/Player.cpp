@@ -378,8 +378,6 @@ b2Vec2 addAngle(b2Vec2 vector, float angle, bool limit) {
 		phi = -M_PI + 0.01;
 	}
 
-	cout << phi << endl;
-
 	newVector.x = r * cosf(phi);
 	newVector.y = r * sinf(phi);
 

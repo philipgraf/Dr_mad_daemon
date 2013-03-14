@@ -137,8 +137,12 @@ float Entity::getX() const {
 	return body->GetPosition().x;
 }
 
+
+/** Get get current y Position of the Entity.
+ * @return the y position of the Entity
+ */
 float Entity::getY() const {
-	return body->GetPosition().y ;
+	return body->GetWorldCenter().y ;
 }
 
 SDL_Surface* Entity::getImage() {

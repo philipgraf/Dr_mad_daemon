@@ -17,12 +17,9 @@ using namespace std;
 class BadGuy: public Entity {
 public:
 	BadGuy(string type, int x, int y);
-	virtual ~BadGuy();
 
 	void move();
 	void logic();
-
-	float getY() const;
 };
 
 #endif /* BADGUY_H_ */

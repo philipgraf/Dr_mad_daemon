@@ -68,9 +68,13 @@ Camera::Camera(float x, float y, int w, int h) {
 
 }
 
-Camera::~Camera() {
-}
-
+/** Main logic of the Camera
+ * If the mode is sticky the position will be recalculated from the Entity stored in the target variable
+ * Checks the x and y value of the camera and set it back to zero if it is lower then zero and set it back to the maximum width.
+ *
+ * @see mode
+ * @see target
+ */
 void Camera::logic() {
 
 	if (cameraMode == STICKY) {
@@ -97,6 +101,14 @@ void Camera::logic() {
 
 }
 
+/**
+ * call the draw functions in the correct order. From background to foreground.
+ * @see drawBackground()
+ * @see drawTiles()
+ * @see drawEntities()
+ * @see Items()
+ * @see drawNotification()
+ */
 void Camera::drawImage() {
 	drawBackground();
 	drawTiles(BACKGROUND);
@@ -107,6 +119,10 @@ void Camera::drawImage() {
 	drawNotification();
 }
 
+/**
+ * draw all notifications stored in the notification list
+ * @see Notification::notificationList
+ */
 void Camera::drawNotification() {
 	int i = 0;
 	for (vector<Notification*>::iterator it = Notification::notificationList.begin(); it != Notification::notificationList.end(); ++it) {
@@ -120,6 +136,10 @@ void Camera::drawNotification() {
 	}
 }
 
+/**
+ * draw all items stored in the item list
+ * @see Item::itemList
+ */
 void Camera::drawItems() {
 	for (unsigned i = 0; i < Item::itemlist.size(); i++) {
 		SDL_Rect destRect = Item::itemlist[i]->getClipRect();
@@ -129,6 +149,12 @@ void Camera::drawItems() {
 	}
 }
 
+/**
+ * draw all entities stored in the entity list
+ * and put the crosshairs on it if it is selected
+ * @see Entity::entityList
+ * @see crosshairs
+ */
 void Camera::drawEntities() {
 
 	for (vector<Entity*>::iterator it = Entity::entityList.begin(); it != Entity::entityList.end(); ++it) {
@@ -174,6 +200,10 @@ void Camera::drawEntities() {
 	}
 }
 
+/**
+ * compute the viewable range of the litelist and draw the range of given layer on the screen. (Background, Main and Foreground)
+ * @param layer contails the layer which will be rendered
+ */
 void Camera::drawTiles(int layer) {
 //get shortcut to the level
 	Level* curLevel = Game::curGame->getCurrentLevel();
@@ -216,6 +246,9 @@ void Camera::drawTiles(int layer) {
 
 }
 
+/**
+ * draw the backgrounde image of the Level on the screen.
+ */
 void Camera::drawBackground() {
 	Level *curLevel = Game::curGame->getCurrentLevel();
 	int bgWidth = curLevel->getBackground()->clip_rect.w;
@@ -238,6 +271,12 @@ void Camera::drawBackground() {
 
 }
 
+/**
+ * Set the position of the camera to given x and y values.
+ *
+ * @param x new x value
+ * @param y new y value
+ */
 void Camera::setPosition(int x, int y) {
 	this->x = x - width / 2;
 	this->y = y - height / 2;
@@ -253,8 +292,7 @@ void Camera::setPosition(Entity* target) {
 }
 
 /**
- * Move camera.
- *
+ * Increase the x and y of the camera by the given values.
  * @param h Horizontal movement
  * @param v Vertical movement
  */
@@ -295,30 +333,56 @@ void Camera::setHeight(int height) {
 	this->height = height;
 }
 
+/**
+ * Get the target the camera have focused on.
+ */
 const Entity* Camera::getTarget() const {
 	return target;
 }
 
+/**
+ * Set the target of the camera
+ */
 void Camera::setTarget(Entity* target) {
 	this->target = target;
 }
 
+/**
+ * get the Width of the camera
+ * @return the current camera height
+ */
 int Camera::getWidth() const {
 	return width;
 }
 
+/**
+ * Set the width of the camera to given value.
+ * @param width the value camera will be set to.
+ */
 void Camera::setWidth(int width) {
 	this->width = width;
 }
 
+/**
+ * get the x position of the camera
+ * @return the current x position
+ */
 int Camera::getX() const {
 	return x;
 }
 
+/**
+ * get the y position of the camera
+ * @return the current y position
+ */
 int Camera::getY() const {
 	return y;
 }
 
+/**
+ * get the x,y position and the width and height as SDL_Rect
+ * @return the whole camera proportion as SDL_Rect
+ */
 SDL_Rect Camera::getRect() {
 	SDL_Rect rec;
 	rec.x = x;

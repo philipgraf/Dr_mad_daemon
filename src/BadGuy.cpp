@@ -19,6 +19,15 @@
 
 using namespace std;
 
+/** Constructor of BadGuy.
+ * Call the constructor of Entity. Get the information about the specific BadGuy from the bayguy.yml
+ * Build collision box with width and height from the file.
+ *
+ * @see Entity()
+ * @param type based on this the width, height, maxSpeed and items will be read form file
+ * @param x the x position of the BadGuy
+ * @param y the y position of the BadGuy
+ */
 BadGuy::BadGuy(string type, int x, int y) :
 		Entity() {
 	YAML::Node badguys = YAML::LoadFile(CONFIGS"badguy.yml");
@@ -123,9 +132,13 @@ BadGuy::BadGuy(string type, int x, int y) :
 
 }
 
-BadGuy::~BadGuy() {
-}
-
+/** The basic BadGuy movement.
+ *  move the BadGuy if he is grounded.
+ *  set the action variable corresponding to the direction
+ *
+ *  @see grounded
+ *  @see direction
+ */
 void BadGuy::move() {
 
 	if (grounded) {
@@ -139,6 +152,13 @@ void BadGuy::move() {
 	}
 }
 
+/** The main logic.
+ * check the collisions of the BadGuy.
+ * Set alive variable to false if he got a top collision.
+ * Change the direction if collision is left of right.
+ * Call the logic from the Entity.
+ * @see Entity::logic()
+ */
 void BadGuy::logic() {
 	int collision = checkCollision();
 
@@ -158,8 +178,4 @@ void BadGuy::logic() {
 
 		Entity::logic();
 	}
-}
-
-float BadGuy::getY() const {
-	return body->GetPosition().y + 0.05;
 }

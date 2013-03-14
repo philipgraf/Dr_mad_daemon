@@ -36,7 +36,7 @@ class Entity {
 private:
 	Uint32 timer; /**< time in milliseconds needed for nextframe */
 protected:
-	std::map<std::string, int> items;
+	std::map<std::string, int> items; /**< a map with all items and there amount */
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
 	bool alive; /**< contains true if the entity is still alive and false if not */
 

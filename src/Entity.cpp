@@ -200,7 +200,7 @@ int Entity::getCurrentframe() const {
 
 /**
  * set the current frame to given value
- * @param the value current frame will be set to
+ * @param currentframe the value current frame will be set to
  */
 void Entity::setCurrentframe(int currentframe) {
 	this->currentframe = currentframe;
@@ -214,38 +214,73 @@ float Entity::getHeight() const {
 	return height;
 }
 
+/**
+ * set the height of the entity to given value
+ * @param height the new height of the entity
+ */
 void Entity::setHeight(float height) {
 	this->height = height;
 }
 
+/**
+ * get the width of the Entity
+ * @return the with of the Entity
+ */
 float Entity::getWidth() const {
 	return width;
 }
 
+/**
+ * set the width of the entity to given value
+ * @param width the new width of the entity
+ */
 void Entity::setWidth(float width) {
 	this->width = width;
 }
 
+/**
+ * get the body of the entity which contains the x and y values and all his shapes
+ * @return the body of the entity
+ */
 b2Body* Entity::getBody() {
 	return body;
 }
 
+/**
+ * get the direction of the entity
+ */
 Uint8 Entity::getDirection() const {
 	return direction;
 }
 
+/**
+ * set bits of the direction variable
+ * @param direction this contains the bits which will be set
+ */
 void Entity::setDirection(Uint8 direction) {
 	this->direction |= direction;
 }
-
+/**
+ * delete bits of the direction variable
+ * @param direction this contains the bits which will be deleted
+ */
 void Entity::delDirection(Uint8 direction) {
 	this->direction &= ~direction;
 }
 
+/**
+ * get the itemlist of the entity
+ * @return the items of the entity
+ * @see items
+ */
 std::map<std::string, int>& Entity::getItems() {
 	return items;
 }
 
+/**
+ * add the given item to the itemlist if the item is already in the item list the amount of the item will be increased.
+ * @param item the item which will be added
+ */
 void Entity::addItem(std::string item) {
 	items[item]++;
 }

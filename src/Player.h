@@ -25,7 +25,6 @@ private:
 	b2Vec2 *distanceVec; /**< Vector from player to grabbed objekt*/
 public:
 	Player(int x, int y, int level);
-	virtual ~Player();
 
 	PDA pda; /**< the players pda */
 

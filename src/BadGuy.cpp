@@ -127,7 +127,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	fixtureDef->isSensor = true;
 	this->sensorBottom = body->CreateFixture(fixtureDef);
 
-	direction = RIGHT;
+	direction = LEFT;
 	grounded = false;
 
 }

@@ -28,7 +28,6 @@ private:
 	int pdaLevel;/**< the upgadelevel of the pda*/
 public:
 	Slot(std::string name = "DrInSane");
-	virtual ~Slot();
 
 	void checkAndSetFinishedLevels(int levelnum);
 	int getFinishedLevels() const;

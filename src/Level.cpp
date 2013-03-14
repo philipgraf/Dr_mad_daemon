@@ -192,7 +192,7 @@ void Level::render() {
  * also check if the player is alive and if the level is finished.
  */
 void Level::logic() {
-
+	static bool entityCreated = false;
 	updateTime();
 	if (time <= 0) {
 		player->setAlive(false);
@@ -201,6 +201,14 @@ void Level::logic() {
 	if (!player->isAlive()) {
 		Menu *gameOverMenu = new Menu(GAMEOVER);
 		gameOverMenu->show();
+	}
+	if(levelnum == 2 && tilelist[1][43][16]->getCurrentframe() == 0 && tilelist[1][43][16]->getId() != 0 ){
+		if(entityCreated == false){
+			new BadGuy("vacuuBoy",41,16);
+			entityCreated = true;
+		}
+	}else{
+		entityCreated= false;
 	}
 
 	if (levelFinished) {
@@ -514,7 +522,18 @@ void Level::level1Logic() {
 }
 
 void Level::level2Logic() {
-
+	if (switches & TF_SWITCH1) {
+		//remove iBuild
+		tilelist[1][43][16]->setId(0);
+		tilelist[1][43][17]->setId(0);
+		tilelist[1][43][18]->setId(0);
+		tilelist[1][44][16]->setId(0);
+		tilelist[1][44][17]->setId(0);
+		tilelist[1][44][18]->setId(0);
+		tilelist[1][45][16]->setId(0);
+		tilelist[1][45][17]->setId(0);
+		tilelist[1][45][18]->setId(0);
+	}
 }
 
 void Level::level3Logic() {

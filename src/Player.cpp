@@ -10,8 +10,9 @@
 using namespace std;
 
 /**
- * Constructor of Player
- *
+ * Constructor of Player.
+ * Sets size, animation parameters, some physical attributes and load image
+ * Also the "physical body is generated and sensors for collision detection are added
  *
  * @param x horizontal position
  * @param y vertical position
@@ -134,21 +135,23 @@ Player::Player(int x, int y, int level) :
 
 }
 
-Player::~Player() {
-}
-
+/**
+ * Handles the "use"-logic.
+ * if a dead object is below the player it will be looted (items will be thrown out and entity will be deleted).
+ * if the player is in front of a tile with a flag switchactions will be executed
+ */
 void Player::use() {
-	BadGuy *badguy;
+	Entity *deadguy;
 	// check player contacts with dead bodys and loot them
 	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
 		if (contactEdge->contact->GetFixtureA() == sensorBottom && contactEdge->contact->IsTouching()) {
-			if ((badguy = (BadGuy*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData()) != NULL) {
-				delete badguy;
+			if ((deadguy = (Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData()) != NULL) {
+				delete deadguy;
 				break;
 			}
 		} else if (contactEdge->contact->GetFixtureB() == sensorBottom && contactEdge->contact->IsTouching()) {
-			if ((badguy = (BadGuy*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData()) != NULL) {
-				delete badguy;
+			if ((deadguy = (Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData()) != NULL) {
+				delete deadguy;
 				break;
 			}
 		}
@@ -169,12 +172,17 @@ void Player::use() {
 		}
 	}
 }
-
+/**
+ * Handles the player movement
+ *
+ * checkes the wanted direction of movement and applies the needed forces to the player
+ * also handles the the aiming if a dead body is grabbed
+ */
 void Player::move() {
 	if (running) {
 		maxVelocity = 8;
 	} else {
-		maxVelocity = 4;
+		maxVelocity = 5;
 	}
 
 	if (direction & LEFT) {

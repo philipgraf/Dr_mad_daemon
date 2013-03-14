@@ -40,8 +40,8 @@
  */
 class Event {
 private:
-	bdaddr_t blueaddr;
-	cwiid_wiimote_t *wiimote;
+	bdaddr_t blueaddr; /**< contains the bluetooth address of the wiimote  */
+	cwiid_wiimote_t *wiimote; /**< contains the state of the wiimote */
 public:
 	Event();
 	virtual ~Event();

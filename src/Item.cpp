@@ -1,10 +1,3 @@
-/*
- * Item.cpp
- *
- *  Created on: 25.02.2013
- *      Author: philip
- */
-
 #include "Item.h"
 #include "define.h"
 #include "Game.h"
@@ -13,6 +6,19 @@ using namespace std;
 
 vector<Item*> Item::itemlist;
 
+/**
+ * Load the image.
+ * also a colorkey is set to make a defined color(0xFF00FF) transparent as .bmp do not provide an alpha channel but give the best performance
+ * build the collision box of the item.
+ * push the item in the itemList.
+ *
+ *
+ * @param name the type of the item
+ * @param x the x position of the item
+ * @param y the y position of the item
+ * @param relX the x value of the throw vector
+ * @param relY the y value of the throw vector
+ */
 Item::Item(std::string name, int x, int y, int relX, int relY) {
 	this->type = name;
 
@@ -55,6 +61,9 @@ Item::Item(std::string name, int x, int y, int relX, int relY) {
 
 }
 
+/**
+ * delete the item form the itemList and free all allocated memory
+ */
 Item::~Item() {
 	SDL_FreeSurface(image);
 	vector<Item*>::iterator pos;
@@ -64,6 +73,10 @@ Item::~Item() {
 	Game::curGame->getCurrentLevel()->getWorld()->DestroyBody(body);
 }
 
+/**
+ * enable collision with the player after 1000 milliseconds and check the collision.
+ * If a collision is detected the item will be added to the colliding entity.
+ */
 void Item::logic() {
 	if(SDL_GetTicks() - timer > 1000){
 		body->GetFixtureList()->SetFilterData(b2Filter());
@@ -83,14 +96,18 @@ void Item::logic() {
 	}
 }
 
-std::string Item::getType() {
-	return type;
-}
-
+/**
+ * get the image of the Item
+ * @return the image of the Item
+ */
 SDL_Surface *Item::getImage() {
 	return image;
 }
 
+/**
+ * get the x,y and the width and height of the item and build it as SDL_Rect.
+ * @return the proportion of the item
+ */
 SDL_Rect Item::getClipRect() {
 	SDL_Rect retRect;
 	retRect.w = image->clip_rect.w;

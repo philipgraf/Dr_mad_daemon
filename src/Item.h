@@ -15,19 +15,19 @@
 
 class Item {
 public:
-	static std::vector<Item*> itemlist;
+	static std::vector<Item*> itemlist; /**< contains all items */
 private:
-	SDL_Surface *image;
-	std::string type;
-	b2Body *body;
-	Uint32 timer;
+	SDL_Surface *image; /**< the image of the item */
+	std::string type; /**< the type of the item */
+	b2Body *body; /**< the body for collision detection */
+	Uint32 timer; /**< time in milliseconds the item does not collide with the player until this is grater then 1000*/
+
 public:
 	Item(std::string name, int x, int y, int relX=0,int relY=0);
 	virtual ~Item();
 
 	void logic();
 
-	std::string getType();
 	SDL_Surface *getImage();
 	SDL_Rect getClipRect();
 };

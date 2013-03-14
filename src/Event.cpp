@@ -17,9 +17,9 @@ Event::Event() {
 Event::~Event() {
 }
 /**
- * Funktion that execute the different Eventhandler
+ * Function to execute the different Eventhandler
  *
- * @param event sdl event which contains happened UI interactions
+ * @param event SDL_Event which contains happened UI interactions
  */
 void Event::onEvent(SDL_Event *event) {
 	switch (event->type) {
@@ -226,9 +226,6 @@ void wiimote_callback(cwiid_wiimote_t *wiimote_my, int mesg_count, union cwiid_m
 			break;
 		case CWIID_MESG_BTN:
 			SDL_Event event;
-//			int *date1;
-//			date1 = new int;
-//			*date1 = ;
 			event.type = SDL_USEREVENT;
 			event.user.code = MSGTYPE_BTN;
 			event.user.data1 = &mesg[i].btn_mesg.buttons;

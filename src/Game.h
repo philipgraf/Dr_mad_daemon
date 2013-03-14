@@ -55,7 +55,6 @@ private:
 
 	SDL_Surface * display;
 	TTF_Font *font[6];
-
 	Level *currentLevel;
 
 	void loadSettings();

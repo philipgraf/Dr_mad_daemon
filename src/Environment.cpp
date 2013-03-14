@@ -16,6 +16,14 @@
 
 using namespace std;
 
+/** Constructor of Environment
+ * Call the constructor of Entity.
+ * set alive to false and all other values from the environment.yml file.
+ * Build the collision box and place it on given x and y values.
+ * @param type is the type of the environment object
+ * @param x the x position of the environment
+ * @param y the y position of the environment
+ */
 Environment::Environment(string type, int x, int y) :
 		Entity() {
 	alive = false;
@@ -106,8 +114,3 @@ Environment::Environment(string type, int x, int y) :
 	grounded = false;
 
 }
-
-Environment::~Environment() {
-	// TODO Auto-generated destructor stub
-}
-

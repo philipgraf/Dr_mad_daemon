@@ -16,7 +16,6 @@
 class Environment : public Entity {
 public:
 	Environment(std::string type, int x,int y);
-	virtual ~Environment();
 };
 
 #endif /* ENVIRONMENT_H_ */

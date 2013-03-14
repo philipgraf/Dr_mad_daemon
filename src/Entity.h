@@ -44,7 +44,6 @@ protected:
 
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
-	//TODO: actionframes get from File ?!?
 	std::vector<int> actionframes;
 	std::vector<unsigned> animationDuration;
 

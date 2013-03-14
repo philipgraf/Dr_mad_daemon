@@ -1,10 +1,3 @@
-/*
- * Player.cpp
- *
- *  Created on: 12.02.2013
- *      Author: philip
- */
-
 #include "Player.h"
 #include "Tile.h"
 #include "Game.h"
@@ -16,6 +9,14 @@
 
 using namespace std;
 
+/**
+ * Constructor of Player
+ *
+ *
+ * @param x horizontal position
+ * @param y vertical position
+ * @param level level of the pda
+ */
 Player::Player(int x, int y, int level) :
 		Entity(), pda(level) {
 	width = 1;
@@ -352,6 +353,14 @@ bool Player::isJumping() const {
 
 void Player::setJumping(bool jumping) {
 	this->jumping = jumping;
+}
+
+bool Player::isRunning() const {
+	return running;
+}
+
+void Player::setRunning(bool running) {
+		this->running = running;
 }
 
 unsigned Player::getSelectedEntity() const {

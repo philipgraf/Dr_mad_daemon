@@ -1,16 +1,26 @@
-/*
- * Slot.cpp
- *
- *  Created on: 11.02.2013
- *      Author: philip
- */
-
 #include "Slot.h"
 #include <cstdlib>
 using namespace std;
 
 vector<Slot*> Slot::slots;
 
+/**
+ * Constructor of Slot.
+ *
+ * @param name the name of the saveslot (DrInSane is default)
+ */
+Slot::Slot(string name) {
+	this->name = name;
+	finishedLevels = 0;
+	pdaLevel=0;
+}
+
+/**
+ * Load existing slots.
+ * all the already existing slots in slot.yml will be loaded and stored in slots
+ *
+ * @see slots
+ */
 void Slot::loadSlots() {
 
 	string home="";
@@ -40,7 +50,12 @@ void Slot::loadSlots() {
 	}
 
 }
-
+/**
+ * Save all Slots to YAML-File.
+ * All the Slots in slots will be converted to YAML format and stored in slots.yml
+ *
+ * @see slots
+ */
 void Slot::saveSlots() {
 
 	YAML::Emitter out;
@@ -77,51 +92,87 @@ void Slot::saveSlots() {
 
 }
 
-Slot::Slot(string name) {
-	this->name = name;
-	finishedLevels = 0;
-	pdaLevel=0;
-	//Slot::slotnames.push_back(this->name);
-}
 
 /*******************************************GETTER AND SETTER *************************************************/
-
+/**
+ * Unlocks the next level
+ * If a Level is finished successful and the level is the last playable in the current slot, the next level will be unlocked.
+ *
+ * @param levelnum the number of the finished level
+ *
+ * @see finishedLevels
+ */
 void Slot::checkAndSetFinishedLevels(int levelnum) {
 	if (levelnum == finishedLevels)
 		finishedLevels++;
 }
 
+/**
+ * Returns the number of the highest finished level in this slot
+ *
+ * @see finishedLevels
+ */
 int Slot::getFinishedLevels() const {
 	return finishedLevels;
 }
 
-void Slot::setFinishedLevels(int finishedLevels) {
-	this->finishedLevels = finishedLevels;
-}
-
+/**
+ * Returns the name of the slot.
+ *
+ * @see name
+ */
 const string& Slot::getName() const {
 	return name;
 }
 
+/**
+ * Returns the PDA-Level of the slot.
+ *
+ * @see pdaLevel
+ */
 int Slot::getPdaLevel() const {
 	return pdaLevel;
 }
 
+/**
+ * Sets the level of the PDA.
+ *
+ * @param pdaLevel the new PDA-Level
+ *
+ * @see pdaLevel
+ */
 void Slot::setPdaLevel(int pdaLevel) {
 	this->pdaLevel = pdaLevel;
 }
 
-map<string, int> Slot::getPlayerItems() {
+/**
+ * Returns the items of the player.
+ * A map of all Player-items stored in the slot will be returned
+ *
+ * @see playerItems
+ */
+map<string, int>& Slot::getPlayerItems() {
 	return playerItems;
 }
 
+/**
+ * Sets a new map with playeritems.
+ *
+ * @param playerItems reference to a map with playerItems
+ *
+ * @see playerItems
+ */
 void Slot::setPlayerItems(const std::map<std::string, int>& playerItems) {
 	this->playerItems = playerItems;
 }
 
+/**
+ * Sets the name of a Slot
+ *
+ * @param name reference to a string
+ *
+ * @see name
+ */
 void Slot::setName(const string& name) {
 	this->name = name;
-}
-
-Slot::~Slot() {
 }

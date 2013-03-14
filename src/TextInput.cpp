@@ -7,6 +7,13 @@
 
 #include "TextInput.h"
 
+/**
+ * Constructor of TextInput
+ * This will generate a kind of input-"window" where text can be typed.
+ *
+ * @param title the text that will be shown in the titleSurface
+ * @param maxSize the max count of digits that can be typed
+ */
 TextInput::TextInput(string title, int maxSize) {
 	SDL_Surface *screen = SDL_GetVideoSurface();
 	this->textInput = "";
@@ -19,6 +26,10 @@ TextInput::TextInput(string title, int maxSize) {
 	this->textInputSurface = TTF_RenderUTF8_Solid(Game::curGame->getFont(), textInput.c_str(), (SDL_Color ) { 255, 255, 255 });
 }
 
+/**
+ * Destructor of TextInput.
+ * This will free the used Surfaces
+ */
 TextInput::~TextInput() {
 	SDL_FreeSurface(titleSurface);
 	SDL_FreeSurface(background);
@@ -26,7 +37,15 @@ TextInput::~TextInput() {
 	SDL_FreeSurface(textInputSurface);
 
 }
-
+/**
+ * Handles the typing.
+ * At first the position of the surfaces will be calculated.
+ * The Digits 0-9 and a-z will be added to textInput
+ * BACKSPACE will delete the last digit and ESC will clear textInput and return "".
+ * RETURN will end the typing and return textInput
+ *
+ * @see textInput
+ */
 string TextInput::getInput() {
 
 	SDL_Surface *screen = SDL_GetVideoSurface();
@@ -76,7 +95,6 @@ string TextInput::getInput() {
 		SDL_BlitSurface(background, NULL, screen, &backgroundDest);
 
 		SDL_Flip(screen);
-
 	}
 
 	return textInput;

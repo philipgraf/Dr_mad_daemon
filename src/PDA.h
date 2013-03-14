@@ -33,36 +33,36 @@ typedef struct {
  */
 class PDA: public Event {
 public:
-	static std::vector<std::map<std::string,int> > updateReqList;
+	static std::vector<std::map<std::string,int> > updateReqList; /**< list of all level requirements */
 	static void loadRequirements();
 private:
-	SDL_Surface *image;
-	SDL_Surface *display;
-	SDL_Surface *lcd;
-	SDL_Surface *curser;
-	SDL_Surface *timer;
+	SDL_Surface *image; /**< the whole image of the PDA */
+	SDL_Surface *display; /**< the main display of the PDA. the curser, timer and the items will be rendered on it */
+	SDL_Surface *lcd; /**< the lcd of the PDA only available with level two or more */
+	SDL_Surface *cursor; /**< the cursor of the PDA this is used to show the currentItem */
+	SDL_Surface *timer; /**< the times left before the player dies */
 
-	SDL_Surface *updateText;
-	SDL_Surface *updateRequirements;
+	SDL_Surface *updateText; /**< the updatetext at the bottom of the PDA */
+	SDL_Surface *updateRequirements; /**< shows the requirements for the next level  */
 
-	SDL_Color green;
+	SDL_Color green; /**< the color of the fonts */
 
-	SDL_Rect displayRect;
-    SDL_Rect lcdRect;
-	SDL_Rect imageRect;
-	SDL_Rect curserRect;
-	SDL_Rect timerRect;
+	SDL_Rect displayRect; /**< the positions and the metrics of the display */
+    SDL_Rect lcdRect;/**< the positions and the metrics of the lcd */
+	SDL_Rect imageRect;/**< the positions and the metrics of the whole image  */
+	SDL_Rect cursorRect;/**< the positions and the metrics of the cursor */
+	SDL_Rect timerRect;/**< the positions and the metrics of the timer */
 
-	SDL_Rect updateTextRect;
-	SDL_Rect updateRequirementsRect;
+	SDL_Rect updateTextRect;/**< the positions and the metrics of the display */
+	SDL_Rect updateRequirementsRect;/**< the positions and the metrics of the display */
 
-	Language lang;
+	Language lang; /**< this objekt is used for translation*/
 
-	int level;
-	unsigned currentItem;
-	std::vector<items_t> itemlist;
+	int level; /**< the level of the PDA */
+	unsigned currentItem; /**< the index of the current selected item */
+	std::vector<items_t> itemlist; /**< contains all items of the player */
 
-	bool running;
+	bool running; /**< while this variable is true the PDA will be visible */
 
 	void init();
 	void render();

@@ -119,8 +119,8 @@ void Entity::move() {
 /**
  * Iterate thru the items and create for each a new item with random relX and relY values.
  * delete the entity in the entity list and free all allocated memory.
- * @see Item()
- * @see entityList()
+ * @see Item
+ * @see entityList
  */
 Entity::~Entity() {
 	srand(time(NULL));

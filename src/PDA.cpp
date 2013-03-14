@@ -21,6 +21,11 @@ using namespace std;
 
 vector<map<string, int> > PDA::updateReqList;
 
+/**
+ * initialize level with given value and all the rest with default values and call the init function
+ * @param level the level of the pda
+ * @see init()
+ */
 PDA::PDA(int level) {
 
 	this->level = level;
@@ -33,7 +38,7 @@ PDA::PDA(int level) {
 	image = NULL;
 	lcd = NULL;
 
-	curser = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), ">", green);
+	cursor = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK), ">", green);
 	SDL_Surface *screen = SDL_GetVideoSurface();
 
 	display = SDL_CreateRGBSurface(SDL_HWSURFACE, 250, 230, SDL_GetVideoInfo()->vfmt->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask);
@@ -43,10 +48,10 @@ PDA::PDA(int level) {
 	displayRect.w = display->w;
 	displayRect.h = display->h;
 
-	curserRect.x = 0;
-	curserRect.y = 0;
-	curserRect.w = curser->w;
-	curserRect.h = curser->h;
+	cursorRect.x = 0;
+	cursorRect.y = 0;
+	cursorRect.w = cursor->w;
+	cursorRect.h = cursor->h;
 
 	updateText = TTF_RenderUTF8_Blended(Game::curGame->getFont(FONT_PDA_CLOCK_SMALL), "Press \"A\" to Update PDA", green);
 	updateRequirements = NULL;
@@ -58,7 +63,7 @@ PDA::PDA(int level) {
 PDA::~PDA() {
 	SDL_FreeSurface(image);
 	SDL_FreeSurface(display);
-	SDL_FreeSurface(curser);
+	SDL_FreeSurface(cursor);
 	if (lcd != NULL) {
 		SDL_FreeSurface(lcd);
 	}
@@ -69,6 +74,9 @@ PDA::~PDA() {
 	itemlist.clear();
 }
 
+/**
+ * build the vector with all the update requirements.
+ */
 void PDA::loadRequirements() {
 
 	map<string, int> req;
@@ -91,10 +99,12 @@ void PDA::loadRequirements() {
 
 }
 
-int PDA::getLevel() const {
-	return level;
-}
-
+/**
+ * the main loop this will run until running is FALSE
+ * first it calls build and every frame render will be called.
+ * @see build()
+ * @see render()
+ */
 int PDA::show() {
 	SDL_Event event;
 
@@ -119,6 +129,9 @@ int PDA::show() {
 
 }
 
+/**
+ * creates the level specific images and compute his positions.
+ */
 void PDA::init() {
 
 	if (image != NULL) {
@@ -190,6 +203,9 @@ void PDA::init() {
 
 }
 
+/**
+ * render all the surfaces on the screen.
+ */
 void PDA::render() {
 	SDL_FillRect(display, &display->clip_rect, SDL_MapRGB(display->format, 0, 0, 0));
 
@@ -197,8 +213,8 @@ void PDA::render() {
 
 	if (itemlist.size() != 0) {
 		// 20 pixel per line plus 50 pixel for the timer
-		curserRect.y = 20 * currentItem + 50;
-		SDL_BlitSurface(curser, NULL, display, &curserRect);
+		cursorRect.y = 20 * currentItem + 50;
+		SDL_BlitSurface(cursor, NULL, display, &cursorRect);
 	} else {
 		SDL_Rect textRect;
 		textRect.x = 0;
@@ -230,6 +246,9 @@ void PDA::render() {
 	SDL_Flip(SDL_GetVideoSurface());
 }
 
+/**
+ * build the itemlist and the current remaining level time
+ */
 void PDA::build() {
 	map<string, int> playerItems = Game::curGame->getCurrentLevel()->getPlayer()->getItems();
 
@@ -267,6 +286,11 @@ void PDA::build() {
 	}
 }
 
+/**
+ * check for all requirements and if all in players itemlist increase the level of the level and finally call the init and build function
+ * @see init()
+ * @see build()
+ */
 void PDA::update() {
 	map<string, int> &playerItems = Game::curGame->getCurrentLevel()->getPlayer()->getItems();
 
@@ -291,6 +315,10 @@ void PDA::update() {
 
 }
 
+/**
+ * the Key-Down Event handler
+ * @see Event::onKeyDown()
+ */
 void PDA::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	switch (sym) {
 	case SDLK_ESCAPE:
@@ -311,6 +339,10 @@ void PDA::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	}
 }
 
+/**
+ * the wiimote button event
+ * @see Event::onWiiButtonEvent()
+ */
 void PDA::onWiiButtonEvent(int button) {
 	if (button & WII_BTN_LEFT) {
 		currentItem = (currentItem >= itemlist.size() - 1) ? itemlist.size() - 1 : currentItem + 1;
@@ -328,3 +360,10 @@ void PDA::onWiiButtonEvent(int button) {
 	}
 }
 
+/**
+ * get the current level of the PDA
+ * @return the current level
+ */
+int PDA::getLevel() const {
+	return level;
+}

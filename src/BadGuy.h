@@ -20,6 +20,7 @@ public:
 
 	void move();
 	void logic();
+
 };
 
 #endif /* BADGUY_H_ */

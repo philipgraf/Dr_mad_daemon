@@ -14,13 +14,12 @@
 
 class Language {
 public:
-	static std::vector<std::string> supLanguages;
+	static std::vector<std::string> supLanguages; /**< a list with all supported Languages */
 private:
-	YAML::Node root;
+	YAML::Node root; /**< the root node of the lang.yml file */
 
 public:
 	Language();
-	virtual ~Language();
 	std::string operator[](std::string key);
 	static void getSupportedLanguages();
 

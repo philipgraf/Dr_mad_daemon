@@ -33,20 +33,20 @@ typedef struct {
 class Menu: public Event {
 	typedef void (Menu::*fptr)();
 private:
-	std::vector<fptr> labelactions;
-	std::vector<std::string> labeltexts;
-	std::vector<int> labelfonts;
-	SDL_Surface *background;
-	SDL_Surface *backgroudFilter;
-	menuitem *items;
-	unsigned int currentItem;
-	SDL_Color colors[2];
-	int menuType;
-	int returnValue;
+	std::vector<fptr> labelactions; /**< list of all labelactions */
+	std::vector<std::string> labeltexts; /**< list of all labeltexts */
+	std::vector<int> labelfonts; /**< list of the font sizes */
+	SDL_Surface *background; /**< the background images */
+	SDL_Surface *backgroudFilter; /**< a alpha screen for the background */
+	menuitem *items; /**< list of all items  */
+	unsigned int currentItem; /**< the index of the current selected menuitem */
+	SDL_Color colors[2]; /**< 2 colors first for unselected and the second for selected items */
+	int menuType; /**< the menutype this is used to built the lists */
+	int returnValue; /**< this value will be returned if the menu will be destroyed  */
 
-	Language lang;
+	Language lang; /**< this objekt is used for translation*/
 
-	bool running;
+	bool running; /**< the menu is visible while this is True */
 	void onExit();
 	void onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
 	void onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle);

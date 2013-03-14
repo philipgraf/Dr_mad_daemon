@@ -17,6 +17,10 @@
 #include "TextInput.h"
 #include "Slot.h"
 
+/**
+ * initialize the variables based on the menu type
+ * @param menuType the menu type
+ */
 Menu::Menu(int menuType) {
 
 	backgroudFilter = NULL;

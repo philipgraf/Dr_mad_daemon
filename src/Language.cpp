@@ -13,16 +13,21 @@ vector<string> Language::supLanguages;
 
 using namespace YAML;
 
+/**
+ * Load the language configuration file
+ */
 Language::Language() {
 
 	root = LoadFile(CONFIGS"lang.yml");
 
 }
 
-Language::~Language() {
-
-}
-
+/**
+ * get the translation of the given string. try to return the language which is stores in the game settings if this translation is not available the engish translation will be returned.
+ * @param key the key in the root note
+ * @see root
+ * @return the translated string
+ */
 std::string Language::operator [](std::string key) {
 
 	std::string retVel;
@@ -34,6 +39,10 @@ std::string Language::operator [](std::string key) {
 	}
 }
 
+/**
+ * get all languages from the greeting entry and store it in supLanguages
+ * @see supLanguages
+ */
 void Language::getSupportedLanguages() {
 	Node root = LoadFile(CONFIGS"lang.yml");
 

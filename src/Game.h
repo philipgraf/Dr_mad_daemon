@@ -34,7 +34,7 @@ typedef struct {
 	int use;
 	int grab;
 	int pda;
-} controll_t;
+} controll_t;/**< A struct with controlsettings*/
 
 typedef struct {
 	string language;
@@ -43,25 +43,31 @@ typedef struct {
 	int activeSlot;
 	controll_t keyboard;
 	controll_t wiimote;
-} settings_t;
+} settings_t; /**< A struct with gamesettings*/
 
+/** Game class.
+ * This class handles the Game initialization and settings
+ * @author Felix Eckner
+ * @date 14.03.2013
+ * @version 0.1.0 Alpha-State
+ */
 class Game {
 
 public:
-	static Game *curGame;
-	static map<std::string, Mix_Chunk*> sounds;
+	static Game *curGame; /**< Pointer to running Game*/
+	static map<std::string, Mix_Chunk*> sounds; /**< map with all needed Sound effects*/
 
 private:
 
-	SDL_Surface * display;
-	TTF_Font *font[6];
-	Level *currentLevel;
+	SDL_Surface * display; /**< the whole screen of the game*/
+	TTF_Font *font[6]; /**< An Array with different fonts*/
+	Level *currentLevel; /**< Pointer to the current level*/
 
 	void loadSettings();
 	void loadSounds();
 
 public:
-	settings_t settings;
+	settings_t settings; /**< A struct with gamesettings*/
 
 	Game();
 	virtual ~Game();

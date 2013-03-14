@@ -256,6 +256,12 @@ void Player::move() {
 
 }
 
+/**
+ * Handles joins between player and dead entities
+ * if the selected target isn't already attached to the player this method will generate a join (pic up) to the targeted entity.
+ * on the other hand if there is already a join, it will be deleted and a force will be applied (throw away)
+ *
+ */
 void Player::grab() {
 	if (selectedEntity != 0) {
 		b2Body *selectedBody = entityList[selectedEntity]->getBody();
@@ -277,7 +283,6 @@ void Player::grab() {
 			b2Vec2 force = *distanceVec;
 			force.x *= 10000;
 			force.y *= 10000;
-//			force *= 10000;
 			Game::curGame->getCurrentLevel()->getWorld()->DestroyJoint(grebJoin);
 			grebJoin = NULL;
 			delete distanceVec;
@@ -287,6 +292,17 @@ void Player::grab() {
 	}
 }
 
+/**
+ * Handles the logic related to the player.
+ * This includes targeting to check if there is a grabable dead entity(boxes or dead badguy) in range  and select it,
+ * call checkCollision() method to check the collisions,
+ * kill the player if there is a collision with a badguy left or right or it is out of the level,
+ * check if player is grounded
+ * and call the Entity::logic
+ *
+ * @see Entity::checkCollision()
+ * @see Entity::logic()
+ */
 void Player::logic() {
 //TODO check connected tiles for shock and other game events
 	if (pda.getLevel() > 0 /*& items["gravitiy module"] > 0*/) {
@@ -343,6 +359,13 @@ void Player::logic() {
 	Entity::logic();
 }
 
+/**
+ * Handles the itemcollection
+ * This will call the Entity::addItem() and throw a Notification
+ *
+ * @see Entity::addItem()
+ * @see Notification()
+ */
 void Player::addItem(string item) {
 	Entity::addItem(item);
 
@@ -350,35 +373,73 @@ void Player::addItem(string item) {
 	s << lang["looted"] << " " << lang[item];
 	new Notification(s.str(), 2, NOTIFICATION_INFO, item);
 }
-
+/**
+ * Returns the Players PDA
+ *
+ * @see pda
+ */
 PDA &Player::getpda() {
 	return pda;
 }
 
+/**
+ * Returns TRUE if Player is currently jumping
+ *
+ * @see jumping
+ */
 bool Player::isJumping() const {
 	return jumping;
 }
 
+/**
+ * Sets Player to jumping
+ *
+ * @param jumping
+ *
+ * @see jumping
+ */
 void Player::setJumping(bool jumping) {
 	this->jumping = jumping;
 }
 
+/**
+ * Returns TRUE if Player is running
+ *
+ * @see running
+ */
 bool Player::isRunning() const {
 	return running;
 }
 
+/**
+ * Sets Player to running
+ *
+ * @param jumping
+ *
+ * @see jumping
+ */
 void Player::setRunning(bool running) {
 		this->running = running;
 }
 
+/**
+ * Returns the entityList index of the currently selected(targeted) Entity
+ *
+ * @see selectedEntity
+ */
 unsigned Player::getSelectedEntity() const {
 	return selectedEntity;
 }
 
+/**
+ * Returns the current vertical position of the Player
+ */
 float Player::getY() const {
 	return body->GetPosition().y + height / 8;
 }
-
+/**
+ * Rotates a Vector
+ */
 b2Vec2 addAngle(b2Vec2 vector, float angle, bool limit) {
 	b2Vec2 newVector;
 
@@ -402,14 +463,15 @@ b2Vec2 addAngle(b2Vec2 vector, float angle, bool limit) {
 	return newVector;
 }
 
-b2Vec2 setAngle(b2Vec2 vector, float angle) {
-	b2Vec2 newVector;
 
-	float r = vector.Length();
-	float phi = angle * (M_PI / 180);
-
-	newVector.x = r * cosf(phi);
-	newVector.y = r * sinf(phi);
-
-	return newVector;
-}
+//b2Vec2 setAngle(b2Vec2 vector, float angle) {
+//	b2Vec2 newVector;
+//
+//	float r = vector.Length();
+//	float phi = angle * (M_PI / 180);
+//
+//	newVector.x = r * cosf(phi);
+//	newVector.y = r * sinf(phi);
+//
+//	return newVector;
+//}

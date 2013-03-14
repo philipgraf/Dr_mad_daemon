@@ -1,9 +1,3 @@
-/*
- * game.cpp
- *
- *  Created on: 10.09.2012
- *      Author: philip
- */
 
 #include "Game.h"
 
@@ -16,14 +10,18 @@ using namespace std;
 
 Game* Game::curGame;
 map<string, Mix_Chunk*> Game::sounds;
-
+/**
+ * Constructor of the Game
+ */
 Game::Game() {
 	curGame = this;
 	display = NULL;
 	currentLevel = NULL;
 
 }
-
+/**
+ * Destructor of the Game
+*/
 Game::~Game() {
 	SDL_FreeSurface(display);
 	SDL_Quit();
@@ -41,7 +39,11 @@ Game::~Game() {
 	Mix_CloseAudio();
 	Mix_Quit();
 }
-
+/**
+ * Starts the Game.
+ * This method calls the Game::init() to initialize the game and generates the mainmenu
+ * If mainmenu is left it will also show a goodbye message
+ */
 int Game::execute() {
 
 	init();
@@ -65,6 +67,10 @@ int Game::execute() {
 	return ret;
 }
 
+/**
+ * This will initialize many things
+ * Here is where all the loading methods are called, fonts get defined. Also sound and video (screen) get configured
+ */
 void Game::init() {
 
 	/**
@@ -144,6 +150,9 @@ void Game::init() {
 	PDA::loadRequirements();
 }
 
+/**
+ * Load the gamesettings from YAML-file
+ */
 void Game::loadSettings() {
 	string home = "";
 	if (getenv("HOME") != NULL) {
@@ -334,13 +343,18 @@ void Game::loadSettings() {
 
 }
 
+/**
+ * Load all soundfiles
+ */
 void Game::loadSounds() {
 	sounds["menu select"] = Mix_LoadWAV(SOUNDS"menu_select.ogg");
 	sounds["menu confirm"] = Mix_LoadWAV(SOUNDS"menu_confirm.ogg");
 	sounds["player jump"] = Mix_LoadWAV(SOUNDS"player_jump.ogg");
 	sounds["player jump impact"] = Mix_LoadWAV(SOUNDS"player_jump_impact.ogg");
 }
-
+/**
+ * Save all settings back to YAML-file
+ */
 void Game::saveSettings() {
 
 	YAML::Emitter out;
@@ -418,15 +432,30 @@ void Game::saveSettings() {
 }
 
 /********************************** GETTER AND SETTER **********************************************************/
-
+/**
+ * Returns a pointer to the current Level.
+ *
+ * @returns current Level
+ */
 Level* Game::getCurrentLevel() {
 	return currentLevel;
 }
 
+/**
+ * Sets a Pointer to the current Level.
+ */
 void Game::setCurrentLevel(Level *curLev) {
 	currentLevel = curLev;
 }
 
+/**
+ * Returns a pointer to a Font stored in the font array
+ *
+ * @param which int value for selecting a font
+ *
+ * @returns font
+
+ */
 TTF_Font* Game::getFont(int which) {
 	return font[which];
 }

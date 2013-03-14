@@ -25,6 +25,12 @@ typedef struct {
 	SDL_Surface *amound;
 } items_t;
 
+/** PDA class.
+ * This class handles the Player PDA
+ * @author Felix Eckner
+ * @date 14.03.2013
+ * @version 0.1.0 Alpha-State
+ */
 class PDA: public Event {
 public:
 	static std::vector<std::map<std::string,int> > updateReqList;

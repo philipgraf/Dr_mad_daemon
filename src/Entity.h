@@ -34,7 +34,7 @@
  */
 class Entity {
 private:
-	Uint32 timer;
+	Uint32 timer; /**< time in milliseconds needed for nextframe */
 protected:
 	std::map<std::string, int> items;
 	SDL_Surface * image; /**< Image of the entity with all animationframes */
@@ -44,8 +44,8 @@ protected:
 
 	int currentframe; /**< Current Frame number this is used to calculate the correct part of the image */
 	int action; /**< the action e.g. move left, move right, jump, needed for rendering  */
-	std::vector<int> actionframes;
-	std::vector<unsigned> animationDuration;
+	std::vector<int> actionframes; /**< contains the number of frames for each action */
+	std::vector<unsigned> animationDuration; /**< contains the duration of each actionframe */
 
 	float width;/**< width of the entity in meter */
 	float height;/**< height of the entity in meter */
@@ -54,18 +54,18 @@ protected:
 
 	bool grounded; /**< is true when sensorBottom collide with something. */
 
-	b2Fixture *sensorRight;
-	b2Fixture *sensorLeft;
-	b2Fixture *sensorTop;
-	b2Fixture *sensorBottom;
+	b2Fixture *sensorRight; /**< right sensor used for collision detection  */
+	b2Fixture *sensorLeft; /**< left sensor used for collision detection  */
+	b2Fixture *sensorTop; /**< top sensor used for collision detection  */
+	b2Fixture *sensorBottom; /**< bottom sensor used for collision detection  */
 
-	b2Body *body;
+	b2Body *body; /**< the main body. contains the x and y values and to this body all forces (gravity, ...) are applied */
 
-	std::vector<b2Fixture*> wheels;
+	std::vector<b2Fixture*> wheels; /** vector of all bottom shapes for a smoother movement */
 	void nextframe();
 
 public:
-	static std::vector<Entity*> entityList;
+	static std::vector<Entity*> entityList; /**< list of all entities */
 
 	Entity();
 	virtual ~Entity();

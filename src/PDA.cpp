@@ -75,9 +75,9 @@ void PDA::loadRequirements() {
 	map<string, int> req;
 
 	//Level 1 Requirements
-	req["screw"] = 4;
+	req["screw"] = 2;
 	req["inductor"] = 2;
-	req["wire"] = 5;
+	req["wire"] = 3;
 	req["pcb"] = 2;
 	req["slot"] = 1;
 	updateReqList.push_back(req);

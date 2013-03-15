@@ -5,8 +5,9 @@ wooden crate:
   action frames: [1]
   animation duration: [9999]
   items:
-    screw: 3
-    inductor: 3
+    wire: 1
+    inductor: 1
+    capacitor: 1
 metal crate 1:
   width: 1.0
   height: 1.0
@@ -14,7 +15,9 @@ metal crate 1:
   action frames: [1]
   animation duration: [9999]
   items:
-    pcb: 5
+    pcb: 1
+    battery: 1
+    resistor: 1
 metal crate 2:
   width: 1.0
   height: 1.0
@@ -22,4 +25,6 @@ metal crate 2:
   action frames: [1]
   animation duration: [9999]
   items:
-    wire: 5
+    wire: 1
+    capacitor: 1
+    resistor: 1

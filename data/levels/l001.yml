@@ -6,27 +6,67 @@ bgMusic : LukHash_DigitalHeart.ogg
 gravity : 2.0
 time    : 300
 player:
-    x: 2
-    y: 0
+    x: 6
+    y: 15
+environments:
+    wooden crate:
+        x: 1
+        y: 17
+    wooden crate:
+        x: 1
+        y: 16
+    wooden crate:
+        x: 1
+        y: 15
+    wooden crate:
+        x: 1
+        y: 14
+    wooden crate:
+        x: 2
+        y: 17
+    wooden crate:
+        x: 2
+        y: 16
+    wooden crate:
+        x: 2
+        y: 15
+    wooden crate:
+        x: 3
+        y: 17
+    metal crate 1:
+        x: 42
+        y: 17
+    metal crate 1:
+        x: 43
+        y: 16
+    metal crate 2:
+        x: 43
+        y: 17
 badguys:
     vacuuBoy:
-        x: 5
-        y: 5
-    vacuuBoy:
         x: 15
-        y: 5
+        y: 16
     vacuuBoy:
         x: 25
-        y: 5
+        y: 16
     vacuuBoy:
         x: 35
-        y: 5
+        y: 16
     vacuuBoy:
         x: 45
-        y: 5
+        y: 16
     vacuuBoy:
         x: 55
-        y: 5
+        y: 16
     vacuuBoy:
         x: 65
-        y: 5
+        y: 16
+    vacuuBoy:
+        x: 75
+        y: 16
+    vacuuBoy:
+        x: 85
+        y: 16
+    vacuuBoy:
+        x: 95
+        y: 16

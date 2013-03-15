@@ -1,0 +1,4 @@
+<map id="Player::grab" name="Player::grab">
+<area shape="rect" id="node2" href="$class_entity.html#af9ee7c42eae01c2b0a2947314cd434eb" title="get the body of the entity which contains the x and y values and all his shapes" alt="" coords="169,5,281,32"/>
+<area shape="rect" id="node3" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="147,56,304,83"/>
+</map>

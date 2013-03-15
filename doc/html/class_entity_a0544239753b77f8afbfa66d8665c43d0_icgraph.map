@@ -1,0 +1,5 @@
+<map id="Entity::nextframe" name="Entity::nextframe">
+<area shape="rect" id="node2" href="$class_entity.html#a94ac61c2db2a346b7508ce12126ce932" title="currently just call the move and nextframe function" alt="" coords="176,31,267,57"/>
+<area shape="rect" id="node3" href="$class_bad_guy.html#a1cab3fe734c6c75660baafaad90ce7f3" title="The main logic." alt="" coords="315,5,419,32"/>
+<area shape="rect" id="node4" href="$class_player.html#a22aaf14f4b9b7bd7487af88873f5d9f3" title="Handles the logic related to the player." alt="" coords="319,56,414,83"/>
+</map>

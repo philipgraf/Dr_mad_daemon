@@ -1,0 +1,4 @@
+<map id="PDA::update" name="PDA::update">
+<area shape="rect" id="node2" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="152,5,309,32"/>
+<area shape="rect" id="node3" href="$class_entity.html#ac2cdbab08af5ceccc59252e66c953692" title="get the itemlist of the entity" alt="" coords="173,56,288,83"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="Entity::addItem" name="Entity::addItem">
+<area shape="rect" id="node2" href="$class_player.html#a9c8ee9c00cf704f0e8097440175fe7e8" title="Handles the itemcollection This will call the Entity::addItem() and throw a Notification." alt="" coords="165,5,280,32"/>
+</map>

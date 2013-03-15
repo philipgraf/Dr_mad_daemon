@@ -1,0 +1,5 @@
+<map id="Entity::getBody" name="Entity::getBody">
+<area shape="rect" id="node2" href="$class_player.html#ae02ee46d8c20dd0697b975f935b09839" title="Handles the player movement." alt="" coords="165,5,264,32"/>
+<area shape="rect" id="node3" href="$class_player.html#a87823e60182c5c7142b154aa91f81fe0" title="Handles joins between player and dead entities if the selected target isn&#39;t already attached to the p..." alt="" coords="169,56,261,83"/>
+<area shape="rect" id="node4" href="$class_player.html#a22aaf14f4b9b7bd7487af88873f5d9f3" title="Handles the logic related to the player." alt="" coords="167,107,262,133"/>
+</map>

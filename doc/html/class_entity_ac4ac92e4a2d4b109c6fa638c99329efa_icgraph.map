@@ -1,0 +1,5 @@
+<map id="Entity::getY" name="Entity::getY">
+<area shape="rect" id="node2" href="$class_camera.html#a1b23c8005e9ca5f940825290184593e2" title="Constuctor." alt="" coords="157,5,280,32"/>
+<area shape="rect" id="node3" href="$class_camera.html#a5267df5e690f75ff357762c56ad904d9" title="draw all entities stored in the entity list and put the crosshairs on it if it is selected..." alt="" coords="145,56,293,83"/>
+<area shape="rect" id="node4" href="$class_camera.html#ab8d774bf908de334226b569b5100983b" title="Set the camera position depends on given Target." alt="" coords="148,107,289,133"/>
+</map>

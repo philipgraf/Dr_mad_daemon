@@ -1,0 +1,10 @@
+<map id="Level::getWorld" name="Level::getWorld">
+<area shape="rect" id="node2" href="$class_bad_guy.html#a8e1d7664140bc3bec874adcbe00208a3" title="Constructor of BadGuy." alt="" coords="194,5,318,32"/>
+<area shape="rect" id="node3" href="$class_entity.html#adf6d3f7cb1b2ba029b6b048a395cc8ae" title="Iterate thru the items and create for each a new item with random relX and relY values." alt="" coords="203,56,309,83"/>
+<area shape="rect" id="node4" href="$class_environment.html#aafd2b1692a040bd41593c43605dbcceb" title="Constructor of Environment Call the constructor of Entity." alt="" coords="168,107,344,133"/>
+<area shape="rect" id="node5" href="$class_item.html#ae6d5aa21e4a1ef7a1d3199ba8781a878" title="Load the image." alt="" coords="215,157,297,184"/>
+<area shape="rect" id="node6" href="$class_item.html#a11663c84075b78c3ae5e30fdfcd7c458" title="delete the item form the itemList and free all allocated memory" alt="" coords="211,208,301,235"/>
+<area shape="rect" id="node7" href="$class_player.html#a2576583c857d7001ffeb504ef9324d2e" title="Constructor of Player." alt="" coords="204,259,308,285"/>
+<area shape="rect" id="node8" href="$class_player.html#ae02ee46d8c20dd0697b975f935b09839" title="Handles the player movement." alt="" coords="207,309,305,336"/>
+<area shape="rect" id="node9" href="$class_player.html#a87823e60182c5c7142b154aa91f81fe0" title="Handles joins between player and dead entities if the selected target isn&#39;t already attached to the p..." alt="" coords="210,360,302,387"/>
+</map>

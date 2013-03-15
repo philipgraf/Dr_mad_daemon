@@ -1,0 +1,4 @@
+<map id="Game::setCurrentLevel" name="Game::setCurrentLevel">
+<area shape="rect" id="node2" href="$class_level.html#a7c3dcc9e6f6d3dbfdad6982a0fe7c986" title="Initialize all necessary information from the levelconfig create all items, badguys and environments..." alt="" coords="215,5,307,32"/>
+<area shape="rect" id="node3" href="$class_level.html#a249eac1e8f19ff44134efa5e986feaca" title="free all allocated memory" alt="" coords="211,56,311,83"/>
+</map>

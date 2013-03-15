@@ -1,0 +1,26 @@
+var annotated =
+[
+    [ "BadGuy", "class_bad_guy.html", "class_bad_guy" ],
+    [ "Camera", "class_camera.html", "class_camera" ],
+    [ "controll_t", "structcontroll__t.html", "structcontroll__t" ],
+    [ "Debug", "class_debug.html", "class_debug" ],
+    [ "Entity", "class_entity.html", "class_entity" ],
+    [ "Environment", "class_environment.html", "class_environment" ],
+    [ "Event", "class_event.html", "class_event" ],
+    [ "Exception", "class_exception.html", "class_exception" ],
+    [ "FileOpenException", "class_file_open_exception.html", null ],
+    [ "Game", "class_game.html", "class_game" ],
+    [ "Item", "class_item.html", "class_item" ],
+    [ "items_t", "structitems__t.html", "structitems__t" ],
+    [ "Language", "class_language.html", "class_language" ],
+    [ "Level", "class_level.html", "class_level" ],
+    [ "Menu", "class_menu.html", "class_menu" ],
+    [ "menuitem", "structmenuitem.html", "structmenuitem" ],
+    [ "Notification", "class_notification.html", "class_notification" ],
+    [ "PDA", "class_p_d_a.html", "class_p_d_a" ],
+    [ "Player", "class_player.html", "class_player" ],
+    [ "settings_t", "structsettings__t.html", "structsettings__t" ],
+    [ "Slot", "class_slot.html", "class_slot" ],
+    [ "TextInput", "class_text_input.html", "class_text_input" ],
+    [ "Tile", "class_tile.html", "class_tile" ]
+];

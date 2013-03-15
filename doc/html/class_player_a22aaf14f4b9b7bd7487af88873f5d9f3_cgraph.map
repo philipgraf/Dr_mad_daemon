@@ -1,0 +1,10 @@
+<map id="Player::logic" name="Player::logic">
+<area shape="rect" id="node2" href="$class_p_d_a.html#a7b4b2cc450490e9177a3a367192548e4" title="get the current level of the PDA" alt="" coords="175,5,281,32"/>
+<area shape="rect" id="node3" href="$class_entity.html#a12d50c43ed279c53e813475e0dd46f5f" title="returns TRUE if the entity is alive" alt="" coords="177,56,279,83"/>
+<area shape="rect" id="node4" href="$class_entity.html#af9ee7c42eae01c2b0a2947314cd434eb" title="get the body of the entity which contains the x and y values and all his shapes" alt="" coords="172,107,284,133"/>
+<area shape="rect" id="node5" href="$class_entity.html#a8bf51b83c398f48e416515273cd6fe27" title="check the collision and set the corresponding bit of the return value and set grounded of true if the..." alt="" coords="153,157,303,184"/>
+<area shape="rect" id="node6" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="149,208,307,235"/>
+<area shape="rect" id="node7" href="$class_entity.html#a94ac61c2db2a346b7508ce12126ce932" title="currently just call the move and nextframe function" alt="" coords="183,259,273,285"/>
+<area shape="rect" id="node8" href="$class_entity.html#ac1f12a5f7922624ee7ced15be3b884de" title="virtual function movement defined from inheriting classes" alt="" coords="368,233,464,260"/>
+<area shape="rect" id="node9" href="$class_entity.html#a0544239753b77f8afbfa66d8665c43d0" title="vector of all bottom shapes for a smoother movement" alt="" coords="355,284,477,311"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="Slot::saveSlots" name="Slot::saveSlots">
+<area shape="rect" id="node2" href="$class_level.html#ab453a1f64e2540e5afaa575f271fc595" title="Logic function of the level." alt="" coords="864,24,952,51"/>
+<area shape="rect" id="node3" href="$class_menu.html#a88c8c25de0eecc0119f8e639ed364196" title="create a textinput field and create an new slot with the return name." alt="" coords="166,131,287,157"/>
+<area shape="rect" id="node4" href="$class_menu.html#af7347d79fbba2faccafac0f2568b0526" title="build all the labels based on the menu type" alt="" coords="337,219,426,245"/>
+<area shape="rect" id="node5" href="$class_menu.html#aa97163357c495986d6d76df7871ce329" title="set the type of the menu and call the build function" alt="" coords="507,320,602,347"/>
+<area shape="rect" id="node6" href="$class_menu.html#ae1ec62e738dda7faaaec850bd0b58ffe" title="start the selected level" alt="" coords="511,219,599,245"/>
+<area shape="rect" id="node15" href="$class_menu.html#a38d35e6754406fb860ca3540e9684b42" title="change the language and rebuild the menu with the new language" alt="" coords="475,371,635,397"/>
+<area shape="rect" id="node12" href="$class_menu.html#a105bb8ad40462a6777513c9c8a80873a" title="create a new menu with the menu type SLOTMENU" alt="" coords="863,433,953,460"/>
+<area shape="rect" id="node16" href="$class_menu.html#a79e270efa37ad86e2b91639e8616db9c" title="change the volume in 25 per cent steps." alt="" coords="506,43,603,69"/>
+<area shape="rect" id="node13" href="$class_menu.html#a613567f1327b03d1238c2e5844c623fd" title="create a new menu with the menu type OPTIONSMENU" alt="" coords="856,105,960,132"/>
+<area shape="rect" id="node7" href="$class_menu.html#a346009151f57e18ffe0fa5a9dd89b1d6" title="the menu loop." alt="" coords="683,219,776,245"/>
+<area shape="rect" id="node8" href="$class_game.html#a852aa9562cfcdf9848ffa628fbf0a22c" title="Starts the Game." alt="" coords="853,257,963,284"/>
+<area shape="rect" id="node9" href="$class_level.html#a39f4f48d6269b2f99b2ba02b9daf3962" title="handle the key down events" alt="" coords="842,308,974,335"/>
+<area shape="rect" id="node10" href="$class_level.html#aca1b562f650024a960bc08b63cd662f1" title="handle the wii button events" alt="" coords="825,207,991,233"/>
+<area shape="rect" id="node11" href="$class_menu.html#ae2b1f4f9b5e36fb482482bed7480571f" title="create a new menu with the menu type LEVELMENU" alt="" coords="860,359,956,385"/>
+<area shape="rect" id="node14" href="$class_menu.html#ad038639f1dbf6e0d16ce7986d141155d" title="create a new menu with the menu type CREDITS" alt="" coords="857,156,959,183"/>
+</map>

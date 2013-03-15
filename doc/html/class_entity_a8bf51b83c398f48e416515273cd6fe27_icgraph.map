@@ -1,0 +1,5 @@
+<map id="Entity::checkCollision" name="Entity::checkCollision">
+<area shape="rect" id="node2" href="$class_bad_guy.html#a1cab3fe734c6c75660baafaad90ce7f3" title="The main logic." alt="" coords="203,5,307,32"/>
+<area shape="rect" id="node3" href="$class_player.html#ae02ee46d8c20dd0697b975f935b09839" title="Handles the player movement." alt="" coords="205,56,304,83"/>
+<area shape="rect" id="node4" href="$class_player.html#a22aaf14f4b9b7bd7487af88873f5d9f3" title="Handles the logic related to the player." alt="" coords="207,107,302,133"/>
+</map>

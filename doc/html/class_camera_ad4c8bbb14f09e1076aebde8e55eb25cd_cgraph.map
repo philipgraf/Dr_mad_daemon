@@ -1,0 +1,5 @@
+<map id="Camera::drawTiles" name="Camera::drawTiles">
+<area shape="rect" id="node2" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="187,5,344,32"/>
+<area shape="rect" id="node3" href="$class_tile.html#ad85b02def4cc1fb342b3ac318cd4dd66" title="Returns the ID of the tile." alt="" coords="225,56,305,83"/>
+<area shape="rect" id="node4" href="$class_tile.html#ae2922ffb66e70f51308b8bf3762d3700" title="Returns the current frame of the tile." alt="" coords="193,107,338,133"/>
+</map>

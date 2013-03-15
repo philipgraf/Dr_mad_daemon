@@ -1,0 +1,4 @@
+<map id="Item::~Item" name="Item::~Item">
+<area shape="rect" id="node2" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="144,5,301,32"/>
+<area shape="rect" id="node3" href="$class_level.html#aab4b4aee2b6372424fda213388e9005b" title="Level::getWorld" alt="" coords="166,56,279,83"/>
+</map>

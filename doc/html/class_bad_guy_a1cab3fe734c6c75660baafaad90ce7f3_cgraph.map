@@ -1,0 +1,6 @@
+<map id="BadGuy::logic" name="BadGuy::logic">
+<area shape="rect" id="node2" href="$class_entity.html#a8bf51b83c398f48e416515273cd6fe27" title="check the collision and set the corresponding bit of the return value and set grounded of true if the..." alt="" coords="157,5,307,32"/>
+<area shape="rect" id="node3" href="$class_entity.html#a94ac61c2db2a346b7508ce12126ce932" title="currently just call the move and nextframe function" alt="" coords="187,56,277,83"/>
+<area shape="rect" id="node4" href="$class_entity.html#ac1f12a5f7922624ee7ced15be3b884de" title="virtual function movement defined from inheriting classes" alt="" coords="368,31,464,57"/>
+<area shape="rect" id="node5" href="$class_entity.html#a0544239753b77f8afbfa66d8665c43d0" title="vector of all bottom shapes for a smoother movement" alt="" coords="355,81,477,108"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="Level" name="Level">
+<area shape="rect" id="node2" href="$class_event.html" title="Event Class." alt="" coords="5,5,60,32"/>
+<area shape="rect" id="node6" href="$class_p_d_a.html" title="PDA class." alt="" coords="132,96,183,123"/>
+<area shape="rect" id="node3" href="$class_camera.html" title="Camera class." alt="" coords="54,187,121,213"/>
+<area shape="rect" id="node4" href="$class_entity.html" title="Entity Class." alt="" coords="52,96,107,123"/>
+<area shape="rect" id="node5" href="$class_player.html" title="Player class." alt="" coords="152,187,209,213"/>
+<area shape="rect" id="node7" href="$class_language.html" title="Language class." alt="" coords="191,5,269,32"/>
+<area shape="rect" id="node8" href="$class_tile.html" title="Tile class." alt="" coords="335,187,377,213"/>
+</map>

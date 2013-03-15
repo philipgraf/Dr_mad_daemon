@@ -1,0 +1,51 @@
+<map id="Menu::options" name="Menu::options">
+<area shape="rect" id="node2" href="$class_menu.html#a346009151f57e18ffe0fa5a9dd89b1d6" title="the menu loop." alt="" coords="157,157,251,184"/>
+<area shape="rect" id="node5" href="$class_menu.html#af7347d79fbba2faccafac0f2568b0526" title="build all the labels based on the menu type" alt="" coords="499,1576,589,1603"/>
+<area shape="rect" id="node19" href="$class_game.html#ade0f23eb7b377ff35437bd8757480b48" title="Save all settings back to YAML&#45;file." alt="" coords="893,1728,1035,1755"/>
+<area shape="rect" id="node3" href="$class_menu.html#ae1ec62e738dda7faaaec850bd0b58ffe" title="start the selected level" alt="" coords="311,1520,399,1547"/>
+<area shape="rect" id="node23" href="$class_event.html#a635884dd62052453df368751e2ef8a03" title="Function to execute the different Eventhandler." alt="" coords="299,816,411,843"/>
+<area shape="rect" id="node50" href="$class_menu.html#ab714de8d7efd0a2bdf8b04fa0809eb4b" title="render the background and the menu label on the screen" alt="" coords="305,5,404,32"/>
+<area shape="rect" id="node4" href="$class_level.html#abe6dc25518c4121eb891436cfbe64dd9" title="Play function of the level." alt="" coords="501,1525,587,1552"/>
+<area shape="rect" id="node6" href="$class_menu.html#ae2b1f4f9b5e36fb482482bed7480571f" title="create a new menu with the menu type LEVELMENU" alt="" coords="709,348,805,375"/>
+<area shape="rect" id="node7" href="$class_menu.html#ad038639f1dbf6e0d16ce7986d141155d" title="create a new menu with the menu type CREDITS" alt="" coords="707,689,808,716"/>
+<area shape="rect" id="node8" href="$class_menu.html#ade755f2e7d8aca9d795f054504592eba" title="set running to false and quit the whole game" alt="" coords="716,1576,799,1603"/>
+<area shape="rect" id="node9" href="$class_menu.html#add314bfd110ecfe995f8d7fc2e74bf4e" title="set running of the PAUSEMENU to false." alt="" coords="684,1627,831,1653"/>
+<area shape="rect" id="node10" href="$class_menu.html#a79e270efa37ad86e2b91639e8616db9c" title="change the volume in 25 per cent steps." alt="" coords="709,1677,806,1704"/>
+<area shape="rect" id="node11" href="$class_menu.html#ae48947a82512e7073fd20d603ccdfa9a" title="quit the current level" alt="" coords="700,1829,815,1856"/>
+<area shape="rect" id="node14" href="$class_menu.html#a38d35e6754406fb860ca3540e9684b42" title="change the language and rebuild the menu with the new language" alt="" coords="677,1373,837,1400"/>
+<area shape="rect" id="node15" href="$class_event.html#abe1c27920f8e8677d30b4f0fda462037" title="Event::initWiimote" alt="" coords="693,1424,822,1451"/>
+<area shape="rect" id="node16" href="$class_menu.html#ab18f7ad5752d4be19d0bff8c0458481e" title="get back to the menu before" alt="" coords="712,1475,803,1501"/>
+<area shape="rect" id="node17" href="$class_menu.html#a105bb8ad40462a6777513c9c8a80873a" title="create a new menu with the menu type SLOTMENU" alt="" coords="712,1323,803,1349"/>
+<area shape="rect" id="node18" href="$class_menu.html#a6703bc272bc7db67fb55a0a01f635d74" title="change the active slot to the currently selected one." alt="" coords="694,1728,821,1755"/>
+<area shape="rect" id="node20" href="$class_menu.html#a88c8c25de0eecc0119f8e639ed364196" title="create a textinput field and create an new slot with the return name." alt="" coords="697,1525,818,1552"/>
+<area shape="rect" id="node12" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="885,1855,1043,1881"/>
+<area shape="rect" id="node13" href="$class_level.html#a32c258a115ede93afb08e33297e87ae3" title="Level::setRunning" alt="" coords="901,1804,1027,1831"/>
+<area shape="rect" id="node21" href="$class_text_input.html#ab787ca0ad74af30c3a613211200da84a" title="Handles the typing." alt="" coords="898,1551,1030,1577"/>
+<area shape="rect" id="node22" href="$class_slot.html#a088103eb6d6b455a25c3c3295c032e56" title="Save all Slots to YAML&#45;File." alt="" coords="909,1500,1019,1527"/>
+<area shape="rect" id="node24" href="$class_event.html#a631db996c80cc9e76d416668f86f0ac6" title="Event::onMouseFocus" alt="" coords="467,664,621,691"/>
+<area shape="rect" id="node25" href="$class_event.html#a0a13ba037a42ac04b780a9456c4ac33a" title="Event::onMouseBlur" alt="" coords="474,715,614,741"/>
+<area shape="rect" id="node26" href="$class_event.html#a12eff42aa1638ade5285eb71d9eace9c" title="Event::onInputFocus" alt="" coords="473,765,615,792"/>
+<area shape="rect" id="node27" href="$class_event.html#abfecf01d3d3f91653b4ff975d5656f18" title="Event::onInputBlur" alt="" coords="479,816,609,843"/>
+<area shape="rect" id="node28" href="$class_event.html#a755035b7ed6aeb66880a55b7d1413875" title="Event::onRestore" alt="" coords="482,867,606,893"/>
+<area shape="rect" id="node29" href="$class_event.html#a9d630cb65cdc882eb94c5bc1ae202bd0" title="Event::onMinimize" alt="" coords="479,917,609,944"/>
+<area shape="rect" id="node30" href="$class_event.html#a81bf1de23a9fc2bcc87826577ce7a7fc" title="Event::onKeyDown" alt="" coords="477,968,611,995"/>
+<area shape="rect" id="node31" href="$class_event.html#a405f537739e063a34dc9c0b858deceb0" title="Event::onKeyUP" alt="" coords="484,1019,604,1045"/>
+<area shape="rect" id="node32" href="$class_event.html#a67cdc327bd1196265596258116c12612" title="Event::onMouseMove" alt="" coords="469,1069,619,1096"/>
+<area shape="rect" id="node33" href="$class_event.html#a3b950294082321617f3ecbc6803d6131" title="Event::onLButtonDown" alt="" coords="465,1120,623,1147"/>
+<area shape="rect" id="node34" href="$class_event.html#a70a2b1299ca1156808362ae1cc9b2fcd" title="Event::onLButtonUp" alt="" coords="474,1171,614,1197"/>
+<area shape="rect" id="node35" href="$class_event.html#af2dff78554f6a00d0f99ad6b57741a0d" title="Event::onRButtonDown" alt="" coords="464,1221,624,1248"/>
+<area shape="rect" id="node36" href="$class_event.html#adb18a7a3486dfcab2d1fbf19b7fe502f" title="Event::onRButtonUp" alt="" coords="473,1272,615,1299"/>
+<area shape="rect" id="node37" href="$class_event.html#af22192e64d83c7a8bc0267b1c95f9789" title="Event::onMButtonDown" alt="" coords="463,1323,625,1349"/>
+<area shape="rect" id="node38" href="$class_event.html#a76b2c258e057ce6cea334dd7475642a5" title="Event::onMButtonUp" alt="" coords="472,1373,616,1400"/>
+<area shape="rect" id="node39" href="$class_event.html#a839a908aee68661d6b74cc0189da68dc" title="Event::onMouseWheel" alt="" coords="467,1424,621,1451"/>
+<area shape="rect" id="node40" href="$class_event.html#af36a0c27891057b0815cf628e10697da" title="Event::onJoyAxis" alt="" coords="481,1475,607,1501"/>
+<area shape="rect" id="node41" href="$class_event.html#a49752abbeef2dac2a0f894b077d169f2" title="Event::onJoyButtonDown" alt="" coords="459,208,629,235"/>
+<area shape="rect" id="node42" href="$class_event.html#a8c492ef349c82c66e7360c30a075d076" title="Event::onJoyButtonUp" alt="" coords="467,259,621,285"/>
+<area shape="rect" id="node43" href="$class_event.html#a305733e45336bb3300a8c4ea0a9dbeb6" title="Event::onJoyHat" alt="" coords="484,309,604,336"/>
+<area shape="rect" id="node44" href="$class_event.html#ad8ee7398652a1a3b07db413efb6e0bef" title="Event::onJoyBall" alt="" coords="483,360,605,387"/>
+<area shape="rect" id="node45" href="$class_event.html#a59234a2f955ed3d6a8cc175554476ced" title="Event::onExit" alt="" coords="493,411,595,437"/>
+<area shape="rect" id="node46" href="$class_event.html#a130ac082dbeed11ada36e38ab3abaee8" title="Event::onExpose" alt="" coords="483,461,605,488"/>
+<area shape="rect" id="node47" href="$class_event.html#abaa07941a83c0ee80c42f46dfe83377e" title="Event::onResize" alt="" coords="485,512,603,539"/>
+<area shape="rect" id="node48" href="$class_event.html#ad772d7c2ca4b07fc0db370d557a47e84" title="Event::onWiiButtonEvent" alt="" coords="459,563,629,589"/>
+<area shape="rect" id="node49" href="$class_event.html#ab5f7702350e785f8563149b09f8af1fe" title="Event::onUser" alt="" coords="491,613,597,640"/>
+</map>

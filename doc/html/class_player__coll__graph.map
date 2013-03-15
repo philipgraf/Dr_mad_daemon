@@ -1,0 +1,6 @@
+<map id="Player" name="Player">
+<area shape="rect" id="node2" href="$class_entity.html" title="Entity Class." alt="" coords="5,96,60,123"/>
+<area shape="rect" id="node3" href="$class_p_d_a.html" title="PDA class." alt="" coords="85,96,136,123"/>
+<area shape="rect" id="node4" href="$class_event.html" title="Event Class." alt="" coords="63,5,117,32"/>
+<area shape="rect" id="node5" href="$class_language.html" title="Language class." alt="" coords="143,5,221,32"/>
+</map>

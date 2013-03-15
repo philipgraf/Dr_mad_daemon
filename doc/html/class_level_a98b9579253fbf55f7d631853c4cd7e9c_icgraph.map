@@ -1,0 +1,5 @@
+<map id="Level::getPlayer" name="Level::getPlayer">
+<area shape="rect" id="node2" href="$class_camera.html#a5267df5e690f75ff357762c56ad904d9" title="draw all entities stored in the entity list and put the crosshairs on it if it is selected..." alt="" coords="171,5,319,32"/>
+<area shape="rect" id="node3" href="$class_p_d_a.html#ad23c857e04d3de40831ba9f0f8fa1520" title="build the itemlist and the current remaining level time" alt="" coords="203,56,288,83"/>
+<area shape="rect" id="node4" href="$class_p_d_a.html#aa91c2f484bb19e5542ee520da921b854" title="check for all requirements and if all in players itemlist increase the level of the level and finally..." alt="" coords="197,107,294,133"/>
+</map>

@@ -1,9 +1,9 @@
 name    : Where is the ibuild 3000?
 width   : 25
 height  : 20
-bgImage : bg.bmp
+bgImage : city.bmp
 bgMusic : LukHash_DigitalHeart.ogg
-gravity : 1.5
+gravity : 2.0
 time    : 300
 player:
     x: 2

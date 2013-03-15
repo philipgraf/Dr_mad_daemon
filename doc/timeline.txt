@@ -7,25 +7,25 @@ KW1:
 	Camera -> done
 	Exceptionhandling
 KW2:
-	Collitiondetection
+	Collitiondetection ->done
 KW3:
-	Jump / Gravitiy
+	Jump / Gravitiy ->done
 	Level change ->done
 KW1-4:
-	Animations
-	Graphics/Tileset/Player/BadGuys
+	Animations ->done
+	Graphics/Tileset/Player/BadGuys->done
 
 Februar:
 Menuclass (Sound/Resolution/Fullscreen/Credits)-> nearly done
-Leveleditor
-Story
-levelresults
-savegames -> nearly done
+Leveleditor ->canceled
+Story ->done
+levelresults ->not needed
+savegames -> done
 
 -> no.1 priority:
-	refactor entity class (badguy, player, environment)
-	gameplay
-	fonts (sizes,color, etc)
+	refactor entity class (badguy, player, environment)->done
+	gameplay ->done
+	fonts (sizes,color, etc) ->done
 
 
 
@@ -41,7 +41,7 @@ Features:
 	implement Wiimote settings --> done
 	Environment Entities --> done
 	PDA upgrade --> done
-	throw environment entities
+	throw environment entities -->done
 	battery(3 levels and use of the glover costs 1 level)
 	(badguy2)
 	(mouse)?

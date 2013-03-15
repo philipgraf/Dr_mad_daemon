@@ -1,11 +1,3 @@
-/*
- * Menu.cpp
- *
- *  Created on: 28.01.2013
- *      Author: philip
- */
-
-
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
 #include <sstream>
@@ -18,8 +10,9 @@
 #include "Slot.h"
 
 /**
- * initialize the variables based on the menu type
+ * set the type of the menu and call the build function
  * @param menuType the menu type
+ * @see build()
  */
 Menu::Menu(int menuType) {
 
@@ -48,6 +41,9 @@ Menu::Menu(int menuType) {
 
 }
 
+/**
+ * free all the allocated memory
+ */
 Menu::~Menu() {
 	for (unsigned int i = 0; i < labeltexts.size(); i++) {
 		SDL_FreeSurface(items[i].labelSurface);
@@ -58,6 +54,9 @@ Menu::~Menu() {
 	labelactions.clear();
 }
 
+/**
+ * build all the labels based on the menu type
+ */
 void Menu::build() {
 	std::stringstream vol;
 	vol << Game::curGame->settings.volume/128.0*100 << "%";
@@ -185,6 +184,9 @@ void Menu::build() {
 
 }
 
+/**
+ * render the background and the menu label on the screen
+ */
 void Menu::render() {
 	SDL_Surface *screen = SDL_GetVideoSurface();
 
@@ -205,6 +207,10 @@ void Menu::render() {
 	}
 }
 
+/**
+ * play the sound and change the color and the current selected index
+ * @param direction the direction that the currentItem index will change (UP or DOWN)
+ */
 void Menu::select(int direction) {
 
 	Mix_PlayChannel(-1, Game::sounds["menu select"], 0);
@@ -223,6 +229,10 @@ void Menu::select(int direction) {
 	items[currentItem].labelSurface = TTF_RenderUTF8_Blended(Game::curGame->getFont(labelfonts[currentItem]), labeltexts[currentItem].c_str(), colors[1]);
 }
 
+/**
+ * the menu loop. Handles the Framecontrol and the user inputs.
+ * This loop runs until running is false.
+ */
 int Menu::show() {
 	Uint32 start;
 	SDL_Event event;
@@ -243,7 +253,9 @@ int Menu::show() {
 }
 
 /*************************************** MENU ACTIONS **************************************/
-
+/**
+ * start the selected level
+ */
 void Menu::start() {
 
 	Level level((unsigned) currentItem - 1);
@@ -251,6 +263,9 @@ void Menu::start() {
 	build();
 }
 
+/**
+ * change the language and rebuild the menu with the new language
+ */
 void Menu::changeLanguage() {
 	int index = -1;
 	for (unsigned i = 0; i < Language::supLanguages.size(); i++) {
@@ -272,6 +287,9 @@ void Menu::changeLanguage() {
 	build();
 }
 
+/**
+ * change the active slot to the currently selected one.
+ */
 void Menu::changeSlot() {
 
 	Game::curGame->settings.activeSlot = currentItem;
@@ -279,6 +297,10 @@ void Menu::changeSlot() {
 	running = false;
 }
 
+/**
+ * create a textinput field and create an new slot with the return name.
+ * @see TextInput
+ */
 void Menu::createSlot() {
 	string slotname = TextInput("Enter slotname:", 10).getInput();
 	if (slotname != "") {
@@ -290,21 +312,34 @@ void Menu::createSlot() {
 	running = false;
 }
 
+/**
+ * create a new menu with the menu type LEVELMENU
+ */
 void Menu::levels() {
 	Menu levelmenu(LEVELMENU);
 	levelmenu.show();
 }
 
+/**
+ * create a new menu with the menu type SLOTMENU
+ */
 void Menu::slots() {
 	Menu slotmenu(SLOTMENU);
 	slotmenu.show();
 	build();
 }
 
+/**
+ * set running of the PAUSEMENU to false.
+ */
 void Menu::continueGame() {
 	this->running = false;
 }
 
+/**
+ * change the volume in 25 per cent steps.
+ * the volume of the music always have half of the sounds
+ */
 void Menu::sound() {
 	Game::curGame->settings.volume=(Game::curGame->settings.volume+32)%(MIX_MAX_VOLUME+32);
 	Mix_VolumeMusic(Game::curGame->settings.volume/2);
@@ -315,6 +350,9 @@ void Menu::sound() {
 	}
 }
 
+/**
+ * create a new menu with the menu type OPTIONSMENU
+ */
 void Menu::options() {
 	Menu optionMenu(OPTIONMENU);
 	optionMenu.show();
@@ -322,23 +360,34 @@ void Menu::options() {
 	Game::curGame->saveSettings();
 }
 
+/**
+ * set running to false and quit the whole game
+ */
 void Menu::exit() {
-	//TODO if level has the main gameloop then return -1 oder so. set returnvalue to pass throw and quit the whole game
+	//TODO if level has the main gameloop then return -1. set returnvalue to pass throw and quit the whole game
 
 	//Game::curGame->getCurrentLevel()->setRunning(false);
 	running = false;
 	returnValue = -1;
 }
-
+/**
+ * create a new menu with the menu type CREDITS
+ */
 void Menu::credits() {
 	Menu creditsMenu(CREDITS);
 	creditsMenu.show();
 }
 
+/**
+ * get back to the menu before
+ */
 void Menu::back() {
 	running = false;
 }
 
+/**
+ * quit the current level
+ */
 void Menu::quitLevel() {
 	Game::curGame->getCurrentLevel()->setRunning(false);
 	//	delete level;
@@ -346,15 +395,28 @@ void Menu::quitLevel() {
 	running = false;
 }
 
+/**
+ * not implemented yet.
+ */
 void Menu::controllerSettings() {
 }
 
 /*************************************** EVENT HANDLING ****************************************/
 
+/**
+ * the event which will be called if the close button is clicked.
+ * quit the game.
+ */
 void Menu::onExit() {
 	exit();
 }
 
+/**
+ * handle the key events
+ * @param sym the symbol of the key
+ * @param mod modifications like left-Shift or alt button
+ * @param unicode the unicode value of the pressed key
+ */
 void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	switch (sym) {
 	case SDLK_ESCAPE:
@@ -375,6 +437,9 @@ void Menu::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	}
 }
 
+/**
+ * handle the wii button events
+ */
 void Menu::onWiiButtonEvent(int buttons) {
 	switch (buttons) {
 	// if the wiimote is horizontal Left is down
@@ -397,6 +462,10 @@ void Menu::onWiiButtonEvent(int buttons) {
 	}
 }
 
+/**
+ * mouse movement handler
+ * set the currentitem to the item under the mouse.
+ */
 void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right, bool middle) {
 	for (unsigned i = 0; i < labeltexts.size(); i++) {
 		if (mX > items[i].position.x && mX < items[i].position.x + items[i].position.w && mY > items[i].position.y && mY < items[i].position.y + items[i].position.h) {
@@ -408,6 +477,10 @@ void Menu::onMouseMove(int mX, int mY, int xRel, int yRel, bool left, bool right
 	}
 }
 
+/**
+ * mouse button handler
+ * execute the labelaction of the current selected menuitem
+ */
 void Menu::onLButtonDown(int mX, int mY) {
 	(this->*labelactions[currentItem])();
 }

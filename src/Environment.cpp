@@ -1,10 +1,3 @@
-/*
- * Environment.cpp
- *
- *  Created on: 28.02.2013
- *      Author: philip
- */
-
 #include <Box2D/Box2D.h>
 #include <SDL/SDL.h>
 #include <yaml-cpp/yaml.h>

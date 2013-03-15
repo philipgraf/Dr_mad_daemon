@@ -1,10 +1,3 @@
-/*
- * Notification.cpp
- *
- *  Created on: 19.02.2013
- *      Author: philip
- */
-
 #include "Notification.h"
 
 #include <SDL/SDL_image.h>
@@ -16,6 +9,13 @@ using namespace std;
 
 vector<Notification*> Notification::notificationList;
 
+/**
+ * load the images and texts convert it to SDL_Surfaces and blit it on the notificationSurface.
+ * @param message the message which will be shown
+ * @param displaySecs the duration in seconds until the notification will be destroyed.
+ * @param type the type of the Notification( INFO; WARRNING)
+ * @param iconName the iconname without .bmp
+ */
 Notification::Notification(string message, int displaySecs, int type, string iconName) {
 	SDL_Surface *temp;
 	if ((temp = IMG_Load(NOTIFI"notification.png")) == NULL) {
@@ -80,6 +80,9 @@ Notification::Notification(string message, int displaySecs, int type, string ico
 
 }
 
+/**
+ * free all the allocated memory and remove it self from the notification list.
+ */
 Notification::~Notification() {
 	SDL_FreeSurface(notificationSurface);
 	std::vector<Notification*>::iterator pos;
@@ -88,6 +91,9 @@ Notification::~Notification() {
 	}
 }
 
+/**
+ * decrease the counter and commit suicide if it zero
+ */
 void Notification::timeout() {
 	if (--counter <= 0) {
 		//it's OK for an object to commit suicide
@@ -95,6 +101,10 @@ void Notification::timeout() {
 	}
 }
 
+/**
+ * get the surface of the notification
+ * @return the surface of the notification
+ */
 SDL_Surface* Notification::getNotificationSurface() {
 	return notificationSurface;
 }

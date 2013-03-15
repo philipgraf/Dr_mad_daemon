@@ -1,9 +1,3 @@
-/*
- * Event.h
- *
- *  Created on: 10.09.2012
- *      Author: philip
- */
 #ifndef EVENT_H_
 #define EVENT_H_
 
@@ -35,8 +29,11 @@
 #include <cwiid.h>
 
 /**
+ * Event Class.
  * This Class handles all Input Events
- * Maybe wii and SNES too
+ * @author Philip Graf
+ * @date 14.04.2013
+ * @version 0.1.0 Alpha-State
  */
 class Event {
 private:

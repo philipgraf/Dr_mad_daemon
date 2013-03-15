@@ -9,7 +9,7 @@
 #include "define.h"
 #include "Game.h"
 
-/** Tile class.
+/** Slot class.
  * This class handles the "Savegame"-Slots and stores the game-progress
  * @author Felix Eckner
  * @date 14.03.2013

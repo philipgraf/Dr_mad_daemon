@@ -1,9 +1,3 @@
-/*
- * Language.h
- *
- *  Created on: 07.02.2013
- *      Author: philip
- */
 
 #ifndef LANGUAGE_H_
 #define LANGUAGE_H_
@@ -12,6 +6,12 @@
 #include <string>
 #include <vector>
 
+/** Language class.
+ * This class handels all translations.
+ * @author Philip Graf
+ * @date 14.03.2013
+ * @version 0.1.0 Alpha-State
+ */
 class Language {
 public:
 	static std::vector<std::string> supLanguages; /**< a list with all supported Languages */

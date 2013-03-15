@@ -1,10 +1,3 @@
-/*
- * game.h
- *
- *  Created on: 10.09.2012
- *      Author: philip
- */
-
 #ifndef GAME_H_
 #define GAME_H_
 
@@ -47,7 +40,7 @@ typedef struct {
 
 /** Game class.
  * This class handles the Game initialization and settings
- * @author Felix Eckner
+ * @author Philip Graf
  * @date 14.03.2013
  * @version 0.1.0 Alpha-State
  */

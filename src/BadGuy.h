@@ -1,10 +1,3 @@
-/*
- * BadGuy.h
- *
- *  Created on: 12.02.2013
- *      Author: philip
- */
-
 #ifndef BADGUY_H_
 #define BADGUY_H_
 
@@ -14,6 +7,12 @@
 
 using namespace std;
 
+/** Badguy class.
+ * This class defines all badguy specific things
+ * @author Felix Eckner
+ * @date 14.04.2013
+ * @version 0.1.0 Alpha-State
+ */
 class BadGuy: public Entity {
 public:
 	BadGuy(string type, int x, int y);

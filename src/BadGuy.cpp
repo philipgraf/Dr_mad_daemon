@@ -1,10 +1,3 @@
-/*
- * BadGuy.cpp
- *
- *  Created on: 12.02.2013
- *      Author: philip
- */
-
 #include <iostream>
 #include <Box2D/Box2D.h>
 #include <SDL/SDL.h>

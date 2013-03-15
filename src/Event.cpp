@@ -1,10 +1,3 @@
-/*
- * Event.cpp
- *
- *  Created on: 10.09.2012
- *      Author: philip
- */
-
 #include "Event.h"
 #include "define.h"
 

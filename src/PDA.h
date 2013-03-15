@@ -1,10 +1,3 @@
-/*
- * PDA.h
- *
- *  Created on: 19.02.2013
- *      Author: philip
- */
-
 #ifndef PDA_H_
 #define PDA_H_
 
@@ -27,7 +20,7 @@ typedef struct {
 
 /** PDA class.
  * This class handles the Player PDA
- * @author Felix Eckner
+ * @author Philip Graf
  * @date 14.03.2013
  * @version 0.1.0 Alpha-State
  */

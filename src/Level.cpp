@@ -18,6 +18,9 @@ using namespace std;
 vector<string> Level::levels;
 map<string, string> Level::levelnames;
 
+/**
+ * load the levelnames from the levelconfigs
+ */
 void Level::loadLevels() {
 	levels.push_back("l000");
 	levels.push_back("l001");
@@ -31,6 +34,11 @@ void Level::loadLevels() {
 
 }
 
+/**
+ * Initialize all necessary information from the levelconfig
+ * create all items, badguys and environments, also create the player and the main camera.
+ * @param levelnum the number of the level this is needed to load the correct mapfile.
+ */
 Level::Level(unsigned levelnum) {
 
 	if (levelnum >= levels.size()) {
@@ -106,6 +114,9 @@ Level::Level(unsigned levelnum) {
 
 }
 
+/**
+ * free all allocated memory
+ */
 Level::~Level() {
 	for (int i = 0; i < 3; i++) {
 		for (int x = 0; x < width; x++) {
@@ -134,6 +145,9 @@ Level::~Level() {
 
 }
 
+/**
+ * load the map file and build the tilelist array.
+ */
 void Level::loadMapFile(string filename) {
 	tilelist = new Tile***[3];
 	for (int i = 0; i < 3; i++) {
@@ -161,6 +175,7 @@ void Level::loadMapFile(string filename) {
 					b2PolygonShape groundBox;
 					groundBox.SetAsBox(0.5, 0.5);
 					groundBody->CreateFixture(&groundBox, 0.0f);
+					tilelist[i][x][y]->setBody(groundBody);
 				}
 
 				if ((id >> 16) & 0xFF) {
@@ -202,13 +217,13 @@ void Level::logic() {
 		Menu *gameOverMenu = new Menu(GAMEOVER);
 		gameOverMenu->show();
 	}
-	if(levelnum == 2 && tilelist[1][43][16]->getCurrentframe() == 0 && tilelist[1][43][16]->getId() != 0 ){
-		if(entityCreated == false){
-			new BadGuy("vacuuBoy",41,16);
+	if (levelnum == 2 && tilelist[1][43][16]->getCurrentframe() == 0 && tilelist[1][43][16]->getId() != 0) {
+		if (entityCreated == false) {
+			new BadGuy("vacuuBoy", 41, 16);
 			entityCreated = true;
 		}
-	}else{
-		entityCreated= false;
+	} else {
+		entityCreated = false;
 	}
 
 	if (levelFinished) {
@@ -310,6 +325,9 @@ void Level::play() {
 	}
 }
 
+/**
+ * if 1000 milliseconds are gone the time variable will be decreased by one.
+ */
 void Level::updateTime() {
 
 	if (SDL_GetTicks() - timer > 1000) {
@@ -318,6 +336,12 @@ void Level::updateTime() {
 	}
 }
 
+/**
+ * handle the key down events
+ * @param sym the symbol of the key
+ * @param mod modifications like left-Shift or alt button
+ * @param unicode the unicode value of the pressed key
+ */
 void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 
 	if (sym == SDLK_ESCAPE) {
@@ -350,6 +374,12 @@ void Level::onKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	}
 }
 
+/**
+ * handle the key up events
+ * @param sym the symbol of the key
+ * @param mod modifications like left-Shift or alt button
+ * @param unicode the unicode value of the pressed key
+ */
 void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	if (sym == Game::curGame->settings.keyboard.left) {
 		player->delDirection(LEFT);
@@ -366,6 +396,9 @@ void Level::onKeyUP(SDLKey sym, SDLMod mod, Uint16 unicode) {
 	}
 }
 
+/**
+ * handle the wii button events
+ */
 void Level::onWiiButtonEvent(int button) {
 	if (button == WII_BTN_HOME) {
 		Menu *pauseMenu = new Menu(PAUSEMENU);
@@ -490,6 +523,9 @@ void Level::level0Logic() {
 
 }
 
+/** Switch logic of level1.
+ * switch1 (hand) open the door and change the hand to green.
+ */
 void Level::level1Logic() {
 	if (switches & TF_SWITCH1) {
 		//switch hand to green
@@ -521,18 +557,74 @@ void Level::level1Logic() {
 
 }
 
+/**
+ * Switch logic of level2.
+ * switch1 (main switch) ibuild run away and door is open
+ */
 void Level::level2Logic() {
 	if (switches & TF_SWITCH1) {
-		//remove iBuild
-		tilelist[1][43][16]->setId(0);
-		tilelist[1][43][17]->setId(0);
-		tilelist[1][43][18]->setId(0);
-		tilelist[1][44][16]->setId(0);
-		tilelist[1][44][17]->setId(0);
-		tilelist[1][44][18]->setId(0);
-		tilelist[1][45][16]->setId(0);
-		tilelist[1][45][17]->setId(0);
-		tilelist[1][45][18]->setId(0);
+		if (tilelist[1][42][15]->getId() != 0) {
+			//remove iBuild
+			tilelist[1][42][15]->setId(0);
+			tilelist[1][42][16]->setId(0);
+			tilelist[1][42][17]->setId(0);
+			tilelist[1][43][15]->setId(0);
+			tilelist[1][43][16]->setId(0);
+			tilelist[1][43][17]->setId(0);
+			tilelist[1][44][15]->setId(0);
+			tilelist[1][44][16]->setId(0);
+			tilelist[1][44][17]->setId(0);
+
+			world->DestroyBody(tilelist[1][42][15]->getBody());
+			world->DestroyBody(tilelist[1][42][16]->getBody());
+			world->DestroyBody(tilelist[1][42][17]->getBody());
+			world->DestroyBody(tilelist[1][43][15]->getBody());
+			world->DestroyBody(tilelist[1][43][16]->getBody());
+			world->DestroyBody(tilelist[1][43][17]->getBody());
+			world->DestroyBody(tilelist[1][44][15]->getBody());
+			world->DestroyBody(tilelist[1][44][16]->getBody());
+			world->DestroyBody(tilelist[1][44][17]->getBody());
+
+			tilelist[0][44][15]->setCurrentframe(1);
+			tilelist[0][44][16]->setCurrentframe(1);
+			tilelist[0][44][17]->setCurrentframe(1);
+			tilelist[0][45][15]->setCurrentframe(1);
+			tilelist[0][45][16]->setCurrentframe(1);
+			tilelist[0][45][17]->setCurrentframe(1);
+			tilelist[0][46][15]->setCurrentframe(1);
+			tilelist[0][46][16]->setCurrentframe(1);
+			tilelist[0][46][17]->setCurrentframe(1);
+
+			tilelist[0][44][15]->setFlags(TF_FINISH);
+			tilelist[0][44][16]->setFlags(TF_FINISH);
+			tilelist[0][44][17]->setFlags(TF_FINISH);
+			tilelist[0][45][15]->setFlags(TF_FINISH);
+			tilelist[0][45][16]->setFlags(TF_FINISH);
+			tilelist[0][45][17]->setFlags(TF_FINISH);
+			tilelist[0][46][15]->setFlags(TF_FINISH);
+			tilelist[0][46][16]->setFlags(TF_FINISH);
+			tilelist[0][46][17]->setFlags(TF_FINISH);
+		}
+	}else {
+		tilelist[0][44][15]->setCurrentframe(0);
+		tilelist[0][44][16]->setCurrentframe(0);
+		tilelist[0][44][17]->setCurrentframe(0);
+		tilelist[0][45][15]->setCurrentframe(0);
+		tilelist[0][45][16]->setCurrentframe(0);
+		tilelist[0][45][17]->setCurrentframe(0);
+		tilelist[0][46][15]->setCurrentframe(0);
+		tilelist[0][46][16]->setCurrentframe(0);
+		tilelist[0][46][17]->setCurrentframe(0);
+
+		tilelist[0][44][15]->setFlags(0);
+		tilelist[0][44][16]->setFlags(0);
+		tilelist[0][44][17]->setFlags(0);
+		tilelist[0][45][15]->setFlags(0);
+		tilelist[0][45][16]->setFlags(0);
+		tilelist[0][45][17]->setFlags(0);
+		tilelist[0][46][15]->setFlags(0);
+		tilelist[0][46][16]->setFlags(0);
+		tilelist[0][46][17]->setFlags(0);
 	}
 }
 
@@ -549,6 +641,10 @@ int Level::getGravity() const {
 	return gravity2d->y;
 }
 
+/**
+ * set the gravity to given value.
+ * @param gravity the new gravity value
+ */
 void Level::setGravity(int gravity) {
 	this->gravity2d->y = gravity;
 }

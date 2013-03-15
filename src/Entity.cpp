@@ -1,10 +1,3 @@
-/** Entity.cpp
- *
- *  Created on: 27.09.2012
- *      Author: medi
- */
-
-//#include <algorithm>
 #include "Entity.h"
 
 #include "define.h"

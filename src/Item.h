@@ -1,10 +1,3 @@
-/*
- * Item.h
- *
- *  Created on: 25.02.2013
- *      Author: philip
- */
-
 #ifndef ITEM_H_
 #define ITEM_H_
 
@@ -13,6 +6,12 @@
 #include <SDL/SDL.h>
 #include <Box2D/Box2D.h>
 
+/** Item class.
+ * This class handles the Items.
+ * @author Felix Eckner
+ * @date 14.04.2013
+ * @version 0.1.0 Alpha-State
+ */
 class Item {
 public:
 	static std::vector<Item*> itemlist; /**< contains all items */

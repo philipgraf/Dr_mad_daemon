@@ -12,6 +12,12 @@
 
 class Entity;
 
+/** Camera class.
+ * This class handles all the output to the screen
+ * @author Philip Graf
+ * @date 14.04.2013
+ * @version 0.1.0 Alpha-State
+ */
 class Camera {
 public:
 	/** Cameramode enum.

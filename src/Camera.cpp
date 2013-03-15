@@ -1,10 +1,3 @@
-/*
- * Camera.cpp
- *
- *  Created on: 03.01.2013
- *      Author: philip
- */
-
 #include "Camera.h"
 #include "Game.h"
 #include "Notification.h"

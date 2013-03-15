@@ -1,10 +1,3 @@
-/*
- * Menu.h
- *
- *  Created on: 28.01.2013
- *      Author: philip
- */
-
 #ifndef MENU_H_
 #define MENU_H_
 
@@ -30,6 +23,12 @@ typedef struct {
 	SDL_Rect position;
 } menuitem;
 
+/** Menu class.
+ * Creates the menus and execute the different actions
+ * @author Philip Graf
+ * @date 14.03.2013
+ * @version 0.1.0 Alpha-State
+ */
 class Menu: public Event {
 	typedef void (Menu::*fptr)();
 private:

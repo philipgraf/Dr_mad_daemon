@@ -1,10 +1,3 @@
-/*
- * Language.cpp
- *
- *  Created on: 07.02.2013
- *      Author: philip
- */
-
 #include "Language.h"
 #include "define.h"
 #include "Game.h"

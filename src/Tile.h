@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <iostream>
+#include <Box2D/Box2D.h>
 #include "define.h"
 
 #define TF_SWITCH1 0x1
@@ -32,6 +33,7 @@ private:
 	void nextFrame();
 
 	Uint32 timer; /**< Time in milliseconds when the current frame was set. This is needed to change the frame after the defined time for the tile to make the animation smooth */
+	b2Body *body;
 
 public:
 	Tile(Sint64 id = 0);
@@ -46,6 +48,8 @@ public:
 	Sint64 getFlags() const;
 	void setFlags(Sint64 flags);
 	void setId(Sint16 id);
+	b2Body* getBody();
+	void setBody(b2Body* body);
 };
 
 #endif

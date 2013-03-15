@@ -23,39 +23,38 @@ class Camera;
 
 /** Level class.
  * This class contain all Tiles, the name, the Background Image, the Player, absolute width and height in Tiles, the gravity and the time.
- * All values loaded from file.
- * @author Philip Graf
- * @date 04.11.2012
- * @version 0.0.1 Class create
+ * @author Felix Eckner
+ * @date 14.04.2013
+ * @version 0.1.0 Alpha-State
  */
 class Level: public Event {
 public:
-	static vector<string> levels;
-	static map<string, string> levelnames;
+	static vector<string> levels; /**< list of all level in the right order */
+	static map<string, string> levelnames; /**< a map with the level and the levelname, needed for the levelmenu */
 private:
 
 	/**
 	 * 3D Tilearray [0=bg,1=main,2=fg][x][y]
 	 */
-	Tile ****tilelist;
+	Tile ****tilelist; /**< 3 dimensional array with all tiles */
 
-	int levelnum;
+	int levelnum; /**< the level number */
 	string name; /**< the name of the Level. */
-	SDL_Surface *bgImage;
-	Mix_Music *bgMusic;
-	b2World *world;
-	Player* player;
-	int width;
-	int height;
-	int time;
-	b2Vec2 *gravity2d;
-	Camera* mainCam;
-	Uint8 switches;
+	SDL_Surface *bgImage; /**< the background image of the Level */
+	Mix_Music *bgMusic; /**< the background music of the Level */
+	b2World *world; /**< the collision world where all the basic collision detection happens */
+	Player* player; /**< an object of the player */
+	int width; /**< the width of the level in meter */
+	int height; /**< the height of the level in meter */
+	int time; /**< the time in seconds the player have to complete the level */
+	b2Vec2 *gravity2d; /**< the gravity vector */
+	Camera* mainCam; /**< the main camera of the level */
+	Uint8 switches; /**< 8 switches of the level. All switches must be set to 1 to complete the level*/
 	bool running; /**< while this is true the level will be rendered */
-	bool levelFinished;
-	Language lang;
+	bool levelFinished; /**< contains true if the level is finished and false if the player is dead */
+	Language lang;  /**< this objekt is used for translation the notifications*/
 
-	Uint32 timer;
+	Uint32 timer; /**< contains the time in milliseconds which is needed for the time */
 
 #if DEBUG >= 3
 	Debug b2Debug;

@@ -1,16 +1,9 @@
-/*
- * Debug.cpp
- *
- *  Created on: 31.01.2013
- *      Author: philip
- */
-
 #include "Debug.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include "define.h"
 
-#define SCALE 1
+#define SCALE 4
 
 using namespace std;
 

@@ -145,6 +145,14 @@ Sint64 Tile::getFlags() const {
 	return flags;
 }
 
+b2Body* Tile::getBody(){
+	return body;
+}
+
+void Tile::setBody(b2Body* body) {
+	this->body = body;
+}
+
 /**
  * Sets a new id for this Tile.
  * this can be used to alter a level while running

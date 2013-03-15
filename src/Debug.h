@@ -1,10 +1,3 @@
-/*
- * Debug.h
- *
- *  Created on: 31.01.2013
- *      Author: philip
- */
-
 #ifndef DEBUG_H_
 #define DEBUG_H_
 

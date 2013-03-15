@@ -1,9 +1,3 @@
-/*
- * Entity.h
- *
- *  Created on: 27.09.2012
- *      Author: medi
- */
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
@@ -30,7 +24,11 @@
 #define LEFT 0x08
 
 /**
- * Entity Class all things you can interact with.
+ * Entity Class.
+ * This class handle all things you can interact with.
+ * @author Felix Eckner
+ * @date 14.04.2013
+ * @version 0.1.0 Alpha-State
  */
 class Entity {
 private:

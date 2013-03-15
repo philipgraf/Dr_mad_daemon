@@ -1,10 +1,3 @@
-/*
- * PDA.cpp
- *
- *  Created on: 19.02.2013
- *      Author: philip
- */
-
 #include <iostream>
 
 #include "PDA.h"

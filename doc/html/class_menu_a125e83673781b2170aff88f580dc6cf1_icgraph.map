@@ -1,0 +1,4 @@
+<map id="Menu::select" name="Menu::select">
+<area shape="rect" id="node2" href="$class_menu.html#ad8b1236b229adec435c53ed3142cf9fe" title="handle the key events" alt="" coords="169,5,303,32"/>
+<area shape="rect" id="node3" href="$class_menu.html#a18bf293ba3291f2dc99b1ec9c4919f14" title="handle the wii button events" alt="" coords="153,56,319,83"/>
+</map>

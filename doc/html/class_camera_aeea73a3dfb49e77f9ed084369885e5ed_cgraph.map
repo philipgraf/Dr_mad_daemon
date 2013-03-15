@@ -1,0 +1,6 @@
+<map id="Camera::drawBackground" name="Camera::drawBackground">
+<area shape="rect" id="node2" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="227,5,384,32"/>
+<area shape="rect" id="node3" href="$class_level.html#a47eb6ea34bc8100b82778cc5af0e42d4" title="Level::getBackground" alt="" coords="231,56,379,83"/>
+<area shape="rect" id="node4" href="$class_level.html#a11ca1be00c88ed5c14774cf938509e61" title="Level::getWidth" alt="" coords="249,107,362,133"/>
+<area shape="rect" id="node5" href="$class_level.html#a0f867d54960aac1ceaa3b42fc7522924" title="Level::getHeight" alt="" coords="247,157,364,184"/>
+</map>

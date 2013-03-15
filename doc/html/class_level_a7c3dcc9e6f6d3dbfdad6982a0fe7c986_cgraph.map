@@ -1,0 +1,4 @@
+<map id="Level::Level" name="Level::Level">
+<area shape="rect" id="node2" href="$class_game.html#ac1da1f9af929fcf792d25b10cd409b03" title="Sets a Pointer to the current Level." alt="" coords="147,5,304,32"/>
+<area shape="rect" id="node3" href="$class_tile.html#afac3bde19da9a965f332a7ebf6401241" title="Loads the image and convert it to a SDL_Surface." alt="" coords="168,56,283,83"/>
+</map>

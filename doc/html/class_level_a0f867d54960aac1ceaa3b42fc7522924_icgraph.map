@@ -1,0 +1,6 @@
+<map id="Level::getHeight" name="Level::getHeight">
+<area shape="rect" id="node2" href="$class_camera.html#acd967656adcfe2070e30b4e8157ad1dc" title="Main logic of the Camera If the mode is sticky the position will be recalculated from the Entity stor..." alt="" coords="206,5,309,32"/>
+<area shape="rect" id="node3" href="$class_camera.html#ad4c8bbb14f09e1076aebde8e55eb25cd" title="compute the viewable range of the litelist and draw the range of given layer on the screen..." alt="" coords="191,56,323,83"/>
+<area shape="rect" id="node4" href="$class_camera.html#aeea73a3dfb49e77f9ed084369885e5ed" title="draw the backgrounde image of the Level on the screen." alt="" coords="171,107,344,133"/>
+<area shape="rect" id="node5" href="$class_player.html#a22aaf14f4b9b7bd7487af88873f5d9f3" title="Handles the logic related to the player." alt="" coords="210,157,305,184"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="Game::init" name="Game::init">
+<area shape="rect" id="node2" href="$class_level.html#aea6d240e42e374e93261ea7d1947900e" title="load the levelnames from the levelconfigs" alt="" coords="188,5,311,32"/>
+<area shape="rect" id="node3" href="$class_slot.html#a8eeea946b5a61aa5b6a3432f110a8031" title="Load existing slots." alt="" coords="196,56,303,83"/>
+<area shape="rect" id="node4" href="$class_language.html#a21a4e3312e37791afa079fa3ffc01afe" title="get all languages from the greeting entry and store it in supLanguages" alt="" coords="136,107,363,133"/>
+<area shape="rect" id="node5" href="$class_p_d_a.html#a278c2e48b702d505dd2f13c1d972e475" title="build the vector with all the update requirements." alt="" coords="168,157,331,184"/>
+</map>

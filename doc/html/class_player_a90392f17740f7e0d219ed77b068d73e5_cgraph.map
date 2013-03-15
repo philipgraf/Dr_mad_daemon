@@ -1,0 +1,5 @@
+<map id="Player::use" name="Player::use">
+<area shape="rect" id="node2" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="141,5,299,32"/>
+<area shape="rect" id="node3" href="$class_tile.html#a207528848ec6411a829d044f01b8711a" title="Returns the flags of the tile." alt="" coords="169,56,271,83"/>
+<area shape="rect" id="node4" href="$class_level.html#a5eaf6701b57ed6c07f6f6fbc4c99e898" title="Call the right level&#45;Switch logic call the level logic depend on the levelnumber." alt="" coords="149,107,291,133"/>
+</map>

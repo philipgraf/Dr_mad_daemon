@@ -1,0 +1,4 @@
+<map id="Menu::quitLevel" name="Menu::quitLevel">
+<area shape="rect" id="node2" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="168,5,325,32"/>
+<area shape="rect" id="node3" href="$class_level.html#a32c258a115ede93afb08e33297e87ae3" title="Level::setRunning" alt="" coords="183,56,310,83"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="Level::getTilelist" name="Level::getTilelist">
+<area shape="rect" id="node2" href="$class_camera.html#ad4c8bbb14f09e1076aebde8e55eb25cd" title="compute the viewable range of the litelist and draw the range of given layer on the screen..." alt="" coords="171,5,303,32"/>
+<area shape="rect" id="node3" href="$class_player.html#a90392f17740f7e0d219ed77b068d73e5" title="Handles the &quot;use&quot;&#45;logic." alt="" coords="193,56,281,83"/>
+</map>

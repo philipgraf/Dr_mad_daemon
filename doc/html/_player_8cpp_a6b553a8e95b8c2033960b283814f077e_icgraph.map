@@ -1,0 +1,4 @@
+<map id="addAngle" name="addAngle">
+<area shape="rect" id="node2" href="$class_player.html#ae02ee46d8c20dd0697b975f935b09839" title="Handles the player movement." alt="" coords="131,5,229,32"/>
+<area shape="rect" id="node3" href="$class_player.html#a87823e60182c5c7142b154aa91f81fe0" title="Handles joins between player and dead entities if the selected target isn&#39;t already attached to the p..." alt="" coords="134,56,226,83"/>
+</map>

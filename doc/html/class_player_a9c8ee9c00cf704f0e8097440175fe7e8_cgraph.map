@@ -1,0 +1,3 @@
+<map id="Player::addItem" name="Player::addItem">
+<area shape="rect" id="node2" href="$class_entity.html#a2034067cb7dc764864a2f8fb34fe28f6" title="add the given item to the itemlist if the item is already in the item list the amount of the item wil..." alt="" coords="169,5,279,32"/>
+</map>

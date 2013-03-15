@@ -1,0 +1,5 @@
+<map id="Player::move" name="Player::move">
+<area shape="rect" id="node2" href="$class_entity.html#a8bf51b83c398f48e416515273cd6fe27" title="check the collision and set the corresponding bit of the return value and set grounded of true if the..." alt="" coords="156,5,305,32"/>
+<area shape="rect" id="node3" href="$class_game.html#a268d07238d3a4eea730b2561dbea49a5" title="Returns a pointer to the current Level." alt="" coords="152,56,309,83"/>
+<area shape="rect" id="node4" href="$class_entity.html#af9ee7c42eae01c2b0a2947314cd434eb" title="get the body of the entity which contains the x and y values and all his shapes" alt="" coords="175,107,287,133"/>
+</map>

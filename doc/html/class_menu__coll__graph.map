@@ -1,0 +1,5 @@
+<map id="Menu" name="Menu">
+<area shape="rect" id="node2" href="$class_event.html" title="Event Class." alt="" coords="5,5,60,32"/>
+<area shape="rect" id="node3" href="$structmenuitem.html" title="menuitem" alt="" coords="86,5,164,32"/>
+<area shape="rect" id="node4" href="$class_language.html" title="Language class." alt="" coords="189,5,267,32"/>
+</map>

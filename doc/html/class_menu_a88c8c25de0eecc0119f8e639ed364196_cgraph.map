@@ -1,0 +1,5 @@
+<map id="Menu::createSlot" name="Menu::createSlot">
+<area shape="rect" id="node2" href="$class_text_input.html#ab787ca0ad74af30c3a613211200da84a" title="Handles the typing." alt="" coords="181,5,313,32"/>
+<area shape="rect" id="node3" href="$class_slot.html#a088103eb6d6b455a25c3c3295c032e56" title="Save all Slots to YAML&#45;File." alt="" coords="191,56,302,83"/>
+<area shape="rect" id="node4" href="$class_game.html#ade0f23eb7b377ff35437bd8757480b48" title="Save all settings back to YAML&#45;file." alt="" coords="176,107,317,133"/>
+</map>

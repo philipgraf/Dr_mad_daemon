@@ -1,0 +1,12 @@
+<map id="Game" name="Game">
+<area shape="rect" id="node2" href="$structsettings__t.html" title="settings_t" alt="" coords="66,291,144,317"/>
+<area shape="rect" id="node3" href="$structcontroll__t.html" title="controll_t" alt="" coords="5,187,79,213"/>
+<area shape="rect" id="node4" href="$class_level.html" title="Level class." alt="" coords="195,291,248,317"/>
+<area shape="rect" id="node5" href="$class_event.html" title="Event Class." alt="" coords="108,5,163,32"/>
+<area shape="rect" id="node9" href="$class_p_d_a.html" title="PDA class." alt="" coords="155,96,205,123"/>
+<area shape="rect" id="node6" href="$class_camera.html" title="Camera class." alt="" coords="238,187,305,213"/>
+<area shape="rect" id="node7" href="$class_entity.html" title="Entity Class." alt="" coords="307,96,361,123"/>
+<area shape="rect" id="node8" href="$class_player.html" title="Player class." alt="" coords="155,187,212,213"/>
+<area shape="rect" id="node10" href="$class_language.html" title="Language class." alt="" coords="214,5,292,32"/>
+<area shape="rect" id="node11" href="$class_tile.html" title="Tile class." alt="" coords="331,187,373,213"/>
+</map>

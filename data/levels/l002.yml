@@ -2,8 +2,8 @@ name    : back in the lab
 width   : 50
 height  : 20
 bgImage : lab.bmp
-bgMusic : LukHash_DigitalHeart.ogg
-gravity : 1.5
+bgMusic : Pornophonique_SadRobot.ogg
+gravity : 2.0
 time    : 300
 player:
     x: 3

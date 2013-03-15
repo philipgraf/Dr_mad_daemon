@@ -2,7 +2,7 @@ name    : Tutorial
 width   : 40
 height  : 20
 bgImage : store.bmp
-bgMusic : LukHash_DigitalHeart.ogg
+bgMusic : TrackyBirthday_Websiiite
 gravity : 2.0
 time    : 300
 player:

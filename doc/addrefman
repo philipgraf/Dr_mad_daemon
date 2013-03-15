@@ -1,0 +1,18 @@
+\chapter{Development Environment}
+\section{IDE}
+Ecipse with the C/C++ plugin
+\section{Version Control}
+git with Github as server
+\section{Nightly Build}
+hudson for nifhtly Builds and test runs
+\section{Graphics}
+Gimp for all the graphics
+\section{External Libraries}
+SDL for all the rendering stuff
+Box2D for the physics
+yaml-cpp for the configfiles
+cwiid for the wiimote input
+\section{Operating system}
+ArchLinux
+\section{Compiler}
+GCC 4.7.2

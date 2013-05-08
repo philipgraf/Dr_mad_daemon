@@ -2,7 +2,7 @@ name    : WTF!!
 width   : 100
 height  : 20
 bgImage : city.bmp
-bgMusic : Pornophonique_SpaceInvaders
+bgMusic : Pornophonique_SpaceInvaders.ogg
 gravity : 2.0
 time    : 300
 player:

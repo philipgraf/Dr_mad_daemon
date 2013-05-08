@@ -2,7 +2,7 @@ name    : Tutorial
 width   : 40
 height  : 20
 bgImage : store.bmp
-bgMusic : TrackyBirthday_Websiiite
+bgMusic : TrackyBirthday_Websiiite.ogg
 gravity : 2.0
 time    : 300
 player:

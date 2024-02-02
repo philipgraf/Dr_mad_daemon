@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <SDL/SDL.h>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 /** Item class.
  * This class handles the Items.

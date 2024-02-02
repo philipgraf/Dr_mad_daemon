@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "PDA.h"
 #include "Language.h"
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 #include <map>
 #include <string>
 #include <cmath>

@@ -1,4 +1,4 @@
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 #include <SDL/SDL.h>
 #include <yaml-cpp/yaml.h>
 #include <map>
@@ -52,7 +52,7 @@ Environment::Environment(string type, int x, int y) :
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 
-	body->SetUserData(this);
+	body->GetUserData().pointer = (uintptr_t) this;
 
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(halfWidth, halfHeight);

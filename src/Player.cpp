@@ -72,7 +72,7 @@ Player::Player(int x, int y, int level) :
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 
-	body->SetUserData(this);
+	body->GetUserData().pointer = (uintptr_t) this;
 
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(halfWidth, halfHeight - radius / 2);
@@ -145,12 +145,12 @@ void Player::use() {
 	// check player contacts with dead bodys and loot them
 	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
 		if (contactEdge->contact->GetFixtureA() == sensorBottom && contactEdge->contact->IsTouching()) {
-			if ((deadguy = (Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData()) != NULL) {
+			if ((deadguy = (Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData().pointer) != NULL) {
 				delete deadguy;
 				break;
 			}
 		} else if (contactEdge->contact->GetFixtureB() == sensorBottom && contactEdge->contact->IsTouching()) {
-			if ((deadguy = (Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData()) != NULL) {
+			if ((deadguy = (Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData().pointer) != NULL) {
 				delete deadguy;
 				break;
 			}
@@ -189,11 +189,11 @@ void Player::move() {
 		wheels[0]->SetFriction(0.2);
 		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x > -maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0), body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 2, 0), body->GetWorldCenter(),true);
 			}
 		} else {
 			if (body->GetLinearVelocity().x > -maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 8, 0), body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(-body->GetMass() / 8, 0), body->GetWorldCenter(),true);
 			}
 		}
 
@@ -204,11 +204,11 @@ void Player::move() {
 		wheels[0]->SetFriction(0.2);
 		if (checkCollision() & DOWN) {
 			if (body->GetLinearVelocity().x < maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0), body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 2, 0), body->GetWorldCenter(),true);
 			}
 		} else {
 			if (body->GetLinearVelocity().x < maxVelocity) {
-				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 8, 0), body->GetWorldCenter());
+				body->ApplyLinearImpulse(b2Vec2(body->GetMass() / 8, 0), body->GetWorldCenter(),true);
 			}
 		}
 		action = ACTION_WALK_RIGHT;
@@ -243,7 +243,7 @@ void Player::move() {
 	if (jumping) {
 		if (checkCollision() & DOWN) {
 			float impulse = body->GetMass();
-			body->ApplyLinearImpulse(b2Vec2(0, -impulse * 4), body->GetWorldCenter());
+			body->ApplyLinearImpulse(b2Vec2(0, -impulse * 4), body->GetWorldCenter(),true);
 			Mix_PlayChannel(-1, Game::sounds["player jump"], 0);
 		}
 		//action = ACTION_JUMP_LEFT;
@@ -287,7 +287,7 @@ void Player::grab() {
 			grebJoin = NULL;
 			delete distanceVec;
 			distanceVec = NULL;
-			selectedBody->ApplyForceToCenter(force);
+			selectedBody->ApplyForceToCenter(force,false);
 		}
 	}
 }
@@ -329,14 +329,14 @@ void Player::logic() {
 
 	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
 		if ((contactEdge->contact->GetFixtureA() == sensorRight || contactEdge->contact->GetFixtureA() == sensorLeft || contactEdge->contact->GetFixtureA() == sensorTop) && contactEdge->contact->IsTouching()) {
-			if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
-				if (((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData())->isAlive()) {
+			if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData().pointer != NULL) {
+				if (((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData().pointer)->isAlive()) {
 					alive = false;
 				}
 			}
 		} else if ((contactEdge->contact->GetFixtureB() == sensorRight || contactEdge->contact->GetFixtureB() == sensorLeft || contactEdge->contact->GetFixtureB() == sensorTop) && contactEdge->contact->IsTouching()) {
-			if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData() != NULL) {
-				if (((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData())->isAlive()) {
+			if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData().pointer != NULL) {
+				if (((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData().pointer)->isAlive()) {
 					alive = false;
 				}
 			}

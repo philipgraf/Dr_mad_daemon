@@ -252,7 +252,7 @@ void Level::logic() {
 		}
 	}
 	//TODO move to a better place and check
-	float32 timeStep = 1.0f / FPS;
+	float timeStep = 1.0f / FPS;
 
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;

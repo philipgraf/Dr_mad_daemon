@@ -6,7 +6,7 @@
 #include <map>
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 //TODO find a better way
 #define ACTION_STAY 0

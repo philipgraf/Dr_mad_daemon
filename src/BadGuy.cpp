@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 #include <SDL/SDL.h>
 #include <yaml-cpp/yaml.h>
 #include <map>
@@ -56,7 +56,7 @@ BadGuy::BadGuy(string type, int x, int y) :
 	bodydef.position.Set(x + halfWidth, y + halfHeight);
 	this->body = Game::curGame->getCurrentLevel()->getWorld()->CreateBody(&bodydef);
 
-	body->SetUserData(this);
+	body->GetUserData().pointer = (uintptr_t)this;
 
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(halfWidth, halfHeight - radius/2);
@@ -136,10 +136,10 @@ void BadGuy::move() {
 
 	if (grounded) {
 		if (body->GetLinearVelocity().x < maxVelocity && direction == RIGHT) {
-			body->ApplyLinearImpulse(b2Vec2(5, 0), body->GetWorldCenter());
+			body->ApplyLinearImpulse(b2Vec2(5, 0), body->GetWorldCenter(),true);
 			action = ACTION_WALK_RIGHT;
 		} else if (body->GetLinearVelocity().x > -maxVelocity && direction == LEFT) {
-			body->ApplyLinearImpulse(b2Vec2(-5, 0), body->GetWorldCenter());
+			body->ApplyLinearImpulse(b2Vec2(-5, 0), body->GetWorldCenter(),true);
 			action = ACTION_WALK_LEFT;
 		}
 	}

@@ -24,7 +24,7 @@ Language::Language() {
 std::string Language::operator [](std::string key) {
 
 	std::string retVel;
-	if (root[key][Game::curGame->settings.language].Scalar() == detail::node_data::empty_scalar) {
+	if (root[key][Game::curGame->settings.language].Scalar() == "") {
 		return root[key]["en"].Scalar();
 	} else {
 		return root[key][Game::curGame->settings.language].Scalar();

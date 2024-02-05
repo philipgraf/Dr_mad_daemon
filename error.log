@@ -1,0 +1,12 @@
+src/Item.cpp: In member function ‘void Item::logic()’:
+src/Item.cpp:85:94: warning: NULL used in arithmetic [-Wpointer-arith]
+   85 |                 if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData().pointer != NULL) {
+      |                                                                                              ^~~~
+src/Item.cpp:90:101: warning: NULL used in arithmetic [-Wpointer-arith]
+   90 |                 } else if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData().pointer != NULL) {
+      |                                                                                                     ^~~~
+src/main.cpp:2:10: fatal error: boost/filesystem.hpp: Datei oder Verzeichnis nicht gefunden
+    2 | #include <boost/filesystem.hpp>
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make: *** [Makefile:15: DrInSane] Fehler 1

@@ -53,7 +53,7 @@ Item::Item(std::string name, int x, int y, int relX, int relY) {
 	body->CreateFixture(fixDef);
 
 
-	body->ApplyLinearImpulse(b2Vec2(relX, relY), body->GetWorldCenter());
+	body->ApplyLinearImpulse(b2Vec2(relX, relY), body->GetWorldCenter(),true);
 
 	timer = SDL_GetTicks();
 
@@ -82,13 +82,13 @@ void Item::logic() {
 		body->GetFixtureList()->SetFilterData(b2Filter());
 	}
 	for (b2ContactEdge *contactEdge = body->GetContactList(); contactEdge; contactEdge = contactEdge->next) {
-		if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData() != NULL) {
-			((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData())->addItem(type);
+		if (contactEdge->contact->GetFixtureA()->GetBody()->GetUserData().pointer != NULL) {
+			((Entity*) contactEdge->contact->GetFixtureA()->GetBody()->GetUserData().pointer)->addItem(type);
 			//it's OK for an object to commit suicide
 			delete this;
 			break;
-		} else if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData() != NULL) {
-			((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData())->addItem(type);
+		} else if (contactEdge->contact->GetFixtureB()->GetBody()->GetUserData().pointer != NULL) {
+			((Entity*) contactEdge->contact->GetFixtureB()->GetBody()->GetUserData().pointer)->addItem(type);
 			//it's OK for an object to commit suicide
 			delete this;
 			break;

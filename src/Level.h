@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 

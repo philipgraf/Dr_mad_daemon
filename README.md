@@ -1,5 +1,5 @@
 #Dr. In Sane
-## 2D-Game written in C++ wiht SDL
+## 2D-Game written in C++ with SDL
 
 ### Description:
 
@@ -10,6 +10,11 @@ Als ein dekorierter Doktor der Mathematik, Physik, Elektrotechnik und Informatik
 
 ##### 04.01.13  [SHA:050d909a84](https://github.com/philipgraf/Dr_mad_daemon/commit/050d909a84c84fdf713359758f7e8cf63ead6800)
 
-
+## Dependencies
+```
+apt-get install build-essential libsdl-gfx1.2-dev libsdl-image1.2-dev \
+libcwiid-dev libsdl1.2-dev libyaml-cpp-dev libsdl-ttf2.0-dev libbox2d-dev \
+libsdl-mixer1.2-dev libboost-filesystem-dev
+```
 
 Author: Philip Graf, Felix Eckner

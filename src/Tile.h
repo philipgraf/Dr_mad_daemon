@@ -4,7 +4,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <iostream>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 #include "define.h"
 
 #define TF_SWITCH1 0x1
